@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catálogo Profesional de Videovigilancia</title>
+    <title>Catálogo Interactivo de Videovigilancia</title>
     <style>
         /* ==========================================================================
            Variables de Paleta de Color Corporativa
@@ -12,6 +12,7 @@
             --primary-color: #003366;       /* Azul Corporativo */
             --accent-color: #ff6600;        /* Naranja Técnico */
             --subcategory-color: #4A5568;   /* Gris Oscuro para subbotones */
+            --product-color: #1a202c;       /* Gris casi negro para producto final */
             --bg-light: #f8f9fa;            /* Fondo general claro */
             --text-main: #333333;           /* Texto general */
             --border-color: #e2e8f0;        /* Separadores sutiles */
@@ -52,7 +53,7 @@
             margin: 0 auto;
         }
 
-        /* Grid de Categorías (Organización limpia a 2 columnas) */
+        /* Grid de Categorías Principales */
         .categories-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(48%, 1fr));
@@ -61,7 +62,7 @@
 
         @media (max-width: 850px) {
             .categories-grid {
-                grid-template-columns: 1fr; /* Columna única en móviles y tablets */
+                grid-template-columns: 1fr;
             }
         }
 
@@ -82,7 +83,6 @@
             border-color: #cbd5e1;
         }
 
-        /* Botón Principal (summary) */
         .category-btn {
             display: flex;
             justify-content: space-between;
@@ -94,7 +94,6 @@
             cursor: pointer;
             list-style: none;
             user-select: none;
-            transition: background-color 0.2s;
         }
 
         .category-btn::-webkit-details-marker { display: none; }
@@ -105,42 +104,28 @@
             transition: transform 0.25s ease;
         }
 
-        /* Cambios de Estado al abrir el contenedor principal */
-        .category-item[open] {
-            border-color: var(--primary-color);
-        }
+        .category-item[open] { border-color: var(--primary-color); }
+        .category-item[open] .category-btn { background-color: var(--primary-color); color: var(--white); }
+        .category-item[open] .arrow-icon { transform: rotate(180deg); color: var(--white); }
 
-        .category-item[open] .category-btn {
-            background-color: var(--primary-color);
-            color: var(--white);
-        }
-
-        .category-item[open] .arrow-icon {
-            transform: rotate(180deg);
-            color: var(--white);
-        }
-
-        /* Contenedor interno donde habitan los subbotones */
         .products-content {
             padding: 18px;
             background-color: #f1f5f9;
             display: flex;
             flex-direction: column;
-            gap: 12px; /* Espaciado uniforme entre los subbotones */
+            gap: 12px;
         }
 
         /* ==========================================================================
-           NIVEL 2: Subcategorías (Botones Desplegables Internos)
+           NIVEL 2: Subcategorías (Botones Internos)
            ========================================================================== */
         .subcategory-item {
             background-color: var(--white);
             border: 1px solid var(--border-color);
             border-radius: 6px;
             overflow: hidden;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
         }
 
-        /* Botón de la Subcategoría (summary interno) */
         .subcategory-btn {
             display: flex;
             justify-content: space-between;
@@ -153,74 +138,140 @@
             list-style: none;
             user-select: none;
             background-color: var(--white);
-            transition: background-color 0.2s, color 0.2s;
         }
 
         .subcategory-btn::-webkit-details-marker { display: none; }
-
-        .subcategory-btn:hover {
-            background-color: #f8fafc;
-            color: #1e293b;
-        }
+        .subcategory-btn:hover { background-color: #f8fafc; color: #1e293b; }
 
         .arrow-icon-sub {
             font-size: 0.75rem;
             color: #94a3b8;
-            transition: transform 0.2s ease, color 0.2s;
+            transition: transform 0.2s ease;
         }
 
-        /* Cambios de Estado al abrir el subbotón */
-        .subcategory-item[open] .subcategory-btn {
-            background-color: var(--subcategory-color);
-            color: var(--white);
-            border-bottom: 2px solid var(--accent-color);
-        }
+        .subcategory-item[open] .subcategory-btn { background-color: var(--subcategory-color); color: var(--white); }
+        .subcategory-item[open] .arrow-icon-sub { transform: rotate(90deg); color: var(--white); }
 
-        .subcategory-item[open] .arrow-icon-sub {
-            transform: rotate(90deg); /* Gira la flecha lateral apuntando hacia abajo */
-            color: var(--white);
+        .subcategory-content {
+            padding: 12px;
+            background-color: #f8fafc;
+            display: flex;
+            flex-direction: column;
+            gap: 8px; /* Espacio entre los productos finales */
         }
 
         /* ==========================================================================
-           Desglose Final de Productos e Información técnica
+           NIVEL 3: Productos Específicos (NUEVOS BOTONES DE TERCER NIVEL)
            ========================================================================== */
-        .subcategory-content {
-            padding: 16px 20px;
-            background-color: #fafbfc;
-            animation: fadeIn 0.25s ease-out;
+        .product-item {
+            background-color: var(--white);
+            border: 1px dashed #cbd5e1;
+            border-radius: 4px;
+            overflow: hidden;
         }
 
-        .product-list {
-            margin: 0;
-            padding-left: 18px;
-            list-style-type: square;
-        }
-
-        .product-list li {
-            margin-bottom: 10px;
+        .product-btn {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 14px;
             font-size: 0.92rem;
             color: #334155;
-            line-height: 1.5;
+            cursor: pointer;
+            list-style: none;
+            user-select: none;
+            background-color: var(--white);
         }
 
-        .product-list li:last-child {
-            margin-bottom: 0;
+        .product-btn::-webkit-details-marker { display: none; }
+        .product-btn:hover { background-color: #f1f5f9; }
+        
+        .product-btn strong { color: var(--primary-color); }
+
+        .arrow-icon-prod {
+            font-size: 0.7rem;
+            color: var(--accent-color);
+            transition: transform 0.2s ease;
         }
 
-        .product-list li strong {
-            color: var(--primary-color);
+        .product-item[open] .product-btn {
+            background-color: #edf2f7;
+            border-bottom: 1px solid #cbd5e1;
+        }
+        .product-item[open] .arrow-icon-prod { transform: rotate(90deg); }
+
+        /* Contenedor de Recursos (Imágenes, Videos, Artículos) */
+        .resource-vault {
+            padding: 15px;
+            background-color: #ffffff;
+            animation: fadeIn 0.25s ease-out;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
         }
 
-        /* Animación fluida de aparición */
+        /* Grid Multimedia Inteligente */
+        .media-grid {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .media-card {
+            flex: 1;
+            min-width: 140px;
+            max-width: 200px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
+            padding: 6px;
+            text-align: center;
+        }
+
+        .media-card img {
+            width: 100%;
+            height: auto;
+            border-radius: 2px;
+            object-fit: cover;
+        }
+
+        .media-card span {
+            display: block;
+            font-size: 0.75rem;
+            color: #64748b;
+            margin-top: 4px;
+        }
+
+        /* Enlaces a Artículos y Fichas */
+        .article-links {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn-link {
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 12px;
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: var(--white);
+            background-color: var(--primary-color);
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+
+        .btn-link.tech { background-color: var(--subcategory-color); }
+        .btn-link.video { background-color: #c53030; } /* Rojo para video */
+
+        .btn-link:hover {
+            opacity: 0.9;
+        }
+
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(-4px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(-4px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
@@ -229,7 +280,7 @@
     <section class="catalog-container">
         <header class="catalog-header">
             <h2>Sistemas de Videovigilancia Profesional</h2>
-            <p>Seleccione una categoría principal y despliegue las subcategorías para consultar los equipos y especificaciones disponibles.</p>
+            <p>Explore las categorías. Al dar clic en un producto específico, podrá consultar su multimedia y documentación relacionada.</p>
         </header>
 
         <div class="categories-grid">
@@ -240,46 +291,113 @@
                     <i class="arrow-icon">▼</i>
                 </summary>
                 <div class="products-content">
+                    
                     <details class="subcategory-item">
                         <summary class="subcategory-btn">
                             <span>Por Número de Canales</span>
                             <i class="arrow-icon-sub">▶</i>
                         </summary>
                         <div class="subcategory-content">
-                            <ul class="product-list">
-                                <li><strong>DVR 4 Canales:</strong> Ideal para residencias y pequeños comercios.</li>
-                                <li><strong>DVR 8 Canales:</strong> Excelente balance para PyMEs en crecimiento.</li>
-                                <li><strong>DVR 16 Canales:</strong> Capacidad robusta para entornos educativos y medianas empresas.</li>
-                                <li><strong>DVR 32 Canales:</strong> Solución de alta densidad para proyectos corporativos.</li>
-                            </ul>
+                            
+                            <details class="product-item">
+                                <summary class="product-btn">
+                                    <span><strong>DVR 4 Canales:</strong> Ideal para residencias y pequeños comercios.</span>
+                                    <i class="arrow-icon-prod">▶</i>
+                                </summary>
+                                <div class="resource-vault">
+                                    
+                                    <div class="media-grid">
+                                        <div class="media-card">
+                                            <img src="img/dvr4ch-front.jpg" alt="Vista Frontal DVR 4ch" onerror="this.src='https://placehold.co/200x150?text=Vista+Frontal'">
+                                            <span>Vista Frontal</span>
+                                        </div>
+                                        <div class="media-card">
+                                            <img src="img/dvr4ch-rear.jpg" alt="Puertos Traseros DVR 4ch" onerror="this.src='https://placehold.co/200x150?text=Puertos+Traseros'">
+                                            <span>Panel de Conexiones</span>
+                                        </div>
+                                        <div class="media-card">
+                                            <img src="img/diagrama-dvr4.jpg" alt="Diagrama de Instalación" onerror="this.src='https://placehold.co/200x150?text=Diagrama+Instalación'">
+                                            <span>Esquema de Conexión</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="article-links">
+                                        <a href="articulos/guia-instalacion-dvr4.html" class="btn-link">📄 Manual de Usuario</a>
+                                        <a href="fichas/dvr-4ch-datasheet.pdf" class="btn-link tech" target="_blank">📋 Ficha Técnica (PDF)</a>
+                                        <a href="https://youtube.com/watch?v=ejemplo1" class="btn-link video" target="_blank">▶ Video: Configuración Inicial</a>
+                                    </div>
+
+                                </div>
+                            </details>
+
+                            <details class="product-item">
+                                <summary class="product-btn">
+                                    <span><strong>DVR 8 Canales:</strong> Excelente balance para PyMEs en crecimiento.</span>
+                                    <i class="arrow-icon-prod">▶</i>
+                                </summary>
+                                <div class="resource-vault">
+                                    <div class="media-grid">
+                                        <div class="media-card">
+                                            <img src="img/dvr8ch.jpg" alt="DVR 8 canales" onerror="this.src='https://placehold.co/200x150?text=DVR+8+Canales'">
+                                            <span>Equipo Operativo</span>
+                                        </div>
+                                    </div>
+                                    <div class="article-links">
+                                        <a href="fichas/dvr-8ch-datasheet.pdf" class="btn-link tech" target="_blank">📋 Descargar Ficha Técnica</a>
+                                        <a href="https://youtube.com/watch?v=ejemplo2" class="btn-link video" target="_blank">▶ Video de Demostración</a>
+                                    </div>
+                                </div>
+                            </details>
+
+                            <details class="product-item">
+                                <summary class="product-btn">
+                                    <span><strong>DVR 16 Canales:</strong> Capacidad robusta para entornos educativos y medianas empresas.</span>
+                                    <i class="arrow-icon-prod">▶</i>
+                                </summary>
+                                <div class="resource-vault">
+                                    <p style="font-size: 0.85rem; margin: 0; color: #4a5568;">Recursos multimedia en actualización para entornos de red unificados.</p>
+                                    <div class="article-links">
+                                        <a href="fichas/dvr-16ch-datasheet.pdf" class="btn-link tech" target="_blank">📋 Ficha Técnica</a>
+                                    </div>
+                                </div>
+                            </details>
+
+                            <details class="product-item">
+                                <summary class="product-btn">
+                                    <span><strong>DVR 32 Canales:</strong> Solución de alta densidad para proyectos corporativos.</span>
+                                    <i class="arrow-icon-prod">▶</i>
+                                </summary>
+                                <div class="resource-vault">
+                                    <div class="article-links">
+                                        <a href="fichas/dvr-32ch-datasheet.pdf" class="btn-link tech" target="_blank">📋 Especificaciones de Almacenamiento</a>
+                                    </div>
+                                </div>
+                            </details>
+
                         </div>
                     </details>
+                    
                     <details class="subcategory-item">
                         <summary class="subcategory-btn">
                             <span>Tecnología AcuSense (Inteligencia Artificial)</span>
                             <i class="arrow-icon-sub">▶</i>
                         </summary>
                         <div class="subcategory-content">
-                            <ul class="product-list">
-                                <li>Filtro avanzado de falsas alarmas (reducción del 90% de eventos irrelevantes).</li>
-                                <li>Clasificación precisa enfocada en objetivos de Humanos y Vehículos.</li>
-                                <li>Búsqueda inteligente y rápida de clips de video en grabaciones.</li>
-                            </ul>
+                            <details class="product-item">
+                                <summary class="product-btn">
+                                    <span>Filtro avanzado de falsas alarmas e IA</span>
+                                    <i class="arrow-icon-prod">▶</i>
+                                </summary>
+                                <div class="resource-vault">
+                                    <div class="article-links">
+                                        <a href="articulos/analiticas-acusense.html" class="btn-link">📄 Artículo: Cómo configurar cruce de línea</a>
+                                        <a href="https://youtube.com/watch?v=acusense" class="btn-link video" target="_blank">▶ Demo de Analíticas en Tiempo Real</a>
+                                    </div>
+                                </div>
+                            </details>
                         </div>
                     </details>
-                    <details class="subcategory-item">
-                        <summary class="subcategory-btn">
-                            <span>Con Audio Bidireccional</span>
-                            <i class="arrow-icon-sub">▶</i>
-                        </summary>
-                        <div class="subcategory-content">
-                            <ul class="product-list">
-                                <li>Soporte de entrada y salida de audio independiente (RCA/In-Out).</li>
-                                <li>Tecnología Audio Over Coax (Transmisión de audio directo por el cable coaxial).</li>
-                                <li>Interacción de voz remota en tiempo real desde aplicaciones móviles.</li>
-                            </ul>
-                        </div>
-                    </details>
+
                 </div>
             </details>
 
@@ -295,248 +413,23 @@
                             <i class="arrow-icon-sub">▶</i>
                         </summary>
                         <div class="subcategory-content">
-                            <ul class="product-list">
-                                <li>Modelos Plug & Play de 4, 8 y 16 canales con puertos PoE traseros.</li>
-                                <li>Alimentación y datos directo a la cámara IP mediante un solo cable de red.</li>
-                            </ul>
-                        </div>
-                    </details>
-                    <details class="subcategory-item">
-                        <summary class="subcategory-btn">
-                            <span>NVR Corporativos</span>
-                            <i class="arrow-icon-sub">▶</i>
-                        </summary>
-                        <div class="subcategory-content">
-                            <ul class="product-list">
-                                <li>Soporte desde 32, 64 hasta 128 canales IP de alta definición.</li>
-                                <li>Compatibilidad con arreglos de discos duros en RAID (0, 1, 5, 6, 10).</li>
-                                <li>Rendimiento de grabación optimizado para cámaras de hasta 12MP (4K).</li>
-                            </ul>
+                            <details class="product-item">
+                                <summary class="product-btn">
+                                    <span>Modelos de 4, 8 y 16 canales con Switch PoE Integrado</span>
+                                    <i class="arrow-icon-prod">▶</i>
+                                </summary>
+                                <div class="resource-vault">
+                                    <div class="article-links">
+                                        <a href="fichas/nvr-poe.pdf" class="btn-link tech" target="_blank">📋 Ficha Técnica de Suministro Eléctrico</a>
+                                    </div>
+                                </div>
+                            </details>
                         </div>
                     </details>
                 </div>
             </details>
 
-            <details class="category-item">
-                <summary class="category-btn">
-                    <span>NVS (Servidores de Video)</span>
-                    <i class="arrow-icon">▼</i>
-                </summary>
-                <div class="products-content">
-                    <details class="subcategory-item">
-                        <summary class="subcategory-btn">
-                            <span>Codificadores y Servidores de Red</span>
-                            <i class="arrow-icon-sub">▶</i>
-                        </summary>
-                        <div class="subcategory-content">
-                            <ul class="product-list">
-                                <li>Servidores de almacenamiento masivo y gestión centralizada para proyectos urbanos.</li>
-                                <li>Codificadores de video para migración de sistemas análogos complejos a plataformas IP.</li>
-                            </ul>
-                        </div>
-                    </details>
-                </div>
-            </details>
-
-            <details class="category-item">
-                <summary class="category-btn">
-                    <span>Cámaras IP</span>
-                    <i class="arrow-icon">▼</i>
-                </summary>
-                <div class="products-content">
-                    <details class="subcategory-item">
-                        <summary class="subcategory-btn">
-                            <span>Modelos Fijos (Domo y Bullet)</span>
-                            <i class="arrow-icon-sub">▶</i>
-                        </summary>
-                        <div class="subcategory-content">
-                            <ul class="product-list">
-                                <li>Resoluciones disponibles en 2MP, 4MP, 5MP y 4K (8MP).</li>
-                                <li>Lentes fijos de amplio ángulo de visión (2.8 mm y 4 mm).</li>
-                            </ul>
-                        </div>
-                    </details>
-                    <details class="subcategory-item">
-                        <summary class="subcategory-btn">
-                            <span>Tecnología Full Color / ColorVu</span>
-                            <i class="arrow-icon-sub">▶</i>
-                        </summary>
-                        <div class="subcategory-content">
-                            <ul class="product-list">
-                                <li>Visualización e imágenes a color las 24 horas del día, incluso en total oscuridad.</li>
-                                <li>Apertura de lente avanzada F1.0 y luz blanca cálida auxiliar integrada.</li>
-                            </ul>
-                        </div>
-                    </details>
-                </div>
-            </details>
-
-            <details class="category-item">
-                <summary class="category-btn">
-                    <span>Cámaras Análogas</span>
-                    <i class="arrow-icon">▼</i>
-                </summary>
-                <div class="products-content">
-                    <details class="subcategory-item">
-                        <summary class="subcategory-btn">
-                            <span>Cámaras TurboHD / Multi-Tecnología</span>
-                            <i class="arrow-icon-sub">▶</i>
-                        </summary>
-                        <div class="subcategory-content">
-                            <ul class="product-list">
-                                <li>Compatibilidad nativa con tecnologías TVI, AHD, CVI y CVBS.</li>
-                                <li>Modelos económicos para interiores con carcasas de policarbonato.</li>
-                                <li>Cámaras metálicas con certificación IP67 para protección a la intemperie.</li>
-                            </ul>
-                        </div>
-                    </details>
-                </div>
-            </details>
-
-            <details class="category-item">
-                <summary class="category-btn">
-                    <span>Cámaras PTZ (Pan-Tilt-Zoom)</span>
-                    <i class="arrow-icon">▼</i>
-                </summary>
-                <div class="products-content">
-                    <details class="subcategory-item">
-                        <summary class="subcategory-btn">
-                            <span>Domos PTZ Motorizados</span>
-                            <i class="arrow-icon-sub">▶</i>
-                        </summary>
-                        <div class="subcategory-content">
-                            <ul class="product-list">
-                                <li>Zoom óptico de alta precisión desde 4x, 15x, 25x hasta 42x de alcance.</li>
-                                <li>Función Smart Tracking para seguimiento automático de personas u objetos en movimiento.</li>
-                                <li>Iluminación infrarroja de largo alcance inteligente (desde 100 m hasta 500 m).</li>
-                            </ul>
-                        </div>
-                    </details>
-                </div>
-            </details>
-
-            <details class="category-item">
-                <summary class="category-btn">
-                    <span>Switches para Rack</span>
-                    <i class="arrow-icon">▼</i>
-                </summary>
-                <div class="products-content">
-                    <details class="subcategory-item">
-                        <summary class="subcategory-btn">
-                            <span>Equipos Perimetrales y de Distribución</span>
-                            <i class="arrow-icon-sub">▶</i>
-                        </summary>
-                        <div class="subcategory-content">
-                            <ul class="product-list">
-                                <li>Diseño estándar de 19" para montaje en gabinetes o racks de telecomunicaciones.</li>
-                                <li>Administración capa 2 y capa 3 para segmentación de redes vía VLANs.</li>
-                                <li>Puertos Uplink Gigabit y puertos SFP dedicados para enlaces de fibra óptica.</li>
-                            </ul>
-                        </div>
-                    </details>
-                </div>
-            </details>
-
-            <details class="category-item">
-                <summary class="category-btn">
-                    <span>Switches PoE</span>
-                    <i class="arrow-icon">▼</i>
-                </summary>
-                <div class="products-content">
-                    <details class="subcategory-item">
-                        <summary class="subcategory-btn">
-                            <span>Alimentación PoE para Cámaras IP</span>
-                            <i class="arrow-icon-sub">▶</i>
-                        </summary>
-                        <div class="subcategory-content">
-                            <ul class="product-list">
-                                <li>Modelos de 4, 8, 16 y 24 puertos Ethernet con soporte PoE / PoE+ (802.3af/at).</li>
-                                <li>Tecnología Long Range PoE: Transmisión de datos y energía hasta 250 m o 300 m.</li>
-                                <li>Presupuesto de potencia (PoE Budget) optimizado para sistemas críticos ininterrumpidos.</li>
-                            </ul>
-                        </div>
-                    </details>
-                </div>
-            </details>
-
-            <details class="category-item">
-                <summary class="category-btn">
-                    <span>Kits de Distribución</span>
-                    <i class="arrow-icon">▼</i>
-                </summary>
-                <div class="products-content">
-                    <details class="subcategory-item">
-                        <summary class="subcategory-btn">
-                            <span>Soluciones Todo Incluido</span>
-                            <i class="arrow-icon-sub">▶</i>
-                        </summary>
-                        <div class="subcategory-content">
-                            <ul class="product-list">
-                                <li>Kits TurboHD de 4 y 8 cámaras con cables pre-armados, transceptores y fuentes de poder.</li>
-                                <li>Kits IP con switches PoE integrados para configuraciones automáticas Plug & Play.</li>
-                            </ul>
-                        </div>
-                    </details>
-                </div>
-            </details>
-
-            <details class="category-item">
-                <summary class="category-btn">
-                    <span>Monitores</span>
-                    <i class="arrow-icon">▼</i>
-                </summary>
-                <div class="products-content">
-                    <details class="subcategory-item">
-                        <summary class="subcategory-btn">
-                            <span>Pantallas de Grado Industrial</span>
-                            <i class="arrow-icon-sub">▶</i>
-                        </summary>
-                        <div class="subcategory-content">
-                            <ul class="product-list">
-                                <li>Monitores diseñados para operación continua 24/7 sin degradación de panel.</li>
-                                <li>Interfaces de video HDMI, VGA, BNC y DisplayPort de alta fidelidad.</li>
-                                <li>Paneles LED / IPS con amplios ángulos de visión para centros de monitoreo.</li>
-                            </ul>
-                        </div>
-                    </details>
-                </div>
-            </details>
-
-            <details class="category-item">
-                <summary class="category-btn">
-                    <span>Accesorios de Instalación</span>
-                    <i class="arrow-icon">▼</i>
-                </summary>
-                <div class="products-content">
-                    <details class="subcategory-item">
-                        <summary class="subcategory-btn">
-                            <span>Conectividad y Energía</span>
-                            <i class="arrow-icon-sub">▶</i>
-                        </summary>
-                        <div class="subcategory-content">
-                            <ul class="product-list">
-                                <li>Baluns pasivos y activos con protección contra sobretensiones transitorias.</li>
-                                <li>Fuentes de poder reguladas (individuales, tipo pulpo y cajas de distribución multicanal).</li>
-                                <li>Conectores rápidos de energía DC (Macho/Hembra) y conectores RJ45 blindados.</li>
-                            </ul>
-                        </div>
-                    </details>
-                    <details class="subcategory-item">
-                        <summary class="subcategory-btn">
-                            <span>Almacenamiento y Herrajes</span>
-                            <i class="arrow-icon-sub">▶</i>
-                        </summary>
-                        <div class="subcategory-content">
-                            <ul class="product-list">
-                                <li>Discos duros internos mecánicos optimizados para videovigilancia continua (WD Purple / Seagate SkyHawk).</li>
-                                <li>Gabinetes, cajas de conexiones estancas (patios/exteriores) y soportes para postes o esquinas.</li>
-                            </ul>
-                        </div>
-                    </details>
-                </div>
-            </details>
-
-        </div>
+            </div>
     </section>
 
 </body>
