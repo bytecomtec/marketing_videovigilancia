@@ -12,6 +12,7 @@
             --primary-color: #003366;       /* Azul Corporativo */
             --accent-color: #ff6600;        /* Naranja Técnico */
             --price-color: #00875a;         /* Verde Catálogo */
+            --whatsapp-color: #25d366;      /* Verde Oficial WhatsApp */
             --bg-light: #f8fafc;            /* Fondo general sutil */
             --text-main: #1e293b;           /* Texto principal */
             --border-color: #e2e8f0;        /* Separadores */
@@ -80,7 +81,7 @@
            COLUMNA IZQUIERDA: Menú de Categorías (Sidebar)
            ========================================================================== */
         .sidebar {
-            width: 280px;
+            width: 290px;
             background-color: var(--white);
             border-right: 1px solid var(--border-color);
             padding: 20px 10px;
@@ -131,7 +132,6 @@
             color: var(--primary-color);
         }
 
-        /* Estado activo seleccionado */
         .category-menu-item.active {
             background-color: #e0f2fe;
             color: #0369a1;
@@ -154,7 +154,7 @@
         }
 
         /* ==========================================================================
-           COLUMNA DERECHA: Escaparate Dinámico de Productos
+           COLUMNA DERECHA: Escaparate de Productos
            ========================================================================== */
         .content-showcase {
             flex: 1;
@@ -178,92 +178,84 @@
             font-size: 0.95rem;
         }
 
-        /* Cuadrícula de Productos */
+        /* Cuadrícula de Tarjetas */
         .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 20px;
         }
 
-        /* Tarjeta de Producto */
+        /* Tarjeta de Producto Avanzada (Soporta Flayer de Marketing) */
         .product-card {
             background-color: var(--white);
             border: 1px solid var(--border-color);
-            border-radius: 6px;
+            border-radius: 8px;
             padding: 16px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             position: relative;
-            transition: box-shadow 0.2s;
+            transition: transform 0.2s, box-shadow 0.2s;
             animation: fadeIn 0.25s ease-in-out;
         }
 
         .product-card:hover {
-            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-        }
-
-        .product-check {
-            position: absolute;
-            top: 16px;
-            right: 16px;
-            transform: scale(1.15);
-            cursor: pointer;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.08);
         }
 
         .product-body {
             display: flex;
             gap: 15px;
             align-items: flex-start;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
+        /* Contenedor de Imagen adaptado para Flayers de Marketing */
         .product-img-box {
-            width: 90px;
-            height: 90px;
+            width: 100px;
+            height: 100px;
             flex-shrink: 0;
             border: 1px solid #f1f5f9;
-            border-radius: 4px;
+            border-radius: 6px;
             display: flex;
             align-items: center;
             justify-content: center;
             background-color: #ffffff;
+            overflow: hidden;
+            cursor: pointer; /* Indica que se puede ampliar el flayer */
         }
 
         .product-img-box img {
             max-width: 100%;
             max-height: 100%;
-            object-fit: contain;
+            object-fit: cover; /* Ajuste óptimo para imágenes cuadradas de marketing */
+        }
+
+        .product-details {
+            flex-grow: 1;
         }
 
         .product-model {
             color: #003399;
             font-weight: 700;
-            font-size: 0.95rem;
+            font-size: 1rem;
             text-decoration: none;
             display: block;
             margin-bottom: 4px;
         }
 
-        .product-model:hover {
-            text-decoration: underline;
-        }
-
         .product-desc {
             font-size: 0.85rem;
-            color: #64748b;
-            line-height: 1.3;
+            color: #475569;
+            line-height: 1.4;
             margin: 0 0 8px 0;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
         }
 
         .product-price {
             color: var(--price-color);
             font-weight: 700;
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             margin: 0;
         }
 
@@ -273,30 +265,46 @@
             color: #64748b;
         }
 
+        /* Sección de Acciones e Interacción con el Cliente */
         .product-footer {
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 12px;
             border-top: 1px solid #f1f5f9;
-            padding-top: 10px;
-            font-size: 0.85rem;
-            color: #64748b;
+            padding-top: 12px;
+            margin-top: 5px;
         }
 
-        .status-dots {
-            display: flex;
-            gap: 4px;
+        /* Botón de Compartido de WhatsApp */
+        .btn-whatsapp {
+            background-color: var(--whatsapp-color);
+            color: var(--white);
+            border: none;
+            border-radius: 4px;
+            padding: 6px 12px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+            transition: background-color 0.2s;
         }
 
-        .dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background-color: #cbd5e1;
+        .btn-whatsapp:hover {
+            background-color: #1ebd59;
         }
 
-        .dot.active {
-            background-color: #10b981;
+        .btn-view-flayer {
+            font-size: 0.82rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .btn-view-flayer:hover {
+            text-decoration: underline;
         }
 
         @keyframes fadeIn {
@@ -333,66 +341,75 @@
     </div>
 
     <script>
-        // 1. BASE DE DATOS DE PRODUCTOS POR CATEGORÍA
+        // BASE DE DATOS DE PRODUCTOS CON ENLACES A IMÁGENES DE MARKETING DE ALTO IMPACTO
         const catalogData = {
             dvr: {
                 title: "Grabadores Digitales (DVR)",
-                desc: "Soluciones analógicas de alta definición TurboHD con procesamiento local.",
+                desc: "Soluciones de grabación digital homologadas con analíticas inteligentes.",
                 products: [
-                    { model: "DS-7116HGHI-M1(E)", desc: "DVR 16 Canales de Video TurboHD + 2 Canales IP / Audio por Coaxial / H.265", price: "119.22", img: "img/dvr1.jpg" },
-                    { model: "DS-7204HGHI-F1(S)", desc: "DVR 1080p Lite Pentahíbrido de 4 Canales / Eficiencia de almacenamiento", price: "30.65", img: "img/dvr2.jpg" },
-                    { model: "DS-7204HGHI-M1(T)", desc: "[Audio Bidireccional] DVR de 4 Canales con Soporte de Alerta de Intrusión", price: "42.56", img: "img/dvr3.jpg" }
+                    { 
+                        model: "DS-7116HGHI-M1(E)", 
+                        desc: "DVR 16 Canales de Grabación HD / Soporte H.265 Pro+ Eficiente / Compatibilidad Multi-Cámara / Acceso Remoto Simple.", 
+                        price: "119.22", 
+                        flayerUrl: "img/marketing/ds-7116hghi.jpg" // Ruta de tu flayer en el repositorio
+                    },
+                    { 
+                        model: "DS-7204HGHI-F1(S)", 
+                        desc: "DVR 4 Canales 1080p Lite / Audio por coaxial / Clasificación de humanos y vehículos.", 
+                        price: "30.65", 
+                        flayerUrl: "img/marketing/ds-7204hghi.jpg" 
+                    }
                 ]
             },
-            nvr: {
-                title: "Grabadores de Red (NVR)",
-                desc: "Sistemas de grabación autónomos basados puramente en IP con switches PoE.",
-                products: [
-                    { model: "DS-7608NI-K1/8P", desc: "NVR de 8 Canales IP Smart de 4K / Switch PoE Integrado de 8 Puertos", price: "185.50", img: "img/nvr1.jpg" },
-                    { model: "DS-7632NXI-K2", desc: "NVR Inteligente AcuSense de 32 Canales / Resolución 12 Megapíxeles (4K)", price: "299.00", img: "img/nvr2.jpg" }
-                ]
-            },
-            camaras_ip: {
-                title: "Cámaras IP Profesional",
-                desc: "Dispositivos de captura digital nativa de alta definición con analíticas integradas.",
-                products: [
-                    { model: "DS-2CD1023G0-I", desc: "Cámara IP Bullet de 2 Megapíxeles / Lente 2.8mm / Aptas para Intemperie IP67", price: "48.20", img: "img/ip1.jpg" }
-                ]
-            },
-            switches_poe: {
-                title: "Switches PoE (Power over Ethernet)",
-                desc: "Infraestructura de red crítica para la alimentación estable de video IP de largo alcance.",
-                products: [
-                    { model: "DS-3E0106HP-E", desc: "Switch PoE de 4 Puertos Fast Ethernet + 2 Puertos Uplink / Hasta 250 metros", price: "35.80", img: "img/switch1.jpg" }
-                ]
-            }
+            nvr: { title: "Grabadores de Red (NVR)", desc: "Sistemas de grabación IP autónomos.", products: [] },
+            nvs: { title: "Servidores NVS", desc: "Servidores de video en red de grado corporativo.", products: [] },
+            accesorios: { title: "Accesorios de Instalación", desc: "Baluns, transceptores y fuentes centralizadas.", products: [] },
+            camaras_ip: { title: "Cámaras IP", desc: "Dispositivos de captura digital nativa de alta resolución.", products: [] },
+            camaras_analog: { title: "Cámaras Análogas", desc: "Cámaras de alta definición HD-TVI/Analógicas.", products: [] },
+            camaras_ptz: { title: "Cámaras PTZ", desc: "Dometos motorizados con paneo, tildeo y zoom óptico.", products: [] },
+            switch_rack: { title: "Switches para Rack", desc: "Conmutadores de distribución de red para gabinetes.", products: [] },
+            switches_poe: { title: "Switches PoE", desc: "Inyectores y conmutadores de energía sobre Ethernet.", products: [] },
+            kits: { title: "Kits Integrados", desc: "Paquetes completos de CCTV listos para instalar.", products: [] },
+            monitores: { title: "Monitores", desc: "Pantallas de grado industrial para operación continua 24/7.", products: [] }
         };
 
-        // Lista completa de categorías solicitadas para armar el menú izquierdo
         const categoriesList = [
-            { id: "dvr", name: "Grabadores DVR" },
-            { id: "nvr", name: "Grabadores NVR" },
-            { id: "nvs", name: "Servidores NVS" },
+            { id: "dvr", name: "DVR" },
+            { id: "nvr", name: "NVR" },
+            { id: "nvs", name: "NVS" },
             { id: "accesorios", name: "Accesorios" },
             { id: "camaras_ip", name: "Cámaras IP" },
             { id: "camaras_analog", name: "Cámaras Análogas" },
             { id: "camaras_ptz", name: "Cámaras PTZ" },
             { id: "switch_rack", name: "Switches para Rack" },
             { id: "switches_poe", name: "Switches PoE" },
-            { id: "kits", name: "Kits Integrados" },
+            { id: "kits", name: "Kits" },
             { id: "monitores", name: "Monitores" }
         ];
 
-        // 2. FUNCIÓN PARA CONMUTAR Y RENDERIZAR LA PANTALLA DE PRODUCTOS
+        // FUNCIÓN GENERADORA DEL ENLACE DE WHATSAPP
+        function generateWhatsAppLink(model, desc, price, flayer) {
+            // Construcción de la URL pública que tendrá tu flayer en GitHub Pages para enviársela al cliente
+            const currentRepoUrl = window.location.origin + window.location.pathname.replace('index.html', '');
+            const absoluteFlayerUrl = currentRepoUrl + flayer;
+
+            // Formato de mensaje corporativo optimizado usando codificación de texto limpia
+            const text = `*Hola, te comparto la ficha técnica del equipo solicitado:* \n\n` +
+                         `*Modelo:* ${model}\n` +
+                         `*Descripción:* ${desc}\n` +
+                         `*Precio:* $${price} USD (Más IVA)\n\n` +
+                         `📸 *Ver Imagen Publicitaria / Ficha:* ${absoluteFlayerUrl}`;
+            
+            return `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
+        }
+
+        // RENDERIZADO INTERACTIVO
         function renderCategory(categoryId) {
             const container = document.getElementById('productsContainer');
             const titleElem = document.getElementById('categoryTitle');
             const descElem = document.getElementById('categoryDesc');
             
-            // Actualizar clase 'active' en el menú lateral
-            document.querySelectorAll('.category-menu-item').forEach(item => {
-                item.classList.remove('active');
-            });
+            document.querySelectorAll('.category-menu-item').forEach(item => item.classList.remove('active'));
             document.getElementById(`menu-${categoryId}`).classList.add('active');
 
             const data = catalogData[categoryId];
@@ -400,44 +417,41 @@
             if (data && data.products.length > 0) {
                 titleElem.innerText = data.title;
                 descElem.innerText = data.desc;
-                container.innerHTML = ''; // Limpiar cuadrícula
+                container.innerHTML = '';
 
-                // Construcción exacta de tarjetas estilo SYSCOM
                 data.products.forEach(prod => {
+                    const waLink = generateWhatsAppLink(prod.model, prod.desc, prod.price, prod.flayerUrl);
                     const card = document.createElement('div');
                     card.className = 'product-card';
                     card.innerHTML = `
-                        <input type="checkbox" class="product-check">
                         <div class="product-body">
-                            <div class="product-img-box">
-                                <img src="${prod.img}" alt="${prod.model}" onerror="this.src='https://placehold.co/90x90?text=CCTV'">
+                            <div class="product-img-box" onclick="window.open('${prod.flayerUrl}', '_blank')">
+                                <img src="${prod.flayerUrl}" alt="${prod.model}" onerror="this.src='https://placehold.co/100x100?text=Flayer+CCTV'">
                             </div>
                             <div class="product-details">
-                                <a href="#" class="product-model">${prod.model}</a>
+                                <a href="${prod.flayerUrl}" target="_blank" class="product-model">${prod.model}</a>
                                 <p class="product-desc">${prod.desc}</p>
-                                <p class="product-price">${prod.price} <span>Sin IVA</span></p>
+                                <p class="product-price">${prod.price} <span>USD + IVA</span></p>
                             </div>
                         </div>
                         <div class="product-footer">
-                            <span>📦 0</span>
-                            <div class="status-dots">
-                                <div class="dot active"></div>
-                                <div class="dot active"></div>
-                            </div>
+                            <a href="${prod.flayerUrl}" target="_blank" class="btn-view-flayer">🔍 Ampliar Imagen</a>
+                            <a href="${waLink}" target="_blank" class="btn-whatsapp">
+                                💬 Enviar por WhatsApp
+                            </a>
                         </div>
                     `;
                     container.appendChild(card);
                 });
             } else {
-                // Estado vacío si no hay productos cargados en esa sección todavía
                 const catName = categoriesList.find(c => c.id === categoryId).name;
-                titleElem.innerText = catName;
-                descElem.innerText = `Catálogo de soluciones para ${catName.toLowerCase()}.`;
-                container.innerHTML = `<p style="grid-column: 1/-1; color: #64748b; font-style: italic;">No se encontraron equipos registrados en esta línea tecnológica en este momento.</p>`;
+                titleElem.innerText = `Línea: ${catName}`;
+                descElem.innerText = `Soluciones tecnológicas asociadas a ${catName.toLowerCase()}.`;
+                container.innerHTML = `<p style="grid-column: 1/-1; color: #64748b; font-style: italic;">Próximamente se integrarán las imágenes de marketing de esta subcategoría.</p>`;
             }
         }
 
-        // 3. INICIALIZADOR DEL MENÚ LATERAL
+        // INICIALIZACIÓN
         function initMenu() {
             const menuList = document.getElementById('menuList');
             categoriesList.forEach((cat, index) => {
@@ -449,12 +463,9 @@
                 li.innerHTML = `<span>${cat.name}</span> <span class="qty-badge">${count}</span>`;
                 menuList.appendChild(li);
             });
-
-            // Forzar carga inicial con la primera categoría (DVR)
             renderCategory(categoriesList[0].id);
         }
 
-        // Ejecutar al cargar la página
         window.onload = initMenu;
     </script>
 </body>
