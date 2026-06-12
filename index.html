@@ -199,4 +199,345 @@
         .product-list li {
             margin-bottom: 10px;
             font-size: 0.92rem;
-            color:
+            color: #334155;
+            line-height: 1.5;
+        }
+
+        .product-list li:last-child {
+            margin-bottom: 0;
+        }
+
+        .product-list li strong {
+            color: var(--primary-color);
+        }
+
+        /* Animación fluida de aparición */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-4px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <section class="catalog-container">
+        <header class="catalog-header">
+            <h2>Sistemas de Videovigilancia Profesional</h2>
+            <p>Seleccione una categoría principal y despliegue las subcategorías para consultar los equipos y especificaciones disponibles.</p>
+        </header>
+
+        <div class="categories-grid">
+
+            <details class="category-item">
+                <summary class="category-btn">
+                    <span>DVR (Grabadores Digitales)</span>
+                    <i class="arrow-icon">▼</i>
+                </summary>
+                <div class="products-content">
+                    <details class="subcategory-item">
+                        <summary class="subcategory-btn">
+                            <span>Por Número de Canales</span>
+                            <i class="arrow-icon-sub">▶</i>
+                        </summary>
+                        <div class="subcategory-content">
+                            <ul class="product-list">
+                                <li><strong>DVR 4 Canales:</strong> Ideal para residencias y pequeños comercios.</li>
+                                <li><strong>DVR 8 Canales:</strong> Excelente balance para PyMEs en crecimiento.</li>
+                                <li><strong>DVR 16 Canales:</strong> Capacidad robusta para entornos educativos y medianas empresas.</li>
+                                <li><strong>DVR 32 Canales:</strong> Solución de alta densidad para proyectos corporativos.</li>
+                            </ul>
+                        </div>
+                    </details>
+                    <details class="subcategory-item">
+                        <summary class="subcategory-btn">
+                            <span>Tecnología AcuSense (Inteligencia Artificial)</span>
+                            <i class="arrow-icon-sub">▶</i>
+                        </summary>
+                        <div class="subcategory-content">
+                            <ul class="product-list">
+                                <li>Filtro avanzado de falsas alarmas (reducción del 90% de eventos irrelevantes).</li>
+                                <li>Clasificación precisa enfocada en objetivos de Humanos y Vehículos.</li>
+                                <li>Búsqueda inteligente y rápida de clips de video en grabaciones.</li>
+                            </ul>
+                        </div>
+                    </details>
+                    <details class="subcategory-item">
+                        <summary class="subcategory-btn">
+                            <span>Con Audio Bidireccional</span>
+                            <i class="arrow-icon-sub">▶</i>
+                        </summary>
+                        <div class="subcategory-content">
+                            <ul class="product-list">
+                                <li>Soporte de entrada y salida de audio independiente (RCA/In-Out).</li>
+                                <li>Tecnología Audio Over Coax (Transmisión de audio directo por el cable coaxial).</li>
+                                <li>Interacción de voz remota en tiempo real desde aplicaciones móviles.</li>
+                            </ul>
+                        </div>
+                    </details>
+                </div>
+            </details>
+
+            <details class="category-item">
+                <summary class="category-btn">
+                    <span>NVR (Grabadores de Red)</span>
+                    <i class="arrow-icon">▼</i>
+                </summary>
+                <div class="products-content">
+                    <details class="subcategory-item">
+                        <summary class="subcategory-btn">
+                            <span>NVR con PoE Integrado</span>
+                            <i class="arrow-icon-sub">▶</i>
+                        </summary>
+                        <div class="subcategory-content">
+                            <ul class="product-list">
+                                <li>Modelos Plug & Play de 4, 8 y 16 canales con puertos PoE traseros.</li>
+                                <li>Alimentación y datos directo a la cámara IP mediante un solo cable de red.</li>
+                            </ul>
+                        </div>
+                    </details>
+                    <details class="subcategory-item">
+                        <summary class="subcategory-btn">
+                            <span>NVR Corporativos</span>
+                            <i class="arrow-icon-sub">▶</i>
+                        </summary>
+                        <div class="subcategory-content">
+                            <ul class="product-list">
+                                <li>Soporte desde 32, 64 hasta 128 canales IP de alta definición.</li>
+                                <li>Compatibilidad con arreglos de discos duros en RAID (0, 1, 5, 6, 10).</li>
+                                <li>Rendimiento de grabación optimizado para cámaras de hasta 12MP (4K).</li>
+                            </ul>
+                        </div>
+                    </details>
+                </div>
+            </details>
+
+            <details class="category-item">
+                <summary class="category-btn">
+                    <span>NVS (Servidores de Video)</span>
+                    <i class="arrow-icon">▼</i>
+                </summary>
+                <div class="products-content">
+                    <details class="subcategory-item">
+                        <summary class="subcategory-btn">
+                            <span>Codificadores y Servidores de Red</span>
+                            <i class="arrow-icon-sub">▶</i>
+                        </summary>
+                        <div class="subcategory-content">
+                            <ul class="product-list">
+                                <li>Servidores de almacenamiento masivo y gestión centralizada para proyectos urbanos.</li>
+                                <li>Codificadores de video para migración de sistemas análogos complejos a plataformas IP.</li>
+                            </ul>
+                        </div>
+                    </details>
+                </div>
+            </details>
+
+            <details class="category-item">
+                <summary class="category-btn">
+                    <span>Cámaras IP</span>
+                    <i class="arrow-icon">▼</i>
+                </summary>
+                <div class="products-content">
+                    <details class="subcategory-item">
+                        <summary class="subcategory-btn">
+                            <span>Modelos Fijos (Domo y Bullet)</span>
+                            <i class="arrow-icon-sub">▶</i>
+                        </summary>
+                        <div class="subcategory-content">
+                            <ul class="product-list">
+                                <li>Resoluciones disponibles en 2MP, 4MP, 5MP y 4K (8MP).</li>
+                                <li>Lentes fijos de amplio ángulo de visión (2.8 mm y 4 mm).</li>
+                            </ul>
+                        </div>
+                    </details>
+                    <details class="subcategory-item">
+                        <summary class="subcategory-btn">
+                            <span>Tecnología Full Color / ColorVu</span>
+                            <i class="arrow-icon-sub">▶</i>
+                        </summary>
+                        <div class="subcategory-content">
+                            <ul class="product-list">
+                                <li>Visualización e imágenes a color las 24 horas del día, incluso en total oscuridad.</li>
+                                <li>Apertura de lente avanzada F1.0 y luz blanca cálida auxiliar integrada.</li>
+                            </ul>
+                        </div>
+                    </details>
+                </div>
+            </details>
+
+            <details class="category-item">
+                <summary class="category-btn">
+                    <span>Cámaras Análogas</span>
+                    <i class="arrow-icon">▼</i>
+                </summary>
+                <div class="products-content">
+                    <details class="subcategory-item">
+                        <summary class="subcategory-btn">
+                            <span>Cámaras TurboHD / Multi-Tecnología</span>
+                            <i class="arrow-icon-sub">▶</i>
+                        </summary>
+                        <div class="subcategory-content">
+                            <ul class="product-list">
+                                <li>Compatibilidad nativa con tecnologías TVI, AHD, CVI y CVBS.</li>
+                                <li>Modelos económicos para interiores con carcasas de policarbonato.</li>
+                                <li>Cámaras metálicas con certificación IP67 para protección a la intemperie.</li>
+                            </ul>
+                        </div>
+                    </details>
+                </div>
+            </details>
+
+            <details class="category-item">
+                <summary class="category-btn">
+                    <span>Cámaras PTZ (Pan-Tilt-Zoom)</span>
+                    <i class="arrow-icon">▼</i>
+                </summary>
+                <div class="products-content">
+                    <details class="subcategory-item">
+                        <summary class="subcategory-btn">
+                            <span>Domos PTZ Motorizados</span>
+                            <i class="arrow-icon-sub">▶</i>
+                        </summary>
+                        <div class="subcategory-content">
+                            <ul class="product-list">
+                                <li>Zoom óptico de alta precisión desde 4x, 15x, 25x hasta 42x de alcance.</li>
+                                <li>Función Smart Tracking para seguimiento automático de personas u objetos en movimiento.</li>
+                                <li>Iluminación infrarroja de largo alcance inteligente (desde 100 m hasta 500 m).</li>
+                            </ul>
+                        </div>
+                    </details>
+                </div>
+            </details>
+
+            <details class="category-item">
+                <summary class="category-btn">
+                    <span>Switches para Rack</span>
+                    <i class="arrow-icon">▼</i>
+                </summary>
+                <div class="products-content">
+                    <details class="subcategory-item">
+                        <summary class="subcategory-btn">
+                            <span>Equipos Perimetrales y de Distribución</span>
+                            <i class="arrow-icon-sub">▶</i>
+                        </summary>
+                        <div class="subcategory-content">
+                            <ul class="product-list">
+                                <li>Diseño estándar de 19" para montaje en gabinetes o racks de telecomunicaciones.</li>
+                                <li>Administración capa 2 y capa 3 para segmentación de redes vía VLANs.</li>
+                                <li>Puertos Uplink Gigabit y puertos SFP dedicados para enlaces de fibra óptica.</li>
+                            </ul>
+                        </div>
+                    </details>
+                </div>
+            </details>
+
+            <details class="category-item">
+                <summary class="category-btn">
+                    <span>Switches PoE</span>
+                    <i class="arrow-icon">▼</i>
+                </summary>
+                <div class="products-content">
+                    <details class="subcategory-item">
+                        <summary class="subcategory-btn">
+                            <span>Alimentación PoE para Cámaras IP</span>
+                            <i class="arrow-icon-sub">▶</i>
+                        </summary>
+                        <div class="subcategory-content">
+                            <ul class="product-list">
+                                <li>Modelos de 4, 8, 16 y 24 puertos Ethernet con soporte PoE / PoE+ (802.3af/at).</li>
+                                <li>Tecnología Long Range PoE: Transmisión de datos y energía hasta 250 m o 300 m.</li>
+                                <li>Presupuesto de potencia (PoE Budget) optimizado para sistemas críticos ininterrumpidos.</li>
+                            </ul>
+                        </div>
+                    </details>
+                </div>
+            </details>
+
+            <details class="category-item">
+                <summary class="category-btn">
+                    <span>Kits de Distribución</span>
+                    <i class="arrow-icon">▼</i>
+                </summary>
+                <div class="products-content">
+                    <details class="subcategory-item">
+                        <summary class="subcategory-btn">
+                            <span>Soluciones Todo Incluido</span>
+                            <i class="arrow-icon-sub">▶</i>
+                        </summary>
+                        <div class="subcategory-content">
+                            <ul class="product-list">
+                                <li>Kits TurboHD de 4 y 8 cámaras con cables pre-armados, transceptores y fuentes de poder.</li>
+                                <li>Kits IP con switches PoE integrados para configuraciones automáticas Plug & Play.</li>
+                            </ul>
+                        </div>
+                    </details>
+                </div>
+            </details>
+
+            <details class="category-item">
+                <summary class="category-btn">
+                    <span>Monitores</span>
+                    <i class="arrow-icon">▼</i>
+                </summary>
+                <div class="products-content">
+                    <details class="subcategory-item">
+                        <summary class="subcategory-btn">
+                            <span>Pantallas de Grado Industrial</span>
+                            <i class="arrow-icon-sub">▶</i>
+                        </summary>
+                        <div class="subcategory-content">
+                            <ul class="product-list">
+                                <li>Monitores diseñados para operación continua 24/7 sin degradación de panel.</li>
+                                <li>Interfaces de video HDMI, VGA, BNC y DisplayPort de alta fidelidad.</li>
+                                <li>Paneles LED / IPS con amplios ángulos de visión para centros de monitoreo.</li>
+                            </ul>
+                        </div>
+                    </details>
+                </div>
+            </details>
+
+            <details class="category-item">
+                <summary class="category-btn">
+                    <span>Accesorios de Instalación</span>
+                    <i class="arrow-icon">▼</i>
+                </summary>
+                <div class="products-content">
+                    <details class="subcategory-item">
+                        <summary class="subcategory-btn">
+                            <span>Conectividad y Energía</span>
+                            <i class="arrow-icon-sub">▶</i>
+                        </summary>
+                        <div class="subcategory-content">
+                            <ul class="product-list">
+                                <li>Baluns pasivos y activos con protección contra sobretensiones transitorias.</li>
+                                <li>Fuentes de poder reguladas (individuales, tipo pulpo y cajas de distribución multicanal).</li>
+                                <li>Conectores rápidos de energía DC (Macho/Hembra) y conectores RJ45 blindados.</li>
+                            </ul>
+                        </div>
+                    </details>
+                    <details class="subcategory-item">
+                        <summary class="subcategory-btn">
+                            <span>Almacenamiento y Herrajes</span>
+                            <i class="arrow-icon-sub">▶</i>
+                        </summary>
+                        <div class="subcategory-content">
+                            <ul class="product-list">
+                                <li>Discos duros internos mecánicos optimizados para videovigilancia continua (WD Purple / Seagate SkyHawk).</li>
+                                <li>Gabinetes, cajas de conexiones estancas (patios/exteriores) y soportes para postes o esquinas.</li>
+                            </ul>
+                        </div>
+                    </details>
+                </div>
+            </details>
+
+        </div>
+    </section>
+
+</body>
+</html>
