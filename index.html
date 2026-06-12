@@ -3,23 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catálogo Interactivo de Videovigilancia</title>
+    <title>Catálogo Tecnológico - Videovigilancia</title>
     <style>
         /* ==========================================================================
-           Variables de Paleta de Color Corporativa
+           Variables de Diseño y Paleta Corporativa
            ========================================================================== */
         :root {
             --primary-color: #003366;       /* Azul Corporativo */
-            --accent-color: #ff6600;        /* Naranja Técnico */
-            --subcategory-color: #4A5568;   /* Gris Oscuro para subbotones */
-            --product-color: #1a202c;       /* Gris casi negro para producto final */
+            --accent-color: #ff6600;        /* Naranja Técnico de Acento */
             --bg-light: #f8f9fa;            /* Fondo general claro */
-            --text-main: #333333;           /* Texto general */
-            --border-color: #e2e8f0;        /* Separadores sutiles */
+            --text-main: #2d3748;           /* Texto principal */
+            --border-color: #cbd5e1;        /* Bordes y separadores */
             --white: #ffffff;
+            --marketing-bg: #f1f5f9;       /* Fondo sutil para el contenedor de marketing */
         }
 
-        /* Base */
+        /* Configuración Base */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--bg-light);
@@ -28,7 +27,6 @@
             padding: 20px;
         }
 
-        /* Contenedor Principal */
         .catalog-container {
             max-width: 1200px;
             margin: 0 auto;
@@ -44,16 +42,18 @@
             color: var(--primary-color);
             font-size: 2.2rem;
             margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .catalog-header p {
-            color: #555;
+            color: #4a5568;
             font-size: 1.1rem;
             max-width: 700px;
             margin: 0 auto;
         }
 
-        /* Grid de Categorías Principales */
+        /* Grid de Categorías Principales (Estructura en dos columnas en pantallas grandes) */
         .categories-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(48%, 1fr));
@@ -67,7 +67,7 @@
         }
 
         /* ==========================================================================
-           NIVEL 1: Categorías Principales (Estructura Externa)
+           Estructura de Botones de Primer Nivel (details / summary)
            ========================================================================== */
         .category-item {
             background-color: var(--white);
@@ -80,7 +80,7 @@
 
         .category-item:hover {
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
-            border-color: #cbd5e1;
+            border-color: #94a3b8;
         }
 
         .category-btn {
@@ -89,11 +89,13 @@
             align-items: center;
             padding: 18px 24px;
             font-weight: 600;
-            font-size: 1.15rem;
+            font-size: 1.2rem;
             color: var(--primary-color);
             cursor: pointer;
             list-style: none;
             user-select: none;
+            background-color: var(--white);
+            transition: background-color 0.2s, color 0.2s;
         }
 
         .category-btn::-webkit-details-marker { display: none; }
@@ -104,156 +106,91 @@
             transition: transform 0.25s ease;
         }
 
-        .category-item[open] { border-color: var(--primary-color); }
-        .category-item[open] .category-btn { background-color: var(--primary-color); color: var(--white); }
-        .category-item[open] .arrow-icon { transform: rotate(180deg); color: var(--white); }
+        /* Estado abierto de la Categoría */
+        .category-item[open] {
+            border-color: var(--primary-color);
+        }
 
-        .products-content {
-            padding: 18px;
-            background-color: #f1f5f9;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
+        .category-item[open] .category-btn {
+            background-color: var(--primary-color);
+            color: var(--white);
+            border-bottom: 3px solid var(--accent-color);
+        }
+
+        .category-item[open] .arrow-icon {
+            transform: rotate(180deg);
+            color: var(--white);
         }
 
         /* ==========================================================================
-           NIVEL 2: Subcategorías (Botones Internos)
+           Contenedor de Marketing (Desplegado por Bloques)
            ========================================================================== */
-        .subcategory-item {
+        .marketing-container {
+            padding: 24px;
+            background-color: var(--marketing-bg);
+            animation: slideDown 0.25s ease-out;
+            display: flex;
+            flex-direction: column;
+            gap: 20px; /* Separación entre bloques de marketing */
+        }
+
+        /* Bloques individuales de productos */
+        .marketing-block {
             background-color: var(--white);
-            border: 1px solid var(--border-color);
             border-radius: 6px;
-            overflow: hidden;
-        }
-
-        .subcategory-btn {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 16px;
-            font-size: 0.98rem;
-            font-weight: 500;
-            color: var(--subcategory-color);
-            cursor: pointer;
-            list-style: none;
-            user-select: none;
-            background-color: var(--white);
-        }
-
-        .subcategory-btn::-webkit-details-marker { display: none; }
-        .subcategory-btn:hover { background-color: #f8fafc; color: #1e293b; }
-
-        .arrow-icon-sub {
-            font-size: 0.75rem;
-            color: #94a3b8;
-            transition: transform 0.2s ease;
-        }
-
-        .subcategory-item[open] .subcategory-btn { background-color: var(--subcategory-color); color: var(--white); }
-        .subcategory-item[open] .arrow-icon-sub { transform: rotate(90deg); color: var(--white); }
-
-        .subcategory-content {
-            padding: 12px;
-            background-color: #f8fafc;
-            display: flex;
-            flex-direction: column;
-            gap: 8px; /* Espacio entre los productos finales */
-        }
-
-        /* ==========================================================================
-           NIVEL 3: Productos Específicos (NUEVOS BOTONES DE TERCER NIVEL)
-           ========================================================================== */
-        .product-item {
-            background-color: var(--white);
-            border: 1px dashed #cbd5e1;
-            border-radius: 4px;
-            overflow: hidden;
-        }
-
-        .product-btn {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 14px;
-            font-size: 0.92rem;
-            color: #334155;
-            cursor: pointer;
-            list-style: none;
-            user-select: none;
-            background-color: var(--white);
-        }
-
-        .product-btn::-webkit-details-marker { display: none; }
-        .product-btn:hover { background-color: #f1f5f9; }
-        
-        .product-btn strong { color: var(--primary-color); }
-
-        .arrow-icon-prod {
-            font-size: 0.7rem;
-            color: var(--accent-color);
-            transition: transform 0.2s ease;
-        }
-
-        .product-item[open] .product-btn {
-            background-color: #edf2f7;
-            border-bottom: 1px solid #cbd5e1;
-        }
-        .product-item[open] .arrow-icon-prod { transform: rotate(90deg); }
-
-        /* Contenedor de Recursos (Imágenes, Videos, Artículos) */
-        .resource-vault {
-            padding: 15px;
-            background-color: #ffffff;
-            animation: fadeIn 0.25s ease-out;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        /* Grid Multimedia Inteligente */
-        .media-grid {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-
-        .media-card {
-            flex: 1;
-            min-width: 140px;
-            max-width: 200px;
-            background: #f8fafc;
             border: 1px solid #e2e8f0;
-            border-radius: 4px;
-            padding: 6px;
-            text-align: center;
+            padding: 20px;
+            display: flex;
+            gap: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
         }
 
-        .media-card img {
-            width: 100%;
-            height: auto;
-            border-radius: 2px;
-            object-fit: cover;
+        @media (max-width: 650px) {
+            .marketing-block {
+                flex-direction: column; /* Diseño vertical en dispositivos móviles */
+            }
         }
 
-        .media-card span {
-            display: block;
-            font-size: 0.75rem;
-            color: #64748b;
-            margin-top: 4px;
+        /* Área Izquierda: Información técnica comercial */
+        .block-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
-        /* Enlaces a Artículos y Fichas */
-        .article-links {
+        .block-info h3 {
+            margin: 0 0 10px 0;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 6px;
+        }
+
+        .block-info ul {
+            margin: 0 0 15px 0;
+            padding-left: 18px;
+            font-size: 0.92rem;
+            line-height: 1.5;
+            color: #4a5568;
+        }
+
+        .block-info ul li {
+            margin-bottom: 6px;
+        }
+
+        /* Botonera de Acción / Enlaces de interés técnico */
+        .block-actions {
             display: flex;
             gap: 10px;
             flex-wrap: wrap;
         }
 
-        .btn-link {
+        .btn-marketing {
             display: inline-flex;
             align-items: center;
-            padding: 6px 12px;
-            font-size: 0.82rem;
+            padding: 8px 14px;
+            font-size: 0.85rem;
             font-weight: 500;
             color: var(--white);
             background-color: var(--primary-color);
@@ -262,15 +199,70 @@
             transition: background-color 0.2s;
         }
 
-        .btn-link.tech { background-color: var(--subcategory-color); }
-        .btn-link.video { background-color: #c53030; } /* Rojo para video */
+        .btn-marketing.tech-specs { background-color: var(--subcategory-color); }
+        .btn-marketing.video-demo { background-color: #e53e3e; } /* Rojo enfocado en video */
 
-        .btn-link:hover {
+        .btn-marketing:hover {
             opacity: 0.9;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-4px); }
+        /* Área Derecha: Galería Multimedia (Imágenes fijas y miniaturas) */
+        .block-media {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            min-width: 250px;
+        }
+
+        .media-box {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 6px;
+            position: relative;
+        }
+
+        .media-box img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 2px;
+        }
+
+        .media-box span {
+            display: block;
+            font-size: 0.75rem;
+            color: #718096;
+            margin-top: 6px;
+            text-align: center;
+        }
+
+        /* Distintivo para elementos de Video */
+        .media-box.video-type::before {
+            content: "▶";
+            position: absolute;
+            background: rgba(229, 62, 62, 0.9);
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            top: calc(50% - 20px);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        /* Animación de apertura */
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-5px); }
             to { opacity: 1; transform: translateY(0); }
         }
     </style>
@@ -279,157 +271,170 @@
 
     <section class="catalog-container">
         <header class="catalog-header">
-            <h2>Sistemas de Videovigilancia Profesional</h2>
-            <p>Explore las categorías. Al dar clic en un producto específico, podrá consultar su multimedia y documentación relacionada.</p>
+            <h2>Estructura de Videovigilancia Comercial</h2>
+            <p>Dé clic en cualquier categoría para desplegar los bloques interactivos de marketing con especificaciones, imágenes y videos.</p>
         </header>
 
         <div class="categories-grid">
 
             <details class="category-item">
                 <summary class="category-btn">
-                    <span>DVR (Grabadores Digitales)</span>
+                    <span>Grabadores Digitales (DVR)</span>
                     <i class="arrow-icon">▼</i>
                 </summary>
-                <div class="products-content">
+                <div class="marketing-container">
                     
-                    <details class="subcategory-item">
-                        <summary class="subcategory-btn">
-                            <span>Por Número de Canales</span>
-                            <i class="arrow-icon-sub">▶</i>
-                        </summary>
-                        <div class="subcategory-content">
-                            
-                            <details class="product-item">
-                                <summary class="product-btn">
-                                    <span><strong>DVR 4 Canales:</strong> Ideal para residencias y pequeños comercios.</span>
-                                    <i class="arrow-icon-prod">▶</i>
-                                </summary>
-                                <div class="resource-vault">
-                                    
-                                    <div class="media-grid">
-                                        <div class="media-card">
-                                            <img src="img/dvr4ch-front.jpg" alt="Vista Frontal DVR 4ch" onerror="this.src='https://placehold.co/200x150?text=Vista+Frontal'">
-                                            <span>Vista Frontal</span>
-                                        </div>
-                                        <div class="media-card">
-                                            <img src="img/dvr4ch-rear.jpg" alt="Puertos Traseros DVR 4ch" onerror="this.src='https://placehold.co/200x150?text=Puertos+Traseros'">
-                                            <span>Panel de Conexiones</span>
-                                        </div>
-                                        <div class="media-card">
-                                            <img src="img/diagrama-dvr4.jpg" alt="Diagrama de Instalación" onerror="this.src='https://placehold.co/200x150?text=Diagrama+Instalación'">
-                                            <span>Esquema de Conexión</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="article-links">
-                                        <a href="articulos/guia-instalacion-dvr4.html" class="btn-link">📄 Manual de Usuario</a>
-                                        <a href="fichas/dvr-4ch-datasheet.pdf" class="btn-link tech" target="_blank">📋 Ficha Técnica (PDF)</a>
-                                        <a href="https://youtube.com/watch?v=ejemplo1" class="btn-link video" target="_blank">▶ Video: Configuración Inicial</a>
-                                    </div>
-
-                                </div>
-                            </details>
-
-                            <details class="product-item">
-                                <summary class="product-btn">
-                                    <span><strong>DVR 8 Canales:</strong> Excelente balance para PyMEs en crecimiento.</span>
-                                    <i class="arrow-icon-prod">▶</i>
-                                </summary>
-                                <div class="resource-vault">
-                                    <div class="media-grid">
-                                        <div class="media-card">
-                                            <img src="img/dvr8ch.jpg" alt="DVR 8 canales" onerror="this.src='https://placehold.co/200x150?text=DVR+8+Canales'">
-                                            <span>Equipo Operativo</span>
-                                        </div>
-                                    </div>
-                                    <div class="article-links">
-                                        <a href="fichas/dvr-8ch-datasheet.pdf" class="btn-link tech" target="_blank">📋 Descargar Ficha Técnica</a>
-                                        <a href="https://youtube.com/watch?v=ejemplo2" class="btn-link video" target="_blank">▶ Video de Demostración</a>
-                                    </div>
-                                </div>
-                            </details>
-
-                            <details class="product-item">
-                                <summary class="product-btn">
-                                    <span><strong>DVR 16 Canales:</strong> Capacidad robusta para entornos educativos y medianas empresas.</span>
-                                    <i class="arrow-icon-prod">▶</i>
-                                </summary>
-                                <div class="resource-vault">
-                                    <p style="font-size: 0.85rem; margin: 0; color: #4a5568;">Recursos multimedia en actualización para entornos de red unificados.</p>
-                                    <div class="article-links">
-                                        <a href="fichas/dvr-16ch-datasheet.pdf" class="btn-link tech" target="_blank">📋 Ficha Técnica</a>
-                                    </div>
-                                </div>
-                            </details>
-
-                            <details class="product-item">
-                                <summary class="product-btn">
-                                    <span><strong>DVR 32 Canales:</strong> Solución de alta densidad para proyectos corporativos.</span>
-                                    <i class="arrow-icon-prod">▶</i>
-                                </summary>
-                                <div class="resource-vault">
-                                    <div class="article-links">
-                                        <a href="fichas/dvr-32ch-datasheet.pdf" class="btn-link tech" target="_blank">📋 Especificaciones de Almacenamiento</a>
-                                    </div>
-                                </div>
-                            </details>
-
+                    <div class="marketing-block">
+                        <div class="block-info">
+                            <div>
+                                <h3>DVR Serie AcuSense Inteligente (4, 8 y 16 ch)</h3>
+                                <ul>
+                                    <li>Clasificación precisa de objetivos (Humanos y Vehículos).</li>
+                                    <li>Reducción drástica de falsas alarmas provocadas por lluvia o vegetación.</li>
+                                    <li>Soporte de codificación de última generación H.265 Pro+.</li>
+                                    <li>Resoluciones nativas de grabación de 2MP, 5MP y hasta 4K.</li>
+                                </ul>
+                            </div>
+                            <div class="block-actions">
+                                <a href="fichas/acusense-datasheet.pdf" class="btn-link btn-marketing tech-specs" target="_blank">📋 Ficha Técnica</a>
+                                <a href="https://youtube.com/watch?ejemplo" class="btn-link btn-marketing video-demo" target="_blank">🎥 Ver Demo IA</a>
+                            </div>
                         </div>
-                    </details>
-                    
-                    <details class="subcategory-item">
-                        <summary class="subcategory-btn">
-                            <span>Tecnología AcuSense (Inteligencia Artificial)</span>
-                            <i class="arrow-icon-sub">▶</i>
-                        </summary>
-                        <div class="subcategory-content">
-                            <details class="product-item">
-                                <summary class="product-btn">
-                                    <span>Filtro avanzado de falsas alarmas e IA</span>
-                                    <i class="arrow-icon-prod">▶</i>
-                                </summary>
-                                <div class="resource-vault">
-                                    <div class="article-links">
-                                        <a href="articulos/analiticas-acusense.html" class="btn-link">📄 Artículo: Cómo configurar cruce de línea</a>
-                                        <a href="https://youtube.com/watch?v=acusense" class="btn-link video" target="_blank">▶ Demo de Analíticas en Tiempo Real</a>
-                                    </div>
-                                </div>
-                            </details>
+                        <div class="block-media">
+                            <div class="media-box">
+                                <img src="img/dvr-front.jpg" alt="Frente DVR" onerror="this.src='https://placehold.co/200x120?text=Vista+Frontal'">
+                                <span>Diseño de Chasis</span>
+                            </div>
+                            <div class="media-box video-type">
+                                <img src="img/demo-acusense.jpg" alt="Miniatura de video analíticas" onerror="this.src='https://placehold.co/200x120?text=Filtro+Inteligente'">
+                                <span>Video: Analítica en Acción</span>
+                            </div>
                         </div>
-                    </details>
+                    </div>
+
+                    <div class="marketing-block">
+                        <div class="block-info">
+                            <div>
+                                <h3>DVR Corporativos de 32 Canales</h3>
+                                <ul>
+                                    <li>Capacidad para múltiples discos duros de alta capacidad (SATA hasta 10TB).</li>
+                                    <li>Soporte nativo de Audio Bidireccional incorporado.</li>
+                                    <li>Salidas de video simultáneas HDMI independientes en resolución 4K.</li>
+                                </ul>
+                            </div>
+                            <div class="block-actions">
+                                <a href="#" class="btn-link btn-marketing tech-specs">📋 Guía de Almacenamiento</a>
+                            </div>
+                        </div>
+                        <div class="block-media">
+                            <div class="media-box">
+                                <img src="img/dvr32-rear.jpg" alt="Panel posterior" onerror="this.src='https://placehold.co/200x120?text=Panel+Posterior+32ch'">
+                                <span>Puertos e Interfaces</span>
+                            </div>
+                        </div>
+                    </div>
 
                 </div>
             </details>
 
             <details class="category-item">
                 <summary class="category-btn">
-                    <span>NVR (Grabadores de Red)</span>
+                    <span>Grabadores de Red (NVR)</span>
                     <i class="arrow-icon">▼</i>
                 </summary>
-                <div class="products-content">
-                    <details class="subcategory-item">
-                        <summary class="subcategory-btn">
-                            <span>NVR con PoE Integrado</span>
-                            <i class="arrow-icon-sub">▶</i>
-                        </summary>
-                        <div class="subcategory-content">
-                            <details class="product-item">
-                                <summary class="product-btn">
-                                    <span>Modelos de 4, 8 y 16 canales con Switch PoE Integrado</span>
-                                    <i class="arrow-icon-prod">▶</i>
-                                </summary>
-                                <div class="resource-vault">
-                                    <div class="article-links">
-                                        <a href="fichas/nvr-poe.pdf" class="btn-link tech" target="_blank">📋 Ficha Técnica de Suministro Eléctrico</a>
-                                    </div>
-                                </div>
-                            </details>
+                <div class="marketing-container">
+                    
+                    <div class="marketing-block">
+                        <div class="block-info">
+                            <div>
+                                <h3>NVR con Switches PoE Integrados</h3>
+                                <ul>
+                                    <li>Conectividad Plug & Play: Conecta la cámara IP y visualiza de inmediato.</li>
+                                    <li>Alimentación de energía eléctrica y transferencia de datos en un solo cable.</li>
+                                    <li>Ancho de banda de entrada optimizado para alta tasa de bits de video.</li>
+                                </ul>
+                            </div>
+                            <div class="block-actions">
+                                <a href="#" class="btn-link btn-marketing tech-specs">📋 Catálogo IP</a>
+                                <a href="#" class="btn-link btn-marketing video-demo">🎥 Video de Instalación</a>
+                            </div>
                         </div>
-                    </details>
+                        <div class="block-media">
+                            <div class="media-box">
+                                <img src="img/nvr-poe.jpg" alt="NVR PoE" onerror="this.src='https://placehold.co/200x120?text=NVR+PoE+Rear'">
+                                <span>Switches Posteriores</span>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </details>
 
-            </div>
+            <details class="category-item">
+                <summary class="category-btn">
+                    <span>Unidades de Almacenamiento (Disco Duro)</span>
+                    <i class="arrow-icon">▼</i>
+                </summary>
+                <div class="marketing-container">
+                    
+                    <div class="marketing-block">
+                        <div class="block-info">
+                            <div>
+                                <h3>Discos Duros Especializados para Videovigilancia</h3>
+                                <ul>
+                                    <li>Diseñados para cargas de trabajo continuas e ininterrumpidas (24/7).</li>
+                                    <li>Soporte y optimización para transmisiones simultáneas de múltiples cámaras HD.</li>
+                                    <li>Firmware especializado para evitar la pérdida de cuadros de video.</li>
+                                </ul>
+                            </div>
+                            <div class="block-actions">
+                                <a href="#" class="btn-link btn-marketing tech-specs">📋 Tabla de Compatibilidad</a>
+                            </div>
+                        </div>
+                        <div class="block-media">
+                            <div class="media-box">
+                                <img src="img/hdd-purple.jpg" alt="Disco Duro Especializado" onerror="this.src='https://placehold.co/200x120?text=Grado+Industrial+CCTV'">
+                                <span>Unidades Mecánicas</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </details>
+
+            <details class="category-item">
+                <summary class="category-btn">
+                    <span>Accesorios de Instalación</span>
+                    <i class="arrow-icon">▼</i>
+                </summary>
+                <div class="marketing-container">
+                    
+                    <div class="marketing-block">
+                        <div class="block-info">
+                            <div>
+                                <h3>Transceptores (Baluns) y Fuentes de Poder</h3>
+                                <ul>
+                                    <li>Baluns pasivos y activos con inmunidad al ruido eléctrico ambiental.</li>
+                                    <li>Fuentes de poder centralizadas con fusibles PTC de autorrecuperación por canal.</li>
+                                    <li>Cajas de conexiones estancas aptas para montajes limpios a la intemperie.</li>
+                                </ul>
+                            </div>
+                            <div class="block-actions">
+                                <a href="#" class="btn-link btn-marketing tech-specs">📋 Guía de Cableado</a>
+                            </div>
+                        </div>
+                        <div class="block-media">
+                            <div class="media-box">
+                                <img src="img/baluns.jpg" alt="Baluns Técnicos" onerror="this.src='https://placehold.co/200x120?text=Baluns+y+Energía'">
+                                <span>Accesorios Críticos</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </details>
+
+        </div>
     </section>
 
 </body>
