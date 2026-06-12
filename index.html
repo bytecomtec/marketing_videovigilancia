@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal de Recursos - Videovigilancia</title>
+    <title>Infraestructura de Videovigilancia</title>
     <style>
         /* ==========================================================================
            Variables de Paleta de Color Corporativa
@@ -11,11 +11,12 @@
         :root {
             --primary-color: #003366;       /* Azul Corporativo */
             --accent-color: #ff6600;        /* Naranja Técnico */
-            --price-color: #00875a;         /* Verde para precios sin IVA */
-            --bg-light: #f1f5f9;            /* Fondo general sutil */
+            --bg-light: #f1f5f9;            /* Fondo general claro de la captura */
             --text-main: #1e293b;           /* Texto principal */
-            --border-color: #e2e8f0;        /* Bordes de tarjetas */
+            --border-color: #e2e8f0;        /* Bordes sutiles */
             --white: #ffffff;
+            --badge-bg: #e2e8f0;            /* Fondo de los distintivos */
+            --badge-text: #4a5568;          /* Texto de los distintivos */
         }
 
         body {
@@ -30,229 +31,98 @@
         .portal-container {
             max-width: 1300px;
             margin: 0 auto;
-            padding: 30px 20px;
+            padding: 50px 20px;
         }
 
         .portal-header {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 50px;
         }
 
         .portal-header h2 {
             color: var(--primary-color);
-            font-size: 2.2rem;
-            margin: 0 0 10px 0;
+            font-size: 2.4rem;
+            margin: 0 0 16px 0;
+            font-weight: 700;
+        }
+
+        .portal-header p {
+            color: #4a5568;
+            font-size: 1.15rem;
+            max-width: 800px;
+            margin: 0 auto;
         }
 
         /* ==========================================================================
-           PANTALLA 1: Menú de Categorías Principales (Botones)
+           Grid de Categorías Principales (Estilo Botón de la captura)
            ========================================================================== */
         .main-menu-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+            padding: 10px;
         }
 
-        .menu-card-btn {
+        /* Enlaces transformados en botones interactivos */
+        .menu-card-link {
             background-color: var(--white);
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            padding: 24px;
-            text-align: center;
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--primary-color);
-            cursor: pointer;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
-            transition: all 0.2s ease;
+            padding: 30px 24px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            text-decoration: none; /* Elimina la línea azul de enlace */
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.03);
+            transition: all 0.25s ease;
         }
 
-        .menu-card-btn:hover {
-            border-color: var(--accent-color);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+        /* Efectos de Hover idénticos al comportamiento profesional */
+        .menu-card-link:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 20px -5px rgba(0, 51, 102, 0.15);
         }
 
-        .menu-card-btn .badge {
-            background-color: var(--bg-light);
-            color: #64748b;
-            padding: 4px 10px;
+        /* Estilo de los textos de los botones */
+        .menu-card-link .category-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            line-height: 1.2;
+        }
+
+        /* Badges / Distintivos laterales (12 Equipos, Agotado, etc.) */
+        .menu-card-link .badge {
+            background-color: var(--badge-bg);
+            color: var(--badge-text);
+            padding: 6px 14px;
             border-radius: 20px;
-            font-size: 0.85rem;
+            font-size: 0.88rem;
+            font-weight: 600;
+            white-space: nowrap;
+            transition: background-color 0.2s, color 0.2s;
         }
 
-        /* ==========================================================================
-           PANTALLA 2: Vista de Productos (Oculta por defecto)
-           ========================================================================== */
-        .products-view-panel {
-            display: none; /* Controlado por JS */
-            animation: fadeIn 0.3s ease-in-out;
-        }
-
-        .view-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 2px solid var(--primary-color);
-            padding-bottom: 15px;
-            margin-bottom: 30px;
-        }
-
-        .view-header h3 {
-            margin: 0;
-            color: var(--primary-color);
-            font-size: 1.8rem;
-        }
-
-        .btn-back {
+        /* Cambio de color sutil del badge al pasar el mouse por la tarjeta */
+        .menu-card-link:hover .badge {
             background-color: var(--primary-color);
             color: var(--white);
-            border: none;
-            padding: 10px 20px;
-            font-size: 0.95rem;
-            font-weight: 500;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.2s;
         }
 
-        .btn-back:hover {
-            background-color: #002244;
+        /* Comportamiento opcional para categorías inactivas o agotadas */
+        .menu-card-link.disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
         }
-
-        /* Cuadrícula de Productos (Estilo SYSCOM) */
-        .products-showcase-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
+        .menu-card-link.disabled:hover {
+            transform: none;
+            border-color: var(--border-color);
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.03);
         }
-
-        /* Tarjeta de Producto Individual */
-        .product-card {
-            background-color: var(--white);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            padding: 16px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            position: relative;
-            transition: box-shadow 0.2s;
-        }
-
-        .product-card:hover {
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-        }
-
-        /* Checkbox de comparación superior derecho */
-        .product-check {
-            position: absolute;
-            top: 16px;
-            right: 16px;
-            transform: scale(1.2);
-            cursor: pointer;
-        }
-
-        .product-body {
-            display: flex;
-            gap: 15px;
-            align-items: flex-start;
-            margin-bottom: 15px;
-        }
-
-        .product-img-box {
-            width: 90px;
-            height: 90px;
-            flex-shrink: 0;
-            border: 1px solid #f1f5f9;
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-
-        .product-img-box img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-        }
-
-        .product-details {
-            flex-grow: 1;
-        }
-
-        .product-model {
-            color: #003399;
-            font-weight: 700;
-            font-size: 0.95rem;
-            text-decoration: none;
-            display: block;
-            margin-bottom: 4px;
-        }
-
-        .product-model:hover {
-            text-decoration: underline;
-        }
-
-        .product-desc {
-            font-size: 0.85rem;
-            color: #64748b;
-            line-height: 1.3;
-            margin: 0 0 8px 0;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        .product-price {
-            color: var(--price-color);
-            font-weight: 700;
-            font-size: 1.1rem;
-            margin: 0;
-        }
-
-        .product-price span {
-            font-size: 0.8rem;
-            font-weight: 500;
-            color: #64748b;
-        }
-
-        /* Indicadores de Stock / Estatus Inferiores */
-        .product-footer {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            border-top: 1px solid #f1f5f9;
-            padding-top: 10px;
-            font-size: 0.85rem;
-            color: #64748b;
-        }
-
-        .status-dots {
-            display: flex;
-            gap: 4px;
-        }
-
-        .dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background-color: #cbd5e1;
-        }
-
-        .dot.active {
-            background-color: #10b981; /* Verde disponible */
-        }
-
-        /* Animación */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        .menu-card-link.disabled:hover .badge {
+            background-color: var(--badge-bg);
+            color: var(--badge-text);
         }
     </style>
 </head>
@@ -260,169 +130,31 @@
 
     <div class="portal-container">
 
-        <div id="mainMenuScreen">
-            <header class="portal-header">
-                <h2>Infraestructura de Videovigilancia</h2>
-                <p>Seleccione una línea tecnológica para abrir el desglose de equipamiento técnico disponible.</p>
-            </header>
+        <header class="portal-header">
+            <h2>Infraestructura de Videovigilancia</h2>
+            <p>Seleccione una línea tecnológica para abrir el desglose de equipamiento técnico disponible.</p>
+        </header>
 
-            <div class="main-menu-grid">
-                <div class="menu-card-btn" onclick="openCategory('dvr-view')">
-                    <span>Grabadores Digitales (DVR)</span>
-                    <span class="badge">12 Equipos</span>
-                </div>
-                <div class="menu-card-btn" onclick="openCategory('nvr-view')">
-                    <span>Grabadores de Red (NVR)</span>
-                    <span class="badge">Agotado</span>
-                </div>
-                <div class="menu-card-btn" onclick="openCategory('disco-view')">
-                    <span>Discos Duros</span>
-                    <span class="badge">Próximamente</span>
-                </div>
-            </div>
-        </div>
+        <div class="main-menu-grid">
 
-        <div id="dvr-view" class="products-view-panel">
-            <div class="view-header">
-                <h3>Equipos DVR Encontrados</h3>
-                <button class="btn-back" onclick="closeCategory('dvr-view')">← Volver al Menú</button>
-            </div>
+            <a href="categoria_videovigilancia_DVRs/index.html" class="menu-card-link">
+                <span class="category-title">Grabadores<br>Digitales (DVR)</span>
+                <span class="badge">12 Equipos</span>
+            </a>
 
-            <div class="products-showcase-grid">
+            <a href="categoria_videovigilancia_NVRs/index.html" class="menu-card-link">
+                <span class="category-title">Grabadores de<br>Red (NVR)</span>
+                <span class="badge">Agotado</span>
+            </a>
 
-                <div class="product-card">
-                    <input type="checkbox" class="product-check">
-                    <div class="product-body">
-                        <div class="product-img-box">
-                            <img src="img/dvr1.jpg" alt="DVR 16 ch" onerror="this.src='https://placehold.co/90x90?text=DVR'">
-                        </div>
-                        <div class="product-details">
-                            <a href="#" class="product-model">DS-7116HGHI-M1(E)</a>
-                            <p class="product-desc">DVR 16 Canales TurboHD + 2 Canales IP / Audio por Coaxial / Compresión H.265</p>
-                            <p class="product-price">119.22 <span>Sin IVA</span></p>
-                        </div>
-                    </div>
-                    <div class="product-footer">
-                        <span>📦 0</span>
-                        <div class="status-dots">
-                            <div class="dot active"></div>
-                            <div class="dot active"></div>
-                        </div>
-                    </div>
-                </div>
+            <a href="categoria_discos_duros/index.html" class="menu-card-link">
+                <span class="category-title">Discos<br>Duros</span>
+                <span class="badge">Próximamente</span>
+            </a>
 
-                <div class="product-card">
-                    <input type="checkbox" class="product-check">
-                    <div class="product-body">
-                        <div class="product-img-box">
-                            <img src="img/dvr2.jpg" alt="DVR 4 ch" onerror="this.src='https://placehold.co/90x90?text=DVR'">
-                        </div>
-                        <div class="product-details">
-                            <a href="#" class="product-model">DS-7204HGHI-F1(S)</a>
-                            <p class="product-desc">DVR 1080p Lite Pentahíbrido de 4 Canales / Eficiente en Almacenamiento</p>
-                            <p class="product-price">30.65 <span>Sin IVA</span></p>
-                        </div>
-                    </div>
-                    <div class="product-footer">
-                        <span>📦 0</span>
-                        <div class="status-dots">
-                            <div class="dot active"></div>
-                            <div class="dot active"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <input type="checkbox" class="product-check">
-                    <div class="product-body">
-                        <div class="product-img-box">
-                            <img src="img/dvr3.jpg" alt="DVR Audio" onerror="this.src='https://placehold.co/90x90?text=DVR'">
-                        </div>
-                        <div class="product-details">
-                            <a href="#" class="product-model">DS-7204HGHI-M1(T)</a>
-                            <p class="product-desc">[Audio Bidireccional] DVR de 4 Canales con Soporte de Alerta de Intrusión</p>
-                            <p class="product-price">42.56 <span>Sin IVA</span></p>
-                        </div>
-                    </div>
-                    <div class="product-footer">
-                        <span>📦 0</span>
-                        <div class="status-dots">
-                            <div class="dot active"></div>
-                            <div class="dot active"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <input type="checkbox" class="product-check">
-                    <div class="product-body">
-                        <div class="product-img-box">
-                            <img src="img/dvr4.jpg" alt="DVR 32 ch" onerror="this.src='https://placehold.co/90x90?text=DVR'">
-                        </div>
-                        <div class="product-details">
-                            <a href="#" class="product-model">DS-7232HGHI-M2</a>
-                            <p class="product-desc">DVR 32 Canales TurboHD de Alta Densidad / Soporta 2 ranuras de Disco Duro</p>
-                            <p class="product-price">364.90 <span>Sin IVA</span></p>
-                        </div>
-                    </div>
-                    <div class="product-footer">
-                        <span>📦 0</span>
-                        <div class="status-dots">
-                            <div class="dot active"></div>
-                            <div class="dot active"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <input type="checkbox" class="product-check">
-                    <div class="product-body">
-                        <div class="product-img-box">
-                            <img src="img/dvr5.jpg" alt="DVR AcuSense" onerror="this.src='https://placehold.co/90x90?text=DVR'">
-                        </div>
-                        <div class="product-details">
-                            <a href="#" class="product-model">IDS-7208HQHI-M1</a>
-                            <p class="product-desc">DVR 8 Canales TurboHD con Analíticas Avanzadas AcuSense de Falsas Alarmas</p>
-                            <p class="product-price">132.20 <span>Sin IVA</span></p>
-                        </div>
-                    </div>
-                    <div class="product-footer">
-                        <span>📦 0</span>
-                        <div class="status-dots">
-                            <div class="dot active"></div>
-                            <div class="dot active"></div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
         </div>
 
     </div>
-
-    <script>
-        function openCategory(viewId) {
-            // Oculta la pantalla del menú principal
-            document.getElementById('mainMenuScreen').style.display = 'none';
-            
-            // Muestra el contenedor de productos solicitado
-            const viewPanel = document.getElementById(viewId);
-            if (viewPanel) {
-                viewPanel.style.display = 'block';
-            }
-        }
-
-        function closeCategory(viewId) {
-            // Oculta el contenedor de productos actual
-            const viewPanel = document.getElementById(viewId);
-            if (viewPanel) {
-                viewPanel.style.display = 'none';
-            }
-            
-            // Regresa y muestra el menú principal
-            document.getElementById('mainMenuScreen').style.display = 'block';
-        }
-    </script>
 
 </body>
 </html>
