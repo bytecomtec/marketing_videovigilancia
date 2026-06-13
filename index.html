@@ -31,9 +31,21 @@
             padding: 15px 30px;
             display: flex; justify-content: space-between; align-items: center;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            flex-wrap: wrap; gap: 15px;
         }
 
         .navbar h1 { margin: 0; font-size: 1.4rem; font-weight: 600; }
+
+        /* Controlador de Divisas */
+        .currency-controller {
+            display: flex; align-items: center; background: rgba(25xff, 255, 255, 0.1);
+            padding: 6px 12px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.2);
+            gap: 10px; font-size: 0.9rem;
+        }
+        .currency-controller input {
+            width: 70px; padding: 4px 6px; border-radius: 4px; border: none;
+            font-weight: bold; text-align: center; color: var(--primary-color); font-size: 0.95rem;
+        }
 
         .btn-return {
             color: var(--white); text-decoration: none; font-size: 0.9rem;
@@ -100,6 +112,7 @@
         
         .product-price-list { font-size: 0.95rem; color: #475569; margin: 8px 0; font-weight: 500; }
         .product-price-list span { color: #d32f2f; font-weight: bold; font-size: 1.05rem; }
+        .usd-reference { font-size: 0.8rem; color: #94a3b8; display: block; margin-top: 2px; }
 
         /* Características extendidas en el catálogo */
         .product-features-list { margin: 10px 0 0 0; padding-left: 20px; list-style-type: none; }
@@ -152,6 +165,15 @@
 
     <header class="navbar">
         <h1>Centro de Soluciones de Red e Infraestructura</h1>
+        
+        <!-- Controlador dinámico de divisas en tiempo real -->
+        <div class="currency-controller">
+            <label for="exchangeRate">Tipo de Cambio SYSCOM:</label>
+            <span>$</span>
+            <input type="number" id="exchangeRate" value="18.15" step="0.05" min="1" oninput="updateAllPrices()">
+            <span>MXN / USD</span>
+        </div>
+
         <a href="../index.html" class="btn-return">← Menú de Infraestructura</a>
     </header>
 
@@ -188,6 +210,10 @@
     <canvas id="processingCanvas" style="display: none;"></canvas>
 
     <script>
+        // Tipo de cambio global leído desde la UI
+        let currentRate = 18.15;
+
+        // Base de datos homologada con precios de lista netos en dólares (USD) de SYSCOM
         const catalogData = {
             dvr: {
                 title: "Grabadores Digitales (DVR)",
@@ -197,7 +223,7 @@
                         model: "S04-TURBO-G3",
                         titleSpecs: "DVR 4 Canales 1080p Lite / H.265+ / Clasificación de Humanos y Vehículos / Audio por Coaxial / Salida HDMI-VGA",
                         desc: "Grabador compacto ideal para implementaciones residenciales y pequeños comercios que buscan optimización extrema de espacio en disco.",
-                        priceList: "MXN $784.16",
+                        priceUSD: 43.20,
                         features: ["4 Canales de video TurboHD + 1 Canal IP", "Clasificación inteligente basada en aprendizaje profundo", "Soporta compresión H.265+ para ahorro de almacenamiento", "Transmisión de audio integrado sobre cable coaxial"],
                         flayerUrl: "https://bytecomtec.github.io/marketing_videovigilancia/DS-7116HGHI-M1(E).jpg"
                     },
@@ -205,7 +231,7 @@
                         model: "EV-4004TURBO-D",
                         titleSpecs: "DVR 4 Canales 4 Megapixel Lite / Pentahíbrido / Compresión H.265 / Visualización en Tiempo Real",
                         desc: "Grabador de alta definición balanceado para entornos que requieren claridad de imagen superior en perímetros controlados.",
-                        priceList: "MXN $1,433.00",
+                        priceUSD: 78.95,
                         features: ["Soporte nativo para cámaras de 4MP Lite", "Compatibilidad multi-tecnología autoadaptable", "Acceso remoto optimizado por app móvil", "Salidas simultáneas de video Full HD"],
                         flayerUrl: "https://bytecomtec.github.io/marketing_videovigilancia/DS-7116HGHI-M1(E).jpg"
                     },
@@ -213,7 +239,7 @@
                         model: "DS-7204HGHI-M1(T)",
                         titleSpecs: "DVR 4 Canales 1080p / Detección de Movimiento 2.0 / AcuSense Integrado / Soporte de Audio Multiplexado",
                         desc: "Solución inteligente avanzada que reduce falsas alarmas provocadas por elementos naturales, enfocándose en objetivos reales.",
-                        priceList: "MXN $1,114.76",
+                        priceUSD: 61.42,
                         features: ["Detección de movimiento avanzada para todos los canales análogos", "Protección perimetral eficiente basada en analíticas", "Estructura metálica para disipación térmica óptima", "Soporta 1 unidad de almacenamiento SATA de hasta 10TB"],
                         flayerUrl: "https://bytecomtec.github.io/marketing_videovigilancia/DS-7116HGHI-M1(E).jpg"
                     },
@@ -221,7 +247,7 @@
                         model: "DVR-208G-M1(C)",
                         titleSpecs: "DVR 8 Canales 1080p Lite / Línea HiLook de Hikvision / Formato Compacto / Eficiencia en Consumo Eléctrico",
                         desc: "Grabador económico y altamente confiable de la línea HiLook, perfecto para renovaciones de sistemas análogos tradicionales.",
-                        priceList: "MXN $1,059.20",
+                        priceUSD: 58.35,
                         features: ["8 Entradas de video HD adaptables", "Codificación H.264 / H.265 según configuración", "Diseño compacto para instalación en espacios reducidos", "Configuración intuitiva mediante asistente de red"],
                         flayerUrl: "https://bytecomtec.github.io/marketing_videovigilancia/DS-7116HGHI-M1(E).jpg"
                     },
@@ -229,7 +255,7 @@
                         model: "S08-TURBO-M/T",
                         titleSpecs: "DVR 8 Canales TurboHD 1080p / Chasis Metálico de Alta Durabilidad / Audio sobre Coaxial / Monitoreo Remoto P2P",
                         desc: "Grabador de distribución masiva robustecido con chasis metálico para protección superior y operaciones de rango continuo.",
-                        priceList: "MXN $1,215.10",
+                        priceUSD: 66.95,
                         features: ["8 Canales de grabación 2 Megapixel Lite", "Soporte de audio por coaxial directo en canales", "Conectividad estable P2P Cloud sin apertura de puertos", "Compresión de datos optimizada"],
                         flayerUrl: "https://bytecomtec.github.io/marketing_videovigilancia/DS-7116HGHI-M1(E).jpg"
                     },
@@ -237,7 +263,7 @@
                         model: "IDS-7208HQHI-M1/XT",
                         titleSpecs: "DVR 8 Canales 4 Megapixel / Inteligencia AcuSense Pro / Reconocimiento de Rostros / Filtrado de Falsas Alarmas Avanzado",
                         desc: "Equipo profesional de alta gama provisto de analíticas avanzadas para reconocimiento facial y protección de áreas críticas.",
-                        priceList: "MXN $2,376.28",
+                        priceUSD: 130.92,
                         features: ["Grabación de alta resolución hasta 4MP", "Analítica AcuSense Pro activa en canales seleccionados", "Comparación de rostros en tiempo real mediante base de datos integrada", "Salida HDMI compatible con pantallas 2K"],
                         flayerUrl: "https://bytecomtec.github.io/marketing_videovigilancia/DS-7116HGHI-M1(E).jpg"
                     },
@@ -245,7 +271,7 @@
                         model: "EX-5008-TURBO",
                         titleSpecs: "DVR 8 Canales Epcom TurboHD / Tecnología Pentahíbrido 5-en-1 / Grabación Inteligente / Almacenamiento Prolongado",
                         desc: "Grabador digital de alta fiabilidad ideal para proyectos pymes que demandan analíticas fluidas y amplia compatibilidad tecnológica.",
-                        priceList: "MXN $1,610.12",
+                        priceUSD: 88.71,
                         features: ["8 Canales TurboHD de gran desempeño", "Compatibilidad total autoadaptable (TVI/AHD/CVI/CVBS/IP)", "Audio por cable coaxial multiplexado", "Búsqueda inteligente optimizada para reducir tiempos de revisión"],
                         flayerUrl: "https://bytecomtec.github.io/marketing_videovigilancia/DS-7116HGHI-M1(E).jpg"
                     },
@@ -253,7 +279,7 @@
                         model: "S16-TURBO-G3",
                         titleSpecs: "DVR 16 Canales 1080p Lite / Formato Slim / Clasificación de Siluetas Humanas y Vehículos / H.265+ Eficiente",
                         desc: "Grabador multicanal balanceado para instalaciones que requieren cobertura total de cámaras con costos de infraestructura contenidos.",
-                        priceList: "MXN $1,786.15",
+                        priceUSD: 98.41,
                         features: ["16 Entradas de video TurboHD + canales IP adicionales", "Algoritmos inteligentes de clasificación perimetral", "Ahorro drástico de ancho de banda y almacenamiento", "Salidas VGA y HDMI simultáneas"],
                         flayerUrl: "https://bytecomtec.github.io/marketing_videovigilancia/DS-7116HGHI-M1(E).jpg"
                     },
@@ -261,15 +287,15 @@
                         model: "S16-TURBO-M/T",
                         titleSpecs: "DVR 16 Canales TurboHD 2 Megapixel Lite / Gabinete Metálico Industrial / Soporte de Audio Multiplexado",
                         desc: "Grabador robusto de 16 vías optimizado con blindaje estructural para montaje seguro en gabinetes de telecomunicaciones.",
-                        priceList: "MXN $1,995.40",
-                        features: ["Gabinete metálico apto para entornos con variación térmica", "Audio por coaxial activo en su plataforma multicanal", "Soporte de discos SATAempresariales", "Visualización simultánea multi-usuario sin degradación"],
+                        priceUSD: 109.94,
+                        features: ["Gabinete metálico apto para entornos con variación térmica", "Audio por coaxial activo en su plataforma multicanal", "Soporte de discos SATA empresariales", "Visualización simultánea multi-usuario sin degradación"],
                         flayerUrl: "https://bytecomtec.github.io/marketing_videovigilancia/DS-7116HGHI-M1(E).jpg"
                     },
                     {
                         model: "DS-7116HGHI-M1(E)",
                         titleSpecs: "DVR 16 Canales TurboHD + 2 Canales IP / 2 Megapixel (1080p) Lite / Acusense Lite (Evita falsas alarmas) / Audio por Coaxitron / 1 Bahía de Disco Duro / H.265+ / Salida de Video en Full HD",
                         desc: "DVR de 16 canales de grabación HD, cuenta con soporte H.265 Pro+ altamente eficiente, compatibilidad multi-cámara y acceso remoto simple para gestión unificada.",
-                        priceList: "MXN $2,080.65",
+                        priceUSD: 114.63,
                         features: ["Audio por coaxitron en todos los canales", "Búsqueda inteligente por humanos y vehículos", "Compatibilidad con HD-TVI, HD-CVI, AHD, CVBS, IP", "Soporta 18 canales: 16 TurboHD + 2 IP", "Compresión H.265+ optimiza almacenamiento", "Salida Full HD HDMI y VGA simultáneas"],
                         flayerUrl: "https://bytecomtec.github.io/marketing_videovigilancia/DS-7116HGHI-M1(E).jpg"
                     },
@@ -277,7 +303,7 @@
                         model: "IDS-7216HUHI-M1/T",
                         titleSpecs: "DVR 16 Canales 5 Megapixel / Grabación Ultra HD de Alta Fidelidad / AcuSense Avanzado / Salida 4K UHD",
                         desc: "Grabador profesional de ultra alta definición recomendado para monitorear detalles críticos como rostros o placas vehiculares.",
-                        priceList: "MXN $5,240.22",
+                        priceUSD: 288.71,
                         features: ["Resolución de captura nativa hasta 5MP", "Clasificación de objetivos mediante inteligencia artificial activa", "Salida de video HDMI real con soporte de resolución 4K", "Audio premium sobre la misma línea coaxial"],
                         flayerUrl: "https://bytecomtec.github.io/marketing_videovigilancia/DS-7116HGHI-M1(E).jpg"
                     },
@@ -285,7 +311,7 @@
                         model: "IDS-7216HQHI-M1/XT",
                         titleSpecs: "DVR 16 Canales 4 Megapixel Lite / Analítica de Video Inteligente / Búsqueda Eficiente por Atributos / Chasis Profesional",
                         desc: "Plataforma multicanal corporativa que integra motores analíticos para búsquedas inmediatas en grabaciones extensas.",
-                        priceList: "MXN $3,518.89",
+                        priceUSD: 193.87,
                         features: ["16 Canales de procesamiento HD de alto rango", "Filtrado inteligente de alarmas por clasificación estructural", "Compatibilidad extendida con cámaras IP de alta resolución", "Conectividad de red Gigabit estable"],
                         flayerUrl: "https://bytecomtec.github.io/marketing_videovigilancia/DS-7116HGHI-M1(E).jpg"
                     },
@@ -293,7 +319,7 @@
                         model: "IDS-7216HQHI-M1/H/XT",
                         titleSpecs: "DVR 16 Canales Híbrido Avanzado / Soporte IP Expandido / Analíticas de Cruce de Línea e Intrusión",
                         desc: "Grabador robusto diseñado para integraciones complejas donde coexisten cámaras análogas de alta definición e infraestructura IP.",
-                        priceList: "MXN $3,845.00",
+                        priceUSD: 211.84,
                         features: ["Capacidad híbrida pura autoadaptable de alto ancho de banda", "Analíticas perimetrales integradas en hardware", "Soporte de codecs optimizados H.265 Pro+", "Administración centralizada mediante software de red unificado"],
                         flayerUrl: "https://bytecomtec.github.io/marketing_videovigilancia/DS-7116HGHI-M1(E).jpg"
                     },
@@ -301,7 +327,7 @@
                         model: "EX-5016TURBO",
                         titleSpecs: "DVR 16 Canales Epcom Pro / 4 Megapixel Lite / Conectividad Multitecnología / Estabilidad Industrial Continua",
                         desc: "Solución de videovigilancia robustecida y escalable para medianas empresas con flujos operativos ininterrumpidos.",
-                        priceList: "MXN $3,190.44",
+                        priceUSD: 175.78,
                         features: ["16 Canales de captura de gran fidelidad cromática", "Soporte nativo Pentahíbrido de gran estabilidad", "Audio por coaxial integrado en la arquitectura física", "Excelente disipación de calor para operación continua 24/7"],
                         flayerUrl: "https://bytecomtec.github.io/marketing_videovigilancia/DS-7116HGHI-M1(E).jpg"
                     },
@@ -309,7 +335,7 @@
                         model: "DS-7232HGHI-M2",
                         titleSpecs: "DVR 32 Canales de Alta Densidad / Doble Bahía SATA para Discos Duros / Clasificación Inteligente de Objetivos",
                         desc: "Sistema centralizado de alta densidad idóneo para proyectos escolares, comerciales o corporativos con amplio despliegue periférico.",
-                        priceList: "MXN $5,489.70",
+                        priceUSD: 302.46,
                         features: ["32 Vías de grabación de video fluidas", "Capacidad para 2 discos duros SATA de hasta 10TB cada uno", "Detección de movimiento con filtrado inteligente de siluetas", "Salidas independientes de monitorización"],
                         flayerUrl: "https://bytecomtec.github.io/marketing_videovigilancia/DS-7116HGHI-M1(E).jpg"
                     },
@@ -317,7 +343,7 @@
                         model: "IDS-7232HQHI-M2/XT",
                         titleSpecs: "DVR 32 Canales 4 Megapixel Lite / Inteligencia Artificial AcuSense / Doble Bahía de Almacenamiento / Grado Corporativo",
                         desc: "Grabador de alta gama institucional que unifica analíticas avanzadas en una infraestructura masiva de cámaras de seguridad.",
-                        priceList: "MXN $7,325.80",
+                        priceUSD: 403.62,
                         features: ["32 Canales de procesamiento con analíticas de precisión", "Almacenamiento masivo redundante en dos interfaces SATA", "Filtrado proactivo de falsas alarmas en áreas extensas", "Puertos de red de alta velocidad para transmisión remota fluida"],
                         flayerUrl: "https://bytecomtec.github.io/marketing_videovigilancia/DS-7116HGHI-M1(E).jpg"
                     },
@@ -325,8 +351,8 @@
                         model: "EX-5032-TURBO",
                         titleSpecs: "DVR 32 Canales Epcom Elite / Rendimiento Extremo de Video / Capacidad de Expansión / Estabilidad de Grado Servidor",
                         desc: "Grabador masivo insignia diseñado para gestionar la seguridad perimetral de infraestructuras complejas con máxima estabilidad de red.",
-                        priceList: "MXN $6,810.00",
-                        features: ["32 Entradas físicas con soporte híbrido completo", "Soporte para múltiples discos de grado empresarial", "Estructura interna ventilada para optimización de componentes", "Acceso concurrente multi-usuario protegido por encriptación"],
+                        priceUSD: 375.20,
+                        features: ["32 Entradas físicas con soporte híbrido completo", "Soporte para múltiples discos de grado empresarial", "Estructura interna ventilada para optimización de componentes", "Acceso concurrentemulti-usuario protegido por encriptación"],
                         flayerUrl: "https://bytecomtec.github.io/marketing_videovigilancia/DS-7116HGHI-M1(E).jpg"
                     }
                 ]
@@ -342,6 +368,17 @@
             { id: "accesorios", name: "Accesorios" }, { id: "camaras_ip", name: "Cámaras IP" },
             { id: "camaras_analog", name: "Cámaras Análogas" }
         ];
+
+        let activeCategory = "dvr";
+
+        // Función encargada de recalcular la vista cuando cambia el dólar en el Input
+        function updateAllPrices() {
+            const inputRate = document.getElementById('exchangeRate').value;
+            if(inputRate && inputRate > 0) {
+                currentRate = parseFloat(inputRate);
+                renderCategory(activeCategory); // Redibuja la categoría activa con el nuevo cálculo
+            }
+        }
 
         function generateFromIndex(catId, productIndex) {
             const productObj = catalogData[catId].products[productIndex];
@@ -426,7 +463,10 @@
                 const prefixWidth = ctx.measureText("Precio de Lista: ").width;
                 ctx.fillStyle = "#d32f2f";
                 ctx.font = "bold 20px 'Segoe UI', sans-serif";
-                ctx.fillText(productObj.priceList, 30 + prefixWidth, currentY + 2);
+                
+                // Conversión matemática directa sobre el lienzo de la tarjeta publicitaria
+                const calculatedMXN = (productObj.priceUSD * currentRate).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
+                ctx.fillText(calculatedMXN, 30 + prefixWidth, currentY + 2);
                 
                 ctx.drawImage(img, 0, textSectionHeight, imgRenderWidth, imgRenderHeight);
                 
@@ -444,6 +484,7 @@
         }
 
         function renderCategory(categoryId) {
+            activeCategory = categoryId;
             const container = document.getElementById('productsContainer');
             const titleElem = document.getElementById('categoryTitle');
             const descElem = document.getElementById('categoryDesc');
@@ -472,6 +513,9 @@
                     }
 
                     const actionString = `generateFromIndex('${categoryId}', ${index})`;
+                    
+                    // Cálculo dinámico para la interfaz HTML en Pesos Mexicanos (MXN)
+                    const finalPriceMXN = (prod.priceUSD * currentRate).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
 
                     card.innerHTML = `
                         <div class="product-body">
@@ -482,7 +526,8 @@
                                 <div class="product-details">
                                     <div class="product-model" onclick="${actionString}">${prod.model}</div>
                                     <p class="product-title-specs">${prod.titleSpecs}</p>
-                                    <p class="product-price-list">Precio de Lista: <span>${prod.priceList}</span></p>
+                                    <p class="product-price-list">Precio de Lista: <span>${finalPriceMXN}</span></p>
+                                    <small class="usd-reference">Base: $${prod.priceUSD.toFixed(2)} USD</small>
                                 </div>
                             </div>
                             <p class="product-desc" style="font-weight: 500; border-top: 1px dotted #cbd5e1; padding-top: 8px;">${prod.desc}</p>
