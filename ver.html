@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title id="ogTitle">Ficha de Producto</title>
+
+    <meta property="og:title" content="Especificaciones Técnicas de Equipo">
+    <meta id="metaDesc" property="og:description" content="Detalles del modelo seleccionado.">
+    <meta id="metaImg" property="og:image" content="">
+    <meta property="og:type" content="website">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f8fafc;
+            margin: 0; padding: 20px;
+            display: flex; align-items: center; justify-content: center; min-height: 100vh;
+        }
+        .container {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 24px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+        h2 { color: #003366; margin-top: 0; font-size: 1.4rem; }
+        p { color: #475569; font-size: 0.95rem; line-height: 1.5; margin-bottom: 20px; text-align: left; }
+        img { max-width: 100%; height: auto; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    </style>
+
+    <script>
+        // Script encargado de leer las variables de la URL y asignárselas a los Metatags antes de que cargue la vista
+        const urlParams = new URLSearchParams(window.location.search);
+        const model = urlParams.get('m') || 'Modelo no especificado';
+        const desc = urlParams.get('d') || 'Sin descripción disponible.';
+        const img = urlParams.get('i') || 'https://placehold.co/600x400?text=Bytecomtec';
+
+        // Inyección dinámica en el DOM y en los encabezados del documento
+        document.title = `Modelo: ${model}`;
+        
+        window.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('metaDesc').setAttribute('content', desc);
+            document.getElementById('metaImg').setAttribute('content', img);
+            document.getElementById('viewTitle').innerText = model;
+            document.getElementById('viewDesc').innerText = desc;
+            document.getElementById('viewImg').src = img;
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h2 id="viewTitle">Cargando...</h2>
+        <p id="viewDesc">Por favor espere.</p>
+        <img id="viewImg" src="" alt="Ficha técnica">
+    </div>
+</body>
+</html>
