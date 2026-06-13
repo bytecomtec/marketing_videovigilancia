@@ -242,8 +242,11 @@
             { id: "kits", name: "Kits" }, { id: "monitores", name: "Monitores" }
         ];
 
-        // NUEVO PROCESADOR MULTIMEDIA AVANZADO PARA EL CANVAS
-        function generateCompositeCard(productObj) {
+        // PROCESADOR MULTIMEDIA INDEXADO (EVITA ERRORES DE COMILLAS)
+        function generateFromIndex(catId, productIndex) {
+            const productObj = catalogData[catId].products[productIndex];
+            if (!productObj) return;
+
             const canvas = document.getElementById('processingCanvas');
             const ctx = canvas.getContext('2d');
             const img = new Image();
@@ -252,9 +255,9 @@
             img.src = productObj.flayerUrl;
             
             img.onload = function() {
-                const cardWidth = 650; // Ancho óptimo para compartir
+                const cardWidth = 650;
                 
-                // 1. Pre-calcular las líneas del título largo (titleSpecs)
+                // 1. Calcular líneas del título técnico largo
                 ctx.font = "bold 16px 'Segoe UI', sans-serif";
                 const words = productObj.titleSpecs.split(' ');
                 let titleLines = [];
@@ -272,40 +275,33 @@
                 }
                 titleLines.push(currentLine.trim());
 
-                // 2. Calcular dinámicamente la altura total de la sección de texto superior
-                let currentY = 35; // Margen inicial
-                
-                // Espacio para Modelo (H1)
+                // 2. Alturas dinámicas
+                let currentY = 35;
                 const modelHeight = 30;
-                // Espacio para el bloque del título largo
                 const titleBlockHeight = titleLines.length * 24;
-                // Espacio para viñetas (features)
                 const featuresBlockHeight = productObj.features ? (productObj.features.length * 22) + 10 : 0;
-                // Espacio para el precio destacado
                 const priceBlockHeight = 40;
                 
                 const textSectionHeight = currentY + modelHeight + titleBlockHeight + featuresBlockHeight + priceBlockHeight + 20;
                 
-                // Dimensiones del Flyer comercial de fondo
                 const imgRenderWidth = cardWidth;
                 const imgRenderHeight = (img.height / img.width) * cardWidth;
                 
-                // Dimensionar el Canvas final
                 canvas.width = cardWidth;
                 canvas.height = textSectionHeight + imgRenderHeight;
                 
-                // Fondo General Blanco
+                // Fondo blanco
                 ctx.fillStyle = "#ffffff";
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
                 
-                // DIBUJAR: Modelo Principal (Azul, Grande, Centrado o Izquierda según el estilo original)
+                // Modelo
                 ctx.fillStyle = "#003366";
                 ctx.font = "bold 24px 'Segoe UI', sans-serif";
                 ctx.textAlign = "left";
                 ctx.fillText(productObj.model, 30, currentY + 10);
                 currentY += 45;
                 
-                // DIBUJAR: Título Técnico Largo (Negro, Semibold)
+                // Título Largo
                 ctx.fillStyle = "#1e293b";
                 ctx.font = "bold 16px 'Segoe UI', sans-serif";
                 for (let i = 0; i < titleLines.length; i++) {
@@ -314,15 +310,13 @@
                 }
                 currentY += 10;
                 
-                // DIBUJAR: Características / Viñetas con Palomitas Verdes (✓)
+                // Características con palomitas
                 if (productObj.features && productObj.features.length > 0) {
                     productObj.features.forEach(feat => {
-                        // Dibujar Check verde
                         ctx.fillStyle = "#10b981";
                         ctx.font = "bold 15px 'Segoe UI', sans-serif";
                         ctx.fillText("✓", 30, currentY);
                         
-                        // Dibujar texto de la característica
                         ctx.fillStyle = "#475569";
                         ctx.font = "500 14px 'Segoe UI', sans-serif";
                         ctx.fillText(feat, 50, currentY);
@@ -331,27 +325,26 @@
                 }
                 currentY += 15;
                 
-                // DIBUJAR: Precio de Lista Destacado (Rojo, Más Grande)
+                // Precio de Lista en Rojo Grande
                 ctx.fillStyle = "#475569";
                 ctx.font = "500 15px 'Segoe UI', sans-serif";
                 ctx.fillText("Precio de Lista: ", 30, currentY);
                 
-                // Valor numérico en Rojo e Intenso
                 const prefixWidth = ctx.measureText("Precio de Lista: ").width;
-                ctx.fillStyle = "#d32f2f"; // Rojo Intenso Comercial
-                ctx.font = "bold 19px 'Segoe UI', sans-serif";
+                ctx.fillStyle = "#d32f2f";
+                ctx.font = "bold 20px 'Segoe UI', sans-serif"; // Ligeramente más grande y claro
                 ctx.fillText(productObj.priceList, 30 + prefixWidth, currentY + 2);
                 
-                // 3. Renderizar la Imagen o Flyer de base abajo de todo el texto estructurado
+                // Dibujar el flyer abajo de los textos
                 ctx.drawImage(img, 0, textSectionHeight, imgRenderWidth, imgRenderHeight);
                 
-                // Pasar el resultado al modal listo para WhatsApp
+                // Desplegar modal
                 document.getElementById('modalTargetImg').src = canvas.toDataURL("image/jpeg", 0.95);
                 document.getElementById('imageModal').style.display = 'flex';
             };
 
             img.onerror = function() {
-                alert("Error al procesar el flayer multimedia desde el repositorio.");
+                alert("Error al procesar el flyer multimedia desde el repositorio.");
             };
         }
 
@@ -374,7 +367,7 @@
                 descElem.innerText = data.desc;
                 container.innerHTML = '';
 
-                data.products.forEach(prod => {
+                data.products.forEach((prod, index) => {
                     const card = document.createElement('div');
                     card.className = 'product-card';
                     
@@ -387,18 +380,17 @@
                         featuresHtml += `</ul>`;
                     }
 
-                    // Pasar el objeto completo de producto serializado al procesador gráfico
-                    const prodJSON = JSON.stringify(prod).replace(/'/g, "\\'");
-                    const clickAction = `generateCompositeCard(${prodJSON})`;
+                    // LLAMADA MODIFICADA: Ahora usa índices limpios en lugar de cadenas JSON
+                    const actionString = `generateFromIndex('${categoryId}', ${index})`;
 
                     card.innerHTML = `
                         <div class="product-body">
                             <div class="product-main-info">
-                                <div class="product-img-box" onclick="${clickAction}">
-                                    <img src="${prod.flayerUrl}" alt="${prod.model}" onerror="this.src='https://placehold.co/100x100?text=Flayer+CCTV'">
+                                <div class="product-img-box" onclick="${actionString}">
+                                    <img src="${prod.flayerUrl}" alt="${prod.model}" onerror="this.src='https://placehold.co/100x100?text=Flyer+CCTV'">
                                 </div>
                                 <div class="product-details">
-                                    <div class="product-model" onclick="${clickAction}">${prod.model}</div>
+                                    <div class="product-model" onclick="${actionString}">${prod.model}</div>
                                     <p class="product-title-specs">${prod.titleSpecs}</p>
                                     <p class="product-price-list">Precio de Lista: <span>${prod.priceList}</span></p>
                                 </div>
@@ -407,7 +399,7 @@
                             ${featuresHtml}
                         </div>
                         <div class="product-footer">
-                            <button onclick="${clickAction}" class="btn-prepare">
+                            <button onclick="${actionString}" class="btn-prepare">
                                 🖼️ Generar Tarjeta Publicitaria
                             </button>
                         </div>
