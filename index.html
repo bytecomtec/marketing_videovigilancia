@@ -68,18 +68,21 @@
         .showcase-header h2 { margin: 0 0 8px 0; color: var(--primary-color); font-size: 1.8rem; }
         .showcase-header p { margin: 0; color: #64748b; font-size: 0.95rem; }
 
-        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 25px; }
+        @media (max-width: 500px) { .products-grid { grid-template-columns: 1fr; } }
 
         .product-card {
             background-color: var(--white); border: 1px solid var(--border-color); border-radius: 8px;
-            padding: 16px; display: flex; flex-direction: column; justify-content: space-between;
+            padding: 20px; display: flex; flex-direction: column; justify-content: space-between;
             position: relative; transition: transform 0.2s, box-shadow 0.2s; animation: fadeIn 0.25s ease-in-out;
         }
         .product-card:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.08); }
-        .product-body { display: flex; gap: 15px; align-items: flex-start; margin-bottom: 12px; }
+        .product-body { display: flex; flex-direction: column; gap: 15px; margin-bottom: 15px; }
+
+        .product-main-info { display: flex; gap: 15px; align-items: flex-start; }
 
         .product-img-box {
-            width: 100px; height: 100px; flex-shrink: 0; border: 1px solid #f1f5f9; border-radius: 6px;
+            width: 120px; height: 120px; flex-shrink: 0; border: 1px solid #f1f5f9; border-radius: 6px;
             display: flex; align-items: center; justify-content: center; background-color: #ffffff; overflow: hidden; cursor: pointer; position: relative;
         }
         .product-img-box::after {
@@ -91,15 +94,23 @@
         .product-img-box img { max-width: 100%; max-height: 100%; object-fit: cover; }
 
         .product-details { flex-grow: 1; }
-        .product-model { color: #003399; font-weight: 700; font-size: 1rem; display: block; margin-bottom: 6px; cursor: pointer; }
+        .product-model { color: #003399; font-weight: 700; font-size: 1.1rem; display: block; margin-bottom: 6px; cursor: pointer; }
         .product-model:hover { text-decoration: underline; }
-        .product-desc { font-size: 0.85rem; color: #475569; line-height: 1.4; margin: 0; }
+        .product-title-specs { font-size: 1rem; color: var(--text-main); font-weight: bold; line-height: 1.4; margin: 0 0 8px 0; }
+        
+        .product-price-list { font-size: 0.95rem; color: #475569; margin: 8px 0; font-weight: 500; }
+        .product-price-list span { color: #0f172a; font-weight: bold; }
+
+        /* Características extendidas estilo Syscom */
+        .product-features-list { margin: 10px 0 0 0; padding-left: 20px; list-style-type: none; }
+        .product-features-list li { font-size: 0.85rem; color: #475569; line-height: 1.5; margin-bottom: 4px; position: relative; }
+        .product-features-list li::before { content: "✓"; position: absolute; left: -16px; color: #10b981; font-weight: bold; }
 
         .product-footer { border-top: 1px solid #f1f5f9; padding-top: 12px; margin-top: 5px; }
 
         .btn-prepare {
             background-color: var(--primary-color); color: var(--white); border: none; border-radius: 4px;
-            padding: 8px 12px; font-size: 0.85rem; font-weight: 600; cursor: pointer;
+            padding: 10px 12px; font-size: 0.85rem; font-weight: 600; cursor: pointer;
             display: inline-flex; align-items: center; gap: 6px; text-decoration: none; width: 100%; justify-content: center; transition: background-color 0.2s;
         }
         .btn-prepare:hover { background-color: #002244; }
@@ -159,7 +170,6 @@
         </main>
     </div>
 
-    <!-- MODAL DE VISUALIZACIÓN UNIFICADA -->
     <div id="imageModal" class="custom-modal" onclick="closeLightbox()">
         <div class="modal-content-wrapper" onclick="event.stopPropagation()">
             <button class="modal-close" onclick="closeLightbox()">&times;</button>
@@ -174,7 +184,6 @@
         </div>
     </div>
 
-    <!-- Canvas invisible de renderizado técnico -->
     <canvas id="processingCanvas" style="display: none;"></canvas>
 
     <script>
@@ -185,12 +194,30 @@
                 products: [
                     { 
                         model: "DS-7116HGHI-M1(E)", 
-                        desc: "DVR 16 Canales de Grabación HD / Soporte H.265 Pro+ Eficiente / Compatibilidad Multi-Cámara / Acceso Remoto Simple.", 
+                        titleSpecs: "DVR 16 Canales TurboHD + 2 Canales IP / 2 Megapixel (1080p) Lite / Acusense Lite (Evita falsas alarmas) / Audio por Coaxitron / 1 Bahía de Disco Duro / H.265+ / Salida de Video en Full HD",
+                        desc: "DVR de 16 canales de grabación HD, cuenta con soporte H.265 Pro+ altamente eficiente, compatibilidad multi-cámara y acceso remoto simple para gestión unificada.", 
+                        priceList: "MXN $2,820.80",
+                        features: [
+                            "Audio por coaxitron en todos los canales",
+                            "Búsqueda inteligente por humanos y vehículos",
+                            "Compatibilidad con HD-TVI, HD-CVI, AHD, CVBS, IP",
+                            "Soporta 18 canales: 16 TurboHD + 2 IP",
+                            "Compresión H.265+ optimiza almacenamiento",
+                            "Salida Full HD HDMI y VGA simultáneas"
+                        ],
                         flayerUrl: "https://bytecomtec.github.io/marketing_videovigilancia/DS-7116HGHI-M1(E).jpg"
                     },
                     { 
                         model: "DS-7204HGHI-F1(S)", 
-                        desc: "DVR 4 Canales 1080p Lite / Audio por coaxial / Clasificación de humanos y vehículos.", 
+                        titleSpecs: "DVR 4 Canales 1080p Lite / Audio por coaxial / Clasificación de humanos y vehículos",
+                        desc: "Grabador digital de entrada de 4 canales óptimo para implementaciones residenciales o pequeños comercios con analíticas básicas.", 
+                        priceList: "MXN $1,150.00",
+                        features: [
+                            "Audio por coaxial directo",
+                            "Clasificación sutil de humanos y vehículos",
+                            "Soporte de tecnologías híbridas",
+                            "Salida de video HD"
+                        ],
                         flayerUrl: "img/marketing/ds-7204hghi.jpg" 
                     }
                 ]
@@ -215,7 +242,7 @@
             { id: "kits", name: "Kits" }, { id: "monitores", name: "Monitores" }
         ];
 
-        function generateCompositeCard(model, desc, imageUrl) {
+        function generateCompositeCard(model, summaryText, imageUrl) {
             const canvas = document.getElementById('processingCanvas');
             const ctx = canvas.getContext('2d');
             const img = new Image();
@@ -227,7 +254,7 @@
                 const cardWidth = 600;
                 
                 ctx.font = "14px 'Segoe UI', sans-serif";
-                const words = desc.split(' ');
+                const words = summaryText.split(' ');
                 let lines = [];
                 let currentLine = "";
                 
@@ -302,18 +329,37 @@
                 data.products.forEach(prod => {
                     const card = document.createElement('div');
                     card.className = 'product-card';
+                    
+                    // Construcción dinámica de viñetas HTML
+                    let featuresHtml = '';
+                    if (prod.features && prod.features.length > 0) {
+                        featuresHtml = `<ul class="product-features-list">`;
+                        prod.features.forEach(feat => {
+                            featuresHtml += `<li>${feat}</li>`;
+                        });
+                        featuresHtml += `</ul>`;
+                    }
+
+                    // Se pasa el título técnico unificado al generador de canvas
+                    const clickAction = `generateCompositeCard('${prod.model}', '${prod.model} - Canales Inteligentes CCTV', '${prod.flayerUrl}')`;
+
                     card.innerHTML = `
                         <div class="product-body">
-                            <div class="product-img-box" onclick="generateCompositeCard('${prod.model}', '${prod.desc}', '${prod.flayerUrl}')">
-                                <img src="${prod.flayerUrl}" alt="${prod.model}" onerror="this.src='https://placehold.co/100x100?text=Flayer+CCTV'">
+                            <div class="product-main-info">
+                                <div class="product-img-box" onclick="${clickAction}">
+                                    <img src="${prod.flayerUrl}" alt="${prod.model}" onerror="this.src='https://placehold.co/100x100?text=Flayer+CCTV'">
+                                </div>
+                                <div class="product-details">
+                                    <div class="product-model" onclick="${clickAction}">${prod.model}</div>
+                                    <p class="product-title-specs">${prod.titleSpecs}</p>
+                                    <p class="product-price-list">Precio de Lista: <span>${prod.priceList}</span></p>
+                                </div>
                             </div>
-                            <div class="product-details">
-                                <div class="product-model" onclick="generateCompositeCard('${prod.model}', '${prod.desc}', '${prod.flayerUrl}')">${prod.model}</div>
-                                <p class="product-desc">${prod.desc}</p>
-                            </div>
+                            <p class="product-desc" style="font-weight: 500; border-top: 1px dotted #cbd5e1; padding-top: 8px;">${prod.desc}</p>
+                            ${featuresHtml}
                         </div>
                         <div class="product-footer">
-                            <button onclick="generateCompositeCard('${prod.model}', '${prod.desc}', '${prod.flayerUrl}')" class="btn-prepare">
+                            <button onclick="${clickAction}" class="btn-prepare">
                                 🖼️ Generar Tarjeta Publicitaria
                             </button>
                         </div>
