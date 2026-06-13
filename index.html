@@ -11,7 +11,6 @@
         :root {
             --primary-color: #003366;       /* Azul Corporativo */
             --accent-color: #ff6600;        /* Naranja Técnico */
-            --whatsapp-color: #25d366;      /* Verde Oficial WhatsApp */
             --bg-light: #f8fafc;            /* Fondo general sutil */
             --text-main: #1e293b;           /* Texto principal */
             --border-color: #e2e8f0;        /* Separadores */
@@ -84,7 +83,7 @@
             display: flex; align-items: center; justify-content: center; background-color: #ffffff; overflow: hidden; cursor: pointer; position: relative;
         }
         .product-img-box::after {
-            content: "🖼️ Combinar"; position: absolute; background: rgba(0, 51, 102, 0.85);
+            content: "🖼️ Ver Ficha"; position: absolute; background: rgba(0, 51, 102, 0.85);
             width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
             color: white; font-size: 0.8rem; font-weight: 600; opacity: 0; transition: opacity 0.2s;
         }
@@ -106,7 +105,7 @@
         .btn-prepare:hover { background-color: #002244; }
 
         /* ==========================================================================
-           MODAL PARA COPIAR TARJETA DIGITAL PROCESADA
+           MODAL EXCLUSIVO PARA COPIADO MULTIMEDIA
            ========================================================================== */
         .custom-modal {
             display: none; position: fixed; z-index: 9999; top: 0; left: 0; width: 100%; height: 100%;
@@ -119,7 +118,6 @@
             display: flex; flex-direction: column; align-items: center;
         }
 
-        /* Contenedor donde se dibuja el render final */
         .render-container {
             width: 100%; display: flex; justify-content: center; margin-top: 10px; margin-bottom: 15px;
         }
@@ -161,11 +159,12 @@
         </main>
     </div>
 
+    <!-- MODAL DE VISUALIZACIÓN UNIFICADA -->
     <div id="imageModal" class="custom-modal" onclick="closeLightbox()">
         <div class="modal-content-wrapper" onclick="event.stopPropagation()">
             <button class="modal-close" onclick="closeLightbox()">&times;</button>
             
-            <div style="font-size: 0.9rem; color:#475569; font-weight:500;">Vista de Tarjeta Integrada:</div>
+            <div style="font-size: 0.9rem; color:#475569; font-weight:500;">Imagen Lista para Compartir:</div>
             
             <div class="render-container">
                 <img id="modalTargetImg" class="output-composite-img" src="" alt="Ficha Unificada">
@@ -175,6 +174,7 @@
         </div>
     </div>
 
+    <!-- Canvas invisible de renderizado técnico -->
     <canvas id="processingCanvas" style="display: none;"></canvas>
 
     <script>
@@ -215,27 +215,22 @@
             { id: "kits", name: "Kits" }, { id: "monitores", name: "Monitores" }
         ];
 
-        // FUNCIÓN MAESTRA: Dibuja dinámicamente el Modelo, la Descripción y el Flayer en una sola pieza gráfica
         function generateCompositeCard(model, desc, imageUrl) {
             const canvas = document.getElementById('processingCanvas');
             const ctx = canvas.getContext('2d');
             const img = new Image();
             
-            // Permitir la lectura de imágenes desde tu propio repositorio GitHub Pages de forma segura
             img.crossOrigin = "anonymous";
             img.src = imageUrl;
             
             img.onload = function() {
-                // Configuración de dimensiones fijas y limpias para la tarjeta publicitaria final
                 const cardWidth = 600;
                 
-                // Configuración tipográfica para medir el espacio de texto
                 ctx.font = "14px 'Segoe UI', sans-serif";
                 const words = desc.split(' ');
                 let lines = [];
                 let currentLine = "";
                 
-                // Envolver texto automáticamente dentro de los márgenes de la tarjeta corporativa
                 for (let n = 0; n < words.length; n++) {
                     let testLine = currentLine + words[n] + " ";
                     let metrics = ctx.measureText(testLine);
@@ -248,28 +243,22 @@
                 }
                 lines.push(currentLine);
                 
-                // Calcular la altura dinámica que ocupará la caja blanca de texto superior
                 const textSectionHeight = 45 + (lines.length * 20) + 20; 
                 
-                // Ajustar la proporción del flayer publicitario original
                 const imgRenderWidth = cardWidth;
                 const imgRenderHeight = (img.height / img.width) * cardWidth;
                 
-                // Redimensionar el lienzo total de la imagen final
                 canvas.width = cardWidth;
                 canvas.height = textSectionHeight + imgRenderHeight;
                 
-                // 1. Pintar fondo blanco corporativo impecable
                 ctx.fillStyle = "#ffffff";
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
                 
-                // 2. Dibujar el Modelo (Centrado y en azul oscuro institucional)
                 ctx.fillStyle = "#003366";
                 ctx.font = "bold 22px 'Segoe UI', sans-serif";
                 ctx.textAlign = "center";
                 ctx.fillText(model, cardWidth / 2, 40);
                 
-                // 3. Dibujar la Descripción del equipo (Centrada y en gris técnico oscuro)
                 ctx.fillStyle = "#475569";
                 ctx.font = "500 15px 'Segoe UI', sans-serif";
                 ctx.textAlign = "center";
@@ -280,17 +269,14 @@
                     currentY += 22;
                 }
                 
-                // 4. Estampar el Flayer de marketing original justo debajo del texto
                 ctx.drawImage(img, 0, textSectionHeight, imgRenderWidth, imgRenderHeight);
                 
-                // Convertir la composición en una imagen real e inyectarla en el Modal
                 document.getElementById('modalTargetImg').src = canvas.toDataURL("image/jpeg", 0.95);
                 document.getElementById('imageModal').style.display = 'flex';
             };
 
-            // Manejo alternativo si el flayer de GitHub tarda en responder o no existe
             img.onerror = function() {
-                alert("No se pudo cargar el flayer del repositorio. Valida que la ruta sea correcta.");
+                alert("Error al procesar el flayer multimedia desde el repositorio.");
             };
         }
 
@@ -328,7 +314,7 @@
                         </div>
                         <div class="product-footer">
                             <button onclick="generateCompositeCard('${prod.model}', '${prod.desc}', '${prod.flayerUrl}')" class="btn-prepare">
-                                🖼️ Preparar para WhatsApp
+                                🖼️ Generar Tarjeta Publicitaria
                             </button>
                         </div>
                     `;
@@ -338,7 +324,7 @@
                 const catName = categoriesList.find(c => c.id === categoryId).name;
                 titleElem.innerText = `Línea: ${catName}`;
                 descElem.innerText = `Soluciones tecnológicas asociadas a ${catName.toLowerCase()}.`;
-                container.innerHTML = `<p style="grid-column: 1/-1; color: #64748b; font-style: italic;">Próximamente se integrarán las imágenes de marketing de esta subcategoría.</p>`;
+                container.innerHTML = `<p style="grid-column: 1/-1; color: #64748b; font-style: italic;">Próximamente se unificarán las imágenes multimedia de esta subcategoría.</p>`;
             }
         }
 
