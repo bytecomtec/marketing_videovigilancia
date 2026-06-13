@@ -223,13 +223,13 @@
             justify-content: center;
             background-color: #ffffff;
             overflow: hidden;
-            cursor: pointer; /* Indica que se puede ampliar el flayer */
+            cursor: pointer;
         }
 
         .product-img-box img {
             max-width: 100%;
             max-height: 100%;
-            object-fit: cover; /* Ajuste óptimo para imágenes cuadradas de marketing */
+            object-fit: cover;
         }
 
         .product-details {
@@ -324,8 +324,7 @@
 
         <nav class="sidebar">
             <div class="sidebar-title">Líneas de Producto</div>
-            <ul class="category-menu-list" id="menuList">
-                </ul>
+            <ul class="category-menu-list" id="menuList"></ul>
         </nav>
 
         <main class="content-showcase">
@@ -334,8 +333,7 @@
                 <p id="categoryDesc">Haga clic en el menú izquierdo para visualizar las soluciones disponibles.</p>
             </div>
 
-            <div class="products-grid" id="productsContainer">
-                </div>
+            <div class="products-grid" id="productsContainer"></div>
         </main>
 
     </div>
@@ -351,7 +349,7 @@
                         model: "DS-7116HGHI-M1(E)", 
                         desc: "DVR 16 Canales de Grabación HD / Soporte H.265 Pro+ Eficiente / Compatibilidad Multi-Cámara / Acceso Remoto Simple.", 
                         price: "119.22", 
-                        flayerUrl: "https://bytecomtec.github.io/marketing_videovigilancia/DS-7116HGHI-M1(E).jpg" // Ruta de tu flayer en el repositorio
+                        flayerUrl: "https://bytecomtec.github.io/marketing_videovigilancia/DS-7116HGHI-M1(E).jpg"
                     },
                     { 
                         model: "DS-7204HGHI-F1(S)", 
@@ -387,13 +385,20 @@
             { id: "monitores", name: "Monitores" }
         ];
 
-        // FUNCIÓN GENERADORA DEL ENLACE DE WHATSAPP
+        // FUNCIÓN GENERADORA DEL ENLACE DE WHATSAPP (CON FILTRO DE RUTAS DETECTADO)
         function generateWhatsAppLink(model, desc, price, flayer) {
-            // Construcción de la URL pública que tendrá tu flayer en GitHub Pages para enviársela al cliente
-            const currentRepoUrl = window.location.origin + window.location.pathname.replace('index.html', '');
-            const absoluteFlayerUrl = currentRepoUrl + flayer;
+            let absoluteFlayerUrl = '';
 
-            // Formato de mensaje corporativo optimizado usando codificación de texto limpia
+            // Si el flayer ya es una URL absoluta (empieza con http:// o https://) no concatenamos nada
+            if (flayer.startsWith('http://') || flayer.startsWith('https://')) {
+                absoluteFlayerUrl = flayer;
+            } else {
+                // Si es una ruta interna relativa (ej: 'img/marketing/foto.jpg'), calculamos la URL base limpia
+                const currentRepoUrl = window.location.origin + window.location.pathname.replace('index.html', '');
+                absoluteFlayerUrl = currentRepoUrl.endsWith('/') ? currentRepoUrl + flayer : currentRepoUrl + '/' + flayer;
+            }
+
+            // Formato de mensaje corporativo optimizado
             const text = `*Hola, te comparto la ficha técnica del equipo solicitado:* \n\n` +
                          `*Modelo:* ${model}\n` +
                          `*Descripción:* ${desc}\n` +
