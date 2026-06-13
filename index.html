@@ -108,6 +108,11 @@
         .product-price-list .final-price { color: #d32f2f; font-weight: bold; font-size: 1.15rem; }
         .usd-reference { font-size: 0.75rem; color: #64748b; display: block; margin-top: 2px; }
 
+        /* Características con Palomitas */
+        .product-features-list { margin: 8px 0 0 0; padding-left: 20px; list-style-type: none; }
+        .product-features-list li { font-size: 0.85rem; color: #475569; line-height: 1.5; margin-bottom: 4px; position: relative; }
+        .product-features-list li::before { content: "✓"; position: absolute; left: -16px; color: #10b981; font-weight: bold; }
+
         .product-footer { border-top: 1px solid #f1f5f9; padding-top: 12px; }
         .btn-prepare {
             background-color: var(--primary-color); color: var(--white); border: none; border-radius: 4px;
@@ -203,30 +208,130 @@
                 title: "Grabadores Digitales (DVR)",
                 desc: "Catálogo completo de soluciones TurboHD con costos integrados (IVA incluido) y factores de rentabilidad blindados.",
                 products: [
-                    { model: "S04-TURBO-G3", titleSpecs: "DVR 4 Canales 1080p Lite / Audio por Coaxial / Clasificación de Humanos y Vehículos", costUSD: 34.04 },
-                    { model: "EV-4004TURBO-D", titleSpecs: "DVR 4 Canales 4 Megapixel Lite / Pentahíbrido / Compresión H.265", costUSD: 49.50 },
-                    { model: "IDS-7204HGHI-M1(T)", titleSpecs: "DVR 4 Canales 1080p / Detección de Movimiento 2.0 / Metal", costUSD: 38.60 },
-                    { model: "DVR-208G-M1(C)", titleSpecs: "DVR 8 Canales 1080p Lite / Carcasa Plástica Económica / H.265 Pro", costUSD: 42.10 },
-                    { model: "S08-TURBO-M/T", titleSpecs: "DVR 8 Canales TurboHD Eficiente / Audio por Coaxial / Salida HDMI", costUSD: 51.30 },
-                    { model: "IDS-7208HQHI-M1/XT", titleSpecs: "DVR 8 Canales 4MP / AcuSense Completo / Filtro de Falsas Alarmas Avanzado", costUSD: 89.00 },
-                    { model: "EX-5008-TURBO", titleSpecs: "DVR 8 Canales Epcom Premium / Grabación Autónoma Inteligente / Robusto", costUSD: 82.66 },
-                    { model: "S16-TURBO-G3", titleSpecs: "DVR 16 Canales 1080p Lite / Formato Compacto / Detección por Canal", costUSD: 78.50 },
-                    { model: "S16-TURBO-M/T", titleSpecs: "DVR 16 Canales Metálico / Audio Multiplexado / Estabilidad de Red Superior", costUSD: 94.20 },
-                    { model: "IDS-7116HGHI-M1(E)", titleSpecs: "DVR 16 Canales TurboHD + 2 Canales IP / 2 Megapixel / Audio Coaxitron / H.265+", costUSD: 72.00 },
-                    { model: "IDS-7216HUHI-M1/T", titleSpecs: "DVR 16 Canales 5 Megapixel de Alta Definición Nativa / Inteligencia Artificial", costUSD: 185.00 },
-                    { model: "IDS-7216HQHI-M1/XT", titleSpecs: "DVR 16 Canales 4 Megapixel Lite / Tecnología AcuSense / Analíticas Estructurales", costUSD: 142.10 },
-                    { model: "IDS-7216HQHI-M1/H/XT", titleSpecs: "DVR 16 Canales Avanzado / Tasa de Bits Optimizada / Compresión Extendida", costUSD: 154.00 },
-                    { model: "EX-5016TURBO", titleSpecs: "DVR 16 Canales Epcom Industrial / Máxima Capacidad de Transferencia / 4K Out", costUSD: 139.90 },
-                    { model: "IDS-7232HGHI-M2", titleSpecs: "DVR 32 Canales de Captura Masiva / Soporte de Doble Bahía de Disco Duro", costUSD: 198.00 },
-                    { model: "IDS-7232HQHI-M2/XT", titleSpecs: "DVR 32 Canales Analíticos Pro / Detección de Rostros e Intrusos Avanzada", costUSD: 275.00 },
-                    { model: "EX-5032-TURBO", titleSpecs: "DVR 32 Canales Epcom de Alta Densidad / Resguardo Corporativo / Doble SATA", costUSD: 249.00 }
+                    { 
+                        model: "S04-TURBO-G3", 
+                        titleSpecs: "DVR 4 Canales 1080p Lite / H.265+ / Clasificación de Humanos y Vehículos / Audio por Coaxial", 
+                        desc: "Grabador compacto ideal para el resguardo eficiente de perímetros pequeños con optimización extrema de almacenamiento.",
+                        costUSD: 34.04,
+                        features: ["4 Canales de video TurboHD + 1 Canal IP", "Clasificación inteligente basada en aprendizaje profundo", "Soporta compresión H.265+ para ahorro de espacio", "Transmisión de audio integrado sobre cable coaxial"]
+                    },
+                    { 
+                        model: "EV-4004TURBO-D", 
+                        titleSpecs: "DVR 4 Canales 4 Megapixel Lite / Pentahíbrido / Compresión H.265 / Visualización Tiempo Real", 
+                        desc: "Grabador balanceado analítico para entornos residenciales y pequeños comercios que exigen nitidez estructural superior.",
+                        costUSD: 49.50,
+                        features: ["Soporte nativo para cámaras de 4MP Lite", "Compatibilidad multi-tecnología autoadaptable", "Acceso remoto optimizado por app móvil", "Salidas simultáneas de video Full HD"]
+                    },
+                    { 
+                        model: "DS-7204HGHI-M1(T)", 
+                        titleSpecs: "DVR 4 Canales 1080p / Detección de Movimiento 2.0 / AcuSense Integrado / Gabinete de Metal", 
+                        desc: "Solución analítica avanzada basada en algoritmos profundos para mitigar las falsas alarmas de entorno.",
+                        costUSD: 38.60,
+                        features: ["Detección de movimiento avanzada para todos los canales análogos", "Protección perimetral eficiente basada en analíticas", "Estructura metálica para disipación térmica óptima", "Soporta 1 unidad de almacenamiento SATA de hasta 10TB"]
+                    },
+                    { 
+                        model: "DVR-208G-M1(C)", 
+                        titleSpecs: "DVR 8 Canales 1080p Lite / Carcasa Plástica Económica / H.265 Pro+ Eficiente", 
+                        desc: "Grabador de entrada de la línea HiLook de Hikvision, óptimo para renovaciones de sistemas análogos tradicionales a bajo costo.",
+                        costUSD: 42.10,
+                        features: ["8 Entradas de video HD adaptables", "Codificación H.265 Pro+ optimiza almacenamiento", "Diseño compacto ideal para espacios reducidos", "Configuración intuitiva mediante asistente de red"]
+                    },
+                    { 
+                        model: "S08-TURBO-M/T", 
+                        titleSpecs: "DVR 8 Canales TurboHD 1080p / Chasis Metálico de Alta Durabilidad / Audio sobre Coaxial Multiplexado", 
+                        desc: "Grabador robustecido con chasis estructural metálico para protección superior en operaciones de rango continuo.",
+                        costUSD: 51.30,
+                        features: ["8 Canales de grabación 2 Megapixel Lite", "Soporte de audio por coaxial directo en canales", "Conectividad estable P2P Cloud sin apertura de puertos", "Compresión de datos optimizada"]
+                    },
+                    { 
+                        model: "IDS-7208HQHI-M1/XT", 
+                        titleSpecs: "DVR 8 Canales 4 Megapixel / Inteligencia AcuSense Pro / Reconocimiento de Rostros / Filtrado Avanzado", 
+                        desc: "Equipo profesional de alta gama provisto de analíticas avanzadas para reconocimiento facial y protección perimetral estricta.",
+                        costUSD: 89.00,
+                        features: ["Grabación de alta resolución hasta 4MP", "Analítica AcuSense Pro activa en canales seleccionados", "Comparación de rostros en tiempo real mediante base de datos", "Salida HDMI compatible con pantallas 2K"]
+                    },
+                    { 
+                        model: "EX-5008-TURBO", 
+                        titleSpecs: "DVR 8 Canales Epcom TurboHD / Tecnología Pentahíbrida 5-en-1 / Grabación Autónoma Inteligente", 
+                        desc: "Grabador digital insignia de Epcom ideal para proyectos de mediana envergadura que demandan analíticas fluidas.",
+                        costUSD: 82.66,
+                        features: ["8 Canales TurboHD de gran desempeño", "Compatibilidad total autoadaptable (TVI/AHD/CVI/CVBS/IP)", "Audio por cable coaxial multiplexado", "Búsqueda inteligente de eventos con detección avanzada"]
+                    },
+                    { 
+                        model: "S16-TURBO-G3", 
+                        titleSpecs: "DVR 16 Canales 1080p Lite / Formato Slim / Clasificación de Siluetas Humanas y Vehículos / H.265+", 
+                        desc: "Grabador multicanal balanceado para instalaciones escolares que requieren cobertura total de cámaras con costos contenidos.",
+                        costUSD: 78.50,
+                        features: ["16 Entradas de video TurboHD + canales IP adicionales", "Algoritmos inteligentes de clasificación perimetral", "Ahorro drástico de ancho de banda y almacenamiento", "Salidas VGA y HDMI simultáneas"]
+                    },
+                    { 
+                        model: "S16-TURBO-M/T", 
+                        titleSpecs: "DVR 16 Canales TurboHD 2 Megapixel Lite / Gabinete Metálico Industrial / Soporte Audio Multiplexado", 
+                        desc: "Grabador industrial de 16 vías optimizado para montaje seguro en gabinetes o racks de telecomunicaciones.",
+                        costUSD: 94.20,
+                        features: ["Gabinete metálico apto para entornos de alta exigencia", "Audio por coaxial activo en su plataforma multicanal", "Soporte de discos SATA empresariales", "Visualización simultánea multi-usuario sin degradación"]
+                    },
+                    { 
+                        model: "DS-7116HGHI-M1(E)", 
+                        titleSpecs: "DVR 16 Canales TurboHD + 2 Canales IP / 2 Megapixel (1080p) Lite / Acusense Lite / Audio Coaxitron / H.265+", 
+                        desc: "DVR de 16 canales de grabación HD con soporte H.265 Pro+ altamente eficiente y acceso remoto simple unificado.",
+                        costUSD: 72.00,
+                        features: ["Audio por coaxitron en todos los canales", "Búsqueda inteligente por humanos y vehículos", "Compatibilidad con HD-TVI, HD-CVI, AHD, CVBS, IP", "Soporta 18 canales: 16 TurboHD + 2 IP", "Compresión H.265+ optimiza almacenamiento", "Salida Full HD HDMI y VGA simultáneas"]
+                    },
+                    { 
+                        model: "IDS-7216HUHI-M1/T", 
+                        titleSpecs: "DVR 16 Canales TURBOHD + 8 Canales IP / 5 Megapixel Lite - 3K Lite / Audio Bidireccional por Coaxitron / ACUSENSE", 
+                        desc: "Grabador profesional híbrido de ultra alta definición recomendado para monitorear detalles críticos con reconocimiento de objetivos.",
+                        costUSD: 185.00,
+                        features: ["16 Canales TurboHD + 8 IP (24 canales en total)", "Compresión H.265+ para eficiente almacenamiento", "DVR pentahíbrido: HD-TVI/HD-CVI/Analógico/IP/AHD", "Acceso remoto desde PC y smartphones", "Audio bidireccional por coaxitron en todos los canales", "Soporta 1 HDD de hasta 10TB"]
+                    },
+                    { 
+                        model: "IDS-7216HQHI-M1/XT", 
+                        titleSpecs: "DVR 16 Canales 4 Megapixel Lite / Analítica de Video Inteligente / Búsqueda Eficiente / Chasis Profesional", 
+                        desc: "Plataforma multicanal corporativa que integra motores analíticos avanzados para búsquedas inmediatas por atributos.",
+                        costUSD: 142.10,
+                        features: ["16 Canales de procesamiento HD de alto rango", "Filtrado inteligente de alarmas por clasificación estructural", "Compatibilidad extendida con cámaras IP de alta resolución", "Conectividad de red Gigabit estable de alta velocidad"]
+                    },
+                    { 
+                        model: "IDS-7216HQHI-M1/H/XT", 
+                        titleSpecs: "DVR 16 Canales Híbrido Avanzado / Soporte IP Expandido / Analíticas de Cruce de Línea e Intrusión", 
+                        desc: "Grabador robusto diseñado para integraciones institucionales complejas donde coexisten infraestructuras análogas e IP.",
+                        costUSD: 154.00,
+                        features: ["Capacidad híbrida pura autoadaptable de alto ancho de banda", "Analíticas perimetrales integradas directamente en hardware", "Soporte de codecs optimizados H.265 Pro+", "Administración centralizada mediante software unificado"]
+                    },
+                    { 
+                        model: "EX-5016TURBO", 
+                        titleSpecs: "DVR 16 Canales Epcom Pro / 4 Megapixel Lite / Conectividad Multitecnología / Estabilidad Continua", 
+                        desc: "Solución de videovigilancia robustecida y escalable para medianas empresas con flujos operativos ininterrumpidos.",
+                        costUSD: 139.90,
+                        features: ["16 Canales de captura de gran fidelidad cromática", "Soporte nativo Pentahíbrido de gran estabilidad", "Audio por coaxial integrado en la arquitectura física", "Excelente disipación de calor para operación continua 24/7"]
+                    },
+                    { 
+                        model: "DS-7232HGHI-M2", 
+                        titleSpecs: "DVR 32 Canales de Alta Densidad / Doble Bahía SATA / Clasificación Inteligente de Objetivos", 
+                        desc: "Sistema centralizado de alta densidad idóneo para proyectos escolares amplios o naves industriales de despliegue masivo.",
+                        costUSD: 198.00,
+                        features: ["32 Vías de grabación de video fluidas", "Capacidad para 2 discos duros SATA de hasta 10TB cada uno", "Detección de movimiento con filtrado inteligente de siluetas", "Salidas independientes de monitorización"]
+                    },
+                    { 
+                        model: "IDS-7232HQHI-M2/XT", 
+                        titleSpecs: "DVR 32 Canales 4 Megapixel Lite / Inteligencia Artificial AcuSense / Doble Bahía de Almacenamiento", 
+                        desc: "Grabador de alta gama que unifica analíticas avanzadas de IA en una infraestructura masiva de cámaras de seguridad perimetral.",
+                        costUSD: 275.00,
+                        features: ["32 Canales de procesamiento con analíticas de precisión", "Almacenamiento masivo redundante en dos interfaces SATA", "Filtrado proactivo de falsas alarmas en áreas extensas", "Puertos de red de alta velocidad para transmisión remota fluida"]
+                    },
+                    { 
+                        model: "EX-5032-TURBO", 
+                        titleSpecs: "DVR 32 Canales Epcom Elite / Rendimiento Extremo de Video / Estabilidad de Grado Servidor", 
+                        desc: "Grabador masivo insignia diseñado para gestionar la seguridad integral de infraestructuras complejas con máxima estabilidad de red.",
+                        costUSD: 249.00,
+                        features: ["32 Entradas físicas con soporte híbrido completo", "Soporte para múltiples discos de grado empresarial", "Estructura interna ventilada para optimización de componentes", "Acceso concurrente multi-usuario protegido por encriptación"]
+                    }
                 ]
             }
         };
 
-        let activeCategory = "dvr";
-
-        // FUNCIÓN CLAVE: Limpia la barra diagonal del modelo para construir la URL válida en GitHub Pages
+        // FUNCIÓN SANITIZADORA CRÍTICA: Reemplaza las diagonales por guiones bajos para que GitHub encuentre el archivo físico
         function getSanitizedImageUrl(modelName) {
             const cleanName = modelName.replace(/\//g, '_');
             return `https://bytecomtec.github.io/marketing_videovigilancia/${cleanName}.jpg`;
@@ -248,15 +353,29 @@
             img.src = getSanitizedImageUrl(prod.model);
             
             img.onload = function() {
-                canvas.width = 600; canvas.height = 750;
+                canvas.width = 650; canvas.height = 800;
                 ctx.fillStyle = "#ffffff"; ctx.fillRect(0, 0, canvas.width, canvas.height);
                 
+                // Dibujar Modelo
                 ctx.fillStyle = "#003366"; ctx.font = "bold 24px 'Segoe UI', sans-serif";
-                ctx.fillText(prod.model, 30, 50);
+                ctx.fillText(prod.model, 30, 45);
                 
-                ctx.fillStyle = "#334155"; ctx.font = "14px 'Segoe UI', sans-serif";
-                ctx.fillText(prod.titleSpecs.substring(0, 75) + "...", 30, 85);
+                // Dividir TítuloSpecs en líneas legibles dentro del Canvas
+                ctx.fillStyle = "#1e293b"; ctx.font = "bold 15px 'Segoe UI', sans-serif";
+                const words = prod.titleSpecs.split(' ');
+                let lines = []; let currentLine = "";
+                for (let n = 0; n < words.length; n++) {
+                    let testLine = currentLine + words[n] + " ";
+                    if (ctx.measureText(testLine).width > 590 && n > 0) {
+                        lines.push(currentLine.trim()); currentLine = words[n] + " ";
+                    } else { currentLine = testLine; }
+                }
+                lines.push(currentLine.trim());
                 
+                let textY = 75;
+                lines.forEach(line => { ctx.fillText(line, 30, textY); textY += 22; });
+                
+                // Calcular Precios con margen contable del 60%
                 const marginFactor = 1.60;
                 const priceListUSD = prod.costUSD * marginFactor;
                 const priceWithDiscountUSD = priceListUSD * (1 - currentDiscount);
@@ -264,37 +383,38 @@
                 const originalMXN = (priceListUSD * currentRate).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
                 const finalMXN = (priceWithDiscountUSD * currentRate).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
                 
+                textY += 10;
                 if(currentDiscount > 0) {
                     ctx.fillStyle = "#94a3b8"; ctx.font = "line-through 14px 'Segoe UI', sans-serif";
-                    ctx.fillText("Precio Lista Regular: " + originalMXN, 30, 120);
-                    ctx.fillStyle = "#d32f2f"; ctx.font = "bold 22px 'Segoe UI', sans-serif";
-                    ctx.fillText("Descuento Especial: " + finalMXN, 30, 150);
+                    ctx.fillText("Precio Lista Regular: " + originalMXN, 30, textY); textY += 26;
+                    ctx.fillStyle = "#d32f2f"; ctx.font = "bold 21px 'Segoe UI', sans-serif";
+                    ctx.fillText("Descuento Especial: " + finalMXN, 30, textY);
                 } else {
-                    ctx.fillStyle = "#003366"; ctx.font = "bold 22px 'Segoe UI', sans-serif";
-                    ctx.fillText("Precio Público: " + finalMXN, 30, 140);
+                    ctx.fillStyle = "#003366"; ctx.font = "bold 21px 'Segoe UI', sans-serif";
+                    ctx.fillText("Precio Público de Lista: " + finalMXN, 30, textY);
                 }
                 
-                ctx.drawImage(img, 30, 180, 540, 540);
+                // Colocar la imagen limpia de fondo
+                ctx.drawImage(img, 30, textY + 30, 590, 590);
                 document.getElementById('modalTargetImg').src = canvas.toDataURL("image/jpeg", 0.95);
                 document.getElementById('imageModal').style.display = 'flex';
             };
 
             img.onerror = function() {
-                canvas.width = 600; canvas.height = 320;
+                // Fallback dinámico si no existe la imagen física en GitHub Pages
+                canvas.width = 650; canvas.height = 350;
                 ctx.fillStyle = "#003366"; ctx.fillRect(0, 0, canvas.width, canvas.height);
                 ctx.fillStyle = "#ffffff"; ctx.font = "bold 26px 'Segoe UI', sans-serif";
-                ctx.fillText("BYTECOMTEC - DIGITAL FLYER", 40, 60);
-                ctx.font = "bold 20px 'Segoe UI', sans-serif"; ctx.fillText("Modelo: " + prod.model, 40, 115);
+                ctx.fillText("BYTECOMTEC - INGENIERÍA EN SEGURIDAD", 40, 55);
+                ctx.font = "bold 22px 'Segoe UI', sans-serif"; ctx.fillText("Modelo: " + prod.model, 40, 105);
                 
-                // Ajuste de texto largo de especificaciones en el fallback
-                ctx.font = "13px 'Segoe UI', sans-serif";
-                ctx.fillStyle = "#e2e8f0";
-                ctx.fillText(prod.titleSpecs.substring(0, 65) + "...", 40, 155);
+                ctx.font = "14px 'Segoe UI', sans-serif"; ctx.fillStyle = "#cbd5e1";
+                ctx.fillText(prod.titleSpecs.substring(0, 80) + "...", 40, 145);
                 
                 const marginFactor = 1.60;
                 const finalPriceMXN = ((prod.costUSD * marginFactor * (1 - currentDiscount)) * currentRate).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
-                ctx.fillStyle = "#ff6600"; ctx.font = "bold 24px 'Segoe UI', sans-serif";
-                ctx.fillText("Precio Especial: " + finalPriceMXN + " MXN", 40, 230);
+                ctx.fillStyle = "#ff6600"; ctx.font = "bold 26px 'Segoe UI', sans-serif";
+                ctx.fillText("Inversión Especial: " + finalPriceMXN + " MXN", 40, 230);
                 
                 document.getElementById('modalTargetImg').src = canvas.toDataURL("image/jpeg", 0.95);
                 document.getElementById('imageModal').style.display = 'flex';
@@ -310,7 +430,8 @@
             const descElem = document.getElementById('categoryDesc');
             
             document.querySelectorAll('.category-menu-item').forEach(item => item.classList.remove('active'));
-            document.getElementById(`menu-${categoryId}`).classList.add('active');
+            const activeMenuItem = document.getElementById(`menu-${categoryId}`);
+            if(activeMenuItem) activeMenuItem.classList.add('active');
 
             const data = catalogData[categoryId];
 
@@ -344,25 +465,28 @@
                         priceBlock = `<span class="final-price">${finalPriceMXN}</span>`;
                     }
 
-                    // Se asigna la función de sanitización directamente al atributo src de la tarjeta del catálogo
-                    const imgSrc = getSanitizedImageUrl(prod.model);
+                    let featuresHtml = '<ul class="product-features-list">';
+                    prod.features.forEach(feat => { featuresHtml += `<li>${feat}</li>`; });
+                    featuresHtml += '</ul>';
 
                     card.innerHTML = `
                         <div class="product-body">
                             <div class="product-main-info">
                                 <div class="product-img-box" onclick="generateFromIndex(${index})">
-                                    <img src="${imgSrc}" alt="${prod.model}" onerror="this.src='https://placehold.co/110x110?text=${prod.model.replace(/\//g, '_')}'">
+                                    <img src="${getSanitizedImageUrl(prod.model)}" alt="${prod.model}" onerror="this.src='https://placehold.co/110x110?text=${prod.model.replace(/\//g, '_')}'">
                                 </div>
                                 <div class="product-details">
                                     <div class="product-model">${prod.model}</div>
                                     <p class="product-title-specs">${prod.titleSpecs}</p>
                                     <div class="product-price-list">${priceBlock}</div>
-                                    <span class="usd-reference">Costo Base: $${prod.costUSD.toFixed(2)} USD</span>
+                                    <span class="usd-reference">Base Distribuidor: $${prod.costUSD.toFixed(2)} USD</span>
                                     <span style="font-size:0.75rem; color:#475569; font-weight:bold; display:block; margin-top:4px; background:#f0fdf4; padding:3px 6px; border-radius:4px; border:1px solid #bbf7d0;">
-                                        Margen Neto Asegurado: +${utilidadNetaRealMXN.toLocaleString('es-MX', {style:'currency', currency:'MXN'})}
+                                        Margen Asegurado: +${utilidadNetaRealMXN.toLocaleString('es-MX', {style:'currency', currency:'MXN'})}
                                     </span>
                                 </div>
                             </div>
+                            <p style="font-size:0.85rem; color:#475569; margin:0; border-top:1px dotted #e2e8f0; padding-top:6px; font-style:italic;">${prod.desc}</p>
+                            ${featuresHtml}
                         </div>
                         <div class="product-footer">
                             <button onclick="generateFromIndex(${index})" class="btn-prepare">🖼️ Generar Tarjeta Comercial</button>
@@ -372,18 +496,19 @@
                 });
             } else {
                 const catName = categoriesList.find(c => c.id === categoryId).name;
-                titleElem.innerText = `Línea de Redes: ${catName}`;
-                descElem.innerText = `Módulo estructural asignado a la subcategoría de ${catName.toLowerCase()}.`;
-                container.innerHTML = `<p style="grid-column: 1/-1; color: #64748b; font-style: italic; padding: 20px 0;">Las soluciones asociadas a esta subcategoría se encuentran actualmente en proceso de integración en el Hub corporativo.</p>`;
+                titleElem.innerText = `Línea: ${catName}`;
+                descElem.innerText = `Módulo estructural asignado a la ingeniería de ${catName.toLowerCase()}.`;
+                container.innerHTML = `<p style="grid-column: 1/-1; color: #64748b; font-style: italic; padding: 30px 0;">Las soluciones y flyers asociados a esta línea de negocio se encuentran actualmente en proceso de indexación.</p>`;
             }
         }
 
         function initMenu() {
             const menuList = document.getElementById('menuList');
+            menuList.innerHTML = '';
             categoriesList.forEach((cat) => {
                 const count = catalogData[cat.id] ? catalogData[cat.id].products.length : 0;
                 const li = document.createElement('li');
-                li.className = `category-menu-item`;
+                li.className = `category-menu-item ${cat.id === 'dvr' ? 'active' : ''}`;
                 li.id = `menu-${cat.id}`;
                 li.onclick = () => renderCategory(cat.id);
                 li.innerHTML = `<span>${cat.name}</span> <span class="qty-badge">${count}</span>`;
