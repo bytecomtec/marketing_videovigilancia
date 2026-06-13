@@ -9,12 +9,12 @@
            Variables de Paleta de Color Corporativa
            ========================================================================== */
         :root {
-            --primary-color: #003366;       /* Azul Corporativo */
-            --accent-color: #ff6600;        /* Naranja Técnico */
-            --whatsapp-color: #25d366;      /* Verde Oficial WhatsApp */
-            --bg-light: #f8fafc;            /* Fondo general sutil */
-            --text-main: #1e293b;           /* Texto principal */
-            --border-color: #e2e8f0;        /* Separadores */
+            --primary-color: #003366;
+            --accent-color: #ff6600;
+            --whatsapp-color: #25d366;
+            --bg-light: #f8fafc;
+            --text-main: #1e293b;
+            --border-color: #e2e8f0;
             --white: #ffffff;
         }
 
@@ -29,7 +29,6 @@
             min-height: 100vh;
         }
 
-        /* Barra de Navegación / Header Superior */
         .navbar {
             background-color: var(--primary-color);
             color: var(--white);
@@ -61,7 +60,6 @@
             color: var(--primary-color);
         }
 
-        /* Contenedor Principal de doble columna */
         .main-layout {
             display: flex;
             flex: 1;
@@ -71,14 +69,9 @@
         }
 
         @media (max-width: 900px) {
-            .main-layout {
-                flex-direction: column;
-            }
+            .main-layout { flex-direction: column; }
         }
 
-        /* ==========================================================================
-           COLUMNA IZQUIERDA: Menú de Categorías (Sidebar)
-           ========================================================================== */
         .sidebar {
             width: 290px;
             background-color: var(--white);
@@ -88,11 +81,7 @@
         }
 
         @media (max-width: 900px) {
-            .sidebar {
-                width: 100%;
-                border-right: none;
-                border-bottom: 1px solid var(--border-color);
-            }
+            .sidebar { width: 100%; border-right: none; border-bottom: 1px solid var(--border-color); }
         }
 
         .sidebar-title {
@@ -105,11 +94,7 @@
             letter-spacing: 0.5px;
         }
 
-        .category-menu-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
+        .category-menu-list { list-style: none; padding: 0; margin: 0; }
 
         .category-menu-item {
             display: flex;
@@ -126,65 +111,18 @@
             transition: all 0.2s;
         }
 
-        .category-menu-item:hover {
-            background-color: #f1f5f9;
-            color: var(--primary-color);
-        }
+        .category-menu-item:hover { background-color: #f1f5f9; color: var(--primary-color); }
+        .category-menu-item.active { background-color: #e0f2fe; color: #0369a1; font-weight: 600; border-left: 4px solid #0284c7; }
+        .category-menu-item .qty-badge { background-color: #f1f5f9; color: #64748b; font-size: 0.75rem; padding: 2px 8px; border-radius: 10px; font-weight: 600; }
+        .category-menu-item.active .qty-badge { background-color: #bae6fd; color: #0369a1; }
 
-        .category-menu-item.active {
-            background-color: #e0f2fe;
-            color: #0369a1;
-            font-weight: 600;
-            border-left: 4px solid #0284c7;
-        }
+        .content-showcase { flex: 1; padding: 30px; box-sizing: border-box; }
+        .showcase-header { margin-bottom: 25px; }
+        .showcase-header h2 { margin: 0 0 8px 0; color: var(--primary-color); font-size: 1.8rem; }
+        .showcase-header p { margin: 0; color: #64748b; font-size: 0.95rem; }
 
-        .category-menu-item .qty-badge {
-            background-color: #f1f5f9;
-            color: #64748b;
-            font-size: 0.75rem;
-            padding: 2px 8px;
-            border-radius: 10px;
-            font-weight: 600;
-        }
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
 
-        .category-menu-item.active .qty-badge {
-            background-color: #bae6fd;
-            color: #0369a1;
-        }
-
-        /* ==========================================================================
-           COLUMNA DERECHA: Escaparate de Productos
-           ========================================================================== */
-        .content-showcase {
-            flex: 1;
-            padding: 30px;
-            box-sizing: border-box;
-        }
-
-        .showcase-header {
-            margin-bottom: 25px;
-        }
-
-        .showcase-header h2 {
-            margin: 0 0 8px 0;
-            color: var(--primary-color);
-            font-size: 1.8rem;
-        }
-
-        .showcase-header p {
-            margin: 0;
-            color: #64748b;
-            font-size: 0.95rem;
-        }
-
-        /* Cuadrícula de Tarjetas */
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-        }
-
-        /* Tarjeta de Producto */
         .product-card {
             background-color: var(--white);
             border: 1px solid var(--border-color);
@@ -198,19 +136,9 @@
             animation: fadeIn 0.25s ease-in-out;
         }
 
-        .product-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(0,0,0,0.08);
-        }
+        .product-card:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.08); }
+        .product-body { display: flex; gap: 15px; align-items: flex-start; margin-bottom: 12px; }
 
-        .product-body {
-            display: flex;
-            gap: 15px;
-            align-items: flex-start;
-            margin-bottom: 12px;
-        }
-
-        /* Contenedor de Imagen adaptado para Flayers */
         .product-img-box {
             width: 100px;
             height: 100px;
@@ -241,52 +169,16 @@
             transition: opacity 0.2s;
         }
 
-        .product-img-box:hover::after {
-            opacity: 1;
-        }
+        .product-img-box:hover::after { opacity: 1; }
+        .product-img-box img { max-width: 100%; max-height: 100%; object-fit: cover; }
 
-        .product-img-box img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: cover;
-        }
+        .product-details { flex-grow: 1; }
+        .product-model { color: #003399; font-weight: 700; font-size: 1rem; display: block; margin-bottom: 6px; cursor: pointer; }
+        .product-model:hover { text-decoration: underline; }
+        .product-desc { font-size: 0.85rem; color: #475569; line-height: 1.4; margin: 0; }
 
-        .product-details {
-            flex-grow: 1;
-        }
+        .product-footer { border-top: 1px solid #f1f5f9; padding-top: 12px; margin-top: 5px; }
 
-        .product-model {
-            color: #003399;
-            font-weight: 700;
-            font-size: 1rem;
-            text-decoration: none;
-            display: block;
-            margin-bottom: 6px;
-            cursor: pointer;
-        }
-
-        .product-model:hover {
-            text-decoration: underline;
-        }
-
-        .product-desc {
-            font-size: 0.85rem;
-            color: #475569;
-            line-height: 1.4;
-            margin: 0;
-        }
-
-        /* Sección de Acciones */
-        .product-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-top: 1px solid #f1f5f9;
-            padding-top: 12px;
-            margin-top: 5px;
-        }
-
-        /* Botón de Compartido de WhatsApp */
         .btn-whatsapp {
             background-color: var(--whatsapp-color);
             color: var(--white);
@@ -300,69 +192,30 @@
             align-items: center;
             gap: 6px;
             text-decoration: none;
-            transition: background-color 0.2s;
             width: 100%;
             justify-content: center;
+            transition: background-color 0.2s;
         }
 
-        .btn-whatsapp:hover {
-            background-color: #1ebd59;
-        }
+        .btn-whatsapp:hover { background-color: #1ebd59; }
 
-        /* ==========================================================================
-           MODAL INTERNO (Lightbox para hacer la imagen grande)
-           ========================================================================== */
+        /* MODAL */
         .custom-modal {
             display: none; 
             position: fixed;
             z-index: 9999;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             background-color: rgba(15, 23, 42, 0.9);
-            align-items: center;
-            justify-content: center;
+            align-items: center; justify-content: center;
             animation: fadeIn 0.2s ease-in-out;
         }
 
-        .modal-content-wrapper {
-            position: relative;
-            max-width: 90%;
-            max-height: 85%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+        .modal-content-wrapper { position: relative; max-width: 90%; max-height: 85%; display: flex; flex-direction: column; align-items: center; }
+        .modal-img { max-width: 100%; max-height: 80vh; border-radius: 6px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); object-fit: contain; }
+        .modal-close { position: absolute; top: -45px; right: 0; color: var(--white); font-size: 2rem; font-weight: bold; cursor: pointer; background: none; border: none; }
+        .modal-close:hover { color: var(--accent-color); }
 
-        .modal-img {
-            max-width: 100%;
-            max-height: 80vh;
-            border-radius: 6px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-            object-fit: contain;
-        }
-
-        .modal-close {
-            position: absolute;
-            top: -45px;
-            right: 0;
-            color: var(--white);
-            font-size: 2rem;
-            font-weight: bold;
-            cursor: pointer;
-            background: none;
-            border: none;
-        }
-
-        .modal-close:hover {
-            color: var(--accent-color);
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
@@ -383,7 +236,6 @@
                 <h2 id="categoryTitle">Seleccione una Categoría</h2>
                 <p id="categoryDesc">Haga clic en el menú izquierdo para visualizar las soluciones disponibles.</p>
             </div>
-
             <div class="products-grid" id="productsContainer"></div>
         </main>
     </div>
@@ -396,7 +248,6 @@
     </div>
 
     <script>
-        // BASE DE DATOS DE PRODUCTOS
         const catalogData = {
             dvr: {
                 title: "Grabadores Digitales (DVR)",
@@ -441,24 +292,20 @@
             modal.style.display = 'flex';
         }
 
-        function closeLightbox() {
-            document.getElementById('imageModal').style.display = 'none';
-        }
+        function closeLightbox() { document.getElementById('imageModal').style.display = 'none'; }
 
-        // SOLUCIÓN TÉCNICA: Separamos la URL al final del mensaje con salto de línea limpio.
-        // Nota: Para que la previsualización se envíe SIEMPRE de forma nativa, el usuario debe esperar 1 segundo 
-        // en la pantalla de WhatsApp antes de presionar ENTER, permitiendo que los servidores de Facebook indexen el flayer.
+        // AQUÍ ESTÁ EL CAMBIO IMPORTANTE: Apunta al archivo puente "ver.html" pasando variables
         function generateWhatsAppLink(model, desc, flayer) {
-            let absoluteFlayerUrl = flayer;
-            if (!flayer.startsWith('http://') && !flayer.startsWith('https://')) {
-                const currentRepoUrl = window.location.origin + window.location.pathname.replace('index.html', '');
-                absoluteFlayerUrl = currentRepoUrl.endsWith('/') ? currentRepoUrl + flayer : currentRepoUrl + '/' + flayer;
-            }
+            const currentRepoUrl = window.location.origin + window.location.pathname.replace('index.html', '');
+            
+            // Creamos la URL apuntando al puente HTML con parámetros limpios
+            const bridgeUrl = `${currentRepoUrl}ver.html?m=${encodeURIComponent(model)}&d=${encodeURIComponent(desc)}&i=${encodeURIComponent(flayer)}`;
 
+            // Construimos el mensaje. Dejamos la URL al final. WhatsApp leerá este HTML y armará la tarjeta con la foto grande.
             const text = `*Hola, te comparto la información del equipo solicitado:* \n\n` +
                          `*Modelo:* ${model}\n` +
                          `*Descripción:* ${desc}\n\n` +
-                         `${absoluteFlayerUrl}`;
+                         `🔗 Ficha Interactiva: ${bridgeUrl}`;
             
             return `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
         }
