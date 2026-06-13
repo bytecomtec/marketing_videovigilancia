@@ -127,9 +127,9 @@
         }
         .modal-content-wrapper {
             position: relative; background-color: var(--white); padding: 25px; border-radius: 8px;
-            max-width: 600px; width: 90%; text-align: center;
+            max-width: 650px; width: 90%; text-align: center;
         }
-        .output-composite-img { max-width: 100%; max-height: 65vh; border: 1px solid #cbd5e1; border-radius: 6px; }
+        .output-composite-img { max-width: 100%; max-height: 75vh; border: 1px solid #cbd5e1; border-radius: 6px; }
         .modal-close { position: absolute; top: 10px; right: 15px; color: #94a3b8; font-size: 1.8rem; cursor: pointer; background: none; border: none; }
     </style>
 </head>
@@ -252,7 +252,7 @@
                     },
                     { 
                         model: "EX-5008-TURBO", 
-                        titleSpecs: "DVR 8 Canales Epcom TurboHD / Tecnología Pentahíbrida 5-en-1 / Grabación Autónoma Inteligente", 
+                        titleSpecs: "DVR 8 Canales Epcom TurboHD / Tecnología Pentahíbrido 5-en-1 / Grabación Autónoma Inteligente", 
                         desc: "Grabador digital insignia de Epcom ideal para proyectos de mediana envergadura que demandan analíticas fluidas.",
                         costUSD: 82.66,
                         features: ["8 Canales TurboHD de gran desempeño", "Compatibilidad total autoadaptable (TVI/AHD/CVI/CVBS/IP)", "Audio por cable coaxial multiplexado", "Búsqueda inteligente de eventos con detección avanzada"]
@@ -269,21 +269,21 @@
                         titleSpecs: "DVR 16 Canales TurboHD 2 Megapixel Lite / Gabinete Metálico Industrial / Soporte Audio Multiplexado", 
                         desc: "Grabador industrial de 16 vías optimizado para montaje seguro en gabinetes o racks de telecomunicaciones.",
                         costUSD: 94.20,
-                        features: ["Gabinete metálico apto para entornos de alta exigencia", "Audio por coaxial activo en su plataforma multicanal", "Soporte de discos SATA empresariales", "Visualización simultánea multi-usuario sin degradación"]
+                        features: ["Gabinete metálico apto para entornos de alta exigencia", "Audio por coaxial activo en su plataforma multicanal", "Soporte de discos SATAempresariales", "Visualización simultánea multi-usuario sin degradación"]
                     },
                     { 
                         model: "DS-7116HGHI-M1(E)", 
                         titleSpecs: "DVR 16 Canales TurboHD + 2 Canales IP / 2 Megapixel (1080p) Lite / Acusense Lite / Audio Coaxitron / H.265+", 
                         desc: "DVR de 16 canales de grabación HD con soporte H.265 Pro+ altamente eficiente y acceso remoto simple unificado.",
                         costUSD: 72.00,
-                        features: ["Audio por coaxitron en todos los canales", "Búsqueda inteligente por humanos y vehículos", "Compatibilidad con HD-TVI, HD-CVI, AHD, CVBS, IP", "Soporta 18 canales: 16 TurboHD + 2 IP", "Compresión H.265+ optimiza almacenamiento", "Salida Full HD HDMI y VGA simultáneas"]
+                        features: ["Audio por coaxitron en todos los canales", "Búsqueda inteligente por humanos y vehículos", "Compatibilidad con HD-TVI, HD-CVI, AHD, CVBS, IP", "Soporta 18 canales: 16 TurboHD + 2 IP", "Compresión H.265+ optimiza almacenamiento"]
                     },
                     { 
                         model: "IDS-7216HUHI-M1/T", 
                         titleSpecs: "DVR 16 Canales TURBOHD + 8 Canales IP / 5 Megapixel Lite - 3K Lite / Audio Bidireccional por Coaxitron / ACUSENSE", 
                         desc: "Grabador profesional híbrido de ultra alta definición recomendado para monitorear detalles críticos con reconocimiento de objetivos.",
                         costUSD: 185.00,
-                        features: ["16 Canales TurboHD + 8 IP (24 canales en total)", "Compresión H.265+ para eficiente almacenamiento", "DVR pentahíbrido: HD-TVI/HD-CVI/Analógico/IP/AHD", "Acceso remoto desde PC y smartphones", "Audio bidireccional por coaxitron en todos los canales", "Soporta 1 HDD de hasta 10TB"]
+                        features: ["16 Canales TurboHD + 8 IP (24 canales en total)", "Compresión H.265+ para eficiente almacenamiento", "DVR pentahíbrido: HD-TVI/HD-CVI/Analógico/IP/AHD", "Audio bidireccional por coaxitron en todos los canales", "Soporta 1 HDD de hasta 10TB"]
                     },
                     { 
                         model: "IDS-7216HQHI-M1/XT", 
@@ -325,13 +325,14 @@
                         titleSpecs: "DVR 32 Canales Epcom Elite / Rendimiento Extremo de Video / Estabilidad de Grado Servidor", 
                         desc: "Grabador masivo insignia diseñado para gestionar la seguridad integral de infraestructuras complejas con máxima estabilidad de red.",
                         costUSD: 249.00,
-                        features: ["32 Entradas físicas con soporte híbrido completo", "Soporte para múltiples discos de grado empresarial", "Estructura interna ventilada para optimización de componentes", "Acceso concurrente multi-usuario protegido por encriptación"]
+                        features: ["32 Entradas físicas con soporte híbrido completo", "Soporte para múltiples discos de grado empresarial", "Estructura interna ventilada para optimización de componentes", "Acceso de red protegido por encriptación avanzada"]
                     }
                 ]
             }
         };
 
-        // FUNCIÓN SANITIZADORA CRÍTICA: Reemplaza las diagonales por guiones bajos para que GitHub encuentre el archivo físico
+        let activeCategory = "dvr";
+
         function getSanitizedImageUrl(modelName) {
             const cleanName = modelName.replace(/\//g, '_');
             return `https://bytecomtec.github.io/marketing_videovigilancia/${cleanName}.jpg`;
@@ -343,6 +344,9 @@
             renderCategory(activeCategory);
         }
 
+        // ==========================================================================
+        // FUNCIÓN MEJORADA: Incorpora características y descripciones directo en la imagen
+        // ==========================================================================
         function generateFromIndex(index) {
             const prod = catalogData.dvr.products[index];
             const canvas = document.getElementById('processingCanvas');
@@ -353,29 +357,57 @@
             img.src = getSanitizedImageUrl(prod.model);
             
             img.onload = function() {
-                canvas.width = 650; canvas.height = 800;
+                // Lienzo expandido para acomodar texto e imagen cómodamente
+                canvas.width = 650; canvas.height = 950;
                 ctx.fillStyle = "#ffffff"; ctx.fillRect(0, 0, canvas.width, canvas.height);
                 
-                // Dibujar Modelo
-                ctx.fillStyle = "#003366"; ctx.font = "bold 24px 'Segoe UI', sans-serif";
-                ctx.fillText(prod.model, 30, 45);
+                // 1. Encabezado del Modelo
+                ctx.fillStyle = "#003366"; ctx.font = "bold 26px 'Segoe UI', sans-serif";
+                ctx.fillText(prod.model, 35, 50);
                 
-                // Dividir TítuloSpecs en líneas legibles dentro del Canvas
+                // 2. Título de Especificaciones Técnicas (Ajuste de líneas automático)
                 ctx.fillStyle = "#1e293b"; ctx.font = "bold 15px 'Segoe UI', sans-serif";
                 const words = prod.titleSpecs.split(' ');
                 let lines = []; let currentLine = "";
                 for (let n = 0; n < words.length; n++) {
                     let testLine = currentLine + words[n] + " ";
-                    if (ctx.measureText(testLine).width > 590 && n > 0) {
+                    if (ctx.measureText(testLine).width > 580 && n > 0) {
                         lines.push(currentLine.trim()); currentLine = words[n] + " ";
                     } else { currentLine = testLine; }
                 }
                 lines.push(currentLine.trim());
                 
-                let textY = 75;
-                lines.forEach(line => { ctx.fillText(line, 30, textY); textY += 22; });
+                let textY = 80;
+                lines.forEach(line => { ctx.fillText(line, 35, textY); textY += 22; });
                 
-                // Calcular Precios con margen contable del 60%
+                // 3. Descripción Comercial Fidedigna (Texto cursivo)
+                ctx.fillStyle = "#475569"; ctx.font = "italic 14px 'Segoe UI', sans-serif";
+                const descWords = prod.desc.split(' ');
+                let descLines = []; let currentDescLine = "";
+                for (let i = 0; i < descWords.length; i++) {
+                    let testDescLine = currentDescLine + descWords[i] + " ";
+                    if (ctx.measureText(testDescLine).width > 580 && i > 0) {
+                        descLines.push(currentDescLine.trim()); currentDescLine = descWords[i] + " ";
+                    } else { currentDescLine = testDescLine; }
+                }
+                descLines.push(currentDescLine.trim());
+                
+                textY += 5;
+                descLines.forEach(line => { ctx.fillText(line, 35, textY); textY += 20; });
+
+                // 4. Inyección Visual de las Características Específicas (Viñetas con Palomitas)
+                textY += 10;
+                ctx.font = "14px 'Segoe UI', sans-serif";
+                prod.features.forEach(feat => {
+                    ctx.fillStyle = "#10b981"; ctx.font = "bold 14px 'Segoe UI', sans-serif";
+                    ctx.fillText("✓", 35, textY);
+                    
+                    ctx.fillStyle = "#334155"; ctx.font = "14px 'Segoe UI', sans-serif";
+                    ctx.fillText(feat, 55, textY);
+                    textY += 22;
+                });
+                
+                // 5. Bloque de Precios Dinámico
                 const marginFactor = 1.60;
                 const priceListUSD = prod.costUSD * marginFactor;
                 const priceWithDiscountUSD = priceListUSD * (1 - currentDiscount);
@@ -383,38 +415,49 @@
                 const originalMXN = (priceListUSD * currentRate).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
                 const finalMXN = (priceWithDiscountUSD * currentRate).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
                 
-                textY += 10;
+                textY += 15;
                 if(currentDiscount > 0) {
                     ctx.fillStyle = "#94a3b8"; ctx.font = "line-through 14px 'Segoe UI', sans-serif";
-                    ctx.fillText("Precio Lista Regular: " + originalMXN, 30, textY); textY += 26;
-                    ctx.fillStyle = "#d32f2f"; ctx.font = "bold 21px 'Segoe UI', sans-serif";
-                    ctx.fillText("Descuento Especial: " + finalMXN, 30, textY);
+                    ctx.fillText("Precio Lista Regular: " + originalMXN, 35, textY); textY += 26;
+                    ctx.fillStyle = "#d32f2f"; ctx.font = "bold 23px 'Segoe UI', sans-serif";
+                    ctx.fillText("Inversión Especial: " + finalMXN + " MXN", 35, textY);
                 } else {
-                    ctx.fillStyle = "#003366"; ctx.font = "bold 21px 'Segoe UI', sans-serif";
-                    ctx.fillText("Precio Público de Lista: " + finalMXN, 30, textY);
+                    ctx.fillStyle = "#003366"; ctx.font = "bold 23px 'Segoe UI', sans-serif";
+                    ctx.fillText("Inversión Comercial: " + finalMXN + " MXN", 35, textY);
                 }
                 
-                // Colocar la imagen limpia de fondo
-                ctx.drawImage(img, 30, textY + 30, 590, 590);
+                // 6. Estampado de la Imagen del Producto
+                const imgSize = 480;
+                const imgX = (canvas.width - imgSize) / 2; // Centrado horizontal
+                ctx.drawImage(img, imgX, textY + 30, imgSize, imgSize);
+                
+                // Enviar render al modal en formato JPG de alta calidad
                 document.getElementById('modalTargetImg').src = canvas.toDataURL("image/jpeg", 0.95);
                 document.getElementById('imageModal').style.display = 'flex';
             };
 
             img.onerror = function() {
-                // Fallback dinámico si no existe la imagen física en GitHub Pages
-                canvas.width = 650; canvas.height = 350;
+                // Fallback de contingencia si la imagen no se localiza en GitHub
+                canvas.width = 650; canvas.height = 420;
                 ctx.fillStyle = "#003366"; ctx.fillRect(0, 0, canvas.width, canvas.height);
-                ctx.fillStyle = "#ffffff"; ctx.font = "bold 26px 'Segoe UI', sans-serif";
-                ctx.fillText("BYTECOMTEC - INGENIERÍA EN SEGURIDAD", 40, 55);
-                ctx.font = "bold 22px 'Segoe UI', sans-serif"; ctx.fillText("Modelo: " + prod.model, 40, 105);
+                ctx.fillStyle = "#ffffff"; ctx.font = "bold 24px 'Segoe UI', sans-serif";
+                ctx.fillText("BYTECOMTEC - DIGITAL FLYER", 40, 55);
+                ctx.font = "bold 20px 'Segoe UI', sans-serif"; ctx.fillText("Modelo: " + prod.model, 40, 105);
                 
                 ctx.font = "14px 'Segoe UI', sans-serif"; ctx.fillStyle = "#cbd5e1";
-                ctx.fillText(prod.titleSpecs.substring(0, 80) + "...", 40, 145);
+                ctx.fillText(prod.titleSpecs.substring(0, 75) + "...", 40, 150);
+                
+                let fallbackY = 190;
+                prod.features.slice(0, 3).forEach(feat => {
+                    ctx.fillStyle = "#ff6600"; ctx.fillText("✓", 40, fallbackY);
+                    ctx.fillStyle = "#ffffff"; ctx.fillText(feat.substring(0, 70), 60, fallbackY);
+                    fallbackY += 22;
+                });
                 
                 const marginFactor = 1.60;
                 const finalPriceMXN = ((prod.costUSD * marginFactor * (1 - currentDiscount)) * currentRate).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
-                ctx.fillStyle = "#ff6600"; ctx.font = "bold 26px 'Segoe UI', sans-serif";
-                ctx.fillText("Inversión Especial: " + finalPriceMXN + " MXN", 40, 230);
+                ctx.fillStyle = "#ff6600"; ctx.font = "bold 24px 'Segoe UI', sans-serif";
+                ctx.fillText("Inversión Especial: " + finalPriceMXN + " MXN", 40, fallbackY + 30);
                 
                 document.getElementById('modalTargetImg').src = canvas.toDataURL("image/jpeg", 0.95);
                 document.getElementById('imageModal').style.display = 'flex';
