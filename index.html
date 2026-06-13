@@ -22,371 +22,121 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--bg-light);
             color: var(--text-main);
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
+            margin: 0; padding: 0;
+            display: flex; flex-direction: column; min-height: 100vh;
         }
 
-        /* Barra de Navegación / Header Superior */
         .navbar {
             background-color: var(--primary-color);
             color: var(--white);
             padding: 15px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            display: flex; justify-content: space-between; align-items: center;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
-        .navbar h1 {
-            margin: 0;
-            font-size: 1.4rem;
-            font-weight: 600;
-        }
+        .navbar h1 { margin: 0; font-size: 1.4rem; font-weight: 600; }
 
         .btn-return {
-            color: var(--white);
-            text-decoration: none;
-            font-size: 0.9rem;
-            border: 1px solid var(--white);
-            padding: 6px 12px;
-            border-radius: 4px;
+            color: var(--white); text-decoration: none; font-size: 0.9rem;
+            border: 1px solid var(--white); padding: 6px 12px; border-radius: 4px;
             transition: all 0.2s;
         }
+        .btn-return:hover { background-color: var(--white); color: var(--primary-color); }
 
-        .btn-return:hover {
-            background-color: var(--white);
-            color: var(--primary-color);
-        }
+        .main-layout { display: flex; flex: 1; max-width: 1440px; width: 100%; margin: 0 auto; }
 
-        /* Contenedor Principal de doble columna */
-        .main-layout {
-            display: flex;
-            flex: 1;
-            max-width: 1440px;
-            width: 100%;
-            margin: 0 auto;
-        }
+        @media (max-width: 900px) { .main-layout { flex-direction: column; } }
 
-        @media (max-width: 900px) {
-            .main-layout {
-                flex-direction: column;
-            }
-        }
+        /* Sidebar Menú */
+        .sidebar { width: 290px; background-color: var(--white); border-right: 1px solid var(--border-color); padding: 20px 10px; box-sizing: border-box; }
+        @media (max-width: 900px) { .sidebar { width: 100%; border-right: none; border-bottom: 1px solid var(--border-color); } }
 
-        /* COLUMNA IZQUIERDA: Menú de Categorías (Sidebar) */
-        .sidebar {
-            width: 290px;
-            background-color: var(--white);
-            border-right: 1px solid var(--border-color);
-            padding: 20px 10px;
-            box-sizing: border-box;
-        }
-
-        @media (max-width: 900px) {
-            .sidebar {
-                width: 100%;
-                border-right: none;
-                border-bottom: 1px solid var(--border-color);
-            }
-        }
-
-        .sidebar-title {
-            font-size: 0.9rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            color: #64748b;
-            padding-left: 10px;
-            margin-bottom: 15px;
-            letter-spacing: 0.5px;
-        }
-
-        .category-menu-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
+        .sidebar-title { font-size: 0.9rem; font-weight: 700; text-transform: uppercase; color: #64748b; padding-left: 10px; margin-bottom: 15px; letter-spacing: 0.5px; }
+        .category-menu-list { list-style: none; padding: 0; margin: 0; }
         .category-menu-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 14px;
-            color: var(--text-main);
-            text-decoration: none;
-            font-size: 0.95rem;
-            font-weight: 500;
-            border-radius: 6px;
-            margin-bottom: 4px;
-            cursor: pointer;
-            transition: all 0.2s;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 12px 14px; color: var(--text-main); text-decoration: none;
+            font-size: 0.95rem; font-weight: 500; border-radius: 6px; margin-bottom: 4px; cursor: pointer; transition: all 0.2s;
         }
+        .category-menu-item:hover { background-color: #f1f5f9; color: var(--primary-color); }
+        .category-menu-item.active { background-color: #e0f2fe; color: #0369a1; font-weight: 600; border-left: 4px solid #0284c7; }
+        .category-menu-item .qty-badge { background-color: #f1f5f9; color: #64748b; font-size: 0.75rem; padding: 2px 8px; border-radius: 10px; font-weight: 600; }
+        .category-menu-item.active .qty-badge { background-color: #bae6fd; color: #0369a1; }
 
-        .category-menu-item:hover {
-            background-color: #f1f5f9;
-            color: var(--primary-color);
-        }
+        /* Showcase de Productos */
+        .content-showcase { flex: 1; padding: 30px; box-sizing: border-box; }
+        .showcase-header { margin-bottom: 25px; }
+        .showcase-header h2 { margin: 0 0 8px 0; color: var(--primary-color); font-size: 1.8rem; }
+        .showcase-header p { margin: 0; color: #64748b; font-size: 0.95rem; }
 
-        .category-menu-item.active {
-            background-color: #e0f2fe;
-            color: #0369a1;
-            font-weight: 600;
-            border-left: 4px solid #0284c7;
-        }
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
 
-        .category-menu-item .qty-badge {
-            background-color: #f1f5f9;
-            color: #64748b;
-            font-size: 0.75rem;
-            padding: 2px 8px;
-            border-radius: 10px;
-            font-weight: 600;
-        }
-
-        .category-menu-item.active .qty-badge {
-            background-color: #bae6fd;
-            color: #0369a1;
-        }
-
-        /* COLUMNA DERECHA: Escaparate de Productos */
-        .content-showcase {
-            flex: 1;
-            padding: 30px;
-            box-sizing: border-box;
-        }
-
-        .showcase-header {
-            margin-bottom: 25px;
-        }
-
-        .showcase-header h2 {
-            margin: 0 0 8px 0;
-            color: var(--primary-color);
-            font-size: 1.8rem;
-        }
-
-        .showcase-header p {
-            margin: 0;
-            color: #64748b;
-            font-size: 0.95rem;
-        }
-
-        /* Cuadrícula de Tarjetas */
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-        }
-
-        /* Tarjeta de Producto */
         .product-card {
-            background-color: var(--white);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 16px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            position: relative;
-            transition: transform 0.2s, box-shadow 0.2s;
-            animation: fadeIn 0.25s ease-in-out;
+            background-color: var(--white); border: 1px solid var(--border-color); border-radius: 8px;
+            padding: 16px; display: flex; flex-direction: column; justify-content: space-between;
+            position: relative; transition: transform 0.2s, box-shadow 0.2s; animation: fadeIn 0.25s ease-in-out;
         }
-
-        .product-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(0,0,0,0.08);
-        }
-
-        .product-body {
-            display: flex;
-            gap: 15px;
-            align-items: flex-start;
-            margin-bottom: 12px;
-        }
+        .product-card:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.08); }
+        .product-body { display: flex; gap: 15px; align-items: flex-start; margin-bottom: 12px; }
 
         .product-img-box {
-            width: 100px;
-            height: 100px;
-            flex-shrink: 0;
-            border: 1px solid #f1f5f9;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: #ffffff;
-            overflow: hidden;
-            cursor: pointer;
-            position: relative;
+            width: 100px; height: 100px; flex-shrink: 0; border: 1px solid #f1f5f9; border-radius: 6px;
+            display: flex; align-items: center; justify-content: center; background-color: #ffffff; overflow: hidden; cursor: pointer; position: relative;
         }
-
         .product-img-box::after {
-            content: "🔍 Enviar";
-            position: absolute;
-            background: rgba(0, 51, 102, 0.85);
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 0.85rem;
-            font-weight: 600;
-            opacity: 0;
-            transition: opacity 0.2s;
+            content: "🖼️ Combinar"; position: absolute; background: rgba(0, 51, 102, 0.85);
+            width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 0.8rem; font-weight: 600; opacity: 0; transition: opacity 0.2s;
         }
+        .product-img-box:hover::after { opacity: 1; }
+        .product-img-box img { max-width: 100%; max-height: 100%; object-fit: cover; }
 
-        .product-img-box:hover::after {
-            opacity: 1;
-        }
+        .product-details { flex-grow: 1; }
+        .product-model { color: #003399; font-weight: 700; font-size: 1rem; display: block; margin-bottom: 6px; cursor: pointer; }
+        .product-model:hover { text-decoration: underline; }
+        .product-desc { font-size: 0.85rem; color: #475569; line-height: 1.4; margin: 0; }
 
-        .product-img-box img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: cover;
-        }
-
-        .product-details {
-            flex-grow: 1;
-        }
-
-        .product-model {
-            color: #003399;
-            font-weight: 700;
-            font-size: 1rem;
-            text-decoration: none;
-            display: block;
-            margin-bottom: 6px;
-            cursor: pointer;
-        }
-
-        .product-model:hover {
-            text-decoration: underline;
-        }
-
-        .product-desc {
-            font-size: 0.85rem;
-            color: #475569;
-            line-height: 1.4;
-            margin: 0;
-        }
-
-        /* Botón de Preparación */
-        .product-footer {
-            border-top: 1px solid #f1f5f9;
-            padding-top: 12px;
-            margin-top: 5px;
-        }
+        .product-footer { border-top: 1px solid #f1f5f9; padding-top: 12px; margin-top: 5px; }
 
         .btn-prepare {
-            background-color: var(--primary-color);
-            color: var(--white);
-            border: none;
-            border-radius: 4px;
-            padding: 8px 12px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            text-decoration: none;
-            width: 100%;
-            justify-content: center;
-            transition: background-color 0.2s;
+            background-color: var(--primary-color); color: var(--white); border: none; border-radius: 4px;
+            padding: 8px 12px; font-size: 0.85rem; font-weight: 600; cursor: pointer;
+            display: inline-flex; align-items: center; gap: 6px; text-decoration: none; width: 100%; justify-content: center; transition: background-color 0.2s;
         }
-
-        .btn-prepare:hover {
-            background-color: #002244;
-        }
+        .btn-prepare:hover { background-color: #002244; }
 
         /* ==========================================================================
-           MODAL OPTIMIZADO PARA COPIADO DE IMAGEN (IMPECABLE)
+           MODAL PARA COPIAR TARJETA DIGITAL PROCESADA
            ========================================================================== */
         .custom-modal {
-            display: none; 
-            position: fixed;
-            z-index: 9999;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-color: rgba(15, 23, 42, 0.85);
-            align-items: center; justify-content: center;
-            animation: fadeIn 0.2s ease-in-out;
+            display: none; position: fixed; z-index: 9999; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(15, 23, 42, 0.85); align-items: center; justify-content: center; animation: fadeIn 0.2s ease-in-out;
         }
 
-        /* Caja de contenido blanca para emular el resultado esperado */
         .modal-content-wrapper {
-            position: relative;
-            background-color: var(--white);
-            padding: 30px;
-            border-radius: 8px;
-            max-width: 550px;
-            width: 90%;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            position: relative; background-color: var(--white); padding: 25px; border-radius: 8px;
+            max-width: 500px; width: 90%; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+            display: flex; flex-direction: column; align-items: center;
         }
 
-        .modal-product-title {
-            color: #003366;
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin: 0 0 12px 0;
-            text-align: center;
+        /* Contenedor donde se dibuja el render final */
+        .render-container {
+            width: 100%; display: flex; justify-content: center; margin-top: 10px; margin-bottom: 15px;
         }
 
-        .modal-product-desc {
-            color: #475569;
-            font-size: 0.95rem;
-            line-height: 1.5;
-            margin: 0 0 20px 0;
-            text-align: center;
-        }
-
-        .modal-img-container {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            margin-bottom: 15px;
-        }
-
-        .modal-img {
-            max-width: 100%;
-            max-height: 55vh;
-            border-radius: 6px;
-            object-fit: contain;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+        .output-composite-img {
+            max-width: 100%; max-height: 70vh; border: 1px solid #cbd5e1; border-radius: 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.15);
         }
 
         .modal-close {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            color: #94a3b8;
-            font-size: 1.8rem;
-            font-weight: bold;
-            cursor: pointer;
-            background: none;
-            border: none;
+            position: absolute; top: 10px; right: 15px; color: #94a3b8; font-size: 1.8rem; font-weight: bold; cursor: pointer; background: none; border: none;
         }
+        .modal-close:hover { color: #475569; }
 
-        .modal-close:hover {
-            color: #475569;
-        }
+        .copy-helper-text { font-size: 0.85rem; color: #0284c7; font-weight: 600; margin-top: 5px; animation: pulse 2s infinite; }
 
-        /* Instrucción de ayuda flotante */
-        .copy-helper-text {
-            font-size: 0.8rem;
-            color: #64748b;
-            margin-top: 5px;
-            font-style: italic;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
     </style>
 </head>
 <body>
@@ -407,7 +157,6 @@
                 <h2 id="categoryTitle">Seleccione una Categoría</h2>
                 <p id="categoryDesc">Haga clic en el menú izquierdo para visualizar las soluciones disponibles.</p>
             </div>
-
             <div class="products-grid" id="productsContainer"></div>
         </main>
     </div>
@@ -416,19 +165,19 @@
         <div class="modal-content-wrapper" onclick="event.stopPropagation()">
             <button class="modal-close" onclick="closeLightbox()">&times;</button>
             
-            <div class="modal-product-title" id="modalTitle"></div>
-            <div class="modal-product-desc" id="modalDesc"></div>
+            <div style="font-size: 0.9rem; color:#475569; font-weight:500;">Vista de Tarjeta Integrada:</div>
             
-            <div class="modal-img-container">
-                <img id="modalTargetImg" class="modal-img" src="" alt="Ficha Publicitaria">
+            <div class="render-container">
+                <img id="modalTargetImg" class="output-composite-img" src="" alt="Ficha Unificada">
             </div>
             
-            <div class="copy-helper-text">💡 Clic derecho sobre la imagen para copiarla hacia WhatsApp</div>
+            <div class="copy-helper-text">👉 Clic derecho aquí -> "Copiar imagen" y pégala en WhatsApp</div>
         </div>
     </div>
 
+    <canvas id="processingCanvas" style="display: none;"></canvas>
+
     <script>
-        // BASE DE DATOS DE PRODUCTOS
         const catalogData = {
             dvr: {
                 title: "Grabadores Digitales (DVR)",
@@ -466,22 +215,89 @@
             { id: "kits", name: "Kits" }, { id: "monitores", name: "Monitores" }
         ];
 
-        // LÓGICA DE APERTURA CON LOS COMPONENTES EN BLOQUE
-        function openLightbox(model, desc, url) {
-            document.getElementById('modalTitle').innerText = model;
-            document.getElementById('modalDesc').innerText = desc;
+        // FUNCIÓN MAESTRA: Dibuja dinámicamente el Modelo, la Descripción y el Flayer en una sola pieza gráfica
+        function generateCompositeCard(model, desc, imageUrl) {
+            const canvas = document.getElementById('processingCanvas');
+            const ctx = canvas.getContext('2d');
+            const img = new Image();
             
-            const modalImg = document.getElementById('modalTargetImg');
-            modalImg.src = url;
+            // Permitir la lectura de imágenes desde tu propio repositorio GitHub Pages de forma segura
+            img.crossOrigin = "anonymous";
+            img.src = imageUrl;
             
-            document.getElementById('imageModal').style.display = 'flex';
+            img.onload = function() {
+                // Configuración de dimensiones fijas y limpias para la tarjeta publicitaria final
+                const cardWidth = 600;
+                
+                // Configuración tipográfica para medir el espacio de texto
+                ctx.font = "14px 'Segoe UI', sans-serif";
+                const words = desc.split(' ');
+                let lines = [];
+                let currentLine = "";
+                
+                // Envolver texto automáticamente dentro de los márgenes de la tarjeta corporativa
+                for (let n = 0; n < words.length; n++) {
+                    let testLine = currentLine + words[n] + " ";
+                    let metrics = ctx.measureText(testLine);
+                    if (metrics.width > (cardWidth - 60) && n > 0) {
+                        lines.push(currentLine);
+                        currentLine = words[n] + " ";
+                    } else {
+                        currentLine = testLine;
+                    }
+                }
+                lines.push(currentLine);
+                
+                // Calcular la altura dinámica que ocupará la caja blanca de texto superior
+                const textSectionHeight = 45 + (lines.length * 20) + 20; 
+                
+                // Ajustar la proporción del flayer publicitario original
+                const imgRenderWidth = cardWidth;
+                const imgRenderHeight = (img.height / img.width) * cardWidth;
+                
+                // Redimensionar el lienzo total de la imagen final
+                canvas.width = cardWidth;
+                canvas.height = textSectionHeight + imgRenderHeight;
+                
+                // 1. Pintar fondo blanco corporativo impecable
+                ctx.fillStyle = "#ffffff";
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                // 2. Dibujar el Modelo (Centrado y en azul oscuro institucional)
+                ctx.fillStyle = "#003366";
+                ctx.font = "bold 22px 'Segoe UI', sans-serif";
+                ctx.textAlign = "center";
+                ctx.fillText(model, cardWidth / 2, 40);
+                
+                // 3. Dibujar la Descripción del equipo (Centrada y en gris técnico oscuro)
+                ctx.fillStyle = "#475569";
+                ctx.font = "500 15px 'Segoe UI', sans-serif";
+                ctx.textAlign = "center";
+                
+                let currentY = 70;
+                for (let i = 0; i < lines.length; i++) {
+                    ctx.fillText(lines[i].trim(), cardWidth / 2, currentY);
+                    currentY += 22;
+                }
+                
+                // 4. Estampar el Flayer de marketing original justo debajo del texto
+                ctx.drawImage(img, 0, textSectionHeight, imgRenderWidth, imgRenderHeight);
+                
+                // Convertir la composición en una imagen real e inyectarla en el Modal
+                document.getElementById('modalTargetImg').src = canvas.toDataURL("image/jpeg", 0.95);
+                document.getElementById('imageModal').style.display = 'flex';
+            };
+
+            // Manejo alternativo si el flayer de GitHub tarda en responder o no existe
+            img.onerror = function() {
+                alert("No se pudo cargar el flayer del repositorio. Valida que la ruta sea correcta.");
+            };
         }
 
         function closeLightbox() {
             document.getElementById('imageModal').style.display = 'none';
         }
 
-        // RENDEREADO DE TARJETAS
         function renderCategory(categoryId) {
             const container = document.getElementById('productsContainer');
             const titleElem = document.getElementById('categoryTitle');
@@ -502,16 +318,16 @@
                     card.className = 'product-card';
                     card.innerHTML = `
                         <div class="product-body">
-                            <div class="product-img-box" onclick="openLightbox('${prod.model}', '${prod.desc}', '${prod.flayerUrl}')">
+                            <div class="product-img-box" onclick="generateCompositeCard('${prod.model}', '${prod.desc}', '${prod.flayerUrl}')">
                                 <img src="${prod.flayerUrl}" alt="${prod.model}" onerror="this.src='https://placehold.co/100x100?text=Flayer+CCTV'">
                             </div>
                             <div class="product-details">
-                                <div class="product-model" onclick="openLightbox('${prod.model}', '${prod.desc}', '${prod.flayerUrl}')">${prod.model}</div>
+                                <div class="product-model" onclick="generateCompositeCard('${prod.model}', '${prod.desc}', '${prod.flayerUrl}')">${prod.model}</div>
                                 <p class="product-desc">${prod.desc}</p>
                             </div>
                         </div>
                         <div class="product-footer">
-                            <button onclick="openLightbox('${prod.model}', '${prod.desc}', '${prod.flayerUrl}')" class="btn-prepare">
+                            <button onclick="generateCompositeCard('${prod.model}', '${prod.desc}', '${prod.flayerUrl}')" class="btn-prepare">
                                 🖼️ Preparar para WhatsApp
                             </button>
                         </div>
