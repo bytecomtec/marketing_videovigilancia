@@ -224,6 +224,26 @@
             background-color: #ffffff;
             overflow: hidden;
             cursor: pointer;
+            position: relative;
+        }
+
+        .product-img-box::after {
+            content: "🔍";
+            position: absolute;
+            background: rgba(0,0,0,0.4);
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .product-img-box:hover::after {
+            opacity: 1;
         }
 
         .product-img-box img {
@@ -243,6 +263,11 @@
             text-decoration: none;
             display: block;
             margin-bottom: 4px;
+            cursor: pointer;
+        }
+
+        .product-model:hover {
+            text-decoration: underline;
         }
 
         .product-desc {
@@ -290,26 +315,67 @@
             gap: 6px;
             text-decoration: none;
             transition: background-color 0.2s;
+            width: 100%;
+            justify-content: center;
         }
 
         .btn-whatsapp:hover {
             background-color: #1ebd59;
         }
 
-        .btn-view-flayer {
-            font-size: 0.82rem;
-            color: var(--primary-color);
-            text-decoration: none;
-            font-weight: 500;
+        /* ==========================================================================
+           MODAL INTERNO (Lightbox para hacer la imagen grande)
+           ========================================================================== */
+        .custom-modal {
+            display: none; 
+            position: fixed;
+            z-index: 9999;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(15, 23, 42, 0.9); /* Fondo oscuro traslúcido */
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.2s ease-in-out;
         }
 
-        .btn-view-flayer:hover {
-            text-decoration: underline;
+        .modal-content-wrapper {
+            position: relative;
+            max-width: 90%;
+            max-height: 85%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .modal-img {
+            max-width: 100%;
+            max-height: 80vh;
+            border-radius: 6px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            object-fit: contain;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: -45px;
+            right: 0;
+            color: var(--white);
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        .modal-close:hover {
+            color: var(--accent-color);
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(4px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
     </style>
 </head>
@@ -321,7 +387,6 @@
     </header>
 
     <div class="main-layout">
-
         <nav class="sidebar">
             <div class="sidebar-title">Líneas de Producto</div>
             <ul class="category-menu-list" id="menuList"></ul>
@@ -335,11 +400,17 @@
 
             <div class="products-grid" id="productsContainer"></div>
         </main>
+    </div>
 
+    <div id="imageModal" class="custom-modal" onclick="closeLightbox()">
+        <div class="modal-content-wrapper" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeLightbox()">&times;</button>
+            <img id="modalTargetImg" class="modal-img" src="" alt="Vista ampliada">
+        </div>
     </div>
 
     <script>
-        // BASE DE DATOS DE PRODUCTOS CON ENLACES A IMÁGENES DE MARKETING DE ALTO IMPACTO
+        // BASE DE DATOS DE PRODUCTOS
         const catalogData = {
             dvr: {
                 title: "Grabadores Digitales (DVR)",
@@ -372,33 +443,35 @@
         };
 
         const categoriesList = [
-            { id: "dvr", name: "DVR" },
-            { id: "nvr", name: "NVR" },
-            { id: "nvs", name: "NVS" },
-            { id: "accesorios", name: "Accesorios" },
-            { id: "camaras_ip", name: "Cámaras IP" },
-            { id: "camaras_analog", name: "Cámaras Análogas" },
-            { id: "camaras_ptz", name: "Cámaras PTZ" },
-            { id: "switch_rack", name: "Switches para Rack" },
-            { id: "switches_poe", name: "Switches PoE" },
-            { id: "kits", name: "Kits" },
-            { id: "monitores", name: "Monitores" }
+            { id: "dvr", name: "DVR" }, { id: "nvr", name: "NVR" }, { id: "nvs", name: "NVS" },
+            { id: "accesorios", name: "Accesorios" }, { id: "camaras_ip", name: "Cámaras IP" },
+            { id: "camaras_analog", name: "Cámaras Análogas" }, { id: "camaras_ptz", name: "Cámaras PTZ" },
+            { id: "switch_rack", name: "Switches para Rack" }, { id: "switches_poe", name: "Switches PoE" },
+            { id: "kits", name: "Kits" }, { id: "monitores", name: "Monitores" }
         ];
 
-        // FUNCIÓN GENERADORA DEL ENLACE DE WHATSAPP (CON FILTRO DE RUTAS DETECTADO)
+        // LOGICA DE APERTURA DE IMAGEN GRANDE (MODAL)
+        function openLightbox(url) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalTargetImg');
+            modalImg.src = url;
+            modal.style.display = 'flex';
+        }
+
+        function closeLightbox() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+
+        // GENERADORA DEL ENLACE DE WHATSAPP
         function generateWhatsAppLink(model, desc, price, flayer) {
             let absoluteFlayerUrl = '';
-
-            // Si el flayer ya es una URL absoluta (empieza con http:// o https://) no concatenamos nada
             if (flayer.startsWith('http://') || flayer.startsWith('https://')) {
                 absoluteFlayerUrl = flayer;
             } else {
-                // Si es una ruta interna relativa (ej: 'img/marketing/foto.jpg'), calculamos la URL base limpia
                 const currentRepoUrl = window.location.origin + window.location.pathname.replace('index.html', '');
                 absoluteFlayerUrl = currentRepoUrl.endsWith('/') ? currentRepoUrl + flayer : currentRepoUrl + '/' + flayer;
             }
 
-            // Formato de mensaje corporativo optimizado
             const text = `*Hola, te comparto la ficha técnica del equipo solicitado:* \n\n` +
                          `*Modelo:* ${model}\n` +
                          `*Descripción:* ${desc}\n` +
@@ -430,17 +503,16 @@
                     card.className = 'product-card';
                     card.innerHTML = `
                         <div class="product-body">
-                            <div class="product-img-box" onclick="window.open('${prod.flayerUrl}', '_blank')">
+                            <div class="product-img-box" onclick="openLightbox('${prod.flayerUrl}')">
                                 <img src="${prod.flayerUrl}" alt="${prod.model}" onerror="this.src='https://placehold.co/100x100?text=Flayer+CCTV'">
                             </div>
                             <div class="product-details">
-                                <a href="${prod.flayerUrl}" target="_blank" class="product-model">${prod.model}</a>
+                                <div class="product-model" onclick="openLightbox('${prod.flayerUrl}')">${prod.model}</div>
                                 <p class="product-desc">${prod.desc}</p>
                                 <p class="product-price">${prod.price} <span>USD + IVA</span></p>
                             </div>
                         </div>
                         <div class="product-footer">
-                            <a href="${prod.flayerUrl}" target="_blank" class="btn-view-flayer">🔍 Ampliar Imagen</a>
                             <a href="${waLink}" target="_blank" class="btn-whatsapp">
                                 💬 Enviar por WhatsApp
                             </a>
