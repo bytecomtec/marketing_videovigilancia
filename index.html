@@ -388,7 +388,6 @@
         </main>
     </div>
 
-    <!-- ESTRUCTURA DEL MODAL UNIFICADO -->
     <div id="imageModal" class="custom-modal" onclick="closeLightbox()">
         <div class="modal-content-wrapper" onclick="event.stopPropagation()">
             <button class="modal-close" onclick="closeLightbox()">&times;</button>
@@ -397,7 +396,7 @@
     </div>
 
     <script>
-        // BASE DE DATOS DE PRODUCTOS (SIN PRECIOS)
+        // BASE DE DATOS DE PRODUCTOS
         const catalogData = {
             dvr: {
                 title: "Grabadores Digitales (DVR)",
@@ -435,7 +434,6 @@
             { id: "kits", name: "Kits" }, { id: "monitores", name: "Monitores" }
         ];
 
-        // LOGICA DE APERTURA DE IMAGEN GRANDE (MODAL DE LA WEB)
         function openLightbox(url) {
             const modal = document.getElementById('imageModal');
             const modalImg = document.getElementById('modalTargetImg');
@@ -447,7 +445,9 @@
             document.getElementById('imageModal').style.display = 'none';
         }
 
-        // ENLACE DE WHATSAPP OPTIMIZADO (Coloca la URL al inicio para activar la previsualización sin ensuciar abajo)
+        // SOLUCIÓN TÉCNICA: Separamos la URL al final del mensaje con salto de línea limpio.
+        // Nota: Para que la previsualización se envíe SIEMPRE de forma nativa, el usuario debe esperar 1 segundo 
+        // en la pantalla de WhatsApp antes de presionar ENTER, permitiendo que los servidores de Facebook indexen el flayer.
         function generateWhatsAppLink(model, desc, flayer) {
             let absoluteFlayerUrl = flayer;
             if (!flayer.startsWith('http://') && !flayer.startsWith('https://')) {
@@ -455,16 +455,14 @@
                 absoluteFlayerUrl = currentRepoUrl.endsWith('/') ? currentRepoUrl + flayer : currentRepoUrl + '/' + flayer;
             }
 
-            // Al poner la URL al principio del todo, WhatsApp genera la miniatura de la foto arriba automáticamente
-            const text = `${absoluteFlayerUrl}\n` +
-                         `*Hola, te comparto la información del equipo solicitado:* \n\n` +
+            const text = `*Hola, te comparto la información del equipo solicitado:* \n\n` +
                          `*Modelo:* ${model}\n` +
-                         `*Descripción:* ${desc}`;
+                         `*Descripción:* ${desc}\n\n` +
+                         `${absoluteFlayerUrl}`;
             
             return `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
         }
 
-        // RENDERIZADO INTERACTIVO
         function renderCategory(categoryId) {
             const container = document.getElementById('productsContainer');
             const titleElem = document.getElementById('categoryTitle');
@@ -510,7 +508,6 @@
             }
         }
 
-        // INICIALIZACIÓN
         function initMenu() {
             const menuList = document.getElementById('menuList');
             categoriesList.forEach((cat, index) => {
