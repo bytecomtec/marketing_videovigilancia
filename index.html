@@ -185,7 +185,7 @@
             gap: 20px;
         }
 
-        /* Tarjeta de Producto Avanzada (Soporta Flayer de Marketing) */
+        /* Tarjeta de Producto Avanzada */
         .product-card {
             background-color: var(--white);
             border: 1px solid var(--border-color);
@@ -262,7 +262,7 @@
             font-size: 1rem;
             text-decoration: none;
             display: block;
-            margin-bottom: 4px;
+            margin-bottom: 6px;
             cursor: pointer;
         }
 
@@ -274,20 +274,7 @@
             font-size: 0.85rem;
             color: #475569;
             line-height: 1.4;
-            margin: 0 0 8px 0;
-        }
-
-        .product-price {
-            color: var(--price-color);
-            font-weight: 700;
-            font-size: 1.15rem;
             margin: 0;
-        }
-
-        .product-price span {
-            font-size: 0.8rem;
-            font-weight: 500;
-            color: #64748b;
         }
 
         /* Sección de Acciones e Interacción con el Cliente */
@@ -306,8 +293,8 @@
             color: var(--white);
             border: none;
             border-radius: 4px;
-            padding: 6px 12px;
-            font-size: 0.82rem;
+            padding: 8px 12px;
+            font-size: 0.85rem;
             font-weight: 600;
             cursor: pointer;
             display: inline-flex;
@@ -402,6 +389,7 @@
         </main>
     </div>
 
+    <!-- ESTRUCTURA DEL MODAL UNIFICADO -->
     <div id="imageModal" class="custom-modal" onclick="closeLightbox()">
         <div class="modal-content-wrapper" onclick="event.stopPropagation()">
             <button class="modal-close" onclick="closeLightbox()">&times;</button>
@@ -410,7 +398,7 @@
     </div>
 
     <script>
-        // BASE DE DATOS DE PRODUCTOS
+        // BASE DE DATOS DE PRODUCTOS (SIN LOS CAMPOS DE PRECIO VISIBLES)
         const catalogData = {
             dvr: {
                 title: "Grabadores Digitales (DVR)",
@@ -419,13 +407,11 @@
                     { 
                         model: "DS-7116HGHI-M1(E)", 
                         desc: "DVR 16 Canales de Grabación HD / Soporte H.265 Pro+ Eficiente / Compatibilidad Multi-Cámara / Acceso Remoto Simple.", 
-                        price: "119.22", 
                         flayerUrl: "https://bytecomtec.github.io/marketing_videovigilancia/DS-7116HGHI-M1(E).jpg"
                     },
                     { 
                         model: "DS-7204HGHI-F1(S)", 
                         desc: "DVR 4 Canales 1080p Lite / Audio por coaxial / Clasificación de humanos y vehículos.", 
-                        price: "30.65", 
                         flayerUrl: "img/marketing/ds-7204hghi.jpg" 
                     }
                 ]
@@ -462,21 +448,12 @@
             document.getElementById('imageModal').style.display = 'none';
         }
 
-        // GENERADORA DEL ENLACE DE WHATSAPP
-        function generateWhatsAppLink(model, desc, price, flayer) {
-            let absoluteFlayerUrl = '';
-            if (flayer.startsWith('http://') || flayer.startsWith('https://')) {
-                absoluteFlayerUrl = flayer;
-            } else {
-                const currentRepoUrl = window.location.origin + window.location.pathname.replace('index.html', '');
-                absoluteFlayerUrl = currentRepoUrl.endsWith('/') ? currentRepoUrl + flayer : currentRepoUrl + '/' + flayer;
-            }
-
-            const text = `*Hola, te comparto la ficha técnica del equipo solicitado:* \n\n` +
+        // GENERADORA DEL ENLACE DE WHATSAPP (TEXTO EXCLUSIVAMENTE CORPORATIVO)
+        function generateWhatsAppLink(model, desc) {
+            // Se quitó la generación de URL absolutas, precios y flayers para que el mensaje sea 100% limpio
+            const text = `*Hola, te comparto la información del equipo solicitado:* \n\n` +
                          `*Modelo:* ${model}\n` +
-                         `*Descripción:* ${desc}\n` +
-                         `*Precio:* $${price} USD (Más IVA)\n\n` +
-                         `📸 *Ver Imagen Publicitaria / Ficha:* ${absoluteFlayerUrl}`;
+                         `*Descripción:* ${desc}`;
             
             return `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
         }
@@ -498,7 +475,7 @@
                 container.innerHTML = '';
 
                 data.products.forEach(prod => {
-                    const waLink = generateWhatsAppLink(prod.model, prod.desc, prod.price, prod.flayerUrl);
+                    const waLink = generateWhatsAppLink(prod.model, prod.desc);
                     const card = document.createElement('div');
                     card.className = 'product-card';
                     card.innerHTML = `
@@ -509,12 +486,11 @@
                             <div class="product-details">
                                 <div class="product-model" onclick="openLightbox('${prod.flayerUrl}')">${prod.model}</div>
                                 <p class="product-desc">${prod.desc}</p>
-                                <p class="product-price">${prod.price} <span>USD + IVA</span></p>
                             </div>
                         </div>
                         <div class="product-footer">
                             <a href="${waLink}" target="_blank" class="btn-whatsapp">
-                                💬 Enviar por WhatsApp
+                                💬 Consultar por WhatsApp
                             </a>
                         </div>
                     `;
