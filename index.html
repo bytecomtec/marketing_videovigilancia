@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catálogo Especializado - Videovigilancia</title>
+    <title>Panel de Control de Margen e Infraestructura - Bytecomtec</title>
     <style>
         /* ==========================================================================
            Variables de Paleta de Color Corporativa
@@ -34,11 +34,11 @@
             flex-wrap: wrap; gap: 15px;
         }
 
-        .navbar h1 { margin: 0; font-size: 1.4rem; font-weight: 600; }
+        .navbar h1 { margin: 0; font-size: 1.3rem; font-weight: 600; }
 
-        /* Contenedor de Parámetros Globales */
+        /* Panel de Parámetros Globales */
         .config-panel {
-            display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
+            display: flex; align-items: center; gap: 15px; flex-wrap: wrap;
         }
 
         .currency-controller {
@@ -46,32 +46,29 @@
             padding: 6px 12px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.2);
             gap: 10px; font-size: 0.9rem;
         }
-        .currency-controller input {
-            width: 70px; padding: 4px 6px; border-radius: 4px; border: none;
+        .currency-controller input, .currency-controller select {
+            padding: 4px 6px; border-radius: 4px; border: none;
             font-weight: bold; text-align: center; color: var(--primary-color); font-size: 0.95rem;
+            outline: none;
         }
-
-        .btn-return {
-            color: var(--white); text-decoration: none; font-size: 0.9rem;
-            border: 1px solid var(--white); padding: 6px 12px; border-radius: 4px;
-            transition: all 0.2s;
-        }
-        .btn-return:hover { background-color: var(--white); color: var(--primary-color); }
 
         .main-layout { display: flex; flex: 1; max-width: 1440px; width: 100%; margin: 0 auto; }
 
         @media (max-width: 900px) { .main-layout { flex-direction: column; } }
 
-        /* Sidebar Menú */
-        .sidebar { width: 290px; background-color: var(--white); border-right: 1px solid var(--border-color); padding: 20px 10px; box-sizing: border-box; }
-        @media (max-width: 900px) { .sidebar { width: 100%; border-right: none; border-bottom: 1px solid var(--border-color); } }
+        /* Sidebar Menú con Scroll Independiente */
+        .sidebar { 
+            width: 300px; background-color: var(--white); border-right: 1px solid var(--border-color); 
+            padding: 20px 10px; box-sizing: border-box; max-height: calc(100vh - 70px); overflow-y: auto;
+        }
+        @media (max-width: 900px) { .sidebar { width: 100%; max-height: none; border-right: none; border-bottom: 1px solid var(--border-color); } }
 
-        .sidebar-title { font-size: 0.9rem; font-weight: 700; text-transform: uppercase; color: #64748b; padding-left: 10px; margin-bottom: 15px; letter-spacing: 0.5px; }
+        .sidebar-title { font-size: 0.85rem; font-weight: 700; text-transform: uppercase; color: #64748b; padding-left: 10px; margin-bottom: 15px; letter-spacing: 0.5px; }
         .category-menu-list { list-style: none; padding: 0; margin: 0; }
         .category-menu-item {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 12px 14px; color: var(--text-main); text-decoration: none;
-            font-size: 0.95rem; font-weight: 500; border-radius: 6px; margin-bottom: 4px; cursor: pointer; transition: all 0.2s;
+            padding: 11px 14px; color: var(--text-main); text-decoration: none;
+            font-size: 0.9rem; font-weight: 500; border-radius: 6px; margin-bottom: 4px; cursor: pointer; transition: all 0.2s;
         }
         .category-menu-item:hover { background-color: #f1f5f9; color: var(--primary-color); }
         .category-menu-item.active { background-color: #e0f2fe; color: #0369a1; font-weight: 600; border-left: 4px solid #0284c7; }
@@ -81,117 +78,90 @@
         /* Showcase de Productos */
         .content-showcase { flex: 1; padding: 30px; box-sizing: border-box; }
         .showcase-header { margin-bottom: 25px; }
-        .showcase-header h2 { margin: 0 0 8px 0; color: var(--primary-color); font-size: 1.8rem; }
+        .showcase-header h2 { margin: 0 0 8px 0; color: var(--primary-color); font-size: 1.7rem; }
         .showcase-header p { margin: 0; color: #64748b; font-size: 0.95rem; }
 
-        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 25px; }
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(430px, 1fr)); gap: 25px; }
         @media (max-width: 500px) { .products-grid { grid-template-columns: 1fr; } }
 
         .product-card {
             background-color: var(--white); border: 1px solid var(--border-color); border-radius: 8px;
             padding: 20px; display: flex; flex-direction: column; justify-content: space-between;
-            position: relative; transition: transform 0.2s, box-shadow 0.2s; animation: fadeIn 0.25s ease-in-out;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
         .product-card:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.08); }
-        .product-body { display: flex; flex-direction: column; gap: 15px; margin-bottom: 15px; }
-
+        .product-body { display: flex; flex-direction: column; gap: 12px; margin-bottom: 15px; }
         .product-main-info { display: flex; gap: 15px; align-items: flex-start; }
 
         .product-img-box {
-            width: 120px; height: 120px; flex-shrink: 0; border: 1px solid #f1f5f9; border-radius: 6px;
-            display: flex; align-items: center; justify-content: center; background-color: #ffffff; overflow: hidden; cursor: pointer; position: relative;
+            width: 110px; height: 110px; flex-shrink: 0; border: 1px solid #f1f5f9; border-radius: 6px;
+            display: flex; align-items: center; justify-content: center; background-color: #ffffff; overflow: hidden; cursor: pointer;
         }
-        .product-img-box::after {
-            content: "🖼️ Ver Ficha"; position: absolute; background: rgba(0, 51, 102, 0.85);
-            width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
-            color: white; font-size: 0.8rem; font-weight: 600; opacity: 0; transition: opacity 0.2s;
-        }
-        .product-img-box:hover::after { opacity: 1; }
         .product-img-box img { max-width: 100%; max-height: 100%; object-fit: cover; }
 
         .product-details { flex-grow: 1; }
-        .product-model { color: #003399; font-weight: 700; font-size: 1.1rem; display: block; margin-bottom: 6px; cursor: pointer; }
-        .product-model:hover { text-decoration: underline; }
-        .product-title-specs { font-size: 1rem; color: var(--text-main); font-weight: bold; line-height: 1.4; margin: 0 0 8px 0; }
+        .product-model { color: #003399; font-weight: 700; font-size: 1.1rem; margin-bottom: 4px; }
+        .product-title-specs { font-size: 0.9rem; color: var(--text-main); font-weight: 600; line-height: 1.4; margin: 0 0 6px 0; }
         
-        .product-price-list { font-size: 0.95rem; color: #475569; margin: 8px 0; font-weight: 500; }
-        .product-price-list span { color: #d32f2f; font-weight: bold; font-size: 1.1rem; }
-        .usd-reference { font-size: 0.75rem; color: #94a3b8; display: block; margin-top: 2px; }
+        .product-price-list { font-size: 0.95rem; color: #475569; margin: 5px 0; font-weight: 500; }
+        .product-price-list .original-price { text-decoration: line-through; color: #94a3b8; font-size: 0.85rem; margin-right: 8px; }
+        .product-price-list .final-price { color: #d32f2f; font-weight: bold; font-size: 1.15rem; }
+        .usd-reference { font-size: 0.75rem; color: #64748b; display: block; margin-top: 2px; }
 
-        /* Características extendidas en el catálogo */
-        .product-features-list { margin: 10px 0 0 0; padding-left: 20px; list-style-type: none; }
-        .product-features-list li { font-size: 0.85rem; color: #475569; line-height: 1.5; margin-bottom: 4px; position: relative; }
-        .product-features-list li::before { content: "✓"; position: absolute; left: -16px; color: #10b981; font-weight: bold; }
-
-        .product-footer { border-top: 1px solid #f1f5f9; padding-top: 12px; margin-top: 5px; }
-
+        .product-footer { border-top: 1px solid #f1f5f9; padding-top: 12px; }
         .btn-prepare {
             background-color: var(--primary-color); color: var(--white); border: none; border-radius: 4px;
-            padding: 10px 12px; font-size: 0.85rem; font-weight: 600; cursor: pointer;
-            display: inline-flex; align-items: center; gap: 6px; text-decoration: none; width: 100%; justify-content: center; transition: background-color 0.2s;
+            padding: 9px 12px; font-size: 0.85rem; font-weight: 600; cursor: pointer; width: 100%; text-align: center;
         }
         .btn-prepare:hover { background-color: #002244; }
 
-        /* ==========================================================================
-           MODAL EXCLUSIVO PARA COPIADO MULTIMEDIA
-           ========================================================================= */
+        /* MODAL */
         .custom-modal {
             display: none; position: fixed; z-index: 9999; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: rgba(15, 23, 42, 0.85); align-items: center; justify-content: center; animation: fadeIn 0.2s ease-in-out;
+            background-color: rgba(15, 23, 42, 0.85); align-items: center; justify-content: center;
         }
-
         .modal-content-wrapper {
             position: relative; background-color: var(--white); padding: 25px; border-radius: 8px;
-            max-width: 650px; width: 90%; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
-            display: flex; flex-direction: column; align-items: center;
+            max-width: 600px; width: 90%; text-align: center;
         }
-
-        .render-container {
-            width: 100%; display: flex; justify-content: center; margin-top: 10px; margin-bottom: 15px;
-        }
-
-        .output-composite-img {
-            max-width: 100%; max-height: 70vh; border: 1px solid #cbd5e1; border-radius: 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-        }
-
-        .modal-close {
-            position: absolute; top: 10px; right: 15px; color: #94a3b8; font-size: 1.8rem; font-weight: bold; cursor: pointer; background: none; border: none;
-        }
-        .modal-close:hover { color: #475569; }
-
-        .copy-helper-text { font-size: 0.85rem; color: #0284c7; font-weight: 600; margin-top: 5px; animation: pulse 2s infinite; }
-
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
+        .output-composite-img { max-width: 100%; max-height: 65vh; border: 1px solid #cbd5e1; border-radius: 6px; }
+        .modal-close { position: absolute; top: 10px; right: 15px; color: #94a3b8; font-size: 1.8rem; cursor: pointer; background: none; border: none; }
     </style>
 </head>
 <body>
 
     <header class="navbar">
-        <h1>Centro de Soluciones de Red e Infraestructura</h1>
+        <h1>Bytecomtec - Centro de Control de Margen</h1>
         
         <div class="config-panel">
             <div class="currency-controller">
                 <label for="exchangeRate">Dólar SYSCOM:</label>
                 <span>$</span>
-                <input type="number" id="exchangeRate" value="18.15" step="0.05" min="1" oninput="updateAllPrices()">
+                <input type="number" id="exchangeRate" value="17.23" step="0.01" min="1" oninput="updateAllPrices()">
                 <span>MXN</span>
             </div>
-        </div>
 
-        <a href="../index.html" class="btn-return">← Menú de Infraestructura</a>
+            <div class="currency-controller">
+                <label for="discountSelect">Descuento Público:</label>
+                <select id="discountSelect" onchange="updateAllPrices()">
+                    <option value="0">Precio de Lista (Margen 60% base)</option>
+                    <option value="0.10">Aplicar 10% Especial</option>
+                    <option value="0.20" selected>Aplicar 20% Máximo Autorizado</option>
+                </select>
+            </div>
+        </div>
     </header>
 
     <div class="main-layout">
         <nav class="sidebar">
-            <div class="sidebar-title">Líneas de Producto</div>
+            <div class="sidebar-title">Líneas de Negocio</div>
             <ul class="category-menu-list" id="menuList"></ul>
         </nav>
 
         <main class="content-showcase">
             <div class="showcase-header">
-                <h2 id="categoryTitle">Seleccione una Categoría</h2>
-                <p id="categoryDesc">Haga clic en el menú izquierdo para visualizar las soluciones disponibles con margen de protección comercial.</p>
+                <h2 id="categoryTitle">Cargando...</h2>
+                <p id="categoryDesc"></p>
             </div>
             <div class="products-grid" id="productsContainer"></div>
         </main>
@@ -200,197 +170,132 @@
     <div id="imageModal" class="custom-modal" onclick="closeLightbox()">
         <div class="modal-content-wrapper" onclick="event.stopPropagation()">
             <button class="modal-close" onclick="closeLightbox()">&times;</button>
-            
-            <div style="font-size: 0.9rem; color:#475569; font-weight:500;">Imagen de Ficha Comercial Generada:</div>
-            
-            <div class="render-container">
-                <img id="modalTargetImg" class="output-composite-img" src="" alt="Ficha Unificada">
-            </div>
-            
-            <div class="copy-helper-text">👉 Clic derecho aquí -> "Copiar imagen" y pégala en WhatsApp</div>
+            <div style="font-size: 0.9rem; color:#475569; font-weight:600; margin-bottom:10px;">Vista Previa de Ficha Técnica:</div>
+            <img id="modalTargetImg" class="output-composite-img" src="" alt="Ficha Comercial">
+            <div style="color:#0284c7; font-size:0.85rem; font-weight:bold; margin-top:10px;">👉 Clic derecho para copiar y pegar directo en WhatsApp</div>
         </div>
     </div>
 
     <canvas id="processingCanvas" style="display: none;"></canvas>
 
     <script>
-        let currentRate = 18.15;
+        let currentRate = 17.23;
+        let currentDiscount = 0.20;
 
-        // Base de datos parametrizada con Costo SYSCOM (USD) y su respectivo Factor de Margen Comercial (ej. 1.60)
+        // Estructura completa de Categorías solicitadas
+        const categoriesList = [
+            { id: "dvr", name: "DVR" },
+            { id: "nvr", name: "NVR" },
+            { id: "nvs", name: "NVS" },
+            { id: "accesorios", name: "Accesorios" },
+            { id: "almacenamiento", name: "Almacenamiento" },
+            { id: "camaras_ip", name: "Cámaras IP" },
+            { id: "camaras_analogas", name: "Cámaras Análogas" },
+            { id: "camaras_ptz", name: "Cámaras PTZ" },
+            { id: "switch_rack", name: "Switch para Rack" },
+            { id: "switch_poe", name: "Switch PoE" },
+            { id: "kits", name: "Kits" },
+            { id: "monitores", name: "Monitores" },
+            { id: "accesorios_extra", name: "Accesorios Extra" }
+        ];
+
+        // Base de datos parametrizada con los 17 modelos de DVR solicitados
         const catalogData = {
             dvr: {
                 title: "Grabadores Digitales (DVR)",
-                desc: "Soluciones de grabación digital con precios sugeridos al público e infraestructura blindada ante fluctuaciones.",
+                desc: "Catálogo completo de soluciones TurboHD con costos integrados (IVA incluido) y factores de rentabilidad blindados.",
                 products: [
-                    {
-                        model: "S04-TURBO-G3",
-                        titleSpecs: "DVR 4 Canales 1080p Lite / H.265+ / Clasificación de Humanos y Vehículos / Audio por Coaxial / Salida HDMI-VGA",
-                        desc: "Grabador compacto ideal para el resguardo eficiente de perímetros pequeños.",
-                        costUSD: 27.20,
-                        marginFactor: 1.60,
-                        features: ["4 Canales de video TurboHD + 1 Canal IP", "Clasificación inteligente basada en aprendizaje profundo"],
-                        flayerUrl: "https://bytecomtec.github.io/marketing_videovigilancia/DS-7116HGHI-M1(E).jpg"
-                    },
-                    {
-                        model: "EV-4004TURBO-D",
-                        titleSpecs: "DVR 4 Canales 4 Megapixel Lite / Pentahíbrido / Compresión H.265 / Visualización en Tiempo Real",
-                        desc: "Grabador balanceado para nitidez estructural superior.",
-                        costUSD: 49.50,
-                        marginFactor: 1.60,
-                        features: ["Soporte nativo para cámaras de 4MP Lite", "Acceso remoto optimizado por app móvil"],
-                        flayerUrl: "https://bytecomtec.github.io/marketing_videovigilancia/DS-7116HGHI-M1(E).jpg"
-                    },
-                    {
-                        model: "DS-7204HGHI-M1(T)",
-                        titleSpecs: "DVR 4 Canales 1080p / Detección de Movimiento 2.0 / AcuSense Integrado / Soporte de Audio Multiplexado",
-                        desc: "Solución analítica avanzada que mitiga las falsas alarmas de entorno.",
-                        costUSD: 38.60,
-                        marginFactor: 1.60,
-                        features: ["Detección de movimiento 2.0 (Filtro humanos/vehículos)", "Estructura metálica de alta disipación"],
-                        flayerUrl: "https://bytecomtec.github.io/marketing_videovigilancia/DS-7116HGHI-M1(E).jpg"
-                    },
-                    {
-                        model: "EX-5008-TURBO",
-                        titleSpecs: "DVR 8 Canales Epcom TurboHD / Tecnología Pentahíbrido 5-en-1 / Grabación Inteligente / Almacenamiento Prolongado",
-                        desc: "Grabador digital de alta fiabilidad ideal para proyectos institucionales que demandan analíticas fluidas.",
-                        costUSD: 82.66,
-                        marginFactor: 1.60, // 82.66 * 1.6 = 132.25 USD sugerido público
-                        features: ["8 Canales de captura fluidos", "Compatibilidad multi-tecnología (TVI/AHD/CVI/CVBS)", "Audio por cable coaxial multiplexado"],
-                        flayerUrl: "https://bytecomtec.github.io/marketing_videovigilancia/DS-7116HGHI-M1(E).jpg"
-                    },
-                    {
-                        model: "DS-7116HGHI-M1(E)",
-                        titleSpecs: "DVR 16 Canales TurboHD + 2 Canales IP / 2 Megapixel (1080p) Lite / Acusense Lite / Audio por Coaxitron / H.265+",
-                        desc: "Plataforma multicanal masiva con compresión optimizada H.265 Pro+.",
-                        costUSD: 72.00,
-                        marginFactor: 1.60,
-                        features: ["Audio por coaxitron en todos los canales", "Soporta 18 canales en total (16 TurboHD + 2 IP)"],
-                        flayerUrl: "https://bytecomtec.github.io/marketing_videovigilancia/DS-7116HGHI-M1(E).jpg"
-                    }
+                    { model: "S04-TURBO-G3", titleSpecs: "DVR 4 Canales 1080p Lite / Audio por Coaxial / Clasificación de Humanos y Vehículos", costUSD: 34.04 },
+                    { model: "EV-4004TURBO-D", titleSpecs: "DVR 4 Canales 4 Megapixel Lite / Pentahíbrido / Compresión H.265", costUSD: 49.50 },
+                    { model: "DS-7204HGHI-M1(T)", titleSpecs: "DVR 4 Canales 1080p / Detección de Movimiento 2.0 / Metal", costUSD: 38.60 },
+                    { model: "DVR-208G-M1(C)", titleSpecs: "DVR 8 Canales 1080p Lite / Carcasa Plástica Económica / H.265 Pro", costUSD: 42.10 },
+                    { model: "S08-TURBO-M/T", titleSpecs: "DVR 8 Canales TurboHD Eficiente / Audio por Coaxial / Salida HDMI", costUSD: 51.30 },
+                    { model: "IDS-7208HQHI-M1/XT", titleSpecs: "DVR 8 Canales 4MP / AcuSense Completo / Filtro de Falsas Alarmas Avanzado", costUSD: 89.00 },
+                    { model: "EX-5008-TURBO", titleSpecs: "DVR 8 Canales Epcom Premium / Grabación Autónoma Inteligente / Robusto", costUSD: 82.66 },
+                    { model: "S16-TURBO-G3", titleSpecs: "DVR 16 Canales 1080p Lite / Formato Compacto / Detección por Canal", costUSD: 78.50 },
+                    { model: "S16-TURBO-M/T", titleSpecs: "DVR 16 Canales Metálico / Audio Multiplexado / Estabilidad de Red Superior", costUSD: 94.20 },
+                    { model: "DS-7116HGHI-M1(E)", titleSpecs: "DVR 16 Canales TurboHD + 2 Canales IP / 2 Megapixel / Audio Coaxitron / H.265+", costUSD: 72.00 },
+                    { model: "IDS-7216HUHI-M1/T", titleSpecs: "DVR 16 Canales 5 Megapixel de Alta Definición Nativa / Inteligencia Artificial", costUSD: 185.00 },
+                    { model: "IDS-7216HQHI-M1/XT", titleSpecs: "DVR 16 Canales 4 Megapixel Lite / Tecnología AcuSense / Analíticas Estructurales", costUSD: 142.10 },
+                    { model: "IDS-7216HQHI-M1/H/XT", titleSpecs: "DVR 16 Canales Avanzado / Tasa de Bits Optimizada / Compresión Extendida", costUSD: 154.00 },
+                    { model: "EX-5016TURBO", titleSpecs: "DVR 16 Canales Epcom Industrial / Máxima Capacidad de Transferencia / 4K Out", costUSD: 139.90 },
+                    { model: "DS-7232HGHI-M2", titleSpecs: "DVR 32 Canales de Captura Masiva / Soporte de Doble Bahía de Disco Duro", costUSD: 198.00 },
+                    { model: "IDS-7232HQHI-M2/XT", titleSpecs: "DVR 32 Canales Analíticos Pro / Detección de Rostros e Intrusos Avanzada", costUSD: 275.00 },
+                    { model: "EX-5032-TURBO", titleSpecs: "DVR 32 Canales Epcom de Alta Densidad / Resguardo Corporativo / Doble SATA", costUSD: 249.00 }
                 ]
-            },
-            nvr: { title: "Grabadores de Red (NVR)", desc: "Sistemas IP autónomos.", products: [] },
-            accesorios: { title: "Accesorios de Instalación", desc: "Baluns e infraestructura de conexión.", products: [] },
-            camaras_ip: { title: "Cámaras IP", desc: "Captura digital de alta definición nativa.", products: [] },
-            camaras_analog: { title: "Cámaras Análogas", desc: "Equipos ópticos HD-TVI y análogos.", products: [] }
+            }
         };
-
-        const categoriesList = [
-            { id: "dvr", name: "DVR" }, { id: "nvr", name: "NVR" },
-            { id: "accesorios", name: "Accesorios" }, { id: "camaras_ip", name: "Cámaras IP" },
-            { id: "camaras_analog", name: "Cámaras Análogas" }
-        ];
 
         let activeCategory = "dvr";
 
         function updateAllPrices() {
-            const inputRate = document.getElementById('exchangeRate').value;
-            if(inputRate && inputRate > 0) {
-                currentRate = parseFloat(inputRate);
-                renderCategory(activeCategory);
-            }
+            currentRate = parseFloat(document.getElementById('exchangeRate').value) || 17.23;
+            currentDiscount = parseFloat(document.getElementById('discountSelect').value);
+            renderCategory(activeCategory);
         }
 
-        function generateFromIndex(catId, productIndex) {
-            const productObj = catalogData[catId].products[productIndex];
-            if (!productObj) return;
-
+        function generateFromIndex(index) {
+            const prod = catalogData.dvr.products[index];
             const canvas = document.getElementById('processingCanvas');
             const ctx = canvas.getContext('2d');
             const img = new Image();
             
             img.crossOrigin = "anonymous";
-            img.src = productObj.flayerUrl;
+            // Usa una plantilla base o flyer corporativo alojado en tu GitHub Pages
+            img.src = `https://bytecomtec.github.io/marketing_videovigilancia/${prod.model}.jpg`;
             
             img.onload = function() {
-                const cardWidth = 650;
+                canvas.width = 600; canvas.height = 750;
+                ctx.fillStyle = "#ffffff"; ctx.fillRect(0, 0, canvas.width, canvas.height);
                 
-                ctx.font = "bold 16px 'Segoe UI', sans-serif";
-                const words = productObj.titleSpecs.split(' ');
-                let titleLines = [];
-                let currentLine = "";
+                ctx.fillStyle = "#003366"; ctx.font = "bold 24px 'Segoe UI', sans-serif";
+                ctx.fillText(prod.model, 30, 50);
                 
-                for (let n = 0; n < words.length; n++) {
-                    let testLine = currentLine + words[n] + " ";
-                    let metrics = ctx.measureText(testLine);
-                    if (metrics.width > (cardWidth - 60) && n > 0) {
-                        titleLines.push(currentLine.trim());
-                        currentLine = words[n] + " ";
-                    } else {
-                        currentLine = testLine;
-                    }
+                ctx.fillStyle = "#334155"; ctx.font = "14px 'Segoe UI', sans-serif";
+                ctx.fillText(prod.titleSpecs.substring(0, 75) + "...", 30, 85);
+                
+                const marginFactor = 1.60;
+                const priceListUSD = prod.costUSD * marginFactor;
+                const priceWithDiscountUSD = priceListUSD * (1 - currentDiscount);
+                
+                const originalMXN = (priceListUSD * currentRate).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
+                const finalMXN = (priceWithDiscountUSD * currentRate).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
+                
+                if(currentDiscount > 0) {
+                    ctx.fillStyle = "#94a3b8"; ctx.font = "line-through 14px 'Segoe UI', sans-serif";
+                    ctx.fillText("Precio Lista Regular: " + originalMXN, 30, 120);
+                    ctx.fillStyle = "#d32f2f"; ctx.font = "bold 22px 'Segoe UI', sans-serif";
+                    ctx.fillText("Descuento Especial: " + finalMXN, 30, 150);
+                } else {
+                    ctx.fillStyle = "#003366"; ctx.font = "bold 22px 'Segoe UI', sans-serif";
+                    ctx.fillText("Precio Público: " + finalMXN, 30, 140);
                 }
-                titleLines.push(currentLine.trim());
-
-                let currentY = 35;
-                const modelHeight = 30;
-                const titleBlockHeight = titleLines.length * 24;
-                const featuresBlockHeight = productObj.features ? (productObj.features.length * 22) + 10 : 0;
-                const priceBlockHeight = 40;
                 
-                const textSectionHeight = currentY + modelHeight + titleBlockHeight + featuresBlockHeight + priceBlockHeight + 20;
-                const imgRenderWidth = cardWidth;
-                const imgRenderHeight = (img.height / img.width) * cardWidth;
-                
-                canvas.width = cardWidth;
-                canvas.height = textSectionHeight + imgRenderHeight;
-                
-                ctx.fillStyle = "#ffffff";
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-                
-                ctx.fillStyle = "#003366";
-                ctx.font = "bold 24px 'Segoe UI', sans-serif";
-                ctx.fillText(productObj.model, 30, currentY + 10);
-                currentY += 45;
-                
-                ctx.fillStyle = "#1e293b";
-                ctx.font = "bold 16px 'Segoe UI', sans-serif";
-                for (let i = 0; i < titleLines.length; i++) {
-                    ctx.fillText(titleLines[i], 30, currentY);
-                    currentY += 24;
-                }
-                currentY += 10;
-                
-                if (productObj.features && productObj.features.length > 0) {
-                    productObj.features.forEach(feat => {
-                        ctx.fillStyle = "#10b981";
-                        ctx.font = "bold 15px 'Segoe UI', sans-serif";
-                        ctx.fillText("✓", 30, currentY);
-                        
-                        ctx.fillStyle = "#475569";
-                        ctx.font = "500 14px 'Segoe UI', sans-serif";
-                        ctx.fillText(feat, 50, currentY);
-                        currentY += 22;
-                    });
-                }
-                currentY += 15;
-                
-                ctx.fillStyle = "#475569";
-                ctx.font = "500 15px 'Segoe UI', sans-serif";
-                ctx.fillText("Precio Sugerido: ", 30, currentY);
-                
-                const prefixWidth = ctx.measureText("Precio Sugerido: ").width;
-                ctx.fillStyle = "#d32f2f";
-                ctx.font = "bold 20px 'Segoe UI', sans-serif";
-                
-                // PRECIO FINAL EN IMAGEN: Costo * Margen * Tipo de Cambio
-                const calculatedSalePriceMXN = (productObj.costUSD * productObj.marginFactor * currentRate).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
-                ctx.fillText(calculatedSalePriceMXN, 30 + prefixWidth, currentY + 2);
-                
-                ctx.drawImage(img, 0, textSectionHeight, imgRenderWidth, imgRenderHeight);
-                
+                ctx.drawImage(img, 30, 180, 540, 540);
                 document.getElementById('modalTargetImg').src = canvas.toDataURL("image/jpeg", 0.95);
                 document.getElementById('imageModal').style.display = 'flex';
             };
 
             img.onerror = function() {
-                alert("Error al compilar la tarjeta publicitaria.");
+                // Fallback dinámico si el JPG físico no está en la nube para renderizar la ficha
+                canvas.width = 600; canvas.height = 300;
+                ctx.fillStyle = "#003366"; ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = "#ffffff"; ctx.font = "bold 28px 'Segoe UI', sans-serif";
+                ctx.fillText("BYTECOMTEC - FICHA DIGITAL", 40, 60);
+                ctx.font = "bold 22px 'Segoe UI', sans-serif"; ctx.fillText("Modelo: " + prod.model, 40, 110);
+                ctx.font = "14px 'Segoe UI', sans-serif"; ctx.fillText(prod.titleSpecs, 40, 150);
+                
+                const marginFactor = 1.60;
+                const finalPriceMXN = ((prod.costUSD * marginFactor * (1 - currentDiscount)) * currentRate).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
+                ctx.fillStyle = "#ff6600"; ctx.font = "bold 26px 'Segoe UI', sans-serif";
+                ctx.fillText("Inversión: " + finalPriceMXN + " MXN", 40, 220);
+                
+                document.getElementById('modalTargetImg').src = canvas.toDataURL("image/jpeg", 0.95);
+                document.getElementById('imageModal').style.display = 'flex';
             };
         }
 
-        function closeLightbox() {
-            document.getElementById('imageModal').style.display = 'none';
-        }
+        function closeLightbox() { document.getElementById('imageModal').style.display = 'none'; }
 
         function renderCategory(categoryId) {
             activeCategory = categoryId;
@@ -403,7 +308,7 @@
 
             const data = catalogData[categoryId];
 
-            if (data && data.products.length > 0) {
+            if (data && data.products && data.products.length > 0) {
                 titleElem.innerText = data.title;
                 descElem.innerText = data.desc;
                 container.innerHTML = '';
@@ -412,65 +317,71 @@
                     const card = document.createElement('div');
                     card.className = 'product-card';
                     
-                    let featuresHtml = '';
-                    if (prod.features && prod.features.length > 0) {
-                        featuresHtml = `<ul class="product-features-list">`;
-                        prod.features.forEach(feat => {
-                            featuresHtml += `<li>${feat}</li>`;
-                        });
-                        featuresHtml += `</ul>`;
-                    }
-
-                    const actionString = `generateFromIndex('${categoryId}', ${index})`;
+                    const marginFactor = 1.60;
+                    const priceListUSD = prod.costUSD * marginFactor;
+                    const priceWithDiscountUSD = priceListUSD * (1 - currentDiscount);
                     
-                    // Cálculo Dinámico de Venta al público en MXN con margen integrado
-                    const publicPriceUSD = prod.costUSD * prod.marginFactor;
-                    const finalPriceMXN = (publicPriceUSD * currentRate).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
+                    const originalPriceMXN = (priceListUSD * currentRate).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
+                    const finalPriceMXN = (priceWithDiscountUSD * currentRate).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
+
+                    // Auditoría interna de control de pérdidas
+                    const costoRealMXN = prod.costUSD * currentRate;
+                    const utilidadNetaRealMXN = (priceWithDiscountUSD * currentRate) - costoRealMXN;
+
+                    let priceBlock = '';
+                    if(currentDiscount > 0) {
+                        priceBlock = `
+                            <span class="original-price">${originalPriceMXN}</span>
+                            <span class="final-price">${finalPriceMXN}</span>
+                            <small style="color:#10b981; font-weight:bold; display:block;">-${(currentDiscount*100)}% aplicado</small>
+                        `;
+                    } else {
+                        priceBlock = `<span class="final-price">${finalPriceMXN}</span>`;
+                    }
 
                     card.innerHTML = `
                         <div class="product-body">
                             <div class="product-main-info">
-                                <div class="product-img-box" onclick="${actionString}">
-                                    <img src="${prod.flayerUrl}" alt="${prod.model}" onerror="this.src='https://placehold.co/100x100?text=Flyer+CCTV'">
+                                <div class="product-img-box" onclick="generateFromIndex(${index})">
+                                    <img src="https://bytecomtec.github.io/marketing_videovigilancia/${prod.model}.jpg" alt="${prod.model}" onerror="this.src='https://placehold.co/110x110?text=${prod.model}'">
                                 </div>
                                 <div class="product-details">
-                                    <div class="product-model" onclick="${actionString}">${prod.model}</div>
+                                    <div class="product-model">${prod.model}</div>
                                     <p class="product-title-specs">${prod.titleSpecs}</p>
-                                    <p class="product-price-list">Precio de Lista: <span>${finalPriceMXN}</span></p>
-                                    <small class="usd-reference">Valor Sugerido: $${publicPriceUSD.toFixed(2)} USD (Margen base incluido)</small>
+                                    <div class="product-price-list">${priceBlock}</div>
+                                    <span class="usd-reference">Costo Base SYSCOM: $${prod.costUSD.toFixed(2)} USD</span>
+                                    <span style="font-size:0.75rem; color:#475569; font-weight:bold; display:block; margin-top:4px; background:#f0fdf4; padding:3px 6px; border-radius:4px; border:1px solid #bbf7d0;">
+                                        Margen Neto Asegurado: +${utilidadNetaRealMXN.toLocaleString('es-MX', {style:'currency', currency:'MXN'})}
+                                    </span>
                                 </div>
                             </div>
-                            <p class="product-desc" style="font-weight: 500; border-top: 1px dotted #cbd5e1; padding-top: 8px;">${prod.desc}</p>
-                            ${featuresHtml}
                         </div>
                         <div class="product-footer">
-                            <button onclick="${actionString}" class="btn-prepare">
-                                🖼️ Generar Tarjeta Publicitaria
-                            </button>
+                            <button onclick="generateFromIndex(${index})" class="btn-prepare">🖼️ Generar Tarjeta Comercial</button>
                         </div>
                     `;
                     container.appendChild(card);
                 });
             } else {
                 const catName = categoriesList.find(c => c.id === categoryId).name;
-                titleElem.innerText = `Línea: ${catName}`;
-                descElem.innerText = `Soluciones tecnológicas asociadas a ${catName.toLowerCase()}.`;
-                container.innerHTML = `<p style="grid-column: 1/-1; color: #64748b; font-style: italic;">Próximamente se unificarán las imágenes multimedia de esta subcategoría.</p>`;
+                titleElem.innerText = `Línea de Redes: ${catName}`;
+                descElem.innerText = `Módulo estructural asignado a la subcategoría de ${catName.toLowerCase()}.`;
+                container.innerHTML = `<p style="grid-column: 1/-1; color: #64748b; font-style: italic; padding: 20px 0;">Las soluciones asociadas a esta subcategoría se encuentran actualmente en proceso de integración en el Hub corporativo.</p>`;
             }
         }
 
         function initMenu() {
             const menuList = document.getElementById('menuList');
-            categoriesList.forEach((cat, index) => {
+            categoriesList.forEach((cat) => {
                 const count = catalogData[cat.id] ? catalogData[cat.id].products.length : 0;
                 const li = document.createElement('li');
-                li.className = `category-menu-item ${index === 0 ? 'active' : ''}`;
+                li.className = `category-menu-item`;
                 li.id = `menu-${cat.id}`;
                 li.onclick = () => renderCategory(cat.id);
                 li.innerHTML = `<span>${cat.name}</span> <span class="qty-badge">${count}</span>`;
                 menuList.appendChild(li);
             });
-            renderCategory(categoriesList[0].id);
+            renderCategory("dvr");
         }
 
         window.onload = initMenu;
