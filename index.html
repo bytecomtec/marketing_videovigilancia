@@ -99,9 +99,9 @@
         .product-title-specs { font-size: 1rem; color: var(--text-main); font-weight: bold; line-height: 1.4; margin: 0 0 8px 0; }
         
         .product-price-list { font-size: 0.95rem; color: #475569; margin: 8px 0; font-weight: 500; }
-        .product-price-list span { color: #0f172a; font-weight: bold; }
+        .product-price-list span { color: #d32f2f; font-weight: bold; font-size: 1.05rem; }
 
-        /* Características extendidas estilo Syscom */
+        /* Características extendidas en el catálogo */
         .product-features-list { margin: 10px 0 0 0; padding-left: 20px; list-style-type: none; }
         .product-features-list li { font-size: 0.85rem; color: #475569; line-height: 1.5; margin-bottom: 4px; position: relative; }
         .product-features-list li::before { content: "✓"; position: absolute; left: -16px; color: #10b981; font-weight: bold; }
@@ -125,7 +125,7 @@
 
         .modal-content-wrapper {
             position: relative; background-color: var(--white); padding: 25px; border-radius: 8px;
-            max-width: 500px; width: 90%; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+            max-width: 650px; width: 90%; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
             display: flex; flex-direction: column; align-items: center;
         }
 
@@ -242,62 +242,110 @@
             { id: "kits", name: "Kits" }, { id: "monitores", name: "Monitores" }
         ];
 
-        function generateCompositeCard(model, summaryText, imageUrl) {
+        // NUEVO PROCESADOR MULTIMEDIA AVANZADO PARA EL CANVAS
+        function generateCompositeCard(productObj) {
             const canvas = document.getElementById('processingCanvas');
             const ctx = canvas.getContext('2d');
             const img = new Image();
             
             img.crossOrigin = "anonymous";
-            img.src = imageUrl;
+            img.src = productObj.flayerUrl;
             
             img.onload = function() {
-                const cardWidth = 600;
+                const cardWidth = 650; // Ancho óptimo para compartir
                 
-                ctx.font = "14px 'Segoe UI', sans-serif";
-                const words = summaryText.split(' ');
-                let lines = [];
+                // 1. Pre-calcular las líneas del título largo (titleSpecs)
+                ctx.font = "bold 16px 'Segoe UI', sans-serif";
+                const words = productObj.titleSpecs.split(' ');
+                let titleLines = [];
                 let currentLine = "";
                 
                 for (let n = 0; n < words.length; n++) {
                     let testLine = currentLine + words[n] + " ";
                     let metrics = ctx.measureText(testLine);
                     if (metrics.width > (cardWidth - 60) && n > 0) {
-                        lines.push(currentLine);
+                        titleLines.push(currentLine.trim());
                         currentLine = words[n] + " ";
                     } else {
                         currentLine = testLine;
                     }
                 }
-                lines.push(currentLine);
+                titleLines.push(currentLine.trim());
+
+                // 2. Calcular dinámicamente la altura total de la sección de texto superior
+                let currentY = 35; // Margen inicial
                 
-                const textSectionHeight = 45 + (lines.length * 20) + 20; 
+                // Espacio para Modelo (H1)
+                const modelHeight = 30;
+                // Espacio para el bloque del título largo
+                const titleBlockHeight = titleLines.length * 24;
+                // Espacio para viñetas (features)
+                const featuresBlockHeight = productObj.features ? (productObj.features.length * 22) + 10 : 0;
+                // Espacio para el precio destacado
+                const priceBlockHeight = 40;
                 
+                const textSectionHeight = currentY + modelHeight + titleBlockHeight + featuresBlockHeight + priceBlockHeight + 20;
+                
+                // Dimensiones del Flyer comercial de fondo
                 const imgRenderWidth = cardWidth;
                 const imgRenderHeight = (img.height / img.width) * cardWidth;
                 
+                // Dimensionar el Canvas final
                 canvas.width = cardWidth;
                 canvas.height = textSectionHeight + imgRenderHeight;
                 
+                // Fondo General Blanco
                 ctx.fillStyle = "#ffffff";
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
                 
+                // DIBUJAR: Modelo Principal (Azul, Grande, Centrado o Izquierda según el estilo original)
                 ctx.fillStyle = "#003366";
-                ctx.font = "bold 22px 'Segoe UI', sans-serif";
-                ctx.textAlign = "center";
-                ctx.fillText(model, cardWidth / 2, 40);
+                ctx.font = "bold 24px 'Segoe UI', sans-serif";
+                ctx.textAlign = "left";
+                ctx.fillText(productObj.model, 30, currentY + 10);
+                currentY += 45;
                 
+                // DIBUJAR: Título Técnico Largo (Negro, Semibold)
+                ctx.fillStyle = "#1e293b";
+                ctx.font = "bold 16px 'Segoe UI', sans-serif";
+                for (let i = 0; i < titleLines.length; i++) {
+                    ctx.fillText(titleLines[i], 30, currentY);
+                    currentY += 24;
+                }
+                currentY += 10;
+                
+                // DIBUJAR: Características / Viñetas con Palomitas Verdes (✓)
+                if (productObj.features && productObj.features.length > 0) {
+                    productObj.features.forEach(feat => {
+                        // Dibujar Check verde
+                        ctx.fillStyle = "#10b981";
+                        ctx.font = "bold 15px 'Segoe UI', sans-serif";
+                        ctx.fillText("✓", 30, currentY);
+                        
+                        // Dibujar texto de la característica
+                        ctx.fillStyle = "#475569";
+                        ctx.font = "500 14px 'Segoe UI', sans-serif";
+                        ctx.fillText(feat, 50, currentY);
+                        currentY += 22;
+                    });
+                }
+                currentY += 15;
+                
+                // DIBUJAR: Precio de Lista Destacado (Rojo, Más Grande)
                 ctx.fillStyle = "#475569";
                 ctx.font = "500 15px 'Segoe UI', sans-serif";
-                ctx.textAlign = "center";
+                ctx.fillText("Precio de Lista: ", 30, currentY);
                 
-                let currentY = 70;
-                for (let i = 0; i < lines.length; i++) {
-                    ctx.fillText(lines[i].trim(), cardWidth / 2, currentY);
-                    currentY += 22;
-                }
+                // Valor numérico en Rojo e Intenso
+                const prefixWidth = ctx.measureText("Precio de Lista: ").width;
+                ctx.fillStyle = "#d32f2f"; // Rojo Intenso Comercial
+                ctx.font = "bold 19px 'Segoe UI', sans-serif";
+                ctx.fillText(productObj.priceList, 30 + prefixWidth, currentY + 2);
                 
+                // 3. Renderizar la Imagen o Flyer de base abajo de todo el texto estructurado
                 ctx.drawImage(img, 0, textSectionHeight, imgRenderWidth, imgRenderHeight);
                 
+                // Pasar el resultado al modal listo para WhatsApp
                 document.getElementById('modalTargetImg').src = canvas.toDataURL("image/jpeg", 0.95);
                 document.getElementById('imageModal').style.display = 'flex';
             };
@@ -330,7 +378,6 @@
                     const card = document.createElement('div');
                     card.className = 'product-card';
                     
-                    // Construcción dinámica de viñetas HTML
                     let featuresHtml = '';
                     if (prod.features && prod.features.length > 0) {
                         featuresHtml = `<ul class="product-features-list">`;
@@ -340,8 +387,9 @@
                         featuresHtml += `</ul>`;
                     }
 
-                    // Se pasa el título técnico unificado al generador de canvas
-                    const clickAction = `generateCompositeCard('${prod.model}', '${prod.model} - Canales Inteligentes CCTV', '${prod.flayerUrl}')`;
+                    // Pasar el objeto completo de producto serializado al procesador gráfico
+                    const prodJSON = JSON.stringify(prod).replace(/'/g, "\\'");
+                    const clickAction = `generateCompositeCard(${prodJSON})`;
 
                     card.innerHTML = `
                         <div class="product-body">
