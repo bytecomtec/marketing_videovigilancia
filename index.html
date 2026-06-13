@@ -182,7 +182,6 @@
         let currentRate = 17.23;
         let currentDiscount = 0.20;
 
-        // Estructura completa de Categorías solicitadas
         const categoriesList = [
             { id: "dvr", name: "DVR" },
             { id: "nvr", name: "NVR" },
@@ -199,7 +198,6 @@
             { id: "accesorios_extra", name: "Accesorios Extra" }
         ];
 
-        // Base de datos parametrizada con los 17 modelos de DVR solicitados
         const catalogData = {
             dvr: {
                 title: "Grabadores Digitales (DVR)",
@@ -228,6 +226,12 @@
 
         let activeCategory = "dvr";
 
+        // FUNCIÓN CLAVE: Limpia la barra diagonal del modelo para construir la URL válida en GitHub Pages
+        function getSanitizedImageUrl(modelName) {
+            const cleanName = modelName.replace(/\//g, '_');
+            return `https://bytecomtec.github.io/marketing_videovigilancia/${cleanName}.jpg`;
+        }
+
         function updateAllPrices() {
             currentRate = parseFloat(document.getElementById('exchangeRate').value) || 17.23;
             currentDiscount = parseFloat(document.getElementById('discountSelect').value);
@@ -241,8 +245,7 @@
             const img = new Image();
             
             img.crossOrigin = "anonymous";
-            // Usa una plantilla base o flyer corporativo alojado en tu GitHub Pages
-            img.src = `https://bytecomtec.github.io/marketing_videovigilancia/${prod.model}.jpg`;
+            img.src = getSanitizedImageUrl(prod.model);
             
             img.onload = function() {
                 canvas.width = 600; canvas.height = 750;
@@ -277,18 +280,21 @@
             };
 
             img.onerror = function() {
-                // Fallback dinámico si el JPG físico no está en la nube para renderizar la ficha
-                canvas.width = 600; canvas.height = 300;
+                canvas.width = 600; canvas.height = 320;
                 ctx.fillStyle = "#003366"; ctx.fillRect(0, 0, canvas.width, canvas.height);
-                ctx.fillStyle = "#ffffff"; ctx.font = "bold 28px 'Segoe UI', sans-serif";
-                ctx.fillText("BYTECOMTEC - FICHA DIGITAL", 40, 60);
-                ctx.font = "bold 22px 'Segoe UI', sans-serif"; ctx.fillText("Modelo: " + prod.model, 40, 110);
-                ctx.font = "14px 'Segoe UI', sans-serif"; ctx.fillText(prod.titleSpecs, 40, 150);
+                ctx.fillStyle = "#ffffff"; ctx.font = "bold 26px 'Segoe UI', sans-serif";
+                ctx.fillText("BYTECOMTEC - DIGITAL FLYER", 40, 60);
+                ctx.font = "bold 20px 'Segoe UI', sans-serif"; ctx.fillText("Modelo: " + prod.model, 40, 115);
+                
+                // Ajuste de texto largo de especificaciones en el fallback
+                ctx.font = "13px 'Segoe UI', sans-serif";
+                ctx.fillStyle = "#e2e8f0";
+                ctx.fillText(prod.titleSpecs.substring(0, 65) + "...", 40, 155);
                 
                 const marginFactor = 1.60;
                 const finalPriceMXN = ((prod.costUSD * marginFactor * (1 - currentDiscount)) * currentRate).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
-                ctx.fillStyle = "#ff6600"; ctx.font = "bold 26px 'Segoe UI', sans-serif";
-                ctx.fillText("Inversión: " + finalPriceMXN + " MXN", 40, 220);
+                ctx.fillStyle = "#ff6600"; ctx.font = "bold 24px 'Segoe UI', sans-serif";
+                ctx.fillText("Precio Especial: " + finalPriceMXN + " MXN", 40, 230);
                 
                 document.getElementById('modalTargetImg').src = canvas.toDataURL("image/jpeg", 0.95);
                 document.getElementById('imageModal').style.display = 'flex';
@@ -324,7 +330,6 @@
                     const originalPriceMXN = (priceListUSD * currentRate).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
                     const finalPriceMXN = (priceWithDiscountUSD * currentRate).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
 
-                    // Auditoría interna de control de pérdidas
                     const costoRealMXN = prod.costUSD * currentRate;
                     const utilidadNetaRealMXN = (priceWithDiscountUSD * currentRate) - costoRealMXN;
 
@@ -339,17 +344,20 @@
                         priceBlock = `<span class="final-price">${finalPriceMXN}</span>`;
                     }
 
+                    // Se asigna la función de sanitización directamente al atributo src de la tarjeta del catálogo
+                    const imgSrc = getSanitizedImageUrl(prod.model);
+
                     card.innerHTML = `
                         <div class="product-body">
                             <div class="product-main-info">
                                 <div class="product-img-box" onclick="generateFromIndex(${index})">
-                                    <img src="https://bytecomtec.github.io/marketing_videovigilancia/${prod.model}.jpg" alt="${prod.model}" onerror="this.src='https://placehold.co/110x110?text=${prod.model}'">
+                                    <img src="${imgSrc}" alt="${prod.model}" onerror="this.src='https://placehold.co/110x110?text=${prod.model.replace(/\//g, '_')}'">
                                 </div>
                                 <div class="product-details">
                                     <div class="product-model">${prod.model}</div>
                                     <p class="product-title-specs">${prod.titleSpecs}</p>
                                     <div class="product-price-list">${priceBlock}</div>
-                                    <span class="usd-reference">Costo Base SYSCOM: $${prod.costUSD.toFixed(2)} USD</span>
+                                    <span class="usd-reference">Costo Base: $${prod.costUSD.toFixed(2)} USD</span>
                                     <span style="font-size:0.75rem; color:#475569; font-weight:bold; display:block; margin-top:4px; background:#f0fdf4; padding:3px 6px; border-radius:4px; border:1px solid #bbf7d0;">
                                         Margen Neto Asegurado: +${utilidadNetaRealMXN.toLocaleString('es-MX', {style:'currency', currency:'MXN'})}
                                     </span>
