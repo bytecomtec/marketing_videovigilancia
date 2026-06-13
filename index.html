@@ -295,20 +295,21 @@
         function closeLightbox() { document.getElementById('imageModal').style.display = 'none'; }
 
         // AQUÍ ESTÁ EL CAMBIO IMPORTANTE: Apunta al archivo puente "ver.html" pasando variables
-        function generateWhatsAppLink(model, desc, flayer) {
+    function generateWhatsAppLink(model, desc, flayer) {
+        let absoluteFlayerUrl = flayer;
+        if (!flayer.startsWith('http://') && !flayer.startsWith('https://')) {
             const currentRepoUrl = window.location.origin + window.location.pathname.replace('index.html', '');
-            
-            // Creamos la URL apuntando al puente HTML con parámetros limpios
-            const bridgeUrl = `${currentRepoUrl}ver.html?m=${encodeURIComponent(model)}&d=${encodeURIComponent(desc)}&i=${encodeURIComponent(flayer)}`;
-
-            // Construimos el mensaje. Dejamos la URL al final. WhatsApp leerá este HTML y armará la tarjeta con la foto grande.
-            const text = `*Hola, te comparto la información del equipo solicitado:* \n\n` +
-                         `*Modelo:* ${model}\n` +
-                         `*Descripción:* ${desc}\n\n` +
-                         `🔗 Ficha Interactiva: ${bridgeUrl}`;
-            
-            return `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
+            absoluteFlayerUrl = currentRepoUrl.endsWith('/') ? currentRepoUrl + flayer : currentRepoUrl + '/' + flayer;
         }
+
+        // Ponemos la URL arriba. WhatsApp genera la tarjeta multimedia y el texto limpio queda abajo.
+        const text = `${absoluteFlayerUrl}\n` +
+                 `_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n\n` +
+                 `*Modelo:* ${model}\n` +
+                 `*Descripción:* ${desc}`;
+    
+        return `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
+    }
 
         function renderCategory(categoryId) {
             const container = document.getElementById('productsContainer');
