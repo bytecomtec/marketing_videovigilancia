@@ -149,9 +149,9 @@
             <div class="currency-controller">
                 <label for="discountSelect">Descuento Público:</label>
                 <select id="discountSelect" onchange="updateAllPrices()">
-                    <option value="0">Precio de Lista (Margen 60% base)</option>
+                    <option value="0" selected> Precio de Lista Público</option>
                     <option value="0.10">Aplicar 10% Especial</option>
-                    <option value="0.20" selected>Aplicar 20% Máximo Autorizado</option>
+                    <option value="0.20">Aplicar 20% Máximo Autorizado</option>
                 </select>
             </div>
         </div>
@@ -489,7 +489,6 @@
                     }
                 ]
             },
-
             accesorios: {
                 title: "Accesorios complementarios para videovigilancia",
                 desc: "Catálogo completo de accesorios con costos integrados (IVA incluido) y factores de rentabilidad blindados.",
@@ -692,7 +691,6 @@
                     }                    
                 ]
             },
-
             almacenamiento: {
                 title: "Dispostivos de almacenamiento para Videovigilancia",
                 desc: "Soluciones de almacenamiento profesional.",
@@ -790,7 +788,6 @@
                     }
                  ]
             },
-
             camaras_analogas: {
                 title: "Accesorios complementarios para videovigilancia",
                 desc: "Catálogo completo de accesorios con costos integrados (IVA incluido) y factores de rentabilidad blindados.",
@@ -958,7 +955,6 @@
                     }     
                 ]
             },
-
         };
 
         let activeCategory = "dvr";
