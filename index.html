@@ -1035,7 +1035,7 @@
                 });
                 
                 // 5. Bloque de Precios Dinámico
-                const marginFactor = 2.013;
+                const marginFactor = 1.2389;
                 const priceListUSD = prod.costUSD * marginFactor;
                 const priceWithDiscountUSD = priceListUSD * (1 - currentDiscount);
                 
@@ -1079,7 +1079,7 @@
                     fallbackY += 22;
                 });
                 
-                const marginFactor = 2.013;
+                const marginFactor = 1.2389;
                 const finalPriceMXN = ((prod.costUSD * marginFactor * (1 - currentDiscount)) * currentRate).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
                 ctx.fillStyle = "#ff6600"; ctx.font = "bold 24px 'Segoe UI', sans-serif";
                 ctx.fillText("Inversión Especial: " + finalPriceMXN + " MXN", 40, fallbackY + 30);
@@ -1112,7 +1112,7 @@
                     const card = document.createElement('div');
                     card.className = 'product-card';
                     
-                    const marginFactor = 2.013;
+                    const marginFactor = 1.2389;
                     const priceListUSD = prod.costUSD * marginFactor;
                     const priceWithDiscountUSD = priceListUSD * (1 - currentDiscount);
                     
