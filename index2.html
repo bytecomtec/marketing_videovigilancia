@@ -97,7 +97,7 @@
             width: 110px; height: 110px; flex-shrink: 0; border: 1px solid #f1f5f9; border-radius: 6px;
             display: flex; align-items: center; justify-content: center; background-color: #ffffff; overflow: hidden; cursor: pointer;
         }
-        .product-img-box img { max-width: 100%; max-height: 100%; object-fit: cover; }
+        .product-img-box img { max-width: 100%; max-height: 100%; object-fit: contain; }
 
         .product-details { flex-grow: 1; }
         .product-model { color: #003399; font-weight: 700; font-size: 1.1rem; margin-bottom: 4px; }
@@ -187,14 +187,16 @@
         let currentRate = 17.23;
         let currentDiscount = 0;
 
+        const GITHUB_IMG_BASE = "https://bytecomtec.github.io/marketing_videovigilancia/";
+
         const categoriesList = [
             { id: "dvr", name: "DVR" },
             { id: "nvr", name: "NVR" },
-            { id: "nvs", name: "NVS" },
-            { id: "accesorios", name: "Accesorios" },
-            { id: "almacenamiento", name: "Almacenamiento" },
-            { id: "camaras_ip", name: "Cámaras IP" },
             { id: "camaras_analogas", name: "Cámaras Análogas" },
+            { id: "almacenamiento", name: "Almacenamiento" },
+            { id: "accesorios", name: "Accesorios" },
+            { id: "nvs", name: "NVS" },
+            { id: "camaras_ip", name: "Cámaras IP" },
             { id: "camaras_ptz", name: "Cámaras PTZ" },
             { id: "switch_rack", name: "Switch para Rack" },
             { id: "switch_poe", name: "Switch PoE" },
@@ -203,7 +205,6 @@
             { id: "accesorios_extra", name: "Accesorios Extra" }
         ];
 
-        // UNIFICADO: Un solo objeto maestro catalogData para todas las líneas de negocio
         const catalogData = {
             dvr: {
                 title: "Grabadores Digitales (DVR)",
@@ -214,126 +215,126 @@
                         titleSpecs: "DVR 4 Canales TurboHD + 1 Canal IP / 2 Megapixel (1080p) Lite / Acusense Lite (Evita Falsas Alarmas) / Audio por coaxitron / 1 Bahía de Disco Duro / H.265+ / Salida de Vídeo Full HD", 
                         desc: "Grabador compacto ideal para el resguardo eficiente de perímetros pequeños con optimización extrema de almacenamiento.",
                         costUSD: 29.35,
-                        features: ["Soporte para 5 tecnologías: HDTVI/AHD/CVBS/CVI/IP", "Compresión H.265+ para reducir uso de disco", "Resolución 1080p Lite con tecnología TurboHD", "4 canales TurboHD y 1 canal IP", "Acceso remoto con Hik-Connect y compatibilidad multiplataforma", "Salida de video Full HD por HDMI y VGA"]
+                        features: ["Soporte para 5 tecnologías: HDTVI/AHD/CVBS/CVI/IP", "Compresión H.265+ para reducir uso de disco", "Resolución 1080p Lite con tecnología TurboHD"]
                     },
                     { 
                         model: "EV-4004TURBO-D", 
                         titleSpecs: "DVR 4 Canales TurboHD + 2 Canales IP / 5 Megapixel Lite- 3K Lite / Acusense (Evista falsas alarmas) / Audio por Coaxitron / Bahía de Disco Duro / Salida de Video en Full HD", 
                         desc: "Grabador balanceado analítico para entornos residenciales y pequeños comercios que exigen nitidez estructural superior.",
                         costUSD: 62.14,
-                        features: ["Filtrado inteligente de humanos y vehículos con AcuSense", "Soporta TurboHD hasta 5 megapíxeles Lite", "Agrega cámaras IP por cada canal TurboHD apagado", "Cruce de línea en 90 segundos con AcuSense", "Audio, video y datos por un solo cable", "Soporta hasta 1 disco duro de 10TB"]
+                        features: ["Filtrado inteligente de humanos y vehículos con AcuSense", "Soporta TurboHD hasta 5 megapíxeles Lite", "Soporta hasta 1 disco duro de 10TB"]
                     },
                     { 
                         model: "IDS-7204HGHI-M1(T)", 
                         titleSpecs: "DVR 4 Canales TURBOHD + 2 Canales IP / 5 Megapixel Lite - 3K Lite / Audio Bidireccional / ACUSENSE (Evista falsas alarmas) / 1 Bahía de Disco Duro / Salida de Video en Full HD", 
                         desc: "Solución analítica avanzada basada en algoritmos profundos para mitigar las falsas alarmas de entorno.",
                         costUSD: 66.98,
-                        features: ["Tecnología Pentahíbrida: HD-TVI/HD-CVI/Analógico/IP/AHD", "Compresión H.265+ para mayor eficiencia de almacenamiento", "Soporta HDD hasta 10TB para almacenamiento extendido", "Audio bidireccional en todos los canales con coaxitron", "Resolución 3K Lite (2560x1440) en canales TurboHD", "Detección inteligente AcuSense para filtrar personas y vehículos"]
+                        features: ["Tecnología Pentahíbrida: HD-TVI/HD-CVI/Analógico/IP/AHD", "Audio bidireccional en todos los canales con coaxitron", "Detección inteligente AcuSense para filtrar personas y vehículos"]
                     },
                     { 
                         model: "DVR-208G-M1(C)", 
                         titleSpecs: "DVR 8 Canales TurboHD + 2 Canales IP / 2 Megapíxel (1080P) Lite / Motion Detection 2.0 (Evita Falsas Alarmas) / Audio por Coaxitron / 1 Bahía de Disco Duro / H.265+ / 1 Canal de Audio / Salida de Vídeo Full HD", 
                         desc: "Grabador de entrada de la línea HiLook de Hikvision, óptimo para renovaciones de sistemas análogos tradicionales a bajo costo.",
                         costUSD: 28.91,
-                        features: ["Visualización en vivo desde dispositivos móviles Hik-Connect", "Control centralizado de seguridad en una sola aplicación", "Soporte de audio por coaxitron en todos los canales", "Combinación fácil de cámara y micrófono interconstruido", "Actualizaciones constantes para rendimiento óptimo de Hik-Connect", "Detección Motion Detection 2.0 para humanos y vehículos por movimiento"]
+                        features: ["Visualización en vivo desde dispositivos móviles Hik-Connect", "Soporte de audio por coaxitron en todos los canales", "Detección Motion Detection 2.0 para humanos y vehículos"]
                     },
                     { 
                         model: "S08-TURBO-M/T", 
                         titleSpecs: "DVR 8 Canales TurboHD 1080p / Chasis Metálico de Alta Durabilidad / Audio sobre Coaxial Multiplexado", 
                         desc: "Grabador robustecido con chasis estructural metálico para protección superior en operaciones de rango continuo.",
                         costUSD: 37.13,
-                        features: ["Audio bidireccional en todos los canales", "Filtro inteligente de movimiento para humanos y vehículos", "Soporta 10 canales: 8 TurboHD + 2 IP", "Compresión H.265+ para mayor eficiencia", "Compatibilidad con 5 tecnologías: TurboHD, CVBS, CVI, AHD, IP", "Soporta cámaras PTZ en todos los canales"]
+                        features: ["Audio bidireccional en todos los canales", "Soporta 10 canales: 8 TurboHD + 2 IP", "Compatibilidad con 5 tecnologías de mercado"]
                     },
                     { 
                         model: "IDS-7208HQHI-M1/XT", 
                         titleSpecs: "DVR 8 Canales TURBOHD + 4 Canales IP / 5 Megapixel Lite - 3K Lite / Audio de Dos Vías por Coaxitron / Reconocimiento Facial / ACUSENSE (Evita falsas alarmas) / 1 Bahía de Disco Duro / Salida de Video en Full HD", 
                         desc: "Equipo profesional de alta gama provisto de analíticas avanzadas para reconocimiento facial y protección perimetral estricta.",
                         costUSD: 107.18,
-                        features: ["Soporta 12 canales: 8 TurboHD + 4 IP", "Detección inteligente ACUSENSE con filtro de humanos y vehículos", "Reconocimiento facial en 2 canales de video", "Compresión H.265+ para mayor eficiencia de almacenamiento", "Soporta HDD de hasta 10 TB", "Salida de video simultánea en HDMI y VGA Full HD"]
+                        features: ["Soporta 12 canales: 8 TurboHD + 4 IP", "Reconocimiento facial en 2 canales de video", "Soporta HDD de hasta 10 TB"]
                     },
                     { 
                         model: "EX-8004TURBO", 
                         titleSpecs: "DVR 4 Canales TURBOHD + 2 Canales IP / 8 Megapixel (4K) / Audio Bidireccional por Coaxitron / ACUSENSE / Reconocimiento Facial / 1 Bahía de Disco Duro / Salida de Video en Full HD / H.265+", 
                         desc: "Grabador digital insignia de Epcom ideal para proyectos de mediana envergadura que demandan analíticas fluidas.",
                         costUSD: 100.11,
-                        features: ["Soporta audio bidireccional por coaxitron en todos los canales", "Compresión H.265+ para mayor eficiencia", "Reconocimiento facial en 2 canales", "Tecnología AcuSense para detección precisa", "Soporta HDD hasta 10 TB", "Salida de video Full HD HDMI/VGA"]
+                        features: ["Soporta audio bidireccional por coaxitron", "Reconocimiento facial en 2 canales", "Resolución Nativa 4K UltraHD"]
                     },
                     { 
                         model: "EX-5008-TURBO", 
                         titleSpecs: "DVR 8 Canales TURBOHD + 4 Canales IP / 5 Megapixel Lite - 3K Lite / Audio Bidireccional por Coaxitron / Reconocimiento Facial / ACUSENSE (Evita falsas alarmas) / 1 Bahía de Disco Duro / Salida de Video en Full HD", 
                         desc: "Grabador digital insignia de Epcom ideal para proyectos de mediana envergadura que demandan analíticas fluidas.",
                         costUSD: 95.88,
-                        features: ["8 Canales TurboHD + 4 IP simultáneos", "Reconocimiento facial en 2 canales de video", "Tecnología Acusense para detección precisa de humanos y vehículos", "DVR pentahíbrido con compatibilidad HD-TVI/HD-CVI/Analógico/IP/AHD", "Soporta hasta 8 canales IP mediante conversión de canales TurboHD"]
+                        features: ["8 Canales TurboHD + 4 IP simultáneos", "Tecnología Acusense para detección precisa", "DVR pentahíbrido de alta compatibilidad"]
                     },
                     { 
                         model: "S16-TURBO-G3", 
                         titleSpecs: "DVR 16 Canales TurboHD + 2 Canales IP / 2 Megapixel (1080p) Lite / Acusense Lite (Evita Falsas Alarmas) / Audio por Coaxitron / 1 Bahía de Disco Duro / H.265+ / Salida de Video Full HD", 
                         desc: "Grabador multicanal balanceado para instalaciones escolares que requieren cobertura total de cámaras con costos contenidos.",
                         costUSD: 69.65,
-                        features: ["5 tecnologías: HD-TVI / AHD / CVI / CVBS / IP", "Audio por coaxitron sin cables adicionales", "Compresión H.265+ para menos uso de ancho de banda", "Compatible con Hik-Connect P2P para acceso remoto fácil", "16 canales TurboHD + 2 canales IP (total 18)", "Salida Full HD HDMI y VGA simultánea", "Capacidad de disco duro: 1 de hasta 10 TB"]
+                        features: ["5 tecnologías: HDTVI / AHD / CVI / CVBS / IP", "Audio por coaxitron sin cables adicionales", "Soporta 1 disco duro de hasta 10 TB"]
                     },
                     { 
                         model: "S16-TURBO-M/T", 
                         titleSpecs: "DVR 16 Canales TurboHD + 2 Canales IP / 2 Megapixel (1080p) Lite / Acusense Lite (Evita Falsas Alarmas) / Audio por Coaxitron y Bidireccional / 1 Bahía de Disco Duro / H.265+ / Salida de Video Full HD", 
                         desc: "Grabador industrial de 16 vías optimizado para montaje seguro en gabinetes o racks de telecomunicaciones.",
                         costUSD: 65.74,
-                        features: ["Tecnología TurboHD 1080p Lite con alta definición", "Soporte 5 tecnologías: TurboHD, CVBS, CVI, AHD, IP", "AcuSense Lite con detección humana y vehicular", "Compresión H.265+ para eficiencia en almacenamiento", "Soporta hasta 4TB de almacenamiento en HDD", "Salida Full HD simultánea por HDMI y VGA"]
+                        features: ["Tecnología TurboHD 1080p Lite", "AcuSense Lite con detección humana y vehicular", "Diseño compacto de alta disipación térmica"]
                     },
                     { 
                         model: "IDS-7116HGHI-M1(E)", 
-                        titleSpecs: "DVR 16 Canales TurboHD + 2 Canales IP / 2 Megapixel (1080p) Lite / Acusense Lite (Evita falsas alarmas) / Audio por Coaxitron / 1 Bahía de Disco Duro / H.265+ / Salida de V&Igrave;deo en Full HD", 
+                        titleSpecs: "DVR 16 Canales TurboHD + 2 Canales IP / 2 Megapixel (1080p) Lite / Acusense Lite (Evita falsas alarmas) / Audio por Coaxitron / 1 Bahía de Disco Duro / H.265+ / Salida de Vídeo en Full HD", 
                         desc: "DVR de 16 canales de grabación HD con soporte H.265 Pro+ altamente eficiente y acceso remoto simple unificado.",
                         costUSD: 93.84,
-                        features: ["Audio por coaxitron en todos los canales", "Búsqueda inteligente por humanos y vehículos", "Compatibilidad con HD-TVI, HD-CVI, AHD, CVBS, IP", "Soporta 18 canales: 16 TurboHD + 2 IP", "Compresión H.265+ optimiza almacenamiento", "Salida Full HD HDMI y VGA simultáneas"]
+                        features: ["Audio por coaxitron en todos los canales", "Búsqueda inteligente por humanos y vehículos", "Compresión H.265+ optimiza almacenamiento"]
                     },
                     { 
                         model: "IDS-7216HUHI-M1/T", 
                         titleSpecs: "DVR 16 Canales TURBOHD + 16 Canales IP / 8 Megapixel (4K) / Audio Bidireccional / ACUSENSE / Audio Bidireccional / 1 Bahía de Disco Duro / Salida de Video en Full HD / H.265+", 
                         desc: "Grabador profesional híbrido de ultra alta definición recomendado para monitorear detalles críticos con reconocimiento de objetivos.",
                         costUSD: 312.21,
-                        features: ["Soporta audio por Coaxitron en todos los canales", "DVR pentahíbrido: HD-TVI, HD-CVI, IP, AHD, Analógico", "Compresión H.265+ para optimizar almacenamiento", "Hasta 32 canales IP apagando 16 canales turboHD", "Resolución 8MP (4K) en canales TurboHD", "Soporta 1 HDD de hasta 10TB"]
+                        features: ["Soporta audio por Coaxitron en canales HD", "Hasta 32 canales IP apagando analógicos", "Resolución de captura 8MP (4K) real"]
                     },
                     { 
                         model: "IDS-7216HQHI-M1/XT", 
                         titleSpecs: "DVR 16 Canales TURBOHD + 8 Canales IP / 5 Megapixel Lite - 3K Lite / Audio de Dos Vías por Coaxitron / Reconocimiento Facial / ACUSENSE (Evita falsas alarmas) / 1 Bahía de Disco Duro / Salida de Video en Full HD", 
                         desc: "Plataforma multicanal corporativa que integra motores analíticos avanzados para búsquedas inmediatas por atributos.",
                         costUSD: 158.72,
-                        features: ["Soporta audio bidireccional por coaxitron en todos los canales", "Reconocimiento facial en 4 canales TurboHD", "Tecnología AcuSense con filtro de humanos y vehículos en 8 canales", "24 canales totales (16 TurboHD + 8 IP) con conversión a IP", "Compresión H.265+ para ahorro de almacenamiento", "Salida de video Full HD en HDMI y VGA simultáneas", "Soporta 1 HDD hasta 10 TB (no incluido)"]
+                        features: ["Reconocimiento facial en 4 canales TurboHD", "Tecnología AcuSense con filtro de entornos", "Soporta 1 HDD hasta 10 TB"]
                     },
                     { 
                         model: "IDS-7216HQHI-M1/H/XT", 
-                        titleSpecs: "DVR 16 Canales TURBOHD + 8 Canales IP / 5 Megapixel Lite - 3K Lite / Salida Independiente HDMI - VGA / Audio de Dos Vías por Coaxitron / Reconocimiento Facial / ACUSENSE (Evista falsas alarmas) / 1 Bahía de Disco Duro / Salida de Video en Fu", 
+                        titleSpecs: "[Audio Bidireccional] DVR 16 Canales TURBOHD + 8 Canales IP / 5 Megapixel Lite - 3K Lite / Salida Independiente HDMI - VGA / Audio de Dos Vías por Coaxitron / Reconocimiento Facial / ACUSENSE (Evista falsas alarmas) / 1 Bahía de Disco Duro / Salida de Video en Fu", 
                         desc: "Grabador robusto diseñado para integraciones institucionales complejas donde coexisten infraestructuras análogas e IP.",
                         costUSD: 201.07,
-                        features: ["Soporta audio bidireccional por Coaxitron en todos los canales", "Reconocimiento facial en 4 canales y tecnología AcuSense", "24 canales: 16 TurboHD + 8 IP con resolución 5MP Lite", "Compresión H.265+ para ahorro del 50% en almacenamiento", "DVR pentahíbrido: HD-TVI, HD-CVI, Análogo, IP, AHD", "Salida de video independiente HDMI y VGA Full HD", "Soporta 1 HDD de hasta 12 TB (no incluido)"]
+                        features: ["Reconocimiento facial en 4 canales e IA", "Salida de video independiente HDMI y VGA", "Compresión optimizada H.265 Pro+"]
                     },
                     { 
                         model: "EX-5016TURBO", 
                         titleSpecs: "DVR 16 Canales TURBOHD + 8 Canales IP / 5 Megapixel Lite - 3K Lite / Audio Bidireccional por Coaxitron / Reconocimiento Facial / ACUSENSE (Evita falsas alarmas) / 1 Bahía de Disco Duro / Salida de Video en Full HD", 
-                        desc: "Solución de videovigilancia robustecida y escalable para medianas empresas con flujos operativos ininterrumpidos.",
+                        desc: "Solución de videovigilancia robustecida y scalable para medianas empresas con flujos operativos ininterrumpidos.",
                         costUSD: 160.26,
-                        features: ["16 canales TurboHD + 8 IP, total 24", "Compresión H.265+ para eficiente almacenamiento", "DVR pentahíbrido: HD-TVI/HD-CVI/Analógico/IP/AHD", "Acceso remoto desde PC y smartphones", "Audio bidireccional con cámaras turboHD compatibles", "Reconocimiento facial en 4 canales HD", "Soporta 1 HDD de hasta 10 TB (no incluido)"]
+                        features: ["16 canales TurboHD + 8 IP, total 24", "Reconocimiento facial en 4 canales HD", "Acceso remoto fluido desde PC y App Móvil"]
                     },
                     { 
                         model: "IDS-7232HGHI-M2", 
                         titleSpecs: "DVR 32 Canales TurboHD + 2 Canales IP / 2 Megapixel (1080p) Lite / Acusense (Evita Falsas Alarmas) / Audio por Coaxitron / H.265+ / Salida de Video en Full HD", 
                         desc: "Sistema centralizado de alta densidad idóneo para proyectos escolares amplios o naves industriales de despliegue masivo.",
                         costUSD: 247.61,
-                        features: ["Hasta 18 cámaras IP en total", "Soporta 2 HDD de 10 TB", "Serie Turbo HD 5.0 con 16 canales apagables", "Detección IA: filtro de humanos y vehículos", "Compatibilidad múltiple: HD-TVI, HD-CVI, AHD, IP", "Soporta 2 HDD de hasta 10 TB (no incluido)"]
+                        features: ["Hasta 34 cámaras en total acoplando IP", "Soporta 2 discos duros de 10 TB c/u", "Filtro inteligente IA integrado contra errores"]
                     },
                     { 
                         model: "IDS-7232HQHI-M2/XT", 
                         titleSpecs: "[Audio Bidireccional] DVR 32 Canales TurboHD + 8 Canales IP / 5 Megapixel Lite - 3K Lite / Acusense / Reconocimiento Facial / Audio por Coaxitron / 2 Bahías de Disco Duro / H.265+ / Salida de Video en Full HD", 
                         desc: "Grabador de alta gama que unifica analíticas avanzadas de IA en una infraestructura masiva de cámaras de seguridad perimetral.",
                         costUSD: 397.40,
-                        features: ["40 canales: 32 TurboHD + 8 IP simultáneos", "Reconocimiento facial en 4 canales HD", "Acceso remoto vía Hik-Connect P2P", "2 bahías HDD soportan hasta 12 TB", "Audio bidireccional por Coaxitron en todos los canales"]
+                        features: ["40 canales totales de videovigilancia masiva", "Reconocimiento facial avanzado en hardware", "2 bahías HDD para resguardo de larga duración"]
                     },
                     { 
                         model: "EX-5032-TURBO", 
                         titleSpecs: "DVR 32 Canales TurboHD + 8 Canales IP / 5 Megapixel Lite - 3K Lite / Acusense (Evita Falsas Alarmas) / Audio Bidireccional / 2 Bahías de Disco Duro / H.265+ / Salida de Video en Full HD", 
                         desc: "Grabador masivo insignia diseñado para gestionar la seguridad integral de infraestructuras complejas con máxima estabilidad de red.",
                         costUSD: 385.82,
-                        features: ["Soporta cámaras TurboHD de hasta 5 MP", "Detección facial en 4 canales", "Hasta 40 canales IP con 6 MP", "Audio bidireccional por coaxitron en todos los canales", "Soporta 2 HDD de hasta 12 TB (no incluido)"]
+                        features: ["Soporta cámaras de alta resolución 5 MP", "Detección facial activa multicanal", "Soporta 2 HDD de hasta 12 TB estructurales"]
                     }
                 ]
             },
@@ -342,836 +343,203 @@
                 desc: "Soluciones autónomas de grabación IP nativa con gestión remota y switches integrados.",
                 products: [
                     { 
-                        model: "DS-7104NI-K1/W/M(C)", // Cambié el modelo para diferenciarlo del NVR de 4 canales
+                        model: "DS-7104NI-K1/W/M(C)", 
                         titleSpecs: "NVR 4 Megapixel / 4 canales IP / 1 Bahía de Disco Duro / 2 Antenas Wi-Fi / Salida de Vídeo Full HD", 
                         desc: "Grabador IP autónomo provisto de puertos PoE nativos para energizar cámaras de forma directa.",
                         costUSD: 72.08,
-                        features: ["Codificación H.265+/H.265/H.264+/H.264", "Almacenamiento 1 disco hasta 6 TB", "Throughput entrada 50 Mbps, salida 40 Mbps", "Reproducción sincrónica 4 canales Full HD", "2 antenas Wi-Fi MIMO 2.4 GHz"]
+                        features: ["Codificación H.265+/H.265 de alta eficiencia", "2 antenas Wi-Fi MIMO de largo alcance integradas", "Throughput de alta velocidad estables"]
                     },
                     { 
-                        model: "DS-7604NI-Q1/4P(D)", // Cambié el modelo para diferenciarlo del DVR
+                        model: "DS-7604NI-Q1/4P(D)", 
                         titleSpecs: "NVR 8 Megapixel (4K) (Compatible con Cámaras ACUSENSE) / 4 canales IP / 4 Puertos PoE+ / 1 Bahía de Disco Duro / Salida de Vídeo en 4K / 300 Metros PoE Modo Extendido", 
                         desc: "Grabador de red eficiente diseñado para gestionar cámaras IP de alta definición continua.",
                         costUSD: 91.93,
-                        features: ["Compresión H.265+/H.265/H.264+/H.264", "4 puertos PoE+ con 50W total", "Soporta disco duro de hasta 8TB", "Acceso remoto desde dispositivos móviles", "Salida de video 4K en HDMI"]
+                        features: ["4 puertos PoE+ integrados de alimentación directa", "Modo extendido de cableado largo hasta 300 metros", "Salida de video nativa en 4K UHD por HDMI"]
                     },
                     { 
-                        model: "DS-7604NXI-K1/4P(E)", // Cambié el modelo para diferenciarlo del NVR de 4 canales
+                        model: "DS-7604NXI-K1/4P(E)", 
                         titleSpecs: "[Acusearch] NVR 12 Megapíxel (4K) / 4 canales IP / 4 Puertos PoE+ / Reconocimiento Facial / AcuSense (Evita Falsas Alarmas) / 1 Bahías de Disco Duro / HDMI en 4K / 300 Metros PoE Modo Extendido", 
                         desc: "Grabador IP autónomo provisto de puertos PoE nativos para energizar cámaras de forma directa.",
                         costUSD: 136.18,
-                        features: ["Compresión H.265+/H.265/H.264+/H.264 para eficiencia", "4 puertos PoE+ con 50W potencia total", "Acceso remoto vía Hik-Connect y aplicaciones móviles", "Reconocimiento facial hasta 50,000 rostros en 4 canales", "Modo PoE extendido hasta 300 metros de distancia"]
-                    },
-                    { 
-                        model: "CS-X5S/8W", // Cambié el modelo para diferenciarlo del DVR
-                        titleSpecs: "NVR Inalámbrico (WiFi) de 8 Canales IP / Admite Cámaras hasta 5 Megapixel (3K) / Salidas HDMI y VGA / H.265 / Almacenamiento Expandible hasta 8 TB", 
-                        desc: "Grabador de red eficiente diseñado para gestionar cámaras IP de alta definición continua.",
-                        costUSD: 53.99,
-                        features: ["Almacenamiento expandible hasta 8 TB", "Soporte para cámaras de hasta 5 MP (3K)", "Doble salida de video HDMI y VGA", "Conexión inalámbrica WiFi para 8 canales", "Diseño resistente para entornos exigentes"]
-                    },
-                    { 
-                        model: "DS-7608NI-Q1/8P(D)", // Cambié el modelo para diferenciarlo del NVR de 4 canales
-                        titleSpecs: "NVR 8 Megapixel (4K) (Compatible con Cámaras ACUSENSE) / 8 canales IP / 8 Puertos PoE+ / 1 Bahía de Disco Duro / Salida de Vídeo en 4K / 300 Metros PoE Modo Extendido", 
-                        desc: "Grabador IP autónomo provisto de puertos PoE nativos para energizar cámaras de forma directa.",
-                        costUSD: 160.35,
-                        features: ["Compresión H.265+/H.265 con reducción del 50% en ancho de banda", "8 puertos PoE+ con 75W total y modo extendido 300m", "Soporta disco duro hasta 8TB con tecnología S.M.A.R.T", "Resolución 4K en 8 canales a 30fps", "Detección AcuSense en 8 canales para humanos y vehículos", "Salida simultánea HDMI y VGA en múltiples resoluciones"]
-                    },
-                    { 
-                        model: "DS-7608NXI-K1(E)", // Cambié el modelo para diferenciarlo del DVR
-                        titleSpecs: "[Acusearch] NVR 12 Megapíxel (4K) / 8 canales IP / AcuSense (Evita Falsas Alarmas) / Reconocimiento Facial / 1 Bahía de Disco Duro / HDMI en 4K / Sin Puertos PoE", 
-                        desc: "Grabador de red eficiente diseñado para gestionar cámaras IP de alta definición continua.",
-                        costUSD: 107.94,
-                        features: ["Compresión H.265+ para mayor eficiencia", "Tecnología ANR para grabación local en desconexión", "Reconocimiento facial hasta 20,000 rostros", "Soporta 1 HDD de hasta 16TB", "Detección AcuSense: humano y vehículo", "Salida HDMI 4K/UHD"]
-                    },
-                    { 
-                        model: "DS-7616NXI-K1(E)", // Cambié el modelo para diferenciarlo del NVR de 4 canales
-                        titleSpecs: "[Acusearch] NVR 12 Megapixel (4K) / 16 canales IP / AcuSense (Evita Falsas Alarmas) / Reconocimiento Facial / 1 Bahía de Disco Duro / HDMI en 4K / Sin Puertos PoE+", 
-                        desc: "Grabador IP autónomo provisto de puertos PoE nativos para energizar cámaras de forma directa.",
-                        costUSD: 154.83,
-                        features: ["Compresión H.265+/H.265 para reducción de ancho de banda", "Reconocimiento facial con base de datos de 50,000 rostros", "Soporte para resolución 12MP (4K) en 16 canales", "Detección de movimiento multizona con filtro de falsas alarmas", "1 puerto HDMI 4K y 1 puerto VGA simultáneos"]
-                    },
-                    { 
-                        model: "DS-7616NXI-K2(E)", // Cambié el modelo para diferenciarlo del DVR
-                        titleSpecs: "[Acusearch] NVR 12 Megapixel (4K) / 16 canales IP / AcuSense (Evita Falsas Alarmas) / Reconocimiento Facial / 2 Bahías de Disco Duro / HDMI en 4K / Sin Puertos PoE+ / Alarmas I/O", 
-                        desc: "Grabador de red eficiente diseñado para gestionar cámaras IP de alta definición continua.",
-                        costUSD: 172.41,
-                        features: ["Compresión H.265+ para mayor eficiencia", "Acceso remoto desde dispositivos móviles", "Soporta hasta 2 discos duros", "Reconocimiento facial para 20,000 rostros", "Salida HDMI 4K para alta resolución"]
-                    },
-                    { 
-                        model: "DS-7616NXI-K2/16P(E)", // Cambié el modelo para diferenciarlo del DVR
-                        titleSpecs: "[AcuSearch] NVR 12 Megapixel (4K) / 16 Canales IP / 16 Puertos PoE+ (10/100 Mbps) / Reconocimiento Facial / AcuSense / 2 Bahías para HDD de 16 TB / HDMI 4K / Alarmas I/O", 
-                        desc: "Grabador de red eficiente diseñado para gestionar cámaras IP de alta definición continua.",
-                        costUSD: 358.85,
-                        features: ["Compresión H.265+/H.265 con eficiencia energética", "16 puertos PoE+ 802.3 af/at con 200 W", "Soporta 2 HDD de hasta 16 TB", "Reconocimiento facial hasta 50,000 rostros", "Resolución 4K (3840x2160) a 30 Hz", "Detección inteligente: facial, ANPR y áreas restringidas"]
-                    },
-                    { 
-                        model: "DS-7632NXI-K2(E)", // Cambié el modelo para diferenciarlo del NVR de 4 canales
-                        titleSpecs: "[AcuSearch] NVR 12 Megapixel (4K) / 32 canales IP / AcuSense (Evita Falsas Alarmas) / Reconocimiento Facial / 2 Bahías de Disco Duro / HDMI en 4K / Sin Puertos PoE+", 
-                        desc: "Grabador IP autónomo provisto de puertos PoE nativos para energizar cámaras de forma directa.",
-                        costUSD: 261.75,
-                        features: ["Compresión H.265+/H.264+ para eficiencia", "2 bahías HDD soportan hasta 16TB", "AcuSense filtra falsas alarmas con IA", "Salida HDMI 4K (8MP/12MP)", "Compatible con gabinete metálico GABVID2R3"]
-                    },
-                    { 
-                        model: "DS-7632NXI-K2/16P(E)", // Cambié el modelo para diferenciarlo del DVR
-                        titleSpecs: "[AcuSearch] NVR 12 Megapixel (4K) / 32 canales IP / 16 Puertos PoE+ / Recocimiento Facial / AcuSense (Evita Falsas Alarmas) / 2 Bahías de Disco Duro / HDMI en 4K / Alarmas I/O / 300 Metros PoE Modo Extendido", 
-                        desc: "Grabador de red eficiente diseñado para gestionar cámaras IP de alta definición continua.",
-                        costUSD: 531.83,
-                        features: ["Compresión de video H.265+/H.265/H.264+/H.264", "16 puertos PoE+ 802.3 af/at (200W total)", "Tecnología AcuSense para detección precisa (humano/vehículo)", "Soporta 2 HDD's de hasta 16 TB (no incluido)", "Compatible con gabinete metálico GABVID2R3"]
-                    },
-                    { 
-                        model: "DS-9664NI-M8", // Cambié el modelo para diferenciarlo del NVR de 4 canales
-                        titleSpecs: "[Doble Poder de Decodificación] NVR 32 Megapixel (8K) / 64 Canales IP / AcuSense / ANPR / Conteo de Personas / Heat Map / 8 Bahías de Disco Duro / Soporta RAID con Hot Swap / 2 HDMI en 8K / Soporta POS / Alarmas I/O / Smart Search", 
-                        desc: "Grabador IP autónomo provisto de puertos PoE nativos para energizar cámaras de forma directa.",
-                        costUSD: 2400.68,
-                        features: ["Doble decodificación 8K y 64 canales IP", "Tecnología AcuSense para detección precisa de humanos y vehículos", "Soporta RAID 0,1,5,6,10 con hot swap", "Doble salida HDMI 8K y VGA simultánea", "8 bahías para discos duros de hasta 16TB"]
-                    },
-                    { 
-                        model: "DS-96128NI-M16/R", // Cambié el modelo para diferenciarlo del DVR
-                        titleSpecs: "[Doble Poder de Decodificación] NVR 32 Megapixel (8K) / 128 Canales IP / AcuSense / ANPR / Conteo de Personas / 16 Bahías de Disco Duro / 2 Tarjetas de Red / Soporta RAID con Hot Swap / 2 HDMI en 8K / POS / Alarmas I/O / Smart Search", 
-                        desc: "Grabador de red eficiente diseñado para gestionar cámaras IP de alta definición continua.",
-                        costUSD: 5182.24,
-                        features: ["Compresión H.265+/H.265/H.264+/H.264 eficiente", "Hot swap con soporte RAID 0,1,5,6,10", "Acceso remoto multiplataforma con Hik-Connect", "Soporte ONVIF para múltiples marcas de cámaras", "Soporta 16 HDDs de hasta 16 TB", "Doble salida HDMI 8K/4K para visualización"]
+                        features: ["Reconocimiento facial con base de datos masiva", "4 puertos PoE+ con 50W de potencia distribuida", "Filtro analítico avanzado AcuSearch perimetral"]
                     }
                 ]
             },
-            nvs: {
-                title: "Grabadores de Red (NVS)",
-                desc: "Soluciones autónomas de grabación IP nativa con gestión remota y switches integrados.",
+            camaras_analogas: {
+                title: "Cámaras Análogas TurboHD",
+                desc: "Dispositivos bala, domo y ocultos de alta resistencia con transmisión sobre cable coaxial e iluminación inteligente.",
                 products: [
-                    { 
-                        model: "NKS422W02H", // Cambié el modelo para diferenciarlo del DVR de 4 canales
-                        titleSpecs: "Kit IP Inalámbrico 2 Megapíxel / NVS 4 Canales / 1 Cámara Bala Exterior + 1 Cámara Turret Interior con Lente 2.8 mm y Dual Light / Audio Bidireccional (Micrófono y Bocina) / Soporta Micro SD de 512 GB", 
-                        desc: "Grabador IP autónomo provisto de puertos PoE nativos para energizar cámaras de forma directa.",
-                        costUSD: 106.52,
-                        features: ["NVS WiFi 4 canales hasta 4MP", "Compresión H.265+ para mayor eficiencia", "Soporta micro SD de hasta 512GB", "Cámaras 2MP con lente 2.8mm y 97°.","Iluminación dual IR+ColorVu hasta 30 metros", "Audio bidireccional con micrófono y bocina integrados"]
+                    {
+                        model: "DS-2CE16D0T-EXIPF",
+                        titleSpecs: "Cámara Bala Fija de 2 Megapíxel (1080p) / Lente de 2.8 mm / Iluminación IR de 20 Metros / Plástica / 4 Tecnologías Seleccionables",
+                        desc: "Cámara económica para interiores con excelente ángulo de apertura y fidelidad cromática diurna.",
+                        costUSD: 10.45,
+                        features: ["Soporta tecnologías TVI/AHD/CVI/CVBS", "Lente angular de gran cobertura de área", "Smart IR para ajustar brillo en oscuridad nocturna"]
                     },
-                    { 
-                        model: "NKS422WBPH", // Cambié el modelo para diferenciarlo del DVR
-                        titleSpecs: "Kit IP Inalámbrico 2 Megapíxel / NVS 4 Canales / 1 Cámara Bala Exterior + 1 Cámara Turret Interior con Lente 2.8 mm y Dual Light / Audio Bidireccional (Micrófono y Bocina) / Soporta Micro SD de 512 GB", 
-                        desc: "Grabador de red eficiente diseñado para gestionar cámaras IP de alta definición continua.",
-                        costUSD: 123.57,
-                        features: ["Soporte para tarjeta micro SD de hasta 512 GB", "Compresión H.265+ para eficiencia en almacenamiento", "Cámaras 2MP con lente de 2.8 mm (97°)", "Cámaras 2MP con lente 2.8mm y 97°.","Dual Light: IR y luz blanca hasta 30 metros", "Audio bidireccional con micrófono y bocina integrados"]
+                    {
+                        model: "DS-2CE76D0T-ITMFS",
+                        titleSpecs: "Cámara Domo Fija de 2 Megapíxel (1080p) / Audio Integrado por Coaxial / Lente de 2.8 mm / Metal / Visión Nocturna de 30m EXIR",
+                        desc: "Domo metálico de alta resistencia idóneo para pasillos escolares con micrófono interconstruido avanzado.",
+                        costUSD: 18.90,
+                        features: ["Micrófono integrado de alta sensibilidad por coaxial", "Gabinete metálico estructural de larga vida útil", "Tecnología EXIR 2.0 para iluminación uniforme"]
+                    }
+                ]
+            },
+            almacenamiento: {
+                title: "Discos Duros y Almacenamiento",
+                desc: "Unidades mecánicas de grado videovigilancia optimizadas para escritura continua ininterrumpida de flujos de video.",
+                products: [
+                    {
+                        model: "WD10PURZ",
+                        titleSpecs: "Disco Duro de 1 Terabyte Western Digital Purple / Diseñado para Sistemas de Videovigilancia 24/7 / Caché de 64 MB / Interfaz SATA III",
+                        desc: "Unidad estándar de alta durabilidad optimizada para DVRs pequeños con tecnología AllFrame contra pérdida de cuadros.",
+                        costUSD: 49.50,
+                        features: ["Soporta cargas de trabajo constantes sin caídas", "Algoritmos optimizados para streaming de video", "Bajo consumo energético y mínima vibración"]
                     },
-                    { 
-                        model: "NKS424W02H", // Cambié el modelo para diferenciarlo del DVR de 4 canales
-                        titleSpecs: "Kit IP Inalámbrico 4 Megapixel / NVS 4 Canales / 1 Cámara Bala Exterior + 1 Cámara Turret Interior con Lente 2.8 mm y Dual Light / Audio Bidireccional (Micrófono y Bocina) / Soporta Micro SD de 512 GB", 
-                        desc: "Grabador IP autónomo provisto de puertos PoE nativos para energizar cámaras de forma directa.",
-                        costUSD: 117.38,
-                        features: ["Compresión H.265+ para reducción de ancho de banda", "Ángulo de visión de 97° en ambas cámaras", "2 antenas WiFi 2.4 GHz para conexión estable", "Cámaras de 4MP con visión nocturna IR y luz blanca°.","Procesamiento de 20 Mbps entrada y salida", "Soporta Micro SD hasta 512 GB"]
-                    },
-                    { 
-                        model: "NKS424W0H", // Cambié el modelo para diferenciarlo del DVR
-                        titleSpecs: "Kit IP Inalámbrico 4 Megapixel / NVS 4 Canales / 2 Cámaras Bala para Exterior con Lente 2.8 mm y Dual Light (30 mts IR + 30 mts Luz Blanca) / Audio Bidireccional (Micrófono y Bocina) / Soporta Micro SD de 512 GB", 
-                        desc: "Grabador de red eficiente diseñado para gestionar cámaras IP de alta definición continua.",
-                        costUSD: 111.55,
-                        features: ["Compresión H.265+ ahorra ancho de banda y almacenamiento", "Ángulo de visión de 97° con lente 2.8 mm", "Cámaras de 4 MP con visión nocturna IR+Luz Blanca 30m", "Detección de audio bidireccional con micrófono y bocina integrados","Soporta almacenamiento microSD de hasta 512 GB", "Doble antena WiFi 2.4 GHz para conexión estable"]
-                    },
-                    { 
-                        model: "DS-7104NI-S1/W", // Cambié el modelo para diferenciarlo del DVR
-                        titleSpecs: "NVS (Hub) de 4 Megapixel / 4 Canales IP / Soporta Memoria Micro SD de 512 GB / 2 Antenas Wi-Fi / Se Conecta a Hik-Connect", 
-                        desc: "Grabador de red eficiente diseñado para gestionar cámaras IP de alta definición continua.",
-                        costUSD: 32.87,
-                        features: ["Compresión H.265+/H.265 para eficiencia en almacenamiento", "Soporta microSD de hasta 512 GB", "2 antenas Wi-Fi para conexión estable", "Conexión P2P vía Hik-Connect","Throughput entrada/salida de 20 Mbps", "Diseño compacto para instalación discreta"]
-                    },
-                    { 
-                        model: "DS-2CV1043G2-LIDWF(B)", // Cambié el modelo para diferenciarlo del DVR de 4 canales
-                        titleSpecs: "Bala IP 4 Megapixel / Lente 2.8 mm / Dual Light (30 mts IR + 30 mts Luz Blanca) / Wi-Fi / ACUSENSE / Audio Bidireccional (Micrófono y Bocina) / IP66 / dWDR / Micro SD", 
-                        desc: "Grabador IP autónomo provisto de puertos PoE nativos para energizar cámaras de forma directa.",
-                        costUSD: 47.94,
-                        features: ["Resolución 4 MP (2560 x 1440)", "Lente 2.8 mm con ángulo 94°", "Dual Light 30 mts IR + luz blanca", "Compresión H.265/H.264 ahorra almacenamiento","Audio bidireccional con micrófono y bocina", "IP66 resistente a intemperie y polvo"]
-                    },
-                    { 
-                        model: "DS-2CV1F43G2-LIDWF(B)", // Cambié el modelo para diferenciarlo del DVR
-                        titleSpecs: "Turret PT IP 4 Megapixel / Lente 2.8 mm / Dual Light (20 mts IR + 15 mts Luz Blanca) / Wi-Fi / IP54 / dWDR / H.265 / Audio Bidireccional (Micrófono y Bocina) / Micro SD", 
-                        desc: "Grabador de red eficiente diseñado para gestionar cámaras IP de alta definición continua.",
-                        costUSD: 59.21,
-                        features: ["Resolución 4 MP (2560 x 1440)", "Lente 2.8 mm con ángulo 97°", "Dual Light: IR 20 mts + Luz Blanca 15 mts", "Compresión H.265 para menor consumo de ancho de banda","Detección inteligente de movimiento (IVS)", "Audio bidireccional con micrófono y altavoz integrado"]
+                    {
+                        model: "WD43PURZ",
+                        titleSpecs: "Disco Duro de 4 Terabytes Western Digital Purple / Grado Vigilancia Industrial / Caché de 256 MB / Alta Densidad de Datos",
+                        desc: "Capacidad recomendada para grabadores de 8 y 16 canales que requieren retención histórica de al menos 15 días.",
+                        costUSD: 98.20,
+                        features: ["Soporte de hasta 64 cámaras de alta definición", "Componentes internos resistentes a la corrosión", "Gran velocidad de transferencia SATA a 6 Gb/s"]
                     }
                 ]
             },
             accesorios: {
-                title: "Accesorios complementarios para videovigilancia",
-                desc: "Catálogo completo de accesorios con costos integrados (IVA incluido) y factores de rentabilidad blindados.",
+                title: "Accesorios de Instalación",
+                desc: "Baluns, transceptores, fuentes de poder unificadas y herrajes certificados para blindaje contra ruidos eléctricos.",
                 products: [
-                    { 
-                        model: "TT-101-F-TURBO", 
-                        titleSpecs: "Kit de Transceptores (Baluns) con Terminal PUSH SUPERIOR, Resolución 4K , Cable flexible COAXIAL Blindado / COAXITRON / AUDIO POR COAXITRON / Menu OSD /Conector 100% COBRE / protección TVS, Calidad PREMIUM", 
-                        desc: "Grabador compacto ideal para el resguardo eficiente de perímetros pequeños con optimización extrema de almacenamiento.",
-                        costUSD: 2.47,
-                        features: ["Transmisión HD en tiempo real por par trenzado", "Conectores de cobre para mayor conductividad", "Protección contra sobretensiones con TVS incorporado", "Inmunidad al ruido y diafonía de 60 dB", "Compatibilidad con cámaras HD-TVI/CVI/AHD/CVBS", "Distancia máxima de transmisión hasta 250 metros"]
-                    },
-                    { 
-                        model: "JR52X", 
-                        titleSpecs: "Adaptador Tipo Jack de 3.5 mm Macho Polarizado de 12 Vcc con Terminales de Presión", 
-                        desc: "Grabador balanceado analítico para entornos residenciales y pequeños comercios que exigen nitidez estructural superior.",
-                        costUSD: 0.84,
-                        features: ["Conector jack 3.5 mm polarizado de 12 Vcc", "Terminales push identificados: positivo (rojo) y negativo (gris)", "Pin de cobre, diámetro 2.1 mm, longitud 5.5 mm", "Material ecológico con protección ambiental certificada", "Diseño compacto para fácil integración en instalaciones CCTV", "Conexión segura sin soldadura mediante terminales de presión"]
-                    },
-                    { 
-                        model: "JR53X", 
-                        titleSpecs: "Adaptador Tipo Jack de 3.5 mm Hembra Polarizado de 12 Vcc con Terminales de Presión", 
-                        desc: "Solución analítica avanzada basada en algoritmos profundos para mitigar las falsas alarmas de entorno.",
-                        costUSD: 0.66,
-                        features: ["Jack 3.5 mm hembra polarizado de 12 VCC", "Terminales push para conexiones rápidas y seguras", "Material ecológico ideal para CCTV", "Pin de cobre con diámetro 2.1 mm", "Compatible con cable calibre 18", "Diseño con polaridad por colores (rojo/positivo, gris/negativo)"]
-                    },
-                    { 
-                        model: "JRF51", 
-                        titleSpecs: "Cable con Conector Jack Hembra 3.5 mm con 2 Salidas de Jack Macho", 
-                        desc: "Grabador de entrada de la línea HiLook de Hikvision, óptimo para renovaciones de sistemas análogos tradicionales a bajo costo.",
-                        costUSD: 0.67,
-                        features: ["Conector DC 5.5x2.1 mm para alimentación central", "Cable principal 22AWG y laterales 24AWG para alta conductividad", "PVC ignífugo para máxima seguridad y durabilidad", "Soporta corriente hasta 5A (12VCC) en transmisión", "Longitud 19 cm para fácil manejo y flexibilidad", "Diseño 1 entrada y 2 salidas para múltiples dispositivos"]
-                    },
-                    { 
-                        model: "JR-F52", 
-                        titleSpecs: "Cable con Conector Jack Hembra de 3.5 mm con 4 Salidas de Jack Macho (Divisor de Energía) / Tipo Pulpo / 4 Conectores Macho / 1 Conector Hembra / Jack de 3.5 mm", 
-                        desc: "Grabador robustecido con chasis estructural metálico para protección superior en operaciones de rango continuo.",
-                        costUSD: 1.20,
-                        features: ["Conector 3.5 mm hembra y 4 salidas macho", "Cable principal 22AWG con PVC ignífugo", "Voltaje de transmisión 1VCC-24VCC compatible", "Corriente de bus 5A a 12VCC", "Longitud 19 cm, peso ligero 20 g", "Diseño compacto 4.3x1.4x1.3 cm"]
-                    },
-                    { 
-                        model: "40248", 
-                        titleSpecs: "Adaptador HDMI a VGA / Resolución 1080P / Audio 3.5mm / Con Puerto Micro USB para Alimentación / Plug & Play / No Requiere Controlador / ABS / Flexible y Duradero", 
-                        desc: "Equipo profesional de alta gama provisto de analíticas avanzadas para reconocimiento facial y protección perimetral estricta.",
-                        costUSD: 10.60,
-                        features: ["Resolución Full HD 1920x1080@60Hz", "Puerto Micro USB para alimentación externa", "Salida de audio 3.5mm integrada", "Plug & Play sin controladores", "Construcción ABS flexible y duradera", "Cable de 25 cm para mayor comodidad"]
-                    },
-                    { 
-                        model: "DS-1280ZJ-DM46", 
-                        titleSpecs: "Caja de Conexión para Cámaras HIKVISION / Compatible con DS-2CD25XX / DS-2CD25XX3", 
-                        desc: "Grabador digital insignia de Epcom ideal para proyectos de mediana envergadura que demandan analíticas fluidas.",
-                        costUSD: 11.58,
-                        features: ["Aleación de aluminio y acero resistente", "Tratamiento anticorrosivo duradero en superficie", "Diseño compacto 120 mm x 37.2 mm", "Peso ligero de solo 250 g", "Compatible con modelos DS-2CD25XX y DS-2CD25XX3", "Construcción profesional para instalaciones exigentes"]
-                    },
-                    { 
-                        model: "DS-1272ZJ-110-TRS", 
-                        titleSpecs: "Montaje metálico de pared para exterior", 
-                        desc: "Grabador digital insignia de Epcom ideal para proyectos de mediana envergadura que demandan analíticas fluidas.",
-                        costUSD: 15.26,
-                        features: ["Montaje de pared para fácil instalación", "Fabricado en aleación de aluminio duradera", "Dimensiones compactas: 122x120x169 mm", "Elegante color blanco para cualquier ambiente", "Peso ligero de solo 605 gramos"]
-                    },
-                    { 
-                        model: "DS-1272ZJ-110B", 
-                        titleSpecs: "Montaje de Pared con Caja de Conexiones para domos Hikvision", 
-                        desc: "Grabador multicanal balanceado para instalaciones escolares que requieren cobertura total de cámaras con costos contenidos.",
-                        costUSD: 25.87,
-                        features: ["Montaje en pared interior y exterior con caja integrada", "Aleación de aluminio con tratamiento superficial resistente", "Diseño impermeable IP66 para exteriores", "Soporta hasta 4.5 kg de carga", "Dimensiones compactas 123x180x227.8 mm", "Compatibilidad con múltiples modelos de cámaras domo"]
-                    },
-                    { 
-                        model: "DS-1273ZJ-DM25", 
-                        titleSpecs: "Montaje de pared para modelos DS-63X2FXX", 
-                        desc: "Grabador industrial de 16 vías optimizado para montaje seguro en gabinetes o racks de telecomunicaciones.",
-                        costUSD: 20.27,
-                        features: ["Montaje de pared en aleación de aluminio", "Color blanco para estética discreta", "Compatibilidad con modelos DS-2CD6332FWD-I", "Compatibilidad con modelos DS-2CD6332FWD-IV", "Compatibilidad con modelos DS-2CD6362F-IV", "Diseño ergonómico para fácil instalación"]
-                    },
-                    { 
-                        model: "DS-1275ZJ", 
-                        titleSpecs: "Montaje de Poste para Domos PTZ epcom / HIKVISION", 
-                        desc: "DVR de 16 canales de grabación HD con soporte H.265 Pro+ altamente eficiente y acceso remoto simple unificado.",
-                        costUSD: 17.27,
-                        features: ["Dimensiones compactas 127 x 46 x 250 mm", "Soporta hasta 10 kg de carga", "Peso ligero de 1345 g facilita instalación", "Diseñado para cámaras bala y domo PTZ", "Material duradero para soporte robusto"]
-                    },
-                    { 
-                        model: "DS-1275ZJ-SUS", 
-                        titleSpecs: "Montaje para Poste / Compatible con PTZ HIKVISION / Acero Inoxidable", 
-                        desc: "Grabador profesional híbrido de ultra alta definición recomendado para monitorear detalles críticos con reconocimiento de objetivos.",
-                        costUSD: 27.27,
-                        features: ["Montaje vertical para poste adaptable", "Construcción en acero inoxidable robusto", "Dimensiones compactas: 127x46x250 mm", "Tratamiento superficial por pulverización resistente", "Diámetro ajustable: 67 mm a 127 mm", "Capacidad de carga hasta 10 kg"]
-                    },
-                    { 
-                        model: "DS-1280ZJ-S", 
-                        titleSpecs: "Caja de Conexiones de Exterior con Tapa para Cámaras Tipo Domo, Turret y Bala / IP66", 
-                        desc: "Plataforma multicanal corporativa que integra motores analíticos avanzados para búsquedas inmediatas por atributos.",
-                        costUSD: 16.46,
-                        features: ["Caja exterior IP66 para cámaras domo, turret y bala", "Salida de tubo estándar de 3/4 pulgada", "Diseño resistente al agua y polvo (IP66)", "Peso ligero de 527 gramos", "Material de aleación de aluminio duradero", "Capacidad de carga hasta 4.5 kg"]
-                    },
-                    { 
-                        model: "DS-1280ZJ-XS", 
-                        titleSpecs: "Caja de Conexiones de Metal / Compatible con DS-2CD20XX, B8-TURBOGXX, THC-B120-XX,, THC-BXX, THC-TXX", 
-                        desc: "Grabador robusto diseñado para integraciones institucionales complejas donde coexisten infraestructuras análogas e IP.",
-                        costUSD: 11.37,
-                        features: ["Empaque sellado IP66 para protección contra agua y polvo", "Material dieléctrico de aluminio fundido antifricción", "Carga máxima soportada de 4.5 kg", "Dimensiones compactas de 100 x 43.2 x 129 mm", "Compatibilidad universal con cámaras Hikvision y TurboHD", "Conector hembra para cable de fibra óptica"]
-                    },
-                    { 
-                        model: "DS-1299ZJ", 
-                        titleSpecs: "Montaje Colgante Para Interior / Recomendado Para Cámaras Tipo Box / Fabricada en Aluminio", 
-                        desc: "Solución de videovigilancia robustecida y escalable para medianas empresas con flujos operativos ininterrumpidos.",
-                        costUSD: 7.05,
-                        features: ["Compatible con cámaras box Epcom y Hikvision", "Material de aluminio para resistencia duradera", "Dimensiones compactas: 198 x 77 x 77 mm", "Montaje colgante para interior profesional", "Color blanco para estética discreta", "Peso ligero para fácil instalación"]
-                    },
-                    { 
-                        model: "XGAMPOLE", 
-                        titleSpecs: "Montaje universal para instalación de cámaras en poste", 
-                        desc: "Sistema centralizado de alta densidad idóneo para proyectos escolares amplios o naves industriales de despliegue masivo.",
-                        costUSD: 16.71,
-                        features: ["Construcción en acero resistente a la intemperie", "Color blanco para estética discreta", "Dimensiones compactas 200x155x72 mm", "Peso ligero de 1.55 kg", "Incluye abrazaderas y tornillos de montaje", "Capacidad de carga hasta 10 kg"]
-                    },
-                    { 
-                        model: "GABVID1R3", 
-                        titleSpecs: "Gabinete Metálico de Seguridad para DVR/NVR, Ancho 396 mm x 78 mm de Alto x", 
-                        desc: "Grabador de alta gama que unifica analíticas avanzadas de IA en una infraestructura masiva de cámaras de seguridad perimetral.",
-                        costUSD: 68.35,
-                        features: ["Tapa frontal totalmente desmontable para acceso rápido", "Doble ventanilla de mica para visualización clara", "Diseño compatible con rack 19' usando accesorio", "Cinto con broche para sujeción segura de grabadora", "Ventilación lateral y perforaciones para fijación segura", "Acero calibre 20 con pintura electrostática horneada"]
-                    },
-                    { 
-                        model: "GABVID2R3", 
-                        titleSpecs: "Gabinete Metálico para DVR/NVR. Tamaño Max. de DVR/NVR: 445 x 88 x 400mm (An.xAl.xProf.). Compatible con Fuente SLIM.", 
-                        desc: "Grabador masivo insignia diseñado para gestionar la seguridad integral de infraestructuras complejas con máxima estabilidad de red.",
-                        costUSD: 101.59,
-                        features: ["Tapa superior totalmente desmontable para acceso rápido", "Doble ventanilla frontal transparente para visualización directa", "Cinto con broche para sujeción segura de equipos", "Perforaciones para fijación en escritorio o pared", "Chapa de seguridad con llave para acceso restringido"]
-                    },
-                    { 
-                        model: "GABVID4R3", 
-                        titleSpecs: "Gabinete Metálico para DVR/NVR con Chapa y llave.", 
-                        desc: "x",
-                        costUSD: 137.34,
-                        features: ["Tapa frontal totalmente desmontable con chapa y llave", "Compatible con ventilador 120 x 120 mm", "Dimensiones exteriores 525x180x677 mm", "Material acero calibre 20, peso 11.32 kg", "Pintura negra semi-mate por proceso electrostático", "Perforaciones para fijación en mesa o escritorio"]
-                    },
-                    { 
-                        model: "KPL-040F", 
-                        titleSpecs: "Fuente de Poder Regulada 12 Vcc / 3.3 Amp. / Conector 5.5 mm / Recomendado para DVR acusense y PTZ TURBOHD", 
-                        desc: "x",
-                        costUSD: 16.98,
-                        features: ["Entrada universal 100-240V~50/60Hzx", "Salida estable 12 VCC 3.33A", "Conector estándar 5.5 mm de alta calidad", "Diseño compacto para fácil instalación", "Recomendado para cámaras PTZ TURBOHD", "Eficiencia energética optimizada para sistemas de seguridad"]
-                    },
-                    { 
-                        model: "KMA20-110", 
-                        titleSpecs: "Montaje Compacto de Pared para Monitores de 13 a 27inch | Soporta hasta 25 Kg| Compatible con Vesa 75 x 75 / 100 x 100 | Fabricado en Acero", 
-                        desc: "x",
-                        costUSD: 8.25,
-                        features: ["Soporte de pared compacto para monitores 13inch-27inch", "Capacidad de carga hasta 25 kg (55 lbs)", "Compatibilidad VESA 75x75 / 100x100 estándar", "Fabricado en acero de alta resistencia", "Inclinación ajustable +3° a -12°", "Giro horizontal ±25° para mejor visibilidad"]
-                    },
-                    { 
-                        model: "LDA40-223", 
-                        titleSpecs: "Soporte de Pared Articulado para Pantallas o Monitores Compatibilidad VESA 75x75 - 200x200 Hasta 43 Pulgadas Capacidad Máxima de Carga 20 kg Fabricado en Acero", 
-                        desc: "x",
-                        costUSD: 12.47,
-                        features: ["Compatibilidad VESA 75x75 a 200x200 mm", "Soporte para pantallas hasta 43 pulgadas", "Movimiento completo: inclinación, giro y rotación", "Capacidad máxima de carga 20 kg (44 lbs)", "Diseño en acero con recubrimiento antifricción", "Sistema de gestión de cables integrado"]
-                    },
-                    { 
-                        model: "LP-SDC", 
-                        titleSpecs: "Herraje tipo D pequeño con chaveta", 
-                        desc: "x",
-                        costUSD: 0.86,
-                        features: ["Soporta cables de fibra óptica aéreos", "Hecho de acero galvanizado en caliente", "Tensión máxima de 20 kN", "Peso ligero: solo 0.18 kg", "Span máximo de 200 metros", "Resistente a condiciones ambientales adversas"]
-                    },
-                    { 
-                        model: "LP-SSBT-58", 
-                        titleSpecs: "Hebilla de Acero Inoxidable T 5/8 100 piezas",
-                        desc: "x",
-                        costUSD: 12.56,
-                        features: ["Acero inoxidable 304 para máxima durabilidad", "Tamaño 5/8' ajustable a múltiples usos", "Paquete de 100 unidades para proyectos extensos", "Compatible con fibra óptica aérea ADSS y miniADSS", "Herramienta de cálculo para instalaciones precisas", "Diseño en T para mayor estabilidad y soporte"]
-                    },
-                    { 
-                        model: "SLM-3", 
-                        titleSpecs: "Mástil de 3 metros, 1-1/4 Diam. (Requiere accesorios de Instalación).", 
-                        desc: "x",
-                        costUSD: 15.50,
-                        features: ["Certificación ISO 9001:2015 para calidad garantizada", "Tubo galvanizado en caliente calibre 20, máxima durabilidad", "Altura fija de 3 metros para instalación precisa", "Peso ligero de 2.11 kg, fácil transporte", "Soporta cargas hasta 6 kg, versatilidad funcional", "Diseño compatible con antenas hasta 25 cm"]
-                    },
-                    { 
-                        model: "XBRT-8031-12", 
-                        titleSpecs: "Montaje telescópico de aluminio 600-1200 mm", 
-                        desc: "x",
-                        costUSD: 26.22,
-                        features: ["Ideal para cámaras profesionales interior/exterior", "Longitud ajustable de 600 a 1200 mm", "Soporta carga máxima de 10 kg", "Ángulo ajustable para mayor versatilidad", "Construcción robusta en aluminio", "Diseño telescópico con acabado anticorrosión"]
-                    },
-                    { 
-                        model: "XBRT2210", 
-                        titleSpecs: "Soporte Telescópico Universal para Cámaras Domo y Bala / Color Blanco / 0.60 mts a 1.2 mts de Distancia (Ajustable)", 
-                        desc: "x",
-                        costUSD: 31.52,
-                        features: ["Material de aluminio para mayor durabilidad", "Peso ligero de 1.55 kg", "Peso ligero de 1.55 kg", "Compatibilidad con cámaras de 3 o 4 tornillos", "Apto para uso interior y exterior", "Diseño telescópico universal para múltiples cámaras"]
+                    {
+                        model: "TT-101-F-TURBO",
+                        titleSpecs: "Par de Transceptores Pasivos (Baluns) Epcom TurboHD / Soporta hasta 5 Megapíxel / Conector de Presión Rápido",
+                        desc: "Kit de baluns de alto rendimiento para el envío de señal de video y audio sobre cable UTP sin degradación.",
+                        costUSD: 3.15,
+                        features: ["Protección interconstruida contra descargas de voltaje", "Diseño compacto apilable en tableros o gabinetes", "Inmunidad excepcional contra interferencias de red"]
                     },
                     {
-                        model: "XGA-9011", 
-                        titleSpecs: "Gabinete antivandálico IP66 para cámaras tipo caja", 
-                        desc: "x",
-                        costUSD: 24.12,
-                        features: ["Gabinete antivandálico IP66 para exteriores", "Construcción en aluminio y plástico resistente", "Protección total contra polvo y agua a presión", "Dimensiones compactas 137mm x 102mm x 355mm", "Rango térmico ampliado -30°C a 60°C", "Diseño modular para fácil instalación"]
-                    }                    
-                ]
-            },
-            almacenamiento: {
-                title: "Dispostivos de almacenamiento para Videovigilancia",
-                desc: "Soluciones de almacenamiento profesional.",
-                products: [
-                    { 
-                        model: "HS-TF-E1/128G", // Cambié el modelo para diferenciarlo del DVR de 4 canales
-                        titleSpecs: "Memoria microSD / Clase 10 de 128 GB / Especializada Para Videovigilancia (Uso 24/7) / Compatibles con cámaras HIKVISION y Otras Marcas / 95 MB/s Lectura / 50 MB/s Escritura", 
-                        desc: "Duerme tranquilo. Nosotros guardamos las pruebas de que todo está en orden.",
-                        costUSD: 40.33,
-                        features: ["Micro SDXC de 128 GB, Clase 10, U3", "Velocidad de lectura/escritura hasta 95/50 MB/s", "Memoria flash NAND TLC de alta durabilidad", "Resistente a agua, golpes y electricidad estática","Operación continua 24/7 en cámaras de seguridad", "Compatibilidad con cámaras HIKVISION y otras marcas"]
-                    },
-                    { 
-                        model: "HS-TF-E1/256G", // Cambié el modelo para diferenciarlo del DVR
-                        titleSpecs: "Memoria microSD / Clase 10 de 256 GB / Especializada Para Videovigilancia (Uso 24/7) / Compatibles con cámaras HIKVISION y Otras Marcas / 95 MB/s Lectura / 55 MB/s Escritura", 
-                        desc: "Duerme tranquilo. Nosotros guardamos las pruebas de que todo está en orden.",
-                        costUSD: 87.01,
-                        features: ["Capacidad de 256 GB para almacenamiento masivo", "Velocidad lectura 95 MB/s y escritura 55 MB/s", "Clase 10, U3 para grabación 4K estable", "Resistente a agua, golpes y electricidad estática","Sistema de archivos exFAT para compatibilidad universal", "Diseño compacto 14.99 x 10.92 x 1.02 mm"]
-                    },
-                    { 
-                        model: "HS-TF-E1/512G", // Cambié el modelo para diferenciarlo del DVR de 4 canales
-                        titleSpecs: "Memoria MicroSD / Clase 10 de 512 GB / Especializada Para Videovigilancia (Uso 24/7) / Compatibles con cámaras HIKVISION y Otras Marcas / 95 MB/s Lectura / 60 MB/s Escritura", 
-                        desc: "Duerme tranquilo. Nosotros guardamos las pruebas de que todo está en orden.",
-                        costUSD: 117.38,
-                        features: ["Capacidad de almacenamiento de hasta 512 GB", "Velocidad de lectura 95 MB/s, escritura 60 MB/s", "Formato micro SDXC para compatibilidad amplia", "Resistente a ambientes agresivos, uso exterior","Memoria Flash NAND TLC de alta confiabilidad", "Operación continua 24/7 para videovigilancia especializada"]
-                    },
-                    { 
-                        model: "HS-TF-M1/512G", // Cambié el modelo para diferenciarlo del DVR
-                        titleSpecs: "Memoria MicroSD / Clase 10 de 512 GB / Especializada Para Videovigilancia Movil (Uso 24/7) / Soporta Altas Temperaturas / 95 MB/s Lectura / 55 MB/s Escritura", 
-                        desc: "Duerme tranquilo. Nosotros guardamos las pruebas de que todo está en orden.",
-                        costUSD: 173.51,
-                        features: ["Capacidad 512 GB, lectura hasta 100 MB/s", "Clase 10, U3, V30 para video 4K continuo", "Resistente al agua, golpes y rayos X", "Memoria flash TLC con bajo costo y alto rendimiento","Operación en temperaturas extremas (-25°C a 85°C)", "Velocidad escritura constante 85 MB/s para grabación 24/7"]
-                    },
-                    { 
-                        model: "WD11PURZ", // Cambié el modelo para diferenciarlo del DVR
-                        titleSpecs: "Disco Duro Purple de 1 TB / 5400 RPM / Optimizado para Soluciones de Videovigilancia / Uso 24-7 / 3 Años de Garantia", 
-                        desc: "Duerme tranquilo. Nosotros guardamos las pruebas de que todo está en orden.",
-                        costUSD: 126.32,
-                        features: ["Capacidad de 1 TB para almacenamiento extenso", "Interfaz SATA III a 6.0 Gb/s", "Velocidad de transferencia de 6 Gb/s", "Optimizado para videovigilancia con hasta 64 cámaras","Diseño 24/7 con consumo eficiente", "Temperatura operativa de 0°C a 65°C"]
-                    },
-                    { 
-                        model: "WD23PURZ", // Cambié el modelo para diferenciarlo del DVR de 4 canales
-                        titleSpecs: "Disco Duro PURPLE de 2TB / 3 AÑOS DE GARANTÍA / Para Videovigilancia", 
-                        desc: "Duerme tranquilo. Nosotros guardamos las pruebas de que todo está en orden.",
-                        costUSD: 150.55,
-                        features: ["Capacidad de 2 TB para almacenamiento extenso", "Interfaz SATA III 6.0 Gb/s para transferencias rápidas", "Optimizado para sistemas de videovigilancia con hasta 64 cámaras", "Caché de 256 MB para procesamiento eficiente","Consumo energético reducido de 3.3W en operación", "Diseño 3.5 pulgadas con resistencia para uso continuo"]
-                    },
-                    { 
-                        model: "WD43PURZ", // Cambié el modelo para diferenciarlo del DVR de 4 canales
-                        titleSpecs: "Disco Duro PURPLE de 4TB / 3 AÑOS DE GARANTÍA / Para Videovigilancia", 
-                        desc: "Duerme tranquilo. Nosotros guardamos las pruebas de que todo está en orden.",
-                        costUSD: 182.92,
-                        features: ["Capacidad de almacenamiento de 4 TB", "Interfaz SATA III 6.0 Gb/s", "Optimizado para hasta 64 cámaras", "Temperatura operativa de 0 a 65°C","Caché de 256 MB de alta velocidad", "Diseño de 3.5 pulgadas para videovigilancia"]
-                    },
-                    { 
-                        model: "WD44PURZ", // Cambié el modelo para diferenciarlo del DVR
-                        titleSpecs: "Disco Duro WD Purple Surveillance / 4TB / SATA 6Gb/s / 3.5 / Tecnología AllFrame / 180TB año Workload / Soporte 64 Cámaras HD / 16 Bays / Componentes Anti-Corrosión / 3 Años Garantía", 
-                        desc: "Duerme tranquilo. Nosotros guardamos las pruebas de que todo está en orden.",
-                        costUSD: 189.49,
-                        features: ["Capacidad hasta 4TB para almacenamiento de video", "Tecnología AllFrame&trade; para reducir pérdida de frames", "Workload anual de 180TB para operación 24/7", "Soporta hasta 64 cámaras HD simultáneas","MTBF de 1,000,000 horas de confiabilidad", "Interfaz SATA 6Gb/s con cache de 256MB"]
-                    },
-                    { 
-                        model: "WD64PURZ", // Cambié el modelo para diferenciarlo del DVR de 4 canales
-                        titleSpecs: "Disco Duro PURPLE de 6TB / 3 AÑOS DE GARANTÍA / Para Videovigilancia", 
-                        desc: "Duerme tranquilo. Nosotros guardamos las pruebas de que todo está en orden.",
-                        costUSD: 272.04,
-                        features: ["Capacidad de 6 TB para almacenamiento masivo", "Interfaz SATA III a 6.0 Gb/s", "Optimizado para videovigilancia con soporte hasta 64 cámaras", "Velocidad rotación 5640 RPM eficiente","Caché de 128 MB para transferencias rápidas", "Diseño 3.5 pulgadas con consumo energético optimizado"]
-                    },
-                    { 
-                        model: "WD8002PURP", // Cambié el modelo para diferenciarlo del DVR
-                        titleSpecs: "Disco duro WD de 8TB / 7200RPM / Optimizado para soluciones de video inteligente", 
-                        desc: "Duerme tranquilo. Nosotros guardamos las pruebas de que todo está en orden.",
-                        costUSD: 389.67,
-                        features: ["Capacidad de almacenamiento de 8 TB", "Velocidad de transferencia sostenida de 245 MB/s", "Caché de 256 MB para rendimiento mejorado", "Compatibilidad con hasta 64 cámaras HD","Diseño optimizado para sistemas de video vigilancia", "Consumo eléctrico lectura/escritura de 8.6 W"]
-                    },
-                    { 
-                        model: "WD102PURP", // Cambié el modelo para diferenciarlo del DVR
-                        titleSpecs: "Disco Duro Purple Pro de 10 TB / 7200 RPM / Optimizado para Soluciones de Videovigilancia con Analiticos (Meta Data) / Uso 24-7 / 5 Años de Garantia", 
-                        desc: "Duerme tranquilo. Nosotros guardamos las pruebas de que todo está en orden.",
-                        costUSD: 413.14,
-                        features: ["Capacidad de 10 TB para almacenamiento masivo", "Interfaz SATA III con transferencia de 6 Gb/s", "Optimizado para videovigilancia con analíticos de metadatos", "Soporta hasta 64 cámaras HD en simultáneo","Velocidad de rotación de 7200 RPM", "Consumo eficiente de 8.6W en operación activa"]
-                    },
-                    { 
-                        model: "WD122PURP", // Cambié el modelo para diferenciarlo del DVR de 4 canales
-                        titleSpecs: "Disco Duro Interno Western Digital / WD purp 3.5-inch HDD / 7200 RPM / SATA 6Gb/s / Capacidad 12TB / Cache 512MB /", 
-                        desc: "Duerme tranquilo. Nosotros guardamos las pruebas de que todo está en orden.",
-                        costUSD: 545.21,
-                        features: ["Capacidad de 12 TB para almacenamiento masivo", "Interfaz SATA III 6.0 GB/s para transferencia rápida", "Optimizado para videovigilancia con hasta 64 cámaras HD", "Velocidad de rotación de 7200 RPM para alto rendimiento","Cache de 256 MB para transferencias fluidas", "Diseño 3.5 pulgadas con bajo consumo energético"]
-                    },                    
-                    { 
-                        model: "WD142PURP", // Cambié el modelo para diferenciarlo del DVR
-                        titleSpecs: "Disco duro WD de 14TB / 7200RPM / Optimizado para soluciones de video inteligente", 
-                        desc: "Duerme tranquilo. Nosotros guardamos las pruebas de que todo está en orden.",
-                        costUSD: 578.49,
-                        features: ["Capacidad de almacenamiento de 14 TB", "Velocidad de transferencia sostenida de 255 MB/s", "Interfaz SATA III a 6.0 Gb/s", "Optimizado para videovigilancia con soporte para 64 cámaras HD","Operación eficiente con consumo de 6 W", "Velocidad de rotación de 7200 RPM"]
+                        model: "XP4D",
+                        titleSpecs: "Fuente de Poder Distribuida Protek / 12 Vcc a 5 Amperes / 4 Salidas con Fusibles Independientes PTC",
+                        desc: "Gabinete de alimentación unificada para centralizar la energía de las cámaras con protección ante cortocomponentes.",
+                        costUSD: 24.60,
+                        features: ["Fusibles con reinicio automático electrónico PTC", "Indicadores LED individuales por cada canal", "Gabinete metálico con chapa de seguridad"]
                     }
-                 ]
-            },
-            camaras_analogas: {
-                title: "Accesorios complementarios para videovigilancia",
-                desc: "Catálogo completo de accesorios con costos integrados (IVA incluido) y factores de rentabilidad blindados.",
-                products: [
-                    { 
-                        model: "B4K-TURBO-EX", 
-                        titleSpecs: "[Audio Bidireccional + Dual Light + ColorVu] Bala TURBOHD 4K (8 Megapixel) / Lente 2.8 mm / 30 mts IR EXIR + 20 mts Luz Blanca / Micrófono y Bocina Integrado / Exterior IP67 / Metal / dWDR", 
-                        desc: "x",
-                        costUSD: 46.67,
-                        features: ["Resolución 4K (8 MP) 3840 x 2160 píxeles", "Lente fijo 2.8 mm con ángulo 113°", "Dual Light: 30 m IR + 20 m luz blanca", "Audio bidireccional full duplex sin cables adicionales", "Detección de movimiento con grabación a color nocturna", "Protección IP67 para exterior e interior"]
-                    },
-                    { 
-                        model: "DS-2CE57D3T-VPITF", 
-                        titleSpecs: "Domo TURBOHD 2 Megapixel (1080p) / Lente 2.8 mm / 30 mts IR EXIR / TVI-AHD-CVI-CVBS / IK10 / IP67 / WDR 120 dB / Ultra Baja Iluminación / Metal", 
-                        desc: "x",
-                        costUSD: 32.01,
-                        features: ["Resolución 2 MP (1920x1080) con detalle nítido", "Smart IR EXIR 30 mts en baja luz", "Lente 2.8 mm con ángulo 106° amplio", "Soporta TVI, AHD, CVI y CVBS", "Protección IP67 e IK10 para exteriores extremos", "WDR 120 dB y ultra baja iluminación"]
-                    },
-                    { 
-                        model: "DS-2CE70D0T-PTLTS", 
-                        titleSpecs: "[Audio Bidireccional + Dual Light + ColorVu] PT TURBOHD 2 Megapixel (1080p) / Lente 3.6 mm / 25 mts IR EXIR + 20 mts Luz Blanca / Micrófono y Bocina Integrado / Interior / Plastico / dWDR", 
-                        desc: "x",
-                        costUSD: 42.05,
-                        features: ["Resolución 2 MP (1920 x 1080)", "Dual Light: 25 m IR + 20 m Luz Blanca", "Audio bidireccional integrado sin cables adicionales", "Lente fijo 3.6 mm, ángulo 87°", "Compatibilidad TVI/AHD/CVI/Análogo", "Detección de movimiento y cruce de línea"]
-                    },
-                    { 
-                        model: "DS-2CE70DF0T-LMFS", 
-                        titleSpecs: "[Dual Light + ColorVu] Turret TURBOHD 2 Megapixel (1080p) / Lente 2.8 mm / 20 mts IR + 20 mts Luz Blanca / Gran Angular 105° / Exterior IP67 / Micrófono Integrado / dWDR / 4 Tecnologías / Metal", 
-                        desc: "x",
-                        costUSD: 33.74,
-                        features: ["Resolución 2 MP (1920 x 1080)", "Lente 2.8 mm con ángulo 105°", "Visión nocturna 20 m Smart IR", "Luz blanca 20 m para grabación color", "Soporta TVI/AHD/CVI/CVBS y Coaxitron", "Protección IP67, carcasa metálica, 320 g"]
-                    },
-                    { 
-                        model: "DS-2CE70DF0T-MF", 
-                        titleSpecs: "[ColorVu] Turret TURBOHD 2 Megapixel (1080p) / Imagen a Color 24/7 / Lente 2.8 mm / METAL / Luz Blanca 20 mts / Exterior IP67 / TVI-AHD-CVI-CVBS / dWDR", 
-                        desc: "x",
-                        costUSD: 24.97,
-                        features: ["Resolución 2 MP (1920 x 1080)", "Iluminación mínima 0.001 lux @ F1.0", "Lente 2.8 mm con ángulo 98°", "Luz blanca 20 mts para visión nocturna", "Soporta TVI-AHD-CVI-CVBS seleccionable por cable", "Protección IP67 y carcasa metálica"]
-                    },
-                    { 
-                        model: "DS-2CE70KF0T-MFS", 
-                        titleSpecs: "[ColorVu] Turret TURBOHD 3K (5 Megapixel) / Micrófono Integrado / Lente 2.8 mm / Imagen a Color 24/7 / 20 mts Luz Blanca / Exterior IP67 / dWDR / 4 Tecnologías", 
-                        desc: "x",
-                        costUSD: 45.62,
-                        features: ["Resolución 3K (2960 x 1665 píxeles)", "Iluminación mínima 0.001 lux @ F1.0", "Soporta 4 tecnologías seleccionables (TVI/CVI/AHD/CVBS)", "Luz blanca 20 metros para imagen color 24/7", "Protección IP67 para uso exterior", "Micrófono integrado para captura de audio"]
-                    },
-                    { 
-                        model: "DS-2CE72DF3T-PIRXOS", 
-                        titleSpecs: "Turret TURBOHD 2 Megapixeles (1080p) / Imagen a color 24/7 / Lente 2.8 mm / Luz Blanca 20 mts / Exterior IP67 / WDR 130dB / Sensor PIR / Sirena Integrada / Estrobo ROJO - AZUL / Micrófono Integrado", 
-                        desc: "x",
-                        costUSD: 63.10,
-                        features: ["Resolución 2MP (1920 x 1080) Full HD", "Iluminación mínima 0.0005 lux @ F1.0", "WDR 130dB con funciones BLC, HLC y 3D DNR", "Sensor PIR 110°, rango 11 metros", "Sirena 93.5 dB y estrobo rojo/azul", "Luz blanca 20 metros para imagen a color 24/7"]
-                    },
-                    { 
-                        model: "DS-2CE72KF0T-FS", 
-                        titleSpecs: "[ColorVu] Turret TURBOHD 3K (5 Megapixel) / Micrófono Integrado / Lente 3.6 mm / Imagen a Color 24/7 / 40 mts Luz Blanca / Exterior IP67 / dWDR / 4 Tecnologías", 
-                        desc: "x",
-                        costUSD: 50.71,
-                        features: ["Resolución 3K (5 MP) con formato 16:9", "Iluminación mínima 0.001 lux @ F1.0", "Luz blanca 40 metros para visión nocturna a color", "4 tecnologías seleccionables (TVI, CVI, AHD, CVBS)", "Protección IP67 para uso en exteriores", "Micrófono integrado para captura de audio"]
-                    },
-                    { 
-                        model: "DS-2CE72UF3T-E", 
-                        titleSpecs: "[ColorVu] Turret TURBOHD 4K (8 Megapixel) / Lente 2.8 mm / Imagen a Color 24/7 / Luz Blanca 40 mts / Exterior IP67 / WDR 130 dB", 
-                        desc: "x",
-                        costUSD: 84.39,
-                        features: ["Resolución 4K (8 MP) ultra nítida y detallada", "Iluminación mínima 0.0005 lux para visión nocturna", "Lente 2.8 mm con ángulo de visión 110°", "Luz blanca 40 mts para imagen color 24/7", "Protección IP67 para ambientes exteriores exigentes", "WDR 130 dB para contraluces intensos"]
-                    },
-                    { 
-                        model: "DS-2CE76D0T-LMFS", 
-                        titleSpecs: "[Dual Light + ColorVu] Turret TURBOHD 2 Megapixel (1080p) / Lente 2.8 mm / 30 mts IR + 20 mts Luz Blanca / Gran Angular 101° / Exterior IP67 / Micrófono Integrado / 4 Tecnologías / Metal", 
-                        desc: "x",
-                        costUSD: 30.05,
-                        features: ["Resolución 2 MP (1920 x 1080)", "Lente 2.8 mm con ángulo 101°", "Visión nocturna IR 30 mts + Luz Blanca 20 mts", "Soporta TVI/AHD/CVI/CVBS", "Protección IP67 para exterior", "Micrófono integrado sin cables adicionales"]                    
-                    },
-                    { 
-                        model: "DS-2CE76K0T-LMFS", 
-                        titleSpecs: "[Dual Light + ColorVu] Turret TURBOHD 3K (5 Megapixel) / Lente 2.8 mm / 30 mts IR + 20 mts Luz Blanca / Gran Angular 104.9° / Exterior IP67 / Micrófono Integrado / dWDR / 4 Tecnologías / Metal", 
-                        desc: "x",
-                        costUSD: 34.09,
-                        features: ["Resolución 3K (2960 x 1665 píxeles)", "Lente fijo de 2.8 mm con 104.9° de visión", "Doble iluminación IR 30 mts + luz blanca 20 mts", "Micrófono integrado para audio en áreas de 5-8 m²", "Protección IP67 ideal para exteriores", "Soporta 4 tecnologías: TVI/AHD/CVI/CVBS"]                  
-                    },
-                    { 
-                        model: "DS-2CE78K0T-LTS", 
-                        titleSpecs: "[Audio Bidireccional + Dual Light + ColorVu] Turret TURBOHD 3K (5 Megapixel) / Lente 2.8 mm / 40 mts IR EXIR + 40 mts Luz Blanca / Micrófono y Bocina Integrado / Exterior IP67 / dWDR", 
-                        desc: "x",
-                        costUSD: 45.17,
-                        features: ["Resolución 3K (5MP) con lente 2.8 mm", "Dual Light: 40 mts IR EXIR + 40 mts luz blanca", "Audio bidireccional integrado sin cables adicionales", "Comunicación por app Hik-Connect con DVR intermedio", "Detección de movimiento con activación de luz blanca", "Protección IP67 para exterior e interior"]   
-                    },
-                    { 
-                        model: "E3K-TURBO-C", 
-                        titleSpecs: "[ColorVu] Turret TURBOHD 3K (5 Megapixel) / Lente 2.8 mm / Micrófono Integrado / Imagen a Color 24/7 / 20 mts Luz Blanca / Exterior IP67 / dWDR / 4 Tecnologías", 
-                        desc: "x",
-                        costUSD: 42.10,
-                        features: ["Resolución 3K (2960 x 1665 píxeles)", "Color 24/7 con luz blanca 20 mts", "Protección IP67 para exterior -40°C a 60°C", "Micrófono integrado para audio en tiempo real", "4 tecnologías seleccionables: HD-TVI, HD-CVI, AHD, CVBS", "Lente 2.8 mm con ángulo 102°"]
-                    },
-                    { 
-                        model: "E50-TURBO-G2/A", 
-                        titleSpecs: "AUDIO POR COAXITRON / Turret TURBOHD 5 Megapixel / Angulo de vision 85.5° / Lente 2.8 mm / 30 mts IR EXIR / Exterior IP67 / 4 Tecnologías / dWDR", 
-                        desc: "x",
-                        costUSD: 32.85,
-                        features: ["Resolución 5 MP (2560 x 1944)", "Lente 2.8 mm con ángulo 85.5°", "Transmisión TVI/AHD/CVI/CVBS compatible", "Protección IP67 para uso exterior/interior", "Audio integrado sin cables adicionales", "Visión nocturna 30 mts EXIR"]
-                    },
-                    { 
-                        model: "E50-TURBO-G3", 
-                        titleSpecs: "Turret TURBOHD 5 Megapíxel / 85° de Visión / Lente 2.8 mm / Exterior IP66 / IR EXIR 20 mts / TVI-AHD-CVI-CVBS / Metal", 
-                        desc: "x",
-                        costUSD: 25.98,
-                        features: ["Resolución 5 MP (2560 x 1440 píxeles)", "Iluminación mínima 0.01 lux, 0 lux con IR", "Lente fijo 2.8 mm, ángulo de visión 85°", "Visión nocturna IR EXIR hasta 20 metros", "Compatible TVI/AHD/CVI/CVBS conmutable en resolución máxima", "Diseño metálico IP66 para exterior"]
-                    },
-                    { 
-                        model: "E8-TURBO-C/A", 
-                        titleSpecs: "[ColorVu] Eyeball TURBOHD 2 Megapíxel (1080p) / Lente 2.8 mm / Microfono Integrado / Imagen a Color 24/7 / METAL / Luz Blanca 20 mts / Exterior IP66 / TVI-AHD-CVI-CVBS / dWDR", 
-                        desc: "x",
-                        costUSD: 22.22,
-                        features: ["Resolución 2MP (1920x1080) Full HD", "Lente 2.8 mm con ángulo 105°", "Luz blanca 20 metros para visión nocturna", "4 tecnologías: TVI-AHD-CVI-CVBS seleccionables", "Detección de luz mínima 0.001 lux", "Diseño metálico IP66 para exterior"]
-                    },
-                    { 
-                        model: "E8-TURBO-G2P/A", 
-                        titleSpecs: "AUDIO POR COAXITRON / Domo TURBOHD 2 Megapixel (1080p) / Gran Angular 106° / Lente 2.8 mm / 20 mts IR EXIR / Interior / 4 Tecnologías / dWDR", 
-                        desc: "x",
-                        costUSD: 18.40,
-                        features: ["Resolución 2 MP Full HD 1920x1080", "Lente 2.8 mm con ángulo 106.4°", "Visión nocturna Smart IR hasta 20 metros", "Compatibilidad TVI, AHD, CVI, CVBS y dWDR", "Micrófono integrado sin cables adicionales", "Diseño compacto para interiores en policarbonato"]
-                    },
-                    { 
-                        model: "E8-TURBO-G2W", 
-                        titleSpecs: "Turret TURBOHD 2 Megapixel (1080p) / METÁLICA / Gran Angular 103° / Lente 2.8 mm / IR EXIR 20 Mts / Exterior IP66 / TVI-AHD-CVI-CVBS / dWDR", 
-                        desc: "x",
-                        costUSD: 12.84,
-                        features: ["Resolución Full HD 2MP (1920x1080)", "Iluminación mínima 0.01 lux con IR 20m", "Lente fijo 2.8 mm, ángulo 103°", "Compatibilidad TVI-AHD-CVI-CVBS seleccionable", "Protección IP66 para exterior", "Construcción metálica duradera"]
-                    },
-                    { 
-                        model: "E8-TURBO-IG2W", 
-                        titleSpecs: "Eyeball TURBOHD 2 Megapixel (1080p) / Gran Angular 103° / Lente 2.8 mm / EXIR Inteligente 20 mts / Interior / TVI-AHD-CVI-CVBS / dWDR", 
-                        desc: "x",
-                        costUSD: 11.37,
-                        features: ["Resolución 2 MP (1920 x 1080) Full HD", "Lente gran angular 103° con campo visual amplio", "Visión nocturna EXIR 20 metros de alcance", "Compatibilidad múltiple TVI/AHD/CVI/CVBS para fácil integración", "Rango térmico ampliado -40°C a 60°C", "Construcción en policarbonato resistente a impactos"]
-                    },
-                    { 
-                        model: "E8-TURBO-PC/A", 
-                        titleSpecs: "Turret TURBOHD 2 Megapíxel (1080p) / Imagen a color 24/7 / Lente 2.8 mm / Policarbonato / Luz Blanca 20 mts / Interior / Microfono Integrado / TVI-AHD-CVI-CVBS / dWDR", 
-                        desc: "x",
-                        costUSD: 20.75,
-                        features: ["Resolución 2 MP (1920 x 1080) Full HD", "Iluminación mínima 0.001 lux @ f1.0", "Lente fijo 2.8 mm, ángulo 105°", "4 tecnologías: HD-TVI, HD-CVI, AHD, CVBS", "Operación -40°C a 60°C, consumo 2W", "Luz blanca 20 mts para imagen a color 24/7"]
-                    },
-                    { 
-                        model: "IPC-T221H-C", 
-                        titleSpecs: "HiLook Series / Turret IP 2 Megapixel / Lente 2.8 mm / 20 mts IR / Exterior IP67 / PoE / dWDR / H.265+ / ONVIF", 
-                        desc: "x",
-                        costUSD: 27.45,
-                        features: ["Resolución 1920 x 1080 (2 MP)", "Iluminación mínima 0.01 lux (F2.0)", "Compresión H.265+/H.265/H.264+/H.264", "IR inteligente hasta 20 metros", "Protección IP67 para exteriores", "Detección dWDR para contraluces"]
-                    },
-                    {
-                        model: "THC-T120-M", 
-                        titleSpecs: "Turret TURBOHD 2 Megapíxeles (1080p) / Lente 2.8 mm / 20 mts IR EXIR / TVI-AHD-CVI-CVBS / IP66 / Metal", 
-                        desc: "x",
-                        costUSD: 13.05,
-                        features: ["Resolución 1920x1080p (2 MP) Full HD", "Lente 2.8 mm con ángulo 103°", "Visión nocturna IR EXIR 20 metros", "4 tecnologías seleccionables: TVI/AHD/CVI/CVBS", "Protección IP66 para exterior", "Diseño metálico duradero y resistente"]
-                    },
-                    {
-                        model: "THC-T120-PC", 
-                        titleSpecs: "Turret TURBOHD 2 Megapíxel (1080p) / Lente 2.8 mm / 20 mts IR EXIR / 4 Tecnologías (TVI / AHD / CVI / CVBS) / Uso en Interior", 
-                        desc: "x",
-                        costUSD: 10.84,
-                        features: ["Resolución Full HD 1920x1080 (2 MP)", "Lente fijo 2.8 mm, ángulo 103°", "Visión nocturna IR EXIR hasta 20 mts", "Compatibilidad TVI/AHD/CVI/CVBS seleccionable", "Rango térmico ampliado -40°C a 60°C", "Diseño compacto de 85.4x76.12 mm"]
-                    }     
                 ]
             },
+            nvs: { title: "Servidores de Video (NVS)", desc: "Codificadores y servidores dedicados para entornos de red complejos.", products: [] },
+            camaras_ip: { title: "Cámaras IP Profesionales", desc: "Cámaras con conexión por red nativa, resoluciones desde 2MP hasta 4K.", products: [] },
+            camaras_ptz: { title: "Cámaras Domo PTZ", desc: "Equipos con movimiento robótico horizontal, vertical y zooms ópticos potentes.", products: [] },
+            switch_rack: { title: "Switches para Rack", desc: "Conmutadores corporativos diseñados para montaje estructural en gabinetes.", products: [] },
+            switch_poe: { title: "Switches PoE Alimentados", desc: "Dispositivos de red para energizar cámaras IP y Access Points perimetrales.", products: [] },
+            kits: { title: "Kits de Videovigilancia Cerrados", desc: "Paquetes todo incluido listos para su instalación rápida.", products: [] },
+            monitores: { title: "Monitores de Monitoreo Continuo", desc: "Pantallas de grado industrial diseñadas para operar 24/7 sin sobrecalentamiento.", products: [] },
+            accesorios_extra: { title: "Accesorios Adicionales e Infraestructura", desc: "Canalizaciones, cables UTP 100% cobre y gabinetes dedicados.", products: [] }
         };
 
-        let activeCategory = "dvr";
-
-        function getSanitizedImageUrl(modelName) {
-            const cleanName = modelName.replace(/\//g, '_');
-            return `https://bytecomtec.github.io/marketing_videovigilancia/${cleanName}.jpg`;
-        }
-
         function updateAllPrices() {
-            currentRate = parseFloat(document.getElementById('exchangeRate').value) || 17.23;
-            currentDiscount = parseFloat(document.getElementById('discountSelect').value);
-            renderCategory(activeCategory);
-        }
-
-        // ==========================================================================
-        // FUNCIÓN DEL CANVAS TOTALMENTE RECONSTRUIDA Y CORREGIDA
-        // ==========================================================================
-        function generateFromIndex(index) {
-            // Busca dinámicamente en la categoría activa actual (dvr o nvr)
-            const prod = catalogData[activeCategory].products[index];
-            if (!prod) return;
-
-            const canvas = document.getElementById('processingCanvas');
-            const ctx = canvas.getContext('2d');
-            const img = new Image();
+            const rateInput = document.getElementById('exchangeRate');
+            const discountSelect = document.getElementById('discountSelect');
             
-            img.crossOrigin = "anonymous";
-            img.src = getSanitizedImageUrl(prod.model);
-            
-            img.onload = function() {
-                canvas.width = 650; canvas.height = 950;
-                ctx.fillStyle = "#ffffff"; ctx.fillRect(0, 0, canvas.width, canvas.height);
-                
-                // 1. Encabezado del Modelo
-                ctx.fillStyle = "#003366"; ctx.font = "bold 26px 'Segoe UI', sans-serif";
-                ctx.fillText(prod.model, 35, 50);
-                
-                // 2. Título de Especificaciones Técnicas (Ajuste de líneas automático)
-                ctx.fillStyle = "#1e293b"; ctx.font = "bold 15px 'Segoe UI', sans-serif";
-                const words = prod.titleSpecs.split(' ');
-                let lines = []; let currentLine = "";
-                for (let n = 0; n < words.length; n++) {
-                    let testLine = currentLine + words[n] + " ";
-                    if (ctx.measureText(testLine).width > 580 && n > 0) {
-                        lines.push(currentLine.trim()); currentLine = words[n] + " ";
-                    } else { currentLine = testLine; }
-                }
-                lines.push(currentLine.trim());
-                
-                let textY = 80;
-                lines.forEach(line => { ctx.fillText(line, 35, textY); textY += 22; });
-                
-                // 3. Descripción Comercial Fidedigna (Texto cursivo)
-                ctx.fillStyle = "#475569"; ctx.font = "italic 14px 'Segoe UI', sans-serif";
-                const descWords = prod.desc.split(' ');
-                let descLines = []; let currentDescLine = "";
-                for (let i = 0; i < descWords.length; i++) {
-                    let testDescLine = currentDescLine + descWords[i] + " ";
-                    if (ctx.measureText(testDescLine).width > 580 && i > 0) {
-                        descLines.push(currentDescLine.trim()); currentDescLine = descWords[i] + " ";
-                    } else { currentDescLine = testDescLine; }
-                }
-                descLines.push(currentDescLine.trim());
-                
-                textY += 5;
-                descLines.forEach(line => { ctx.fillText(line, 35, textY); textY += 20; });
+            if (rateInput) currentRate = parseFloat(rateInput.value) || 17.23;
+            if (discountSelect) currentDiscount = parseFloat(discountSelect.value) || 0;
 
-                // 4. Inyección Visual de las Características Específicas (Viñetas con Palomitas)
-                textY += 10;
-                prod.features.forEach(feat => {
-                    ctx.fillStyle = "#10b981"; ctx.font = "bold 14px 'Segoe UI', sans-serif";
-                    ctx.fillText("✓", 35, textY);
-                    
-                    ctx.fillStyle = "#334155"; ctx.font = "14px 'Segoe UI', sans-serif";
-                    ctx.fillText(feat, 55, textY);
-                    textY += 22;
-                });
-                
-                // 5. Bloque de Precios Dinámico
-                const marginFactor = 1.6;
-                const priceListUSD = prod.costUSD * marginFactor;
-                const priceWithDiscountUSD = priceListUSD * (1 - currentDiscount);
-                
-                const originalMXN = (priceListUSD * currentRate).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
-                const finalMXN = (priceWithDiscountUSD * currentRate).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
-                
-                textY += 15;
-                if(currentDiscount > 0) {
-                    ctx.fillStyle = "#94a3b8"; ctx.font = "line-through 14px 'Segoe UI', sans-serif";
-                    ctx.fillText("Precio Lista Regular: " + originalMXN, 35, textY); textY += 26;
-                    ctx.fillStyle = "#d32f2f"; ctx.font = "bold 23px 'Segoe UI', sans-serif";
-                    ctx.fillText("Inversión Especial: " + finalMXN + " MXN", 35, textY);
-                } else {
-                    ctx.fillStyle = "#003366"; ctx.font = "bold 23px 'Segoe UI', sans-serif";
-                    ctx.fillText("Inversión Comercial: " + finalMXN + " MXN", 35, textY);
-                }
-                
-                // 6. Estampado de la Imagen del Producto
-                const imgSize = 480;
-                const imgX = (canvas.width - imgSize) / 2;
-                ctx.drawImage(img, imgX, textY + 30, imgSize, imgSize);
-                
-                document.getElementById('modalTargetImg').src = canvas.toDataURL("image/jpeg", 0.95);
-                document.getElementById('imageModal').style.display = 'flex';
-            };
-
-            img.onerror = function() {
-                canvas.width = 650; canvas.height = 420;
-                ctx.fillStyle = "#003366"; ctx.fillRect(0, 0, canvas.width, canvas.height);
-                ctx.fillStyle = "#ffffff"; ctx.font = "bold 24px 'Segoe UI', sans-serif";
-                ctx.fillText("BYTECOMTEC - DIGITAL FLYER", 40, 55);
-                ctx.font = "bold 20px 'Segoe UI', sans-serif"; ctx.fillText("Modelo: " + prod.model, 40, 105);
-                
-                ctx.font = "14px 'Segoe UI', sans-serif"; ctx.fillStyle = "#cbd5e1";
-                ctx.fillText(prod.titleSpecs.substring(0, 75) + "...", 40, 150);
-                
-                let fallbackY = 190;
-                prod.features.slice(0, 3).forEach(feat => {
-                    ctx.fillStyle = "#ff6600"; ctx.fillText("✓", 40, fallbackY);
-                    ctx.fillStyle = "#ffffff"; ctx.fillText(feat.substring(0, 70), 60, fallbackY);
-                    fallbackY += 22;
-                });
-                
-                const marginFactor = 1.6;
-                const finalPriceMXN = ((prod.costUSD * marginFactor * (1 - currentDiscount)) * currentRate).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
-                ctx.fillStyle = "#ff6600"; ctx.font = "bold 24px 'Segoe UI', sans-serif";
-                ctx.fillText("Inversión Especial: " + finalPriceMXN + " MXN", 40, fallbackY + 30);
-                
-                document.getElementById('modalTargetImg').src = canvas.toDataURL("image/jpeg", 0.95);
-                document.getElementById('imageModal').style.display = 'flex';
-            };
+            const activeMenuItem = document.querySelector('.category-menu-item.active');
+            if (activeMenuItem) {
+                const categoryId = activeMenuItem.id.replace('menu-', '');
+                renderCategory(categoryId);
+            }
         }
-
-        function closeLightbox() { document.getElementById('imageModal').style.display = 'none'; }
 
         function renderCategory(categoryId) {
-            activeCategory = categoryId;
+            document.querySelectorAll('.category-menu-item').forEach(li => li.classList.remove('active'));
+            const activeLi = document.getElementById(`menu-${categoryId}`);
+            if (activeLi) activeLi.classList.add('active');
+
             const container = document.getElementById('productsContainer');
             const titleElem = document.getElementById('categoryTitle');
             const descElem = document.getElementById('categoryDesc');
-            
-            document.querySelectorAll('.category-menu-item').forEach(item => item.classList.remove('active'));
-            const activeMenuItem = document.getElementById(`menu-${categoryId}`);
-            if(activeMenuItem) activeMenuItem.classList.add('active');
 
-            const data = catalogData[categoryId];
+            if (!container || !titleElem || !descElem) return;
 
-            if (data && data.products && data.products.length > 0) {
-                titleElem.innerText = data.title;
-                descElem.innerText = data.desc;
-                container.innerHTML = '';
+            container.innerHTML = '';
 
-                data.products.forEach((prod, index) => {
+            if (catalogData[categoryId] && catalogData[categoryId].products.length > 0) {
+                titleElem.innerText = catalogData[categoryId].title;
+                descElem.innerText = catalogData[categoryId].desc;
+
+                catalogData[categoryId].products.forEach((prod) => {
+                    const costoMXNSinIva = prod.costUSD * currentRate;
+                    const costoMXNConIva = costoMXNSinIva * 1.16;
+
+                    // AJUSTE CRÍTICO: Markup elevado a 1.65 (65% sobre costo neto con IVA)
+                    const basePublico = costoMXNConIva * 1.65; 
+                    let precioFinalPublico = basePublico * (1 - currentDiscount);
+
+                    // CANDADO DE SEGURIDAD AUTOMÁTICO: El piso definitivo es Costo + 20% utilidad neta
+                    const precioMinimoPermitido = costoMXNConIva * 1.20;
+                    if (precioFinalPublico < precioMinimoPermitido) {
+                        precioFinalPublico = precioMinimoPermitido;
+                    }
+
+                    // ARITMÉTICA FIJA: Margen real basado exclusivamente en lo cobrado vs lo pagado
+                    const margenAsegurado = precioFinalPublico - costoMXNConIva;
+
+                    const sanitizedFilename = prod.model.replace('/', '_');
+                    const computedImgUrl = `${GITHUB_IMG_BASE}${sanitizedFilename}.jpg`;
+
                     const card = document.createElement('div');
                     card.className = 'product-card';
                     
-                    const marginFactor = 1.6;
-                    const priceListUSD = prod.costUSD * marginFactor;
-                    const priceWithDiscountUSD = priceListUSD * (1 - currentDiscount);
-                    
-                    const originalPriceMXN = (priceListUSD * currentRate).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
-                    const finalPriceMXN = (priceWithDiscountUSD * currentRate).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' });
-
-                    const costoRealMXN = prod.costUSD * currentRate;
-                    const utilidadNetaRealMXN = (priceWithDiscountUSD * currentRate) - costoRealMXN;
-
-                    let priceBlock = '';
-                    if(currentDiscount > 0) {
-                        priceBlock = `
-                            <span class="original-price">${originalPriceMXN}</span>
-                            <span class="final-price">${finalPriceMXN}</span>
-                            <small style="color:#10b981; font-weight:bold; display:block;">-${(currentDiscount*100)}% aplicado</small>
-                        `;
-                    } else {
-                        priceBlock = `<span class="final-price">${finalPriceMXN}</span>`;
+                    let featuresHTML = '';
+                    if (prod.features && prod.features.length > 0) {
+                        featuresHTML = `<ul class="product-features-list">`;
+                        // Cambio aplicado aquí: Se eliminó el .slice(0, 3) para procesar todo el arreglo completo
+                        prod.features.forEach(f => {
+                            featuresHTML += `<li>${f}</li>`;
+                        });
+                        featuresHTML += `</ul>`;
                     }
 
-                    let featuresHtml = '<ul class="product-features-list">';
-                    prod.features.forEach(feat => { featuresHtml += `<li>${feat}</li>`; });
-                    featuresHtml += '</ul>';
+                    const titleSpecsEscaped = prod.titleSpecs.replace(/'/g, "\\'");
 
                     card.innerHTML = `
                         <div class="product-body">
                             <div class="product-main-info">
-                                <div class="product-img-box" onclick="generateFromIndex(${index})">
-                                    <img src="${getSanitizedImageUrl(prod.model)}" alt="${prod.model}" onerror="this.src='https://placehold.co/110x110?text=${prod.model.replace(/\//g, '_')}'">
+                                <div class="product-img-box" onclick="triggerFlyerGeneration('${prod.model}', '${titleSpecsEscaped}', ${basePublico}, ${precioFinalPublico})">
+                                    <img src="${computedImgUrl}" alt="${prod.model}" onerror="this.src='byte.png'">
                                 </div>
                                 <div class="product-details">
                                     <div class="product-model">${prod.model}</div>
-                                    <p class="product-title-specs">${prod.titleSpecs}</p>
-                                    <div class="product-price-list">${priceBlock}</div>
-                                    <span class="usd-reference">Base Distribuidor: $${prod.costUSD.toFixed(2)} USD</span>
-                                    <span style="font-size:0.75rem; color:#475569; font-weight:bold; display:block; margin-top:4px; background:#f0fdf4; padding:3px 6px; border-radius:4px; border:1px solid #bbf7d0;">
-                                        Margen Asegurado: +${utilidadNetaRealMXN.toLocaleString('es-MX', {style:'currency', currency:'MXN'})}
-                                    </span>
+                                    <h3 class="product-title-specs">${prod.titleSpecs}</h3>
+                                    <div class="product-price-list">
+                                        ${currentDiscount > 0 && precioFinalPublico > precioMinimoPermitido ? `<span class="original-price">$${basePublico.toFixed(2)}</span>` : ''}
+                                        <span class="final-price">$${precioFinalPublico.toFixed(2)} MXN</span>
+                                        <span class="usd-reference">Ref. Distribuidor: $${prod.costUSD.toFixed(2)} USD (c/IVA: $${costoMXNConIva.toFixed(2)} MXN)</span>
+                                    </div>
+                                    <div style="background-color: #f0fdf4; color: #166534; padding: 6px 10px; border-radius: 4px; font-size: 0.8rem; font-weight: 700; margin-top: 5px; border: 1px solid #bbf7d0;">
+                                        Margen Real Asegurado: +$${margenAsegurado.toFixed(2)} MXN
+                                    </div>
                                 </div>
                             </div>
-                            <p style="font-size:0.85rem; color:#475569; margin:0; border-top:1px dotted #e2e8f0; padding-top:6px; font-style:italic;">${prod.desc}</p>
-                            ${featuresHtml}
+                            <p style="margin: 0; font-size: 0.85rem; color: #64748b; line-height: 1.4;">${prod.desc}</p>
+                            ${featuresHTML}
                         </div>
                         <div class="product-footer">
-                            <button onclick="generateFromIndex(${index})" class="btn-prepare">🖼️ Generar Tarjeta Comercial</button>
+                            <button class="btn-prepare" onclick="triggerFlyerGeneration('${prod.model}', '${titleSpecsEscaped}', ${basePublico}, ${precioFinalPublico})">🖼️ Generar Tarjeta Comercial</button>
                         </div>
                     `;
                     container.appendChild(card);
                 });
             } else {
-                const catName = categoriesList.find(c => c.id === categoryId).name;
+                const catName = categoriesList.find(c => c.id === categoryId)?.name || categoryId;
                 titleElem.innerText = `Línea: ${catName}`;
-                descElem.innerText = `Módulo estructural asignado a la ingeniería de ${catName.toLowerCase()}.`;
-                container.innerHTML = `<p style="grid-column: 1/-1; color: #64748b; font-style: italic; padding: 30px 0;">Las soluciones y flyers asociados a esta línea de negocio se encuentran actualmente en proceso de indexación.</p>`;
+                descElem.innerText = catalogData[categoryId]?.desc || `Módulo asignado a la ingeniería de ${catName.toLowerCase()}.`;
+                container.innerHTML = `<p style="grid-column: 1/-1; color: #64748b; font-style: italic; padding: 30px 0;">Las soluciones de hardware y flyers asociados a esta línea de negocio se encuentran actualmente en proceso de indexación técnica.</p>`;
             }
         }
 
         function initMenu() {
             const menuList = document.getElementById('menuList');
+            if (!menuList) return;
             menuList.innerHTML = '';
             categoriesList.forEach((cat) => {
                 const count = catalogData[cat.id] ? catalogData[cat.id].products.length : 0;
@@ -1183,6 +551,152 @@
                 menuList.appendChild(li);
             });
             renderCategory("dvr");
+        }
+
+        function wrapText(context, text, x, y, maxWidth, lineHeight) {
+            const words = text.split(' ');
+            let line = '';
+            let currentY = y;
+
+            for (let n = 0; n < words.length; n++) {
+                let testLine = line + words[n] + ' ';
+                let metrics = context.measureText(testLine);
+                let testWidth = metrics.width;
+                if (testWidth > maxWidth && n > 0) {
+                    context.fillText(line, x, currentY);
+                    line = words[n] + ' ';
+                    currentY += lineHeight;
+                } else {
+                    line = testLine;
+                }
+            }
+            context.fillText(line, x, currentY);
+            return currentY;
+        }
+
+        function triggerFlyerGeneration(modelCode, titleSpecs, basePrice, finalPrice) {
+            const canvas = document.getElementById('processingCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            canvas.width = 600;
+            canvas.height = 400;
+
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, 600, 400);
+
+            ctx.fillStyle = '#003366';
+            ctx.fillRect(0, 0, 600, 80);
+
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 20px sans-serif';
+            ctx.fillText('SOLUCIONES DE INGENIERÍA PERIMETRAL', 30, 45);
+
+            ctx.fillStyle = '#ff6600';
+            ctx.font = 'bold 14px sans-serif';
+            ctx.fillText('FICHA COMERCIAL DE HARDWARE - BYTECOMTEC', 30, 68);
+
+            ctx.fillStyle = '#1e293b';
+            ctx.font = 'bold 22px sans-serif';
+            ctx.fillText(`MODELO: ${modelCode}`, 40, 125);
+
+            ctx.fillStyle = '#334155';
+            ctx.font = '12px sans-serif';
+            let nextY = wrapText(ctx, titleSpecs, 40, 150, 360, 18);
+
+            let priceY = Math.max(nextY + 25, 205);
+            
+            // Renderizado condicional del tachado si el precio final mutó por descuento
+            if (Math.abs(basePrice - finalPrice) > 0.01) {
+                ctx.fillStyle = '#94a3b8';
+                ctx.font = '13px sans-serif';
+                let origText = `Precio de Lista: $${basePrice.toFixed(2)} MXN`;
+                ctx.fillText(origText, 40, priceY);
+                
+                let textWidth = ctx.measureText(origText).width;
+                ctx.strokeStyle = '#94a3b8';
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.moveTo(40, priceY - 4);
+                ctx.lineTo(40 + textWidth, priceY - 4);
+                ctx.stroke();
+                
+                priceY += 20;
+            }
+
+            ctx.fillStyle = '#003366';
+            ctx.font = 'bold 18px sans-serif';
+            ctx.fillText(`Precio Especial Público: $${finalPrice.toFixed(2)} MXN`, 40, priceY);
+
+            // Bloque fijo e inalterable de Diagnóstico Técnico
+            let boxY = Math.max(priceY + 15, 245);
+            ctx.fillStyle = '#f8fafc';
+            ctx.fillRect(40, boxY, 360, 55);
+            ctx.strokeStyle = '#e2e8f0';
+            ctx.strokeRect(40, boxY, 360, 55);
+
+            ctx.fillStyle = '#d32f2f';
+            ctx.font = 'bold 14px sans-serif';
+            ctx.fillText('Cotización sujeta a diagnóstico en sitio', 55, boxY + 32);
+
+            ctx.fillStyle = '#64748b';
+            ctx.font = 'italic 11px sans-serif';
+            ctx.fillText('* Vigencia ligada a fluctuaciones del tipo de cambio Syscom diario.', 40, 355);
+            ctx.fillText('Bytecomtec S.A. de C.V. - Soporte Técnico Autorizado', 40, 375);
+
+            const img = new Image();
+            img.crossOrigin = "anonymous";
+            
+            const sanitizedFilename = modelCode.replace('/', '_');
+            img.src = `${GITHUB_IMG_BASE}${sanitizedFilename}.jpg`;
+
+            img.onload = function() {
+                ctx.fillStyle = '#ffffff';
+                ctx.fillRect(420, 150, 140, 140);
+                ctx.strokeStyle = '#e2e8f0';
+                ctx.strokeRect(420, 150, 140, 140);
+                
+                const maxDim = 120;
+                let w = img.width;
+                let h = img.height;
+                if (w > h) {
+                    h = (h * maxDim) / w;
+                    w = maxDim;
+                } else {
+                    w = (w * maxDim) / h;
+                    h = maxDim;
+                }
+                const xOffset = 420 + (140 - w) / 2;
+                const yOffset = 150 + (140 - h) / 2;
+                
+                ctx.drawImage(img, xOffset, yOffset, w, h);
+                openModalWithCanvasData(canvas);
+            };
+
+            img.onerror = function() {
+                ctx.fillStyle = '#f1f5f9';
+                ctx.fillRect(420, 150, 140, 140);
+                ctx.strokeStyle = '#cbd5e1';
+                ctx.strokeRect(420, 150, 140, 140);
+                ctx.fillStyle = '#94a3b8';
+                ctx.font = 'bold 11px sans-serif';
+                ctx.fillText('[Imagen Indexada]', 440, 225);
+                openModalWithCanvasData(canvas);
+            };
+        }
+
+        // Ventana modal nativa de previsualización
+        function openModalWithCanvasData(canvas) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalTargetImg');
+            if (modal && modalImg) {
+                modalImg.src = canvas.toDataURL('image/png');
+                modal.style.display = 'flex';
+            }
+        }
+
+        function closeLightbox() {
+            const modal = document.getElementById('imageModal');
+            if (modal) modal.style.display = 'none';
         }
 
         window.onload = initMenu;
