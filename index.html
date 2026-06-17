@@ -187,8 +187,8 @@
         let currentRate = 17.23;
         let currentDiscount = 0;
 
-        // CORRECCIÓN: Apunta directamente a la raíz de tu repositorio GitHub Pages
-        const GITHUB_IMG_BASE = "https://bytecomtec.github.io/videos-dashcam/";
+        // CORRECCIÓN: Dirección URL de GitHub Pages corregida e integrada
+        const GITHUB_IMG_BASE = "https://bytecomtec.github.io/marketing/";
 
         const categoriesList = [
             { id: "dvr", name: "DVR" },
@@ -394,7 +394,6 @@
                     }
                 ]
             },
-            // NUEVO: Agregados productos reales a la categoría de Cámaras Análogas
             camaras_analogas: {
                 title: "Cámaras Análogas TurboHD",
                 desc: "Dispositivos bala, domo y ocultos de alta resistencia con transmisión sobre cable coaxial e iluminación inteligente.",
@@ -415,7 +414,6 @@
                     }
                 ]
             },
-            // NUEVO: Agregados productos reales a la categoría de Almacenamiento
             almacenamiento: {
                 title: "Discos Duros y Almacenamiento",
                 desc: "Unidades mecánicas de grado videovigilancia optimizadas para escritura continua ininterrumpida de flujos de video.",
@@ -436,7 +434,6 @@
                     }
                 ]
             },
-            // NUEVO: Agregados productos reales a la categoría de Accesorios
             accesorios: {
                 title: "Accesorios de Instalación",
                 desc: "Baluns, transceptores, fuentes de poder unificadas y herrajes certificados para blindaje contra ruidos eléctricos.",
@@ -457,7 +454,6 @@
                     }
                 ]
             },
-            // Contenedores listos para futuras expansiones
             nvs: { title: "Servidores de Video (NVS)", desc: "Codificadores y servidores dedicados para entornos de red complejos.", products: [] },
             camaras_ip: { title: "Cámaras IP Profesionales", desc: "Cámaras con conexión por red nativa, resoluciones desde 2MP hasta 4K.", products: [] },
             camaras_ptz: { title: "Cámaras Domo PTZ", desc: "Equipos con movimiento robótico horizontal, vertical y zooms ópticos potentes.", products: [] },
@@ -507,7 +503,6 @@
                     const precioFinalPublico = basePublico * (1 - currentDiscount);
                     const margenAsegurado = precioFinalPublico - costoMXNConIva;
 
-                    // CORRECCIÓN: La URL apunta directo a la raíz del repositorio
                     const computedImgUrl = `${GITHUB_IMG_BASE}${prod.model}.png`;
 
                     const card = document.createElement('div');
