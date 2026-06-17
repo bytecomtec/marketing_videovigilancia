@@ -97,7 +97,7 @@
             width: 110px; height: 110px; flex-shrink: 0; border: 1px solid #f1f5f9; border-radius: 6px;
             display: flex; align-items: center; justify-content: center; background-color: #ffffff; overflow: hidden; cursor: pointer;
         }
-        .product-img-box img { max-width: 100%; max-height: 100%; object-fit: cover; }
+        .product-img-box img { max-width: 100%; max-height: 100%; object-fit: contain; }
 
         .product-details { flex-grow: 1; }
         .product-model { color: #003399; font-weight: 700; font-size: 1.1rem; margin-bottom: 4px; }
@@ -187,6 +187,9 @@
         let currentRate = 17.23;
         let currentDiscount = 0;
 
+        // Base URL de tus recursos en GitHub Pages para mapear las imágenes
+        const GITHUB_IMG_BASE = "https://bytecomtec.github.io/videos-dashcam/img/";
+
         const categoriesList = [
             { id: "dvr", name: "DVR" },
             { id: "nvr", name: "NVR" },
@@ -213,126 +216,126 @@
                         titleSpecs: "DVR 4 Canales TurboHD + 1 Canal IP / 2 Megapixel (1080p) Lite / Acusense Lite (Evita Falsas Alarmas) / Audio por coaxitron / 1 Bahía de Disco Duro / H.265+ / Salida de Vídeo Full HD", 
                         desc: "Grabador compacto ideal para el resguardo eficiente de perímetros pequeños con optimización extrema de almacenamiento.",
                         costUSD: 29.35,
-                        features: ["Soporte para 5 tecnologías: HDTVI/AHD/CVBS/CVI/IP", "Compresión H.265+ para reducir uso de disco", "Resolución 1080p Lite con tecnología TurboHD", "4 canales TurboHD y 1 canal IP", "Acceso remoto con Hik-Connect y compatibilidad multiplataforma", "Salida de video Full HD por HDMI y VGA"]
+                        features: ["Soporte para 5 tecnologías: HDTVI/AHD/CVBS/CVI/IP", "Compresión H.265+ para reducir uso de disco", "Resolución 1080p Lite con tecnología TurboHD"]
                     },
                     { 
                         model: "EV-4004TURBO-D", 
                         titleSpecs: "DVR 4 Canales TurboHD + 2 Canales IP / 5 Megapixel Lite- 3K Lite / Acusense (Evista falsas alarmas) / Audio por Coaxitron / Bahía de Disco Duro / Salida de Video en Full HD", 
                         desc: "Grabador balanceado analítico para entornos residenciales y pequeños comercios que exigen nitidez estructural superior.",
                         costUSD: 62.14,
-                        features: ["Filtrado inteligente de humanos y vehículos con AcuSense", "Soporta TurboHD hasta 5 megapíxeles Lite", "Agrega cámaras IP por cada canal TurboHD apagado", "Cruce de línea en 90 segundos con AcuSense", "Audio, video y datos por un solo cable", "Soporta hasta 1 disco duro de 10TB"]
+                        features: ["Filtrado inteligente de humanos y vehículos con AcuSense", "Soporta TurboHD hasta 5 megapíxeles Lite", "Soporta hasta 1 disco duro de 10TB"]
                     },
                     { 
                         model: "IDS-7204HGHI-M1(T)", 
                         titleSpecs: "DVR 4 Canales TURBOHD + 2 Canales IP / 5 Megapixel Lite - 3K Lite / Audio Bidireccional / ACUSENSE (Evista falsas alarmas) / 1 Bahía de Disco Duro / Salida de Video en Full HD", 
                         desc: "Solución analítica avanzada basada en algoritmos profundos para mitigar las falsas alarmas de entorno.",
                         costUSD: 66.98,
-                        features: ["Tecnología Pentahíbrida: HD-TVI/HD-CVI/Analógico/IP/AHD", "Compresión H.265+ para mayor eficiencia de almacenamiento", "Soporta HDD hasta 10TB para almacenamiento extendido", "Audio bidireccional en todos los canales con coaxitron", "Resolución 3K Lite (2560x1440) en canales TurboHD", "Detección inteligente AcuSense para filtrar personas y vehículos"]
+                        features: ["Tecnología Pentahíbrida: HD-TVI/HD-CVI/Analógico/IP/AHD", "Audio bidireccional en todos los canales con coaxitron", "Detección inteligente AcuSense para filtrar personas y vehículos"]
                     },
                     { 
                         model: "DVR-208G-M1(C)", 
                         titleSpecs: "DVR 8 Canales TurboHD + 2 Canales IP / 2 Megapíxel (1080P) Lite / Motion Detection 2.0 (Evita Falsas Alarmas) / Audio por Coaxitron / 1 Bahía de Disco Duro / H.265+ / 1 Canal de Audio / Salida de Vídeo Full HD", 
                         desc: "Grabador de entrada de la línea HiLook de Hikvision, óptimo para renovaciones de sistemas análogos tradicionales a bajo costo.",
                         costUSD: 28.91,
-                        features: ["Visualización en vivo desde dispositivos móviles Hik-Connect", "Control centralizado de seguridad en una sola aplicación", "Soporte de audio por coaxitron en todos los canales", "Combinación fácil de cámara y micrófono interconstruido", "Actualizaciones constantes para rendimiento óptimo de Hik-Connect", "Detección Motion Detection 2.0 para humanos y vehículos por movimiento"]
+                        features: ["Visualización en vivo desde dispositivos móviles Hik-Connect", "Soporte de audio por coaxitron en todos los canales", "Detección Motion Detection 2.0 para humanos y vehículos"]
                     },
                     { 
                         model: "S08-TURBO-M/T", 
                         titleSpecs: "DVR 8 Canales TurboHD 1080p / Chasis Metálico de Alta Durabilidad / Audio sobre Coaxial Multiplexado", 
                         desc: "Grabador robustecido con chasis estructural metálico para protección superior en operaciones de rango continuo.",
                         costUSD: 37.13,
-                        features: ["Audio bidireccional en todos los canales", "Filtro inteligente de movimiento para humanos y vehículos", "Soporta 10 canales: 8 TurboHD + 2 IP", "Compresión H.265+ para mayor eficiencia", "Compatibilidad con 5 tecnologías: TurboHD, CVBS, CVI, AHD, IP", "Soporta cámaras PTZ en todos los canales"]
+                        features: ["Audio bidireccional en todos los canales", "Soporta 10 canales: 8 TurboHD + 2 IP", "Compatibilidad con 5 tecnologías de mercado"]
                     },
                     { 
                         model: "IDS-7208HQHI-M1/XT", 
                         titleSpecs: "DVR 8 Canales TURBOHD + 4 Canales IP / 5 Megapixel Lite - 3K Lite / Audio de Dos Vías por Coaxitron / Reconocimiento Facial / ACUSENSE (Evita falsas alarmas) / 1 Bahía de Disco Duro / Salida de Video en Full HD", 
                         desc: "Equipo profesional de alta gama provisto de analíticas avanzadas para reconocimiento facial y protección perimetral estricta.",
                         costUSD: 107.18,
-                        features: ["Soporta 12 canales: 8 TurboHD + 4 IP", "Detección inteligente ACUSENSE con filtro de humanos y vehículos", "Reconocimiento facial en 2 canales de video", "Compresión H.265+ para mayor eficiencia de almacenamiento", "Soporta HDD de hasta 10 TB", "Salida de video simultánea en HDMI y VGA Full HD"]
+                        features: ["Soporta 12 canales: 8 TurboHD + 4 IP", "Reconocimiento facial en 2 canales de video", "Soporta HDD de hasta 10 TB"]
                     },
                     { 
                         model: "EX-8004TURBO", 
                         titleSpecs: "DVR 4 Canales TURBOHD + 2 Canales IP / 8 Megapixel (4K) / Audio Bidireccional por Coaxitron / ACUSENSE / Reconocimiento Facial / 1 Bahía de Disco Duro / Salida de Video en Full HD / H.265+", 
                         desc: "Grabador digital insignia de Epcom ideal para proyectos de mediana envergadura que demandan analíticas fluidas.",
                         costUSD: 100.11,
-                        features: ["Soporta audio bidireccional por coaxitron en todos los canales", "Compresión H.265+ para mayor eficiencia", "Reconocimiento facial en 2 canales", "Tecnología AcuSense para detección precisa", "Soporta HDD hasta 10 TB", "Salida de video Full HD HDMI/VGA"]
+                        features: ["Soporta audio bidireccional por coaxitron", "Reconocimiento facial en 2 canales", "Resolución Nativa 4K UltraHD"]
                     },
                     { 
                         model: "EX-5008-TURBO", 
                         titleSpecs: "DVR 8 Canales TURBOHD + 4 Canales IP / 5 Megapixel Lite - 3K Lite / Audio Bidireccional por Coaxitron / Reconocimiento Facial / ACUSENSE (Evita falsas alarmas) / 1 Bahía de Disco Duro / Salida de Video en Full HD", 
                         desc: "Grabador digital insignia de Epcom ideal para proyectos de mediana envergadura que demandan analíticas fluidas.",
                         costUSD: 95.88,
-                        features: ["8 Canales TurboHD + 4 IP simultáneos", "Reconocimiento facial en 2 canales de video", "Tecnología Acusense para detección precisa de humanos y vehículos", "DVR pentahíbrido con compatibilidad HD-TVI/HD-CVI/Analógico/IP/AHD", "Soporta hasta 8 canales IP mediante conversión de canales TurboHD"]
+                        features: ["8 Canales TurboHD + 4 IP simultáneos", "Tecnología Acusense para detección precisa", "DVR pentahíbrido de alta compatibilidad"]
                     },
                     { 
                         model: "S16-TURBO-G3", 
                         titleSpecs: "DVR 16 Canales TurboHD + 2 Canales IP / 2 Megapixel (1080p) Lite / Acusense Lite (Evita Falsas Alarmas) / Audio por Coaxitron / 1 Bahía de Disco Duro / H.265+ / Salida de Video Full HD", 
                         desc: "Grabador multicanal balanceado para instalaciones escolares que requieren cobertura total de cámaras con costos contenidos.",
                         costUSD: 69.65,
-                        features: ["5 tecnologías: HD-TVI / AHD / CVI / CVBS / IP", "Audio por coaxitron sin cables adicionales", "Compresión H.265+ para menos uso de ancho de banda", "Compatible con Hik-Connect P2P para acceso remoto fácil", "16 canales TurboHD + 2 canales IP (total 18)", "Salida Full HD HDMI y VGA simultánea", "Capacidad de disco duro: 1 de hasta 10 TB"]
+                        features: ["5 tecnologías: HDTVI / AHD / CVI / CVBS / IP", "Audio por coaxitron sin cables adicionales", "Soporta 1 disco duro de hasta 10 TB"]
                     },
                     { 
                         model: "S16-TURBO-M/T", 
                         titleSpecs: "DVR 16 Canales TurboHD + 2 Canales IP / 2 Megapixel (1080p) Lite / Acusense Lite (Evita Falsas Alarmas) / Audio por Coaxitron y Bidireccional / 1 Bahía de Disco Duro / H.265+ / Salida de Video Full HD", 
                         desc: "Grabador industrial de 16 vías optimizado para montaje seguro en gabinetes o racks de telecomunicaciones.",
                         costUSD: 65.74,
-                        features: ["Tecnología TurboHD 1080p Lite con alta definición", "Soporte 5 tecnologías: TurboHD, CVBS, CVI, AHD, IP", "AcuSense Lite con detección humana y vehicular", "Compresión H.265+ para eficiencia en almacenamiento", "Soporta hasta 4TB de almacenamiento en HDD", "Salida Full HD simultánea por HDMI y VGA"]
+                        features: ["Tecnología TurboHD 1080p Lite", "AcuSense Lite con detección humana y vehicular", "Diseño compacto de alta disipación térmica"]
                     },
                     { 
                         model: "IDS-7116HGHI-M1(E)", 
                         titleSpecs: "DVR 16 Canales TurboHD + 2 Canales IP / 2 Megapixel (1080p) Lite / Acusense Lite (Evita falsas alarmas) / Audio por Coaxitron / 1 Bahía de Disco Duro / H.265+ / Salida de Vídeo en Full HD", 
                         desc: "DVR de 16 canales de grabación HD con soporte H.265 Pro+ altamente eficiente y acceso remoto simple unificado.",
                         costUSD: 93.84,
-                        features: ["Audio por coaxitron en todos los canales", "Búsqueda inteligente por humanos y vehículos", "Compatibilidad con HD-TVI, HD-CVI, AHD, CVBS, IP", "Soporta 18 canales: 16 TurboHD + 2 IP", "Compresión H.265+ optimiza almacenamiento", "Salida Full HD HDMI y VGA simultáneas"]
+                        features: ["Audio por coaxitron en todos los canales", "Búsqueda inteligente por humanos y vehículos", "Compresión H.265+ optimiza almacenamiento"]
                     },
                     { 
                         model: "IDS-7216HUHI-M1/T", 
                         titleSpecs: "DVR 16 Canales TURBOHD + 16 Canales IP / 8 Megapixel (4K) / Audio Bidireccional / ACUSENSE / Audio Bidireccional / 1 Bahía de Disco Duro / Salida de Video en Full HD / H.265+", 
                         desc: "Grabador profesional híbrido de ultra alta definición recomendado para monitorear detalles críticos con reconocimiento de objetivos.",
                         costUSD: 312.21,
-                        features: ["Soporta audio por Coaxitron en todos los canales", "DVR pentahíbrido: HD-TVI, HD-CVI, IP, AHD, Analógico", "Compresión H.265+ para optimizar almacenamiento", "Hasta 32 canales IP apagando 16 canales turboHD", "Resolución 8MP (4K) en canales TurboHD", "Soporta 1 HDD de hasta 10TB"]
+                        features: ["Soporta audio por Coaxitron en canales HD", "Hasta 32 canales IP apagando analógicos", "Resolución de captura 8MP (4K) real"]
                     },
                     { 
                         model: "IDS-7216HQHI-M1/XT", 
                         titleSpecs: "DVR 16 Canales TURBOHD + 8 Canales IP / 5 Megapixel Lite - 3K Lite / Audio de Dos Vías por Coaxitron / Reconocimiento Facial / ACUSENSE (Evita falsas alarmas) / 1 Bahía de Disco Duro / Salida de Video en Full HD", 
                         desc: "Plataforma multicanal corporativa que integra motores analíticos avanzados para búsquedas inmediatas por atributos.",
                         costUSD: 158.72,
-                        features: ["Soporta audio bidireccional por coaxitron en todos los canales", "Reconocimiento facial en 4 canales TurboHD", "Tecnología AcuSense con filtro de humanos y vehículos en 8 canales", "24 canales totales (16 TurboHD + 8 IP) con conversión a IP", "Compresión H.265+ para ahorro de almacenamiento", "Salida de video Full HD en HDMI y VGA simultáneas", "Soporta 1 HDD hasta 10 TB (no incluido)"]
+                        features: ["Reconocimiento facial en 4 canales TurboHD", "Tecnología AcuSense con filtro de entornos", "Soporta 1 HDD hasta 10 TB"]
                     },
                     { 
                         model: "IDS-7216HQHI-M1/H/XT", 
                         titleSpecs: "DVR 16 Canales TURBOHD + 8 Canales IP / 5 Megapixel Lite - 3K Lite / Salida Independiente HDMI - VGA / Audio de Dos Vías por Coaxitron / Reconocimiento Facial / ACUSENSE (Evista falsas alarmas) / 1 Bahía de Disco Duro / Salida de Video en Fu", 
                         desc: "Grabador robusto diseñado para integraciones institucionales complejas donde coexisten infraestructuras análogas e IP.",
                         costUSD: 201.07,
-                        features: ["Soporta audio bidireccional por Coaxitron en todos los canales", "Reconocimiento facial en 4 canales y tecnología AcuSense", "24 canales: 16 TurboHD + 8 IP con resolución 5MP Lite", "Compresión H.265+ para ahorro del 50% en almacenamiento", "DVR pentahíbrido: HD-TVI, HD-CVI, Análogo, IP, AHD", "Salida de video independiente HDMI y VGA Full HD", "Soporta 1 HDD de hasta 12 TB (no incluido)"]
+                        features: ["Reconocimiento facial en 4 canales e IA", "Salida de video independiente HDMI y VGA", "Compresión optimizada H.265 Pro+"]
                     },
                     { 
                         model: "EX-5016TURBO", 
                         titleSpecs: "DVR 16 Canales TURBOHD + 8 Canales IP / 5 Megapixel Lite - 3K Lite / Audio Bidireccional por Coaxitron / Reconocimiento Facial / ACUSENSE (Evita falsas alarmas) / 1 Bahía de Disco Duro / Salida de Video en Full HD", 
                         desc: "Solución de videovigilancia robustecida y scalable para medianas empresas con flujos operativos ininterrumpidos.",
                         costUSD: 160.26,
-                        features: ["16 canales TurboHD + 8 IP, total 24", "Compresión H.265+ para eficiente almacenamiento", "DVR pentahíbrido: HD-TVI/HD-CVI/Analógico/IP/AHD", "Acceso remoto desde PC y smartphones", "Audio bidireccional con cámaras turboHD compatibles", "Reconocimiento facial en 4 canales HD", "Soporta 1 HDD de hasta 10 TB (no incluido)"]
+                        features: ["16 canales TurboHD + 8 IP, total 24", "Reconocimiento facial en 4 canales HD", "Acceso remoto fluido desde PC y App Móvil"]
                     },
                     { 
                         model: "IDS-7232HGHI-M2", 
                         titleSpecs: "DVR 32 Canales TurboHD + 2 Canales IP / 2 Megapixel (1080p) Lite / Acusense (Evita Falsas Alarmas) / Audio por Coaxitron / H.265+ / Salida de Video en Full HD", 
                         desc: "Sistema centralizado de alta densidad idóneo para proyectos escolares amplios o naves industriales de despliegue masivo.",
                         costUSD: 247.61,
-                        features: ["Hasta 18 cámaras IP en total", "Soporta 2 HDD de 10 TB", "Serie Turbo HD 5.0 con 16 canales apagables", "Detección IA: filtro de humanos y vehículos", "Compatibilidad múltiple: HD-TVI, HD-CVI, AHD, IP", "Soporta 2 HDD de hasta 10 TB (no incluido)"]
+                        features: ["Hasta 34 cámaras en total acoplando IP", "Soporta 2 discos duros de 10 TB c/u", "Filtro inteligente IA integrado contra errores"]
                     },
                     { 
                         model: "IDS-7232HQHI-M2/XT", 
                         titleSpecs: "[Audio Bidireccional] DVR 32 Canales TurboHD + 8 Canales IP / 5 Megapixel Lite - 3K Lite / Acusense / Reconocimiento Facial / Audio por Coaxitron / 2 Bahías de Disco Duro / H.265+ / Salida de Video en Full HD", 
                         desc: "Grabador de alta gama que unifica analíticas avanzadas de IA en una infraestructura masiva de cámaras de seguridad perimetral.",
                         costUSD: 397.40,
-                        features: ["40 canales: 32 TurboHD + 8 IP simultáneos", "Reconocimiento facial en 4 canales HD", "Acceso remoto vía Hik-Connect P2P", "2 bahías HDD soportan hasta 12 TB", "Audio bidireccional por Coaxitron en todos los canales"]
+                        features: ["40 canales totales de videovigilancia masiva", "Reconocimiento facial avanzado en hardware", "2 bahías HDD para resguardo de larga duración"]
                     },
                     { 
                         model: "EX-5032-TURBO", 
                         titleSpecs: "DVR 32 Canales TurboHD + 8 Canales IP / 5 Megapixel Lite - 3K Lite / Acusense (Evita Falsas Alarmas) / Audio Bidireccional / 2 Bahías de Disco Duro / H.265+ / Salida de Video en Full HD", 
                         desc: "Grabador masivo insignia diseñado para gestionar la seguridad integral de infraestructuras complejas con máxima estabilidad de red.",
                         costUSD: 385.82,
-                        features: ["Soporta cámaras TurboHD de hasta 5 MP", "Detección facial en 4 canales", "Hasta 40 canales IP con 6 MP", "Audio bidireccional por coaxitron en todos los canales", "Soporta 2 HDD de hasta 12 TB (no incluido)"]
+                        features: ["Soporta cámaras de alta resolución 5 MP", "Detección facial activa multicanal", "Soporta 2 HDD de hasta 12 TB estructurales"]
                     }
                 ]
             },
@@ -345,52 +348,64 @@
                         titleSpecs: "NVR 4 Megapixel / 4 canales IP / 1 Bahía de Disco Duro / 2 Antenas Wi-Fi / Salida de Vídeo Full HD", 
                         desc: "Grabador IP autónomo provisto de puertos PoE nativos para energizar cámaras de forma directa.",
                         costUSD: 72.08,
-                        features: ["Codificación H.265+/H.265/H.264+/H.264", "Almacenamiento 1 disco hasta 6 TB", "Throughput entrada 50 Mbps, salida 40 Mbps", "Reproducción sincrónica 4 canales Full HD", "2 antenas Wi-Fi MIMO 2.4 GHz"]
+                        features: ["Codificación H.265+/H.265 de alta eficiencia", "2 antenas Wi-Fi MIMO de largo alcance integradas", "Throughput de alta velocidad estables"]
                     },
                     { 
                         model: "DS-7604NI-Q1/4P(D)", 
                         titleSpecs: "NVR 8 Megapixel (4K) (Compatible con Cámaras ACUSENSE) / 4 canales IP / 4 Puertos PoE+ / 1 Bahía de Disco Duro / Salida de Vídeo en 4K / 300 Metros PoE Modo Extendido", 
                         desc: "Grabador de red eficiente diseñado para gestionar cámaras IP de alta definición continua.",
                         costUSD: 91.93,
-                        features: ["Compresión H.265+/H.265/H.264+/H.264", "4 puertos PoE+ con 50W total", "Soporta disco duro de hasta 8TB", "Acceso remoto desde dispositivos móviles", "Salida de video 4K en HDMI"]
+                        features: ["4 puertos PoE+ integrados de alimentación directa", "Modo extendido de cableado largo hasta 300 metros", "Salida de video nativa en 4K UHD por HDMI"]
                     },
                     { 
                         model: "DS-7604NXI-K1/4P(E)", 
                         titleSpecs: "[Acusearch] NVR 12 Megapíxel (4K) / 4 canales IP / 4 Puertos PoE+ / Reconocimiento Facial / AcuSense (Evita Falsas Alarmas) / 1 Bahías de Disco Duro / HDMI en 4K / 300 Metros PoE Modo Extendido", 
                         desc: "Grabador IP autónomo provisto de puertos PoE nativos para energizar cámaras de forma directa.",
                         costUSD: 136.18,
-                        features: ["Compresión H.265+/H.265/H.264+/H.264 para eficiencia", "4 puertos PoE+ con 50W potencia total", "Acceso remoto vía Hik-Connect y aplicaciones móviles", "Reconocimiento facial hasta 50,000 rostros en 4 canales", "Modo PoE extendido hasta 300 metros de distancia"]
+                        features: ["Reconocimiento facial con base de datos masiva", "4 puertos PoE+ con 50W de potencia distribuida", "Filtro analítico avanzado AcuSearch perimetral"]
                     },
                     { 
                         model: "CS-X5S/8W", 
                         titleSpecs: "NVR Inalámbrico (WiFi) de 8 Canales IP / Admite Cámaras hasta 5 Megapixel (3K) / Salidas HDMI y VGA / H.265 / Almacenamiento Expandible hasta 8 TB", 
                         desc: "Grabador de red eficiente diseñado para gestionar cámaras IP de alta definición continua.",
                         costUSD: 53.99,
-                        features: ["Almacenamiento expandible hasta 8 TB", "Soporte para cámaras de hasta 5 MP (3K)", "Doble salida de video HDMI y VGA", "Conexión inalámbrica WiFi para 8 canales", "Diseño resistente para entornos exigentes"]
+                        features: ["Conexión inalámbrica simplificada Wi-Fi para 8 canales", "Soporta cámaras IP de hasta 5 megapíxeles (3K)", "Salidas simultáneas HDMI/VGA de monitoreo"]
                     },
                     { 
                         model: "DS-7608NI-Q1/8P(D)", 
                         titleSpecs: "NVR 8 Megapixel (4K) (Compatible con Cámaras ACUSENSE) / 8 canales IP / 8 Puertos PoE+ / 1 Bahía de Disco Duro / Salida de Vídeo en 4K / 300 Metros PoE Modo Extendido", 
                         desc: "Grabador IP autónomo provisto de puertos PoE nativos para energizar cámaras de forma directa.",
                         costUSD: 160.35,
-                        features: ["Compresión H.265+/H.265 con reducción del 50% en ancho de banda", "8 puertos PoE+ con 75W total y modo extendido 300m", "Soporta disco duro hasta 8TB con tecnología S.M.A.R.T", "Resolución 4K en 8 canales a 30fps", "Detección AcuSense in 8 canales para humanos y vehículos", "Salida simultánea HDMI y VGA en múltiples resoluciones"]
+                        features: ["8 puertos PoE+ integrados e independientes", "Compatibilidad completa con analíticas AcuSense", "Soporta discos duros industriales de hasta 8TB"]
                     },
                     { 
                         model: "DS-7608NXI-K1(E)", 
                         titleSpecs: "[Acusearch] NVR 12 Megapíxel (4K) / 8 canales IP / AcuSense (Evita Falsas Alarmas) / Reconocimiento Facial / 1 Bahía de Disco Duro / HDMI en 4K / Sin Puertos PoE", 
                         desc: "Grabador de red eficiente diseñado para gestionar cámaras IP de alta definición continua.",
                         costUSD: 107.94,
-                        features: ["Compresión H.265+ para mayor eficiencia", "Tecnología ANR para grabación local en desconexión", "Reconocimiento facial hasta 20,000 rostros", "Soporta 1 HDD de hasta 16TB", "Detección AcuSense: humano y vehículo", "Salida HDMI 4K/UHD"]
+                        features: ["Reconocimiento facial de hasta 20,000 rostros integrados", "Soporta un disco duro de alta densidad hasta 16TB", "Motor AcuSearch para búsquedas forenses rápidas"]
                     },
                     { 
                         model: "DS-7616NXI-K1(E)", 
                         titleSpecs: "[Acusearch] NVR 12 Megapixel (4K) / 16 canales IP / AcuSense (Evita Falsas Alarmas) / Reconocimiento Facial / 1 Bahía de Disco Duro / HDMI en 4K / Sin Puertos PoE+", 
                         desc: "Grabador IP autónomo provisto de puertos PoE nativos para energizar cámaras de forma directa.",
                         costUSD: 154.83,
-                        features: ["Compresión H.265+/H.265 para reducción de ancho de banda", "Reconocimiento facial con base de datos de 50,000 rostros", "Soporte para resolución 12MP (4K) en 16 canales", "Detección de movimiento multizona con filtro de falsas alarmas", "1 puerto HDMI 4K y 1 puerto VGA simultáneos"]
+                        features: ["Administración centralizada para 16 canales IP nativos", "Salida de visualización HDMI en resolución 4K real", "Compresión avanzada H.265+ para ahorro extremo"]
                     }
                 ]
-            }
+            },
+            // Contenedores listos para inyección de datos de las líneas restantes de Bytecomtec
+            nvs: { title: "Servidores de Video (NVS)", desc: "Codificadores y servidores dedicados para entornos de red complejos.", products: [] },
+            accesorios: { title: "Accesorios de Instalación", desc: "Baluns, transceptores, fuentes de poder y herrajes certificados.", products: [] },
+            almacenamiento: { title: "Discos Duros y Almacenamiento", desc: "Unidades mecánicas de grado videovigilancia (WD Purple / Seagate SkyHawk).", products: [] },
+            camaras_ip: { title: "Cámaras IP Profesionales", desc: "Cámaras con conexión por red nativa, resoluciones desde 2MP hasta 4K.", products: [] },
+            camaras_analogas: { title: "Cámaras Análogas TurboHD", desc: "Dispositivos bala, domo y ocultos con transmisión sobre cable coaxial.", products: [] },
+            camaras_ptz: { title: "Cámaras Domo PTZ", desc: "Equipos con movimiento robótico horizontal, vertical y zooms ópticos potentes.", products: [] },
+            switch_rack: { title: "Switches para Rack", desc: "Conmutadores corporativos diseñados para montaje estructural en gabinetes.", products: [] },
+            switch_poe: { title: "Switches PoE Alimentados", desc: "Dispositivos de red para energizar cámaras IP y Access Points perimetrales.", products: [] },
+            kits: { title: "Kits de Videovigilancia Cerrados", desc: "Paquetes todo incluido listos para su instalación rápida.", products: [] },
+            monitores: { title: "Monitores de Monitoreo Continuo", desc: "Pantallas de grado industrial diseñadas para operar 24/7 sin sobrecalentamiento.", products: [] },
+            accesorios_extra: { title: "Accesorios Adicionales e Infraestructura", desc: "Canalizaciones, cables UTP 100% cobre y gabinetes dedicados.", products: [] }
         };
 
         function updateAllPrices() {
@@ -420,7 +435,7 @@
 
             container.innerHTML = '';
 
-            if (catalogData[categoryId]) {
+            if (catalogData[categoryId] && catalogData[categoryId].products.length > 0) {
                 titleElem.innerText = catalogData[categoryId].title;
                 descElem.innerText = catalogData[categoryId].desc;
 
@@ -431,6 +446,9 @@
                     const basePublico = costoMXNConIva * 1.55; 
                     const precioFinalPublico = basePublico * (1 - currentDiscount);
                     const margenAsegurado = precioFinalPublico - costoMXNConIva;
+
+                    // Construcción dinámica de la URL de la imagen basada en el modelo
+                    const computedImgUrl = `${GITHUB_IMG_BASE}${prod.model}.png`;
 
                     const card = document.createElement('div');
                     card.className = 'product-card';
@@ -448,7 +466,7 @@
                         <div class="product-body">
                             <div class="product-main-info">
                                 <div class="product-img-box" onclick="triggerFlyerGeneration('${prod.model}')">
-                                    <img src="byte.png" alt="Product Image">
+                                    <img src="${computedImgUrl}" alt="${prod.model}" onerror="this.src='byte.png'">
                                 </div>
                                 <div class="product-details">
                                     <div class="product-model">${prod.model}</div>
@@ -475,8 +493,8 @@
             } else {
                 const catName = categoriesList.find(c => c.id === categoryId)?.name || categoryId;
                 titleElem.innerText = `Línea: ${catName}`;
-                descElem.innerText = `Módulo estructural asignado a la ingeniería de ${catName.toLowerCase()}.`;
-                container.innerHTML = `<p style="grid-column: 1/-1; color: #64748b; font-style: italic; padding: 30px 0;">Las soluciones y flyers asociados a esta línea de negocio se encuentran actualmente en proceso de indexación.</p>`;
+                descElem.innerText = catalogData[categoryId]?.desc || `Módulo asignado a la ingeniería de ${catName.toLowerCase()}.`;
+                container.innerHTML = `<p style="grid-column: 1/-1; color: #64748b; font-style: italic; padding: 30px 0;">Las soluciones de hardware y flyers asociados a esta línea de negocio se encuentran actualmente en proceso de indexación técnica.</p>`;
             }
         }
 
