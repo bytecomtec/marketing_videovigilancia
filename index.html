@@ -996,17 +996,20 @@
                     const costoMXNSinIva = prod.costUSD * currentRate;
                     const costoMXNConIva = costoMXNSinIva * 1.16;
 
+                    // AJUSTE CRÍTICO: Markup elevado a 1.65 (65% sobre costo neto con IVA)
                     const basePublico = costoMXNConIva * 1.65; 
                     let precioFinalPublico = basePublico * (1 - currentDiscount);
 
+                    // CANDADO DE SEGURIDAD AUTOMÁTICO: El piso definitivo es Costo + 20% utilidad neta
                     const precioMinimoPermitido = costoMXNConIva * 1.20;
                     if (precioFinalPublico < precioMinimoPermitido) {
                         precioFinalPublico = precioMinimoPermitido;
                     }
 
+                    // ARITMÉTICA FIJA: Margen real basado exclusivamente en lo cobrado vs lo pagado
                     const margenAsegurado = precioFinalPublico - costoMXNConIva;
 
-                    const sanitizedFilename = prod.model.replace(/\//g, '_');
+                    const sanitizedFilename = prod.model.replace('/', '_');
                     const computedImgUrl = `${GITHUB_IMG_BASE}${sanitizedFilename}.jpg`;
 
                     const card = document.createElement('div');
@@ -1015,7 +1018,8 @@
                     let featuresHTML = '';
                     if (prod.features && prod.features.length > 0) {
                         featuresHTML = `<ul class="product-features-list">`;
-                        prod.features.slice(0, 6).forEach(f => {
+                        // Cambio aplicado aquí: Se eliminó el .slice(0, 3) para procesar todo el arreglo completo
+                        prod.features.forEach(f => {
                             featuresHTML += `<li>${f}</li>`;
                         });
                         featuresHTML += `</ul>`;
@@ -1100,60 +1104,36 @@
             const canvas = document.getElementById('processingCanvas');
             const ctx = canvas.getContext('2d');
             
-            canvas.width = 800;
-            canvas.height = 550;
+            canvas.width = 600;
+            canvas.height = 400;
 
             ctx.fillStyle = '#ffffff';
-            ctx.fillRect(0, 0, 800, 550);
+            ctx.fillRect(0, 0, 600, 400);
 
             ctx.fillStyle = '#003366';
-            ctx.fillRect(0, 0, 800, 95);
+            ctx.fillRect(0, 0, 600, 80);
 
             ctx.fillStyle = '#ffffff';
-            ctx.font = 'bold 24px sans-serif';
-            ctx.fillText('SOLUCIONES DE INGENIERÍA PERIMETRAL', 40, 50);
+            ctx.font = 'bold 20px sans-serif';
+            ctx.fillText('SOLUCIONES DE INGENIERÍA PERIMETRAL', 30, 45);
 
             ctx.fillStyle = '#ff6600';
-            ctx.font = 'bold 16px sans-serif';
-            ctx.fillText('FICHA COMERCIAL DE HARDWARE - BYTECOMTEC', 40, 78);
+            ctx.font = 'bold 14px sans-serif';
+            ctx.fillText('FICHA COMERCIAL DE HARDWARE - BYTECOMTEC', 30, 68);
 
             ctx.fillStyle = '#1e293b';
-            ctx.font = 'bold 24px sans-serif';
-            ctx.fillText(`MODELO: ${modelCode}`, 40, 150);
+            ctx.font = 'bold 22px sans-serif';
+            ctx.fillText(`MODELO: ${modelCode}`, 40, 125);
 
             ctx.fillStyle = '#334155';
-            ctx.font = '15px sans-serif';
-            let nextY = wrapText(ctx, titleSpecs, 40, 185, 450, 24);
+            ctx.font = '12px sans-serif';
+            let nextY = wrapText(ctx, titleSpecs, 40, 150, 360, 18);
 
-            let priceY = Math.max(nextY + 35, 310);
+            let priceY = Math.max(nextY + 25, 205);
             
+            // Renderizado condicional del tachado si el precio final mutó por descuento
             if (Math.abs(basePrice - finalPrice) > 0.01) {
                 ctx.fillStyle = '#94a3b8';
-                ctx.font = '15px sans-serif';
-                let origText = `Precio de Lista: $${basePrice.toFixed(2)} MXN`;
-                ctx.fillText(origText, 40, priceY);
-                
-                let textWidth = ctx.measureText(origText).width;
-                ctx.strokeStyle = '#94a3b8';
-                ctx.lineWidth = 1;
-                ctx.beginPath();
-                ctx.moveTo(40, priceY - 5);
-                ctx.lineTo(40 + textWidth, priceY - 5);
-                ctx.stroke();
-                
-                priceY += 25;
-            }
-
-            ctx.fillStyle = '#003366';
-            ctx.font = 'bold 22px sans-serif';
-            ctx.fillText(`Precio Especial Público: $${finalPrice.toFixed(2)} MXN`, 40, priceY);
-
-            let boxY = Math.max(priceY + 20, 370);
-            ctx.fillStyle = '#f8fafc';
-            ctx.fillRect(40, boxY, 450, 65);
-            ctx.strokeStyle = '#e2e8f0';
-            ctx.strokeRect(40, boxY, 450, 65);
-
                 ctx.font = '13px sans-serif';
                 let origText = `Precio de Lista: $${basePrice.toFixed(2)} MXN`;
                 ctx.fillText(origText, 40, priceY);
@@ -1171,7 +1151,7 @@
 
             ctx.fillStyle = '#003366';
             ctx.font = 'bold 18px sans-serif';
-            ctx.fillText(`Precio Especial: $${finalPrice.toFixed(2)} MXN`, 40, priceY);
+            ctx.fillText(`Precio Especial Público: $${finalPrice.toFixed(2)} MXN`, 40, priceY);
 
             // Bloque fijo e inalterable de Diagnóstico Técnico
             let boxY = Math.max(priceY + 15, 245);
@@ -1182,27 +1162,26 @@
 
             ctx.fillStyle = '#d32f2f';
             ctx.font = 'bold 14px sans-serif';
-            ctx.fillText('Cotización sujeta a diagnóstico en sitio', 55, boxY + 30);
+            ctx.fillText('Cotización sujeta a diagnóstico en sitio', 55, boxY + 32);
 
             ctx.fillStyle = '#64748b';
             ctx.font = 'italic 11px sans-serif';
             ctx.fillText('* Vigencia ligada a fluctuaciones del tipo de cambio Syscom diario.', 40, 355);
             ctx.fillText('Bytecomtec S.A. de C.V. - Soporte Técnico Autorizado', 40, 375);
 
-
             const img = new Image();
             img.crossOrigin = "anonymous";
             
-            const sanitizedFilename = modelCode.replace(/\//g, '_');
+            const sanitizedFilename = modelCode.replace('/', '_');
             img.src = `${GITHUB_IMG_BASE}${sanitizedFilename}.jpg`;
 
             img.onload = function() {
                 ctx.fillStyle = '#ffffff';
-                ctx.fillRect(520, 140, 240, 240);
+                ctx.fillRect(420, 150, 140, 140);
                 ctx.strokeStyle = '#e2e8f0';
-                ctx.strokeRect(520, 140, 240, 240);
+                ctx.strokeRect(420, 150, 140, 140);
                 
-                const maxDim = 210; 
+                const maxDim = 120;
                 let w = img.width;
                 let h = img.height;
                 if (w > h) {
@@ -1212,8 +1191,8 @@
                     w = (w * maxDim) / h;
                     h = maxDim;
                 }
-                const xOffset = 520 + (240 - w) / 2;
-                const yOffset = 140 + (240 - h) / 2;
+                const xOffset = 420 + (140 - w) / 2;
+                const yOffset = 150 + (140 - h) / 2;
                 
                 ctx.drawImage(img, xOffset, yOffset, w, h);
                 openModalWithCanvasData(canvas);
@@ -1221,16 +1200,17 @@
 
             img.onerror = function() {
                 ctx.fillStyle = '#f1f5f9';
-                ctx.fillRect(520, 140, 240, 240);
+                ctx.fillRect(420, 150, 140, 140);
                 ctx.strokeStyle = '#cbd5e1';
-                ctx.strokeRect(520, 140, 240, 240);
+                ctx.strokeRect(420, 150, 140, 140);
                 ctx.fillStyle = '#94a3b8';
-                ctx.font = 'bold 14px sans-serif';
-                ctx.fillText('[Imagen Indexada]', 575, 265);
+                ctx.font = 'bold 11px sans-serif';
+                ctx.fillText('[Imagen Indexada]', 440, 225);
                 openModalWithCanvasData(canvas);
             };
         }
 
+        // Ventana modal nativa de previsualización
         function openModalWithCanvasData(canvas) {
             const modal = document.getElementById('imageModal');
             const modalImg = document.getElementById('modalTargetImg');
