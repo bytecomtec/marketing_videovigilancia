@@ -303,7 +303,7 @@
                     },
                     { 
                         model: "IDS-7216HQHI-M1/H/XT", 
-                        titleSpecs: "DVR 16 Canales TURBOHD + 8 Canales IP / 5 Megapixel Lite - 3K Lite / Salida Independiente HDMI - VGA / Audio de Dos Vías por Coaxitron / Reconocimiento Facial / ACUSENSE (Evista falsas alarmas) / 1 Bahía de Disco Duro / Salida de Video en Fu", 
+                        titleSpecs: "[Audio Bidireccional] DVR 16 Canales TURBOHD + 8 Canales IP / 5 Megapixel Lite - 3K Lite / Salida Independiente HDMI - VGA / Audio de Dos Vías por Coaxitron / Reconocimiento Facial / ACUSENSE (Evista falsas alarmas) / 1 Bahía de Disco Duro / Salida de Video en Fu", 
                         desc: "Grabador robusto diseñado para integraciones institucionales complejas donde coexisten infraestructuras análogas e IP.",
                         costUSD: 201.07,
                         features: ["Reconocimiento facial en 4 canales e IA", "Salida de video independiente HDMI y VGA", "Compresión optimizada H.265 Pro+"]
@@ -517,10 +517,13 @@
                         featuresHTML += `</ul>`;
                     }
 
+                    // Se escapan caracteres problemáticos de las strings para pasarlos seguros en el onclick
+                    const titleSpecsEscaped = prod.titleSpecs.replace(/'/g, "\\'");
+
                     card.innerHTML = `
                         <div class="product-body">
                             <div class="product-main-info">
-                                <div class="product-img-box" onclick="triggerFlyerGeneration('${prod.model}')">
+                                <div class="product-img-box" onclick="triggerFlyerGeneration('${prod.model}', '${titleSpecsEscaped}', ${basePublico}, ${precioFinalPublico})">
                                     <img src="${computedImgUrl}" alt="${prod.model}" onerror="this.src='byte.png'">
                                 </div>
                                 <div class="product-details">
@@ -540,7 +543,7 @@
                             ${featuresHTML}
                         </div>
                         <div class="product-footer">
-                            <button class="btn-prepare" onclick="triggerFlyerGeneration('${prod.model}')">🖼️ Generar Tarjeta Comercial</button>
+                            <button class="btn-prepare" onclick="triggerFlyerGeneration('${prod.model}', '${titleSpecsEscaped}', ${basePublico}, ${precioFinalPublico})">🖼️ Generar Tarjeta Comercial</button>
                         </div>
                     `;
                     container.appendChild(card);
@@ -569,18 +572,41 @@
             renderCategory("dvr");
         }
 
-        // SOLUCIÓN INTEGRAL: Lógica asíncrona para descargar la imagen de GitHub e inyectarla al Canvas de la Ficha Comercial
-        function triggerFlyerGeneration(modelCode) {
+        // Función auxiliar para segmentar las especificaciones y evitar desbordamientos en el Canvas
+        function wrapText(context, text, x, y, maxWidth, lineHeight) {
+            const words = text.split(' ');
+            let line = '';
+            let currentY = y;
+
+            for (let n = 0; n < words.length; n++) {
+                let testLine = line + words[n] + ' ';
+                let metrics = context.measureText(testLine);
+                let testWidth = metrics.width;
+                if (testWidth > maxWidth && n > 0) {
+                    context.fillText(line, x, currentY);
+                    line = words[n] + ' ';
+                    currentY += lineHeight;
+                } else {
+                    line = testLine;
+                }
+            }
+            context.fillText(line, x, currentY);
+            return currentY;
+        }
+
+        // AJUSTE SOLICITADO: Renderizado de la estructura mixta de precios con leyenda fija de diagnóstico
+        function triggerFlyerGeneration(modelCode, titleSpecs, basePrice, finalPrice) {
             const canvas = document.getElementById('processingCanvas');
             const ctx = canvas.getContext('2d');
             
             canvas.width = 600;
             canvas.height = 400;
 
-            // 1. Limpieza y renderizado del fondo y textos básicos
+            // Limpieza general y fondo blanco
             ctx.fillStyle = '#ffffff';
             ctx.fillRect(0, 0, 600, 400);
 
+            // Banner superior institucional
             ctx.fillStyle = '#003366';
             ctx.fillRect(0, 0, 600, 80);
 
@@ -592,48 +618,73 @@
             ctx.font = 'bold 14px sans-serif';
             ctx.fillText('FICHA COMERCIAL DE HARDWARE - BYTECOMTEC', 30, 68);
 
+            // Modelo del producto
             ctx.fillStyle = '#1e293b';
-            ctx.font = 'bold 24px sans-serif';
-            ctx.fillText(`MODELO: ${modelCode}`, 40, 130);
+            ctx.font = 'bold 22px sans-serif';
+            ctx.fillText(`MODELO: ${modelCode}`, 40, 125);
 
-            ctx.fillStyle = '#64748b';
-            ctx.font = '14px sans-serif';
-            ctx.fillText('Equipo verificado para infraestructura escolar y comercial.', 40, 160);
+            // Especificaciones técnicas formateadas con Wrap
+            ctx.fillStyle = '#334155';
+            ctx.font = '12px sans-serif';
+            let nextY = wrapText(ctx, titleSpecs, 40, 150, 360, 18);
 
-            ctx.fillStyle = '#f8fafc';
-            ctx.fillRect(40, 210, 360, 90);
-            ctx.strokeStyle = '#e2e8f0';
-            ctx.strokeRect(40, 210, 360, 90);
+            // Renderizado dinámico de precios calculados
+            let priceY = Math.max(nextY + 25, 205);
+            
+            // Si hay un descuento activo (Precio final menor al precio base), pintamos el original tachado
+            if (Math.abs(basePrice - finalPrice) > 0.01) {
+                ctx.fillStyle = '#94a3b8';
+                ctx.font = '13px sans-serif';
+                let origText = `Precio de Lista: $${basePrice.toFixed(2)} MXN`;
+                ctx.fillText(origText, 40, priceY);
+                
+                // Línea de tachado estructural
+                let textWidth = ctx.measureText(origText).width;
+                ctx.strokeStyle = '#94a3b8';
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.moveTo(40, priceY - 4);
+                ctx.lineTo(40 + textWidth, priceY - 4);
+                ctx.stroke();
+                
+                priceY += 20;
+            }
 
             ctx.fillStyle = '#003366';
-            ctx.font = 'bold 12px sans-serif';
-            ctx.fillText('PRECIO UNITARIO SUGERIDO DE INSTALACIÓN (MXN):', 55, 240);
+            ctx.font = 'bold 18px sans-serif';
+            ctx.fillText(`Precio Especial Público: $${finalPrice.toFixed(2)} MXN`, 40, priceY);
 
+            // Recuadro estructural gris para la leyenda de diagnóstico
+            let boxY = Math.max(priceY + 15, 245);
+            ctx.fillStyle = '#f8fafc';
+            ctx.fillRect(40, boxY, 360, 55);
+            ctx.strokeStyle = '#e2e8f0';
+            ctx.strokeRect(40, boxY, 360, 55);
+
+            // Texto fijo solicitado
             ctx.fillStyle = '#d32f2f';
-            ctx.font = 'bold 16px sans-serif';
-            ctx.fillText('Cotización sujeta a diagnóstico en sitio', 55, 270);
+            ctx.font = 'bold 14px sans-serif';
+            ctx.fillText('Cotización sujeta a diagnóstico en sitio', 55, boxY + 32);
 
+            // Firmas al pie de página
             ctx.fillStyle = '#64748b';
-            ctx.font = 'italic 12px sans-serif';
-            ctx.fillText('* Vigencia ligada a fluctuaciones del tipo de cambio Syscom diario.', 40, 340);
-            ctx.fillText('Bytecomtec S.A. de C.V. - Soporte Técnico Autorizado', 40, 360);
+            ctx.font = 'italic 11px sans-serif';
+            ctx.fillText('* Vigencia ligada a fluctuaciones del tipo de cambio Syscom diario.', 40, 355);
+            ctx.fillText('Bytecomtec S.A. de C.V. - Soporte Técnico Autorizado', 40, 375);
 
-            // 2. Preparación y carga de la imagen real desde el repositorio remoto
+            // Preparación y descarga asíncrona de la imagen
             const img = new Image();
-            img.crossOrigin = "anonymous"; // Evita bloqueos de seguridad del navegador al exportar el canvas
+            img.crossOrigin = "anonymous";
             
             const sanitizedFilename = modelCode.replace('/', '_');
             img.src = `${GITHUB_IMG_BASE}${sanitizedFilename}.jpg`;
 
-            // En caso de que cargue correctamente, se dibuja en el extremo derecho
             img.onload = function() {
-                // Dibujar un recuadro limpio de fondo para la imagen
                 ctx.fillStyle = '#ffffff';
-                ctx.fillRect(420, 180, 140, 140);
+                ctx.fillRect(420, 150, 140, 140);
                 ctx.strokeStyle = '#e2e8f0';
-                ctx.strokeRect(420, 180, 140, 140);
+                ctx.strokeRect(420, 150, 140, 140);
                 
-                // Ajustar proporciones de la imagen (Aspect Ratio) de forma básica dentro de un cuadro de 120x120
                 const maxDim = 120;
                 let w = img.width;
                 let h = img.height;
@@ -645,21 +696,20 @@
                     h = maxDim;
                 }
                 const xOffset = 420 + (140 - w) / 2;
-                const yOffset = 180 + (140 - h) / 2;
+                const yOffset = 150 + (140 - h) / 2;
                 
                 ctx.drawImage(img, xOffset, yOffset, w, h);
                 openModalWithCanvasData(canvas);
             };
 
-            // Si la imagen falla o no existe, se pinta un recuadro alternativo de texto sin colgar la app
             img.onerror = function() {
                 ctx.fillStyle = '#f1f5f9';
-                ctx.fillRect(420, 180, 140, 140);
+                ctx.fillRect(420, 150, 140, 140);
                 ctx.strokeStyle = '#cbd5e1';
-                ctx.strokeRect(420, 180, 140, 140);
+                ctx.strokeRect(420, 150, 140, 140);
                 ctx.fillStyle = '#94a3b8';
                 ctx.font = 'bold 11px sans-serif';
-                ctx.fillText('[Imagen Indexada]', 440, 255);
+                ctx.fillText('[Imagen Indexada]', 440, 225);
                 openModalWithCanvasData(canvas);
             };
         }
