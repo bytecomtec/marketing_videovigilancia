@@ -187,8 +187,8 @@
         let currentRate = 17.23;
         let currentDiscount = 0;
 
-        // CORRECCIÓN: Dirección URL de GitHub Pages corregida e integrada
-        const GITHUB_IMG_BASE = "https://bytecomtec.github.io/marketing_videovigilancia";
+        // CORRECCIÓN DEFINITIVA: URL base del repositorio real y formato corregidos
+        const GITHUB_IMG_BASE = "https://bytecomtec.github.io/marketing_videovigilancia/";
 
         const categoriesList = [
             { id: "dvr", name: "DVR" },
@@ -503,7 +503,8 @@
                     const precioFinalPublico = basePublico * (1 - currentDiscount);
                     const margenAsegurado = precioFinalPublico - costoMXNConIva;
 
-                    const computedImgUrl = `${GITHUB_IMG_BASE}${prod.model}.png`;
+                    // CORRECCIÓN: Conexión con formato .jpg nativo de tu repositorio
+                    const computedImgUrl = `${GITHUB_IMG_BASE}${prod.model}.jpg`;
 
                     const card = document.createElement('div');
                     card.className = 'product-card';
