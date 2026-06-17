@@ -187,7 +187,6 @@
         let currentRate = 17.23;
         let currentDiscount = 0;
 
-        // CORRECCIÓN DEFINITIVA: URL base del repositorio real y formato corregidos
         const GITHUB_IMG_BASE = "https://bytecomtec.github.io/marketing_videovigilancia/";
 
         const categoriesList = [
@@ -503,8 +502,9 @@
                     const precioFinalPublico = basePublico * (1 - currentDiscount);
                     const margenAsegurado = precioFinalPublico - costoMXNConIva;
 
-                    // CORRECCIÓN: Conexión con formato .jpg nativo de tu repositorio
-                    const computedImgUrl = `${GITHUB_IMG_BASE}${prod.model}.jpg`;
+                    // SOLUCIÓN PARA LINUX: Reemplaza dinámicamente la diagonal por un guión bajo para la ruta de la imagen
+                    const sanitizedFilename = prod.model.replace('/', '_');
+                    const computedImgUrl = `${GITHUB_IMG_BASE}${sanitizedFilename}.jpg`;
 
                     const card = document.createElement('div');
                     card.className = 'product-card';
