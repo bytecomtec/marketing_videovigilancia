@@ -1154,14 +1154,42 @@
             ctx.strokeStyle = '#e2e8f0';
             ctx.strokeRect(40, boxY, 450, 65);
 
+                ctx.font = '13px sans-serif';
+                let origText = `Precio de Lista: $${basePrice.toFixed(2)} MXN`;
+                ctx.fillText(origText, 40, priceY);
+                
+                let textWidth = ctx.measureText(origText).width;
+                ctx.strokeStyle = '#94a3b8';
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.moveTo(40, priceY - 4);
+                ctx.lineTo(40 + textWidth, priceY - 4);
+                ctx.stroke();
+                
+                priceY += 20;
+            }
+
+            ctx.fillStyle = '#003366';
+            ctx.font = 'bold 18px sans-serif';
+            ctx.fillText(`Precio Especial: $${finalPrice.toFixed(2)} MXN`, 40, priceY);
+
+            // Bloque fijo e inalterable de Diagnóstico Técnico
+            let boxY = Math.max(priceY + 15, 245);
+            ctx.fillStyle = '#f8fafc';
+            ctx.fillRect(40, boxY, 360, 55);
+            ctx.strokeStyle = '#e2e8f0';
+            ctx.strokeRect(40, boxY, 360, 55);
+
             ctx.fillStyle = '#d32f2f';
-            ctx.font = 'bold 16px sans-serif';
-            ctx.fillText('Cotización sujeta a diagnóstico en sitio', 60, boxY + 38);
+            ctx.font = 'bold 14px sans-serif';
+            ctx.fillText('Cotización sujeta a diagnóstico en sitio.', 55, 270);
+            ctx.fillText('No incluye mano de obra', 55, 290);
 
             ctx.fillStyle = '#64748b';
-            ctx.font = 'italic 13px sans-serif';
-            ctx.fillText('* Vigencia ligada a fluctuaciones del tipo de cambio Syscom diario.', 40, 490);
-            ctx.fillText('Bytecomtec S.A. de C.V. - Soporte Técnico Autorizado', 40, 515);
+            ctx.font = 'italic 11px sans-serif';
+            ctx.fillText('* Vigencia ligada a existencia y tipo de cambio diario.', 40, 355);
+            ctx.fillText('Bytecomtec - Soporte Técnico Autorizado', 40, 375);
+
 
             const img = new Image();
             img.crossOrigin = "anonymous";
