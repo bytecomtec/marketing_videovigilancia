@@ -203,7 +203,6 @@
             { id: "accesorios_extra", name: "Accesorios Extra" }
         ];
 
-        // Objeto maestro catalogData para todas las líneas de negocio
         const catalogData = {
             dvr: {
                 title: "Grabadores Digitales (DVR)",
@@ -310,7 +309,7 @@
                     { 
                         model: "EX-5016TURBO", 
                         titleSpecs: "DVR 16 Canales TURBOHD + 8 Canales IP / 5 Megapixel Lite - 3K Lite / Audio Bidireccional por Coaxitron / Reconocimiento Facial / ACUSENSE (Evita falsas alarmas) / 1 Bahía de Disco Duro / Salida de Video en Full HD", 
-                        desc: "Solución de videovigilancia robustecida y escalable para medianas empresas con flujos operativos ininterrumpidos.",
+                        desc: "Solución de videovigilancia robustecida y scalable para medianas empresas con flujos operativos ininterrumpidos.",
                         costUSD: 160.26,
                         features: ["16 canales TurboHD + 8 IP, total 24", "Compresión H.265+ para eficiente almacenamiento", "DVR pentahíbrido: HD-TVI/HD-CVI/Analógico/IP/AHD", "Acceso remoto desde PC y smartphones", "Audio bidireccional con cámaras turboHD compatibles", "Reconocimiento facial en 4 canales HD", "Soporta 1 HDD de hasta 10 TB (no incluido)"]
                     },
@@ -374,7 +373,7 @@
                         titleSpecs: "NVR 8 Megapixel (4K) (Compatible con Cámaras ACUSENSE) / 8 canales IP / 8 Puertos PoE+ / 1 Bahía de Disco Duro / Salida de Vídeo en 4K / 300 Metros PoE Modo Extendido", 
                         desc: "Grabador IP autónomo provisto de puertos PoE nativos para energizar cámaras de forma directa.",
                         costUSD: 160.35,
-                        features: ["Compresión H.265+/H.265 con reducción del 50% en ancho de banda", "8 puertos PoE+ con 75W total y modo extendido 300m", "Soporta disco duro hasta 8TB con tecnología S.M.A.R.T", "Resolución 4K en 8 canales a 30fps", "Detección AcuSense en 8 canales para humanos y vehículos", "Salida simultánea HDMI y VGA en múltiples resoluciones"]
+                        features: ["Compresión H.265+/H.265 con reducción del 50% en ancho de banda", "8 puertos PoE+ con 75W total y modo extendido 300m", "Soporta disco duro hasta 8TB con tecnología S.M.A.R.T", "Resolución 4K en 8 canales a 30fps", "Detección AcuSense in 8 canales para humanos y vehículos", "Salida simultánea HDMI y VGA en múltiples resoluciones"]
                     },
                     { 
                         model: "DS-7608NXI-K1(E)", 
@@ -426,13 +425,9 @@
                 descElem.innerText = catalogData[categoryId].desc;
 
                 catalogData[categoryId].products.forEach((prod) => {
-                    // ==================================================================
-                    // LOGICA FISCAL CORREGIDA: Costo base en MXN + 16% de IVA integrado
-                    // ==================================================================
                     const costoMXNSinIva = prod.costUSD * currentRate;
-                    const costoMXNConIva = costoMXNSinIva * 1.16; // Factor del 16% de IVA cobrado por el distribuidor
+                    const costoMXNConIva = costoMXNSinIva * 1.16;
 
-                    // Cálculo del precio base al público usando el multiplicador estructural
                     const basePublico = costoMXNConIva * 1.55; 
                     const precioFinalPublico = basePublico * (1 - currentDiscount);
                     const margenAsegurado = precioFinalPublico - costoMXNConIva;
@@ -492,15 +487,15 @@
             categoriesList.forEach((cat) => {
                 const count = catalogData[cat.id] ? catalogData[cat.id].products.length : 0;
                 const li = document.createElement('li');
-                li.className = `category-menu-item ${cat.id === 'dvr' ? 'active' : ''}`;\n                li.id = `menu-${cat.id}`;
+                li.className = `category-menu-item ${cat.id === 'dvr' ? 'active' : ''}`;
+                li.id = `menu-${cat.id}`;
                 li.onclick = () => renderCategory(cat.id);
-                li.innerHTML = `<span>${cat.name}</span> <span class=\"qty-badge\">${count}</span>`;
+                li.innerHTML = `<span>${cat.name}</span> <span class="qty-badge">${count}</span>`;
                 menuList.appendChild(li);
             });
             renderCategory("dvr");
         }
 
-        // Simulación gráfica en Canvas para generar fichas comerciales inmediatas
         function triggerFlyerGeneration(modelCode) {
             const canvas = document.getElementById('processingCanvas');
             const ctx = canvas.getContext('2d');
@@ -508,11 +503,9 @@
             canvas.width = 600;
             canvas.height = 400;
 
-            // Fondo institucional
             ctx.fillStyle = '#ffffff';
             ctx.fillRect(0, 0, 600, 400);
 
-            // Encabezado Azul Corporativo
             ctx.fillStyle = '#003366';
             ctx.fillRect(0, 0, 600, 80);
 
@@ -524,7 +517,6 @@
             ctx.font = 'bold 14px sans-serif';
             ctx.fillText('FICHA COMERCIAL DE HARDWARE - BYTECOMTEC', 30, 68);
 
-            // Datos del modelo
             ctx.fillStyle = '#1e293b';
             ctx.font = 'bold 24px sans-serif';
             ctx.fillText(`MODELO: ${modelCode}`, 40, 140);
@@ -533,7 +525,6 @@
             ctx.font = '14px sans-serif';
             ctx.fillText('Equipo verificado para infraestructura escolar y comercial.', 40, 170);
 
-            // Recuadro del precio final
             ctx.fillStyle = '#f8fafc';
             ctx.fillRect(40, 200, 520, 90);
             ctx.strokeStyle = '#e2e8f0';
@@ -547,7 +538,6 @@
             ctx.font = 'bold 28px sans-serif';
             ctx.fillText('Cotización personalizada sujeta a diagnóstico en sitio', 60, 270);
 
-            // Pie de página administrativo
             ctx.fillStyle = '#64748b';
             ctx.font = 'italic 12px sans-serif';
             ctx.fillText('* Vigencia ligada a fluctuaciones del tipo de cambio Syscom diario.', 40, 340);
