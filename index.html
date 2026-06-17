@@ -1018,7 +1018,7 @@
                     let featuresHTML = '';
                     if (prod.features && prod.features.length > 0) {
                         featuresHTML = `<ul class="product-features-list">`;
-                        // Cambio aplicado aquí: Se eliminó el .slice(0, 3) para procesar todo el arreglo completo
+                        // Cambio aplicado aquí: Se eliminó el .slice(0, 6) para procesar todo el arreglo completo
                         prod.features.forEach(f => {
                             featuresHTML += `<li>${f}</li>`;
                         });
@@ -1162,8 +1162,8 @@
 
             ctx.fillStyle = '#d32f2f';
             ctx.font = 'bold 14px sans-serif';
-            ctx.fillText('Cotización sujeta a diagnóstico en sitio', 55, boxY + 28);
-            ctx.fillText('No incluye mano de obra', 55, boxY + 48);
+            ctx.fillText('Cotización sujeta a diagnóstico en sitio', 53, boxY + 26);
+            ctx.fillText('No incluye mano de obra', 53, boxY + 46);
 
             ctx.fillStyle = '#64748b';
             ctx.font = 'italic 11px sans-serif';
