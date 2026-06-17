@@ -1009,7 +1009,7 @@
                     // ARITMÉTICA FIJA: Margen real basado exclusivamente en lo cobrado vs lo pagado
                     const margenAsegurado = precioFinalPublico - costoMXNConIva;
 
-                    const sanitizedFilename = prod.model.replace('/', '_');
+                    const sanitizedFilename = prod.model.replace(/\//g, '_');
                     const computedImgUrl = `${GITHUB_IMG_BASE}${sanitizedFilename}.jpg`;
 
                     const card = document.createElement('div');
