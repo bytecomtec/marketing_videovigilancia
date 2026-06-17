@@ -362,34 +362,6 @@
                         desc: "Grabador IP autónomo provisto de puertos PoE nativos para energizar cámaras de forma directa.",
                         costUSD: 136.18,
                         features: ["Reconocimiento facial con base de datos masiva", "4 puertos PoE+ con 50W de potencia distribuida", "Filtro analítico avanzado AcuSearch perimetral"]
-                    },
-                    { 
-                        model: "CS-X5S/8W", 
-                        titleSpecs: "NVR Inalámbrico (WiFi) de 8 Canales IP / Admite Cámaras hasta 5 Megapixel (3K) / Salidas HDMI y VGA / H.265 / Almacenamiento Expandible hasta 8 TB", 
-                        desc: "Grabador de red eficiente diseñado para gestionar cámaras IP de alta definición continua.",
-                        costUSD: 53.99,
-                        features: ["Conexión inalámbrica simplificada Wi-Fi para 8 canales", "Soporta cámaras IP de hasta 5 megapíxeles (3K)", "Salidas simultáneas HDMI/VGA de monitoreo"]
-                    },
-                    { 
-                        model: "DS-7608NI-Q1/8P(D)", 
-                        titleSpecs: "NVR 8 Megapixel (4K) (Compatible con Cámaras ACUSENSE) / 8 canales IP / 8 Puertos PoE+ / 1 Bahía de Disco Duro / Salida de Vídeo en 4K / 300 Metros PoE Modo Extendido", 
-                        desc: "Grabador IP autónomo provisto de puertos PoE nativos para energizar cámaras de forma directa.",
-                        costUSD: 160.35,
-                        features: ["8 puertos PoE+ integrados e independientes", "Compatibilidad completa con analíticas AcuSense", "Soporta discos duros industriales de hasta 8TB"]
-                    },
-                    { 
-                        model: "DS-7608NXI-K1(E)", 
-                        titleSpecs: "[Acusearch] NVR 12 Megapíxel (4K) / 8 canales IP / AcuSense (Evita Falsas Alarmas) / Reconocimiento Facial / 1 Bahía de Disco Duro / HDMI en 4K / Sin Puertos PoE", 
-                        desc: "Grabador de red eficiente diseñado para gestionar cámaras IP de alta definición continua.",
-                        costUSD: 107.94,
-                        features: ["Reconocimiento facial de hasta 20,000 rostros integrados", "Soporta un disco duro de alta densidad hasta 16TB", "Motor AcuSearch para búsquedas forenses rápidas"]
-                    },
-                    { 
-                        model: "DS-7616NXI-K1(E)", 
-                        titleSpecs: "[Acusearch] NVR 12 Megapixel (4K) / 16 canales IP / AcuSense (Evita Falsas Alarmas) / Reconocimiento Facial / 1 Bahía de Disco Duro / HDMI en 4K / Sin Puertos PoE+", 
-                        desc: "Grabador IP autónomo provisto de puertos PoE nativos para energizar cámaras de forma directa.",
-                        costUSD: 154.83,
-                        features: ["Administración centralizada para 16 canales IP nativos", "Salida de visualización HDMI en resolución 4K real", "Compresión avanzada H.265+ para ahorro extremo"]
                     }
                 ]
             },
@@ -447,7 +419,7 @@
                     {
                         model: "XP4D",
                         titleSpecs: "Fuente de Poder Distribuida Protek / 12 Vcc a 5 Amperes / 4 Salidas con Fusibles Independientes PTC",
-                        desc: "Gabinete de alimentación unificada para centralizar la energía de las cámaras con protección ante cortocircuitos.",
+                        desc: "Gabinete de alimentación unificada para centralizar la energía de las cámaras con protección ante cortocomponentes.",
                         costUSD: 24.60,
                         features: ["Fusibles con reinicio automático electrónico PTC", "Indicadores LED individuales por cada canal", "Gabinete metálico con chapa de seguridad"]
                     }
@@ -498,8 +470,17 @@
                     const costoMXNSinIva = prod.costUSD * currentRate;
                     const costoMXNConIva = costoMXNSinIva * 1.16;
 
-                    const basePublico = costoMXNConIva * 1.55; 
-                    const precioFinalPublico = basePublico * (1 - currentDiscount);
+                    // AJUSTE CRÍTICO: Markup elevado a 1.65 (65% sobre costo neto con IVA)
+                    const basePublico = costoMXNConIva * 1.65; 
+                    let precioFinalPublico = basePublico * (1 - currentDiscount);
+
+                    // CANDADO DE SEGURIDAD AUTOMÁTICO: El piso definitivo es Costo + 20% utilidad neta
+                    const precioMinimoPermitido = costoMXNConIva * 1.20;
+                    if (precioFinalPublico < precioMinimoPermitido) {
+                        precioFinalPublico = precioMinimoPermitido;
+                    }
+
+                    // ARITMÉTICA FIJA: Margen real basado exclusivamente en lo cobrado vs lo pagado
                     const margenAsegurado = precioFinalPublico - costoMXNConIva;
 
                     const sanitizedFilename = prod.model.replace('/', '_');
@@ -517,7 +498,6 @@
                         featuresHTML += `</ul>`;
                     }
 
-                    // Se escapan caracteres problemáticos de las strings para pasarlos seguros en el onclick
                     const titleSpecsEscaped = prod.titleSpecs.replace(/'/g, "\\'");
 
                     card.innerHTML = `
@@ -530,7 +510,7 @@
                                     <div class="product-model">${prod.model}</div>
                                     <h3 class="product-title-specs">${prod.titleSpecs}</h3>
                                     <div class="product-price-list">
-                                        ${currentDiscount > 0 ? `<span class="original-price">$${basePublico.toFixed(2)}</span>` : ''}
+                                        ${currentDiscount > 0 && precioFinalPublico > precioMinimoPermitido ? `<span class="original-price">$${basePublico.toFixed(2)}</span>` : ''}
                                         <span class="final-price">$${precioFinalPublico.toFixed(2)} MXN</span>
                                         <span class="usd-reference">Ref. Distribuidor: $${prod.costUSD.toFixed(2)} USD (c/IVA: $${costoMXNConIva.toFixed(2)} MXN)</span>
                                     </div>
@@ -572,7 +552,6 @@
             renderCategory("dvr");
         }
 
-        // Función auxiliar para segmentar las especificaciones y evitar desbordamientos en el Canvas
         function wrapText(context, text, x, y, maxWidth, lineHeight) {
             const words = text.split(' ');
             let line = '';
@@ -594,7 +573,6 @@
             return currentY;
         }
 
-        // AJUSTE SOLICITADO: Renderizado de la estructura mixta de precios con leyenda fija de diagnóstico
         function triggerFlyerGeneration(modelCode, titleSpecs, basePrice, finalPrice) {
             const canvas = document.getElementById('processingCanvas');
             const ctx = canvas.getContext('2d');
@@ -602,11 +580,9 @@
             canvas.width = 600;
             canvas.height = 400;
 
-            // Limpieza general y fondo blanco
             ctx.fillStyle = '#ffffff';
             ctx.fillRect(0, 0, 600, 400);
 
-            // Banner superior institucional
             ctx.fillStyle = '#003366';
             ctx.fillRect(0, 0, 600, 80);
 
@@ -618,27 +594,23 @@
             ctx.font = 'bold 14px sans-serif';
             ctx.fillText('FICHA COMERCIAL DE HARDWARE - BYTECOMTEC', 30, 68);
 
-            // Modelo del producto
             ctx.fillStyle = '#1e293b';
             ctx.font = 'bold 22px sans-serif';
             ctx.fillText(`MODELO: ${modelCode}`, 40, 125);
 
-            // Especificaciones técnicas formateadas con Wrap
             ctx.fillStyle = '#334155';
             ctx.font = '12px sans-serif';
             let nextY = wrapText(ctx, titleSpecs, 40, 150, 360, 18);
 
-            // Renderizado dinámico de precios calculados
             let priceY = Math.max(nextY + 25, 205);
             
-            // Si hay un descuento activo (Precio final menor al precio base), pintamos el original tachado
+            // Renderizado condicional del tachado si el precio final mutó por descuento
             if (Math.abs(basePrice - finalPrice) > 0.01) {
                 ctx.fillStyle = '#94a3b8';
                 ctx.font = '13px sans-serif';
                 let origText = `Precio de Lista: $${basePrice.toFixed(2)} MXN`;
                 ctx.fillText(origText, 40, priceY);
                 
-                // Línea de tachado estructural
                 let textWidth = ctx.measureText(origText).width;
                 ctx.strokeStyle = '#94a3b8';
                 ctx.lineWidth = 1;
@@ -654,25 +626,22 @@
             ctx.font = 'bold 18px sans-serif';
             ctx.fillText(`Precio Especial Público: $${finalPrice.toFixed(2)} MXN`, 40, priceY);
 
-            // Recuadro estructural gris para la leyenda de diagnóstico
+            // Bloque fijo e inalterable de Diagnóstico Técnico
             let boxY = Math.max(priceY + 15, 245);
             ctx.fillStyle = '#f8fafc';
             ctx.fillRect(40, boxY, 360, 55);
             ctx.strokeStyle = '#e2e8f0';
             ctx.strokeRect(40, boxY, 360, 55);
 
-            // Texto fijo solicitado
             ctx.fillStyle = '#d32f2f';
             ctx.font = 'bold 14px sans-serif';
             ctx.fillText('Cotización sujeta a diagnóstico en sitio', 55, boxY + 32);
 
-            // Firmas al pie de página
             ctx.fillStyle = '#64748b';
             ctx.font = 'italic 11px sans-serif';
             ctx.fillText('* Vigencia ligada a fluctuaciones del tipo de cambio Syscom diario.', 40, 355);
             ctx.fillText('Bytecomtec S.A. de C.V. - Soporte Técnico Autorizado', 40, 375);
 
-            // Preparación y descarga asíncrona de la imagen
             const img = new Image();
             img.crossOrigin = "anonymous";
             
