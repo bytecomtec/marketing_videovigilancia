@@ -1025,7 +1025,7 @@
                         featuresHTML += `</ul>`;
                     }
 
-                    const titleSpecsEscaped = prod.titleSpecs.replace(/'/g, "\\'");
+                    const titleSpecsEscaped = prod.titleSpecs.replace(/\//g, '_');
 
                     card.innerHTML = `
                         <div class="product-body">
