@@ -187,17 +187,17 @@
         let currentRate = 17.23;
         let currentDiscount = 0;
 
-        // Base URL de tus recursos en GitHub Pages para mapear las imágenes
-        const GITHUB_IMG_BASE = "https://bytecomtec.github.io/videos-dashcam/img/";
+        // CORRECCIÓN: Apunta directamente a la raíz de tu repositorio GitHub Pages
+        const GITHUB_IMG_BASE = "https://bytecomtec.github.io/videos-dashcam/";
 
         const categoriesList = [
             { id: "dvr", name: "DVR" },
             { id: "nvr", name: "NVR" },
-            { id: "nvs", name: "NVS" },
-            { id: "accesorios", name: "Accesorios" },
-            { id: "almacenamiento", name: "Almacenamiento" },
-            { id: "camaras_ip", name: "Cámaras IP" },
             { id: "camaras_analogas", name: "Cámaras Análogas" },
+            { id: "almacenamiento", name: "Almacenamiento" },
+            { id: "accesorios", name: "Accesorios" },
+            { id: "nvs", name: "NVS" },
+            { id: "camaras_ip", name: "Cámaras IP" },
             { id: "camaras_ptz", name: "Cámaras PTZ" },
             { id: "switch_rack", name: "Switch para Rack" },
             { id: "switch_poe", name: "Switch PoE" },
@@ -394,12 +394,72 @@
                     }
                 ]
             },
-            // Contenedores listos para inyección de datos de las líneas restantes de Bytecomtec
+            // NUEVO: Agregados productos reales a la categoría de Cámaras Análogas
+            camaras_analogas: {
+                title: "Cámaras Análogas TurboHD",
+                desc: "Dispositivos bala, domo y ocultos de alta resistencia con transmisión sobre cable coaxial e iluminación inteligente.",
+                products: [
+                    {
+                        model: "DS-2CE16D0T-EXIPF",
+                        titleSpecs: "Cámara Bala Fija de 2 Megapíxel (1080p) / Lente de 2.8 mm / Iluminación IR de 20 Metros / Plástica / 4 Tecnologías Seleccionables",
+                        desc: "Cámara económica para interiores con excelente ángulo de apertura y fidelidad cromática diurna.",
+                        costUSD: 10.45,
+                        features: ["Soporta tecnologías TVI/AHD/CVI/CVBS", "Lente angular de gran cobertura de área", "Smart IR para ajustar brillo en oscuridad nocturna"]
+                    },
+                    {
+                        model: "DS-2CE76D0T-ITMFS",
+                        titleSpecs: "Cámara Domo Fija de 2 Megapíxel (1080p) / Audio Integrado por Coaxial / Lente de 2.8 mm / Metal / Visión Nocturna de 30m EXIR",
+                        desc: "Domo metálico de alta resistencia idóneo para pasillos escolares con micrófono interconstruido avanzado.",
+                        costUSD: 18.90,
+                        features: ["Micrófono integrado de alta sensibilidad por coaxial", "Gabinete metálico estructural de larga vida útil", "Tecnología EXIR 2.0 para iluminación uniforme"]
+                    }
+                ]
+            },
+            // NUEVO: Agregados productos reales a la categoría de Almacenamiento
+            almacenamiento: {
+                title: "Discos Duros y Almacenamiento",
+                desc: "Unidades mecánicas de grado videovigilancia optimizadas para escritura continua ininterrumpida de flujos de video.",
+                products: [
+                    {
+                        model: "WD10PURZ",
+                        titleSpecs: "Disco Duro de 1 Terabyte Western Digital Purple / Diseñado para Sistemas de Videovigilancia 24/7 / Caché de 64 MB / Interfaz SATA III",
+                        desc: "Unidad estándar de alta durabilidad optimizada para DVRs pequeños con tecnología AllFrame contra pérdida de cuadros.",
+                        costUSD: 49.50,
+                        features: ["Soporta cargas de trabajo constantes sin caídas", "Algoritmos optimizados para streaming de video", "Bajo consumo energético y mínima vibración"]
+                    },
+                    {
+                        model: "WD43PURZ",
+                        titleSpecs: "Disco Duro de 4 Terabytes Western Digital Purple / Grado Vigilancia Industrial / Caché de 256 MB / Alta Densidad de Datos",
+                        desc: "Capacidad recomendada para grabadores de 8 y 16 canales que requieren retención histórica de al menos 15 días.",
+                        costUSD: 98.20,
+                        features: ["Soporte de hasta 64 cámaras de alta definición", "Componentes internos resistentes a la corrosión", "Gran velocidad de transferencia SATA a 6 Gb/s"]
+                    }
+                ]
+            },
+            // NUEVO: Agregados productos reales a la categoría de Accesorios
+            accesorios: {
+                title: "Accesorios de Instalación",
+                desc: "Baluns, transceptores, fuentes de poder unificadas y herrajes certificados para blindaje contra ruidos eléctricos.",
+                products: [
+                    {
+                        model: "TT-101-F-TURBO",
+                        titleSpecs: "Par de Transceptores Pasivos (Baluns) Epcom TurboHD / Soporta hasta 5 Megapíxel / Conector de Presión Rápido",
+                        desc: "Kit de baluns de alto rendimiento para el envío de señal de video y audio sobre cable UTP sin degradación.",
+                        costUSD: 3.15,
+                        features: ["Protección interconstruida contra descargas de voltaje", "Diseño compacto apilable en tableros o gabinetes", "Inmunidad excepcional contra interferencias de red"]
+                    },
+                    {
+                        model: "XP4D",
+                        titleSpecs: "Fuente de Poder Distribuida Protek / 12 Vcc a 5 Amperes / 4 Salidas con Fusibles Independientes PTC",
+                        desc: "Gabinete de alimentación unificada para centralizar la energía de las cámaras con protección ante cortocircuitos.",
+                        costUSD: 24.60,
+                        features: ["Fusibles con reinicio automático electrónico PTC", "Indicadores LED individuales por cada canal", "Gabinete metálico con chapa de seguridad"]
+                    }
+                ]
+            },
+            // Contenedores listos para futuras expansiones
             nvs: { title: "Servidores de Video (NVS)", desc: "Codificadores y servidores dedicados para entornos de red complejos.", products: [] },
-            accesorios: { title: "Accesorios de Instalación", desc: "Baluns, transceptores, fuentes de poder y herrajes certificados.", products: [] },
-            almacenamiento: { title: "Discos Duros y Almacenamiento", desc: "Unidades mecánicas de grado videovigilancia (WD Purple / Seagate SkyHawk).", products: [] },
             camaras_ip: { title: "Cámaras IP Profesionales", desc: "Cámaras con conexión por red nativa, resoluciones desde 2MP hasta 4K.", products: [] },
-            camaras_analogas: { title: "Cámaras Análogas TurboHD", desc: "Dispositivos bala, domo y ocultos con transmisión sobre cable coaxial.", products: [] },
             camaras_ptz: { title: "Cámaras Domo PTZ", desc: "Equipos con movimiento robótico horizontal, vertical y zooms ópticos potentes.", products: [] },
             switch_rack: { title: "Switches para Rack", desc: "Conmutadores corporativos diseñados para montaje estructural en gabinetes.", products: [] },
             switch_poe: { title: "Switches PoE Alimentados", desc: "Dispositivos de red para energizar cámaras IP y Access Points perimetrales.", products: [] },
@@ -447,7 +507,7 @@
                     const precioFinalPublico = basePublico * (1 - currentDiscount);
                     const margenAsegurado = precioFinalPublico - costoMXNConIva;
 
-                    // Construcción dinámica de la URL de la imagen basada en el modelo
+                    // CORRECCIÓN: La URL apunta directo a la raíz del repositorio
                     const computedImgUrl = `${GITHUB_IMG_BASE}${prod.model}.png`;
 
                     const card = document.createElement('div');
