@@ -639,7 +639,8 @@
             ctx.fillStyle = '#f8fafc';
             ctx.fillRect(40, boxY, 360, 55);
             ctx.strokeStyle = '#e2e8f0';
-            ctx.strokeRect(40, boxY, 55);
+            // SOLUCIÓN TÉCNICA: Se añadieron las dimensiones faltantes (360, 55) aquí
+            ctx.strokeRect(40, boxY, 360, 55);
 
             ctx.fillStyle = '#d32f2f';
             ctx.font = 'bold 14px sans-serif';
@@ -700,7 +701,6 @@
                 modalImg.src = canvas.toDataURL('image/png');
                 modal.style.display = 'flex';
                 
-                // Resetear estado visual del botón al abrir
                 if (btnAction) {
                     btnAction.className = 'btn-copy-clipboard';
                     btnAction.innerText = '📋 Copiar Ficha para WhatsApp';
@@ -708,13 +708,11 @@
             }
         }
 
-        /* AJUSTE TÉCNICO CRÍTICO: Copia la imagen como Blob nativo al portapapeles */
         async function copyCanvasToClipboard() {
             const canvas = document.getElementById('processingCanvas');
             const btnAction = document.getElementById('btnClipboardAction');
             
             try {
-                // Convertimos el contenido del Canvas oculto directamente a un archivo binario PNG
                 canvas.toBlob(async function(blob) {
                     if (!blob) {
                         alert("Error al procesar los datos de la ficha técnica.");
@@ -722,14 +720,12 @@
                     }
                     
                     try {
-                        // Escribimos un ítem de portapapeles de tipo imagen pura
                         await navigator.clipboard.write([
                             new ClipboardItem({
                                 [blob.type]: blob
                             })
                         ]);
                         
-                        // Retroalimentación visual al usuario
                         if (btnAction) {
                             btnAction.className = 'btn-copy-clipboard success';
                             btnAction.innerText = '✅ ¡Ficha Copiada! Pégala en WhatsApp (Ctrl+V)';
