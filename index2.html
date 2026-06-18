@@ -160,6 +160,7 @@
                 <label for="discountSelect">Descuento Público:</label>
                 <select id="discountSelect" onchange="updateAllPrices()">
                     <option value="0" selected> Precio de Lista Público</option>
+                    <option value="0.05">Aplicar 5% Preferencial</option>
                     <option value="0.10">Aplicar 10% Especial</option>
                     <option value="0.20">Aplicar 20% Máximo Autorizado</option>
                 </select>
@@ -491,9 +492,10 @@
                         precioFinalPublico = precioMinimoPermitido;
                     }
 
+                    // Cálculo dinámico del Margen Real Asegurado basado en la selección actual (incluyendo el 5%)
                     const margenAsegurado = precioFinalPublico - costoMXNConIva;
 
-                    const sanitizedFilename = prod.model.replace('/', '_');
+                    const sanitizedFilename = prod.model.replace(/\//g, '_');
                     const computedImgUrl = `${GITHUB_IMG_BASE}${sanitizedFilename}.jpg`;
 
                     const card = document.createElement('div');
@@ -508,7 +510,7 @@
                         featuresHTML += `</ul>`;
                     }
 
-                    const titleSpecsEscaped = prod.titleSpecs.replace(/'/g, "\\'");
+                    const titleSpecsEscaped = prod.titleSpecs.replace(/\//g, '_');
 
                     card.innerHTML = `
                         <div class="product-body">
@@ -639,7 +641,6 @@
             ctx.fillStyle = '#f8fafc';
             ctx.fillRect(40, boxY, 360, 55);
             ctx.strokeStyle = '#e2e8f0';
-            // SOLUCIÓN TÉCNICA: Se añadieron las dimensiones faltantes (360, 55) aquí
             ctx.strokeRect(40, boxY, 360, 55);
 
             ctx.fillStyle = '#d32f2f';
