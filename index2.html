@@ -635,22 +635,23 @@
 
             ctx.fillStyle = '#003366';
             ctx.font = 'bold 18px sans-serif';
-            ctx.fillText(`Precio Especial Público: $${finalPrice.toFixed(2)} MXN`, 40, priceY);
+            ctx.fillText(`Tu precio: $${finalPrice.toFixed(2)} MXN`, 40, priceY);
 
             let boxY = Math.max(priceY + 15, 245);
             ctx.fillStyle = '#f8fafc';
             ctx.fillRect(40, boxY, 360, 55);
             ctx.strokeStyle = '#e2e8f0';
             ctx.strokeRect(40, boxY, 360, 55);
-
             ctx.fillStyle = '#d32f2f';
+            
             ctx.font = 'bold 14px sans-serif';
-            ctx.fillText('Cotización sujeta a diagnóstico en sitio', 55, boxY + 32);
+            ctx.fillText('Cotización sujeta a diagnóstico en sitio.', 53, boxY + 26);
+            ctx.fillText('No incluye mano de obra por instalación.', 53, boxY + 46);
 
             ctx.fillStyle = '#64748b';
             ctx.font = 'italic 11px sans-serif';
-            ctx.fillText('* Vigencia ligada a fluctuaciones del tipo de cambio Syscom diario.', 40, 355);
-            ctx.fillText('Bytecomtec S.A. de C.V. - Soporte Técnico Autorizado', 40, 375);
+            ctx.fillText('* Vigencia ligada a existencia y tipo de cambio diario.', 40, 355);
+            ctx.fillText('Bytecomtec - Soporte Técnico Autorizado.', 40, 375);
 
             const img = new Image();
             img.crossOrigin = "anonymous";
