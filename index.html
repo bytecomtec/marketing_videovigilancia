@@ -127,20 +127,10 @@
         }
         .modal-content-wrapper {
             position: relative; background-color: var(--white); padding: 25px; border-radius: 8px;
-            max-width: 650px; width: 90%; text-align: center;
+            max-width: 850px; width: 95%; text-align: center;
         }
-        .output-composite-img { max-width: 100%; max-height: 65vh; border: 1px solid #cbd5e1; border-radius: 6px; }
+        .output-composite-img { max-width: 100%; max-height: 75vh; border: 1px solid #cbd5e1; border-radius: 6px; }
         .modal-close { position: absolute; top: 10px; right: 15px; color: #94a3b8; font-size: 1.8rem; cursor: pointer; background: none; border: none; }
-        
-        /* Botón de Copiado Expreso */
-        .btn-copy-clipboard {
-            background-color: #10b981; color: var(--white); border: none; border-radius: 4px;
-            padding: 12px 20px; font-size: 0.95rem; font-weight: bold; cursor: pointer; width: 100%;
-            margin-top: 12px; display: flex; align-items: center; justify-content: center; gap: 8px;
-            transition: background-color 0.2s;
-        }
-        .btn-copy-clipboard:hover { background-color: #059669; }
-        .btn-copy-clipboard.success { background-color: #2563eb; }
     </style>
 </head>
 <body>
@@ -150,7 +140,7 @@
         
         <div class="config-panel">
             <div class="currency-controller">
-                <label for="exchangeRate">Tipo de cambio:</label>
+                <label for="exchangeRate">Dólar SYSCOM:</label>
                 <span>$</span>
                 <input type="number" id="exchangeRate" value="17.23" step="0.01" min="1" oninput="updateAllPrices()">
                 <span>MXN</span>
@@ -160,7 +150,6 @@
                 <label for="discountSelect">Descuento Público:</label>
                 <select id="discountSelect" onchange="updateAllPrices()">
                     <option value="0" selected> Precio de Lista Público</option>
-                    <option value="0.05">Aplicar 5% Preferencial</option>
                     <option value="0.10">Aplicar 10% Especial</option>
                     <option value="0.20">Aplicar 20% Máximo Autorizado</option>
                 </select>
@@ -188,10 +177,7 @@
             <button class="modal-close" onclick="closeLightbox()">&times;</button>
             <div style="font-size: 0.9rem; color:#475569; font-weight:600; margin-bottom:10px;">Vista Previa de Ficha Técnica:</div>
             <img id="modalTargetImg" class="output-composite-img" src="" alt="Ficha Comercial">
-            
-            <button id="btnClipboardAction" class="btn-copy-clipboard" onclick="copyCanvasToClipboard()">
-                📋 Copiar Ficha para WhatsApp
-            </button>
+            <div style="color:#0284c7; font-size:0.85rem; font-weight:bold; margin-top:10px;">👉 Clic derecho para copiar y pegar directo en WhatsApp</div>
         </div>
     </div>
 
@@ -204,19 +190,19 @@
         const GITHUB_IMG_BASE = "https://bytecomtec.github.io/marketing_videovigilancia/";
 
         const categoriesList = [
-            { id: "dvr", name: "DVR" },
             { id: "nvr", name: "NVR" },
-            { id: "camaras_analogas", name: "Cámaras Análogas" },
-            { id: "almacenamiento", name: "Almacenamiento" },
-            { id: "accesorios", name: "Accesorios" },
+            { id: "dvr", name: "DVR" },
             { id: "nvs", name: "NVS" },
-            { id: "camaras_ip", name: "Cámaras IP" },
-            { id: "camaras_ptz", name: "Cámaras PTZ" },
-            { id: "switch_rack", name: "Switch para Rack" },
-            { id: "switch_poe", name: "Switch PoE" },
             { id: "kits", name: "Kits" },
+            { id: "almacenamiento", name: "Almacenamiento" },
+            { id: "camaras_ip", name: "Cámaras IP" },
+            { id: "camaras_analogas", name: "Cámaras Análogas" },
+            { id: "camaras_ptz", name: "Cámaras PTZ" },
+            { id: "accesorios", name: "Accesorios" },
+            { id: "switch_poe", name: "Switch PoE" },
+            { id: "switch_rack", name: "Switch para Rack" },
             { id: "monitores", name: "Monitores" },
-            { id: "accesorios_extra", name: "Accesorios Extra" }
+            { id: "accesorios_extra", name: "Accesorios Extra" }        
         ];
 
         const catalogData = {
@@ -964,8 +950,197 @@
                         features: ["Resolución Full HD 1920x1080 (2 MP)", "Lente fijo 2.8 mm, ángulo 103°", "Visión nocturna IR EXIR hasta 20 mts", "Compatibilidad TVI/AHD/CVI/CVBS seleccionable", "Rango térmico ampliado -40°C a 60°C", "Diseño compacto de 85.4x76.12 mm"]
                     }     
                 ]
-                },
-            nvs: { title: "Servidores de Video (NVS)", desc: "Codificadores y servidores dedicados para entornos de red complejos.", products: [] },
+            },
+
+            camaras_ip : {
+                title: "Accesorios complementarios para videovigilancia",
+                desc: "Catálogo completo de accesorios con costos integrados (IVA incluido) y factores de rentabilidad blindados.",
+                products: [
+                    { 
+                        model: "DS-2CD1323G2-LIU", 
+                        titleSpecs: "[Dual Light] Turret IP 2 Megapixel / Lente 2.8 mm / 30 mts IR + 30 mts Luz Blanca / Micrófono Integrado / ACUSENSE Lite / Exterior IP67 / H.265 / PoE / ONVIF", 
+                        desc: "x",
+                        costUSD: 52.21,
+                        features: ["Resolución 1080p con sensor de 2 MP", "Lente de 2.8 mm con ángulo de visión de 103°", "Detección de humanos y vehículos con tecnología AcuSense Lite", "Doble iluminación IR y luz blanca hasta 30 metros", "Compresión H.265+/H.265 para reducir almacenamiento", "Diseño exterior IP67 con PoE 802.3af"]
+                    },
+                    { 
+                        model: "DS-2CD1327G2H-LIUF", 
+                        titleSpecs: "[Dual Light + ColorVu] Turret IP 2 Megapixel / Lente 2.8 mm / 30 mts IR + 30 mts Luz Blanca / Micrófono Integrado / ACUSENSE Lite / Exterior IP67 / dWDR / PoE / Micro SD", 
+                        desc: "x",
+                        costUSD: 52.75,
+                        features: ["Resolución 2MP Full HD (1920x1080)", "Lente 2.8 mm con ángulo de visión 106°", "Detección AcuSense Lite: personas y vehículos", "Dual Light: IR 30 mts + Luz Blanca 30 mts", "Exterior IP67, -30°C a 60°C", "Micrófono integrado para grabación de audio"]
+                    },
+                    { 
+                        model: "DS-2CV1F23G2-LIDWF(B)", 
+                        titleSpecs: "Turret PT IP 2 Megapixel / Lente 2.8 mm / Dual Light (20 mts IR + 15 mts Luz Blanca) / Wi-Fi / IP54 / dWDR / H.265 / Audio Bidireccional (Micrófono y Bocina) / Micro SD", 
+                        desc: "x",
+                        costUSD: 48.71,
+                        features: ["Resolución 2 MP (1920x1080) Full HD", "Lente 2.8 mm con ángulo de 97°", "Dual Light: 20 m IR + 15 m Luz Blanca", "Compresión H.265 para ahorro de almacenamiento", "Audio bidireccional con micrófono y altavoz integrados", "Almacenamiento microSD hasta 512 GB"]
+                    },
+                    { 
+                        model: "IPC-T220HA-LUC", 
+                        titleSpecs: "[Dual Light] Turret IP de 2 Megapixel / Lente 2.8 mm / Ángulo de visión 101° / 20 mts IR + 15 mts Luz Blanca / Micrófono Integrado / ACUSENSE Lite / Exterior IP67 / PoE / dWDR / H.265+ / ONVIF", 
+                        desc: "x",
+                        costUSD: 37.70,
+                        features: ["Resolución 2 MP (1920 x 1080)", "Lente fijo 2.8 mm, ángulo 101°", "Dual Light: IR 20 m + Luz Blanca 15 m", "Detección humana con notificaciones push", "Compresión H.265+ para ahorro de almacenamiento", "Protección IP67 para exterior PoE"]
+                    },
+                    { 
+                        model: "IPC-T221H-C", 
+                        titleSpecs: "HiLook Series / Turret IP 2 Megapixel / Lente 2.8 mm / 20 mts IR / Exterior IP67 / PoE / dWDR / H.265+ / ONVIF", 
+                        desc: "x",
+                        costUSD: 23.67,
+                        features: ["Resolución 1920 x 1080 (2 MP)", "Iluminación mínima 0.01 lux (F2.0)", "Compresión H.265+/H.265/H.264+/H.264", "IR inteligente hasta 20 metros", "Protección IP67 para exteriores", "Detección dWDR para contraluces"]
+                    },
+                    { 
+                        model: "DS-2CD1343G2-LIUF", 
+                        titleSpecs: "[Dual Light] Turret IP 4 Megapixel / Lente 2.8 mm / 30 mts IR + 30 mts Luz Blanca / Micrófono Integrado / ACUSENSE Lite / Exterior IP67 / H.265 / PoE / ONVIF / Micro SD", 
+                        desc: "x",
+                        costUSD: 71.91,
+                        features: ["Resolución 4 MP (2560x1440) con alta definición", "Iluminación mínima 0.005 lux para visión nocturna superior", "Visión nocturna IR 30 mts + luz blanca 30 mts", "Compresión H.265+/H.265/H.264+/H.264 para ahorro de ancho de banda", "PoE 802.3af para instalación simplificada y segura", "Detección inteligente AcuSense Lite para filtro de humanos y vehículos"]
+                    },
+                    { 
+                        model: "DS-2CD1347G2H-LIUF", 
+                        titleSpecs: "[Dual Light + ColorVu] Turret IP 4 Megapixel / Lente 2.8 mm / 30 mts IR + 30 mts Luz Blanca / Micrófono Integrado / ACUSENSE Lite / Exterior IP67 / WDR 120 dB / PoE / Micro SD", 
+                        desc: "x",
+                        costUSD: 83.74,
+                        features: ["Resolución 4 MP (2560 x 1440)", "Lente 2.8 mm con FOV 96°", "IR EXIR y luz blanca hasta 30 m", "WDR 120 dB para alto contraste", "Detección humana y vehicular AcuSense Lite", "Diseño exterior IP67 y PoE"]
+                    },
+                    { 
+                        model: "DS-2CD2443G2-I", 
+                        titleSpecs: "Cubo IP 4 Megapixel / Serie PRO / Lente 2.8 mm / 10 mts IR EXIR / PoE / Sensor PIR / H.265+ / Interior / Audio de Dos Vías / PoE / MicroSD / ONVIF / ACUSEEK", 
+                        desc: "x",
+                        costUSD: 72.68,
+                        features: ["Resolución 4 MP (2688 x 1520)", "Lente 2.8 mm con ángulo 104.3°", "IR EXIR 10 metros de alcance", "Compresión H.265+ para ahorro de almacenamiento", "Detección PIR humana vehicular hasta 8 mts", "WDR real 120 dB para alto contraste"]
+                    },
+                    { 
+                        model: "DS-2CD2543G2-LIS2U", 
+                        titleSpecs: "[Dual Light + 2 Micrófonos Integrados] Mini Domo IP 4 Megapixel / Lente 2.8 mm / 30 mts Luz Blanca + 30 mts IR / ACUSENSE / Exterior IP67 / IK08 / WDR 120 dB / PoE / ONVIF / MicroSD / ACUSEEK", 
+                        desc: "x",
+                        costUSD: 115.38,
+                        features: ["Resolución 4 MP (2688 x 1520)", "Lente 2.8 mm con ángulo 104°", "Detección de movimiento y cruce de línea", "Doble iluminación IR y luz blanca (30 mts)", "WDR 120 dB para alto rango dinámico", "Soporta microSD hasta 512 GB"]
+                    },
+                    { 
+                        model: "DS-2CD2945FWD", 
+                        titleSpecs: "Fisheye IP 4 Megapixel / Panorámica 180° - 360° / Exterior IP67 / IK10 / PoE / Múltiples Vistas por iVMS-4200", 
+                        desc: "x",
+                        costUSD: 136.86,
+                        features: ["Resolución 4 MP (1920 x 1920)", "Ángulo de visión 180° horizontal y vertical", "Iluminación mínima 0.01 lux (F1.2, AGC on)", "Compresión H.265+/H.265/H.264+/H.264", "Protección IP67 y resistencia antivandálica IK10", "Soporte para múltiples vistas con iVMS-4200"]
+                    },
+                    { 
+                        model: "IPC-T241H-C", 
+                        titleSpecs: "HiLook Series / Turret IP 4 Megapixel / 20 mts IR / Exterior IP67 / PoE / Lente 2.8 mm / WDR / ONVIF", 
+                        desc: "x",
+                        costUSD: 34.90,
+                        features: ["Resolución 4 MP (2560 x 1440) Full HD", "Iluminación mínima 0.01 lux (F2.2, AGC ON)", "Compresión H.265+/H.265/H.264+/H.264 con mayor eficiencia", "Protección IP67 ideal para exterior", "Infrarrojos inteligentes hasta 20 metros", "Lente 2.8 mm con ángulo 104°"]
+                    },                    
+                    { 
+                        model: "DS-2CD1363G2-LIU(F)", 
+                        titleSpecs: "[Dual Light] Turret IP 6 Megapixel / Lente 2.8 mm / 30 mts IR + 30 mts Luz Blanca / Micrófono Integrado / ACUSENSE Lite / Exterior IP67 / H.265 / PoE / ONVIF / Micro SD", 
+                        desc: "x",
+                        costUSD: 81.59,
+                        features: ["Resolución 6 MP (3200 x 1800)", "Lente 2.8 mm con ángulo 105°", "Detección IR y luz blanca 30 mts", "Compresión H.265+/H.265/H.264+/H.264 eficiente", "Detección humana y vehicular AcuSense Lite", "Micrófono integrado para grabación de audio"]
+                    },
+                    { 
+                        model: "DS-2CD1367G2H-LIUF", 
+                        titleSpecs: "[Dual Light + ColorVu] Turret IP 6 Megapixel / Lente 2.8 mm / 30 mts IR + 30 mts Luz Blanca / Micrófono Integrado / ACUSENSE Lite / Exterior IP67 / WDR 120 dB / PoE / Micro SD", 
+                        desc: "x",
+                        costUSD: 91.60,
+                        features: ["Resolución 6 MP (3200 x 1800)", "Iluminación mínima 0.001 lux @ F1.0", "Dual Light: IR y luz blanca hasta 30 mts", "WDR 120 dB para contraluces extremos", "Compresión H.265+/H.265/H.264+/H.264", "Detección AcuSense Lite de humanos y vehículos"]
+                    },
+                    { 
+                        model: "DS-2CD2367G3-LIS2UY/SRB", 
+                        titleSpecs: "[Dual Light + ColorVu 3.0 + HikAI] Turret IP 6 Megapixel / Lente 2.8 mm / 30 mts IR + Luz Blanca / 2 Microfonos Integrados / Exterior IP67 / Estrobo Azul y Rojo / WDR 130 dB / ACUSENSE 3.0 / Metal / NEMA 4X / ACUSEEK", 
+                        desc: "x",
+                        costUSD: 181.24,
+                        features: ["Resolución 6MP (3200 x 1800) con lente f1.0", "Lente fijo 2.8mm con ángulo 108.8°", "Dual Light: IR + luz blanca hasta 30 mts", "WDR 130dB con IA para alto rango dinámico", "Detección inteligente AcuSense 3.0 con filtro humano/vehículo", "Detección de movimiento, cruce de línea e intrusión"]
+                    },
+                    { 
+                        model: "DS-2CD2563G2-LIS2U", 
+                        titleSpecs: "[Dual Light + 2 Micrófonos Integrados] Mini Domo IP 6 Megapixel / Lente 2.8 mm / 30 mts Luz Blanca + 30 mts IR / ACUSENSE / Exterior IP67 / IK8 / WDR 120 dB / PoE / ONVIF / Micro SD / ACUSEEK", 
+                        desc: "x",
+                        costUSD: 123.49,
+                        features: ["Resolución 6 MP (3200 x 1800)", "Iluminación mínima 0.0005 lux @ F1.6", "Lente fijo 2.8 mm, ángulo 105°", "Alcance IR y luz blanca 30 m", "Tecnología AcuSense con filtro humano/vehículo", "Detección de movimiento y cambio de escena"]
+                    },
+                    { 
+                        model: "DS-2CD1383G2-LIU(F)", 
+                        titleSpecs: "[Dual Light] Turret IP 8 Megapixel (4K) / Lente 2.8 mm / 30 mts IR + 30 mts Luz Blanca / Micrófono Integrado / ACUSENSE Lite / Exterior IP67 / H.265 / PoE / ONVIF / Micro SD", 
+                        desc: "x",
+                        costUSD: 97.00,
+                        features: ["Resolución 8 MP (4K) 3840x2160 píxeles", "Lente 2.8 mm con ángulo 113°", "Visión nocturna IR 30 metros + luz blanca 30 m", "Soporta AcuSense Lite con detección de humanos y vehículos", "Compresión H.265+/H.265 para mayor eficiencia", "Micrófono integrado para captura de audio"]
+                    },
+                    { 
+                        model: "DS-2CD1023G2-LIU(F)", 
+                        titleSpecs: "[Dual Light] Bala IP 2 Megapixel / Lente 2.8 mm / 30 mts IR + 30 mts Luz Blanca / Micrófono Integrado / Motion Detection 2.0 / Exterior IP67 / H.265 / PoE / Micro SD", 
+                        desc: "x",
+                        costUSD: 59.56,
+                        features: ["Resolución 2 MP (1920 x 1080p)", "Lente fijo 2.8 mm, ángulo 103°", "Detección IR EXIR hasta 30 metros", "Compresión H.265+/H.265/H.264 para ahorro de ancho de banda", "Tecnología Dual Light con luz blanca 30 mts", "Detección Motion Detection 2.0 para humanos y vehículos"]
+                    },
+                    { 
+                        model: "DS-2CFW02", 
+                        titleSpecs: "Bala IP 2 Megapixel / Lente 2.8 mm / Dual Light (30 mts IR + 30 mts Luz Blanca) / Wi-Fi 6 / ACUSENSE / Audio Bidireccional (Micrófono y Bocina) / IP66 / dWDR", 
+                        desc: "x",
+                        costUSD: 34.25,
+                        features: ["Resolución 2 MP (1920 x 1080 píxeles)", "Detección avanzada de movimiento (Acusense)", "Doble iluminación 30 mts IR + 30 mts luz blanca", "Audio bidireccional con micrófono y bocina integrados", "Lente 2.8 mm (ángulo de apertura 109°)"]
+                    },
+                    { 
+                        model: "DS-2CV1023G2-LIDWF(B)", 
+                        titleSpecs: "Bala IP 2 Megapixel / Lente 2.8 mm / Dual Light (30 mts IR + 30 mts Luz Blanca) / Wi-Fi / ACUSENSE / Audio Bidireccional (Micrófono y Bocina) / IP66 / dWDR / Micro SD", 
+                        desc: "x",
+                        costUSD: 36.37,
+                        features: ["Resolución 2 MP (1920 x 1080)", "Iluminación mínima 0.009 lux en color", "Lente 2.8 mm con ángulo 97°", "Detección térmica de intrusos y vehículos", "Doble iluminación 30 m IR + 30 m luz blanca", "Audio bidireccional con micrófono y altavoz integrado"]
+                    },
+                    { 
+                        model: "IPC-B121H-C", 
+                        titleSpecs: "HiLook Series / Bala IP 2 Megapixel (1080p) / Lente 2.8 mm / 20 mts IR / Exterior IP67 / PoE / dWDR / H.265+ / ONVIF", 
+                        desc: "x",
+                        costUSD: 22.44,
+                        features: ["Resolución 2MP (1920x1080) Full HD", "Lente 2.8 mm con ángulo 94°", "Visión nocturna IR 20 metros Smart IR", "Compresión H.265+/H.265/H.264+/H.264 eficiente", "Protección exterior IP67 -30°C a 60°C","PoE (802.3af) y alimentación 12VCC"]
+                    },
+                    { 
+                        model: "DS-2CD1043G2-LIUF/SL", 
+                        titleSpecs: "[PROTECCIÓN ACTIVA] Bala IP 4 Megapixel / Lente 2.8 mm / Dual Light (30 mts IR + 20 mts Luz Blanca) / Audio de Dos Vías / Luz Intermitente y Alerta de Audio / Micrófono Integrado / ACUSENSE Lite / Exterior IP67 / H.265 / PoE", 
+                        desc: "x",
+                        costUSD: 83.95,
+                        features: ["Resolución 4 MP (2560x1440) con detalles nítidos", "Lente 2.8 mm con ángulo de visión 98°", "Dual Light: IR 30 m + Luz Blanca 20 m", "Audio bidireccional con micrófono y altavoz integrados", "Detección AcuSense Lite para humanos y vehículos", "Compresión H.265+/H.265 para almacenamiento eficiente"]
+                    },
+                    { 
+                        model: "DS-2CD1047G2H-LIUF", 
+                        titleSpecs: "[Dual Light + ColorVu] Bala IP 4 Megapixel / Lente 2.8 mm / 30 mts IR + 30 mts Luz Blanca / Micrófono Integrado / ACUSENSE Lite / Exterior IP67 / dWDR / PoE / Micro SD", 
+                        desc: "x",
+                        costUSD: 89.20,
+                        features: ["Resolución 4 MP (2560 x 1440)", "Iluminación mínima color 0.001 lux @ F1.0", "Luz blanca y visión IR hasta 30 mts", "Tecnología Dual Light para color inteligente nocturno", "Compresión H.265+ para ahorro de ancho de banda", "Detección AcuSense Lite de humanos y vehículos"]
+                    },
+                    { 
+                        model: "DS-2CD1T47G3-LIUF", 
+                        titleSpecs: "[ColorVu 3.0 + MD 3.0]Bala IP 4 Megapixel / Lente 4 mm / 50 mts IR + 50 mts Luz Blanca / Micrófono Integrado / Motion Detection 3.0 / Exterior IP67 / WDR 120 dB / PoE / Micro SD", 
+                        desc: "x",
+                        costUSD: 98.30,
+                        features: ["Resolución 4 Megapíxel (2560x1440) Ultra HD", "Dual Light: IR 50 mts + Luz Blanca 50 mts", "WDR 120 dB para contraluces extremos", "Tecnología ColorVu para imágenes color día/noche", "Detección inteligente AcuSense Lite: humanos y vehículos", "Conexión PoE para fácil instalación"]
+                    },
+                    { 
+                        model: "DS-2CV1043G2-LIDWF(B)", 
+                        titleSpecs: "Bala IP 4 Megapixel / Lente 2.8 mm / Dual Light (30 mts IR + 30 mts Luz Blanca) / Wi-Fi / ACUSENSE / Audio Bidireccional (Micrófono y Bocina) / IP66 / dWDR / Micro SD", 
+                        desc: "x",
+                        costUSD: 41.33,
+                        features: ["Resolución 4 MP (2560 x 1440)", "Lente 2.8 mm con ángulo 94°", "Dual Light 30 mts IR + luz blanca", "Compresión H.265/H.264 ahorra almacenamiento", "Audio bidireccional con micrófono y bocina", "IP66 resistente a intemperie y polvo"]
+                    },
+                    { 
+                        model: "IDS-2CD7A46G0/P-IZHS(C)", 
+                        titleSpecs: "(Reconocimiento de Marca, Modelo, Color, Placa) Bala IP 4 Megapixel / Lente Mot. 2.8 a 12 mm / ANPR / Reconocimiento y Captura de Placas Vehiculares / WDR 140 dB / IP67 / IK10 / 50 mts IR EXIR / Micro SD", 
+                        desc: "x",
+                        costUSD: 538.86,
+                        features: ["Compresión H.265+/H.265/H.264+/H.264 para eficiencia óptima", "Lente motorizado 2.8-12 mm para versatilidad", "Distancia IR de 50 metros con IR EXIR", "Resolución máxima 60 fps a 1920 x 1080", "Iluminación mínima 0.0005 lux con tecnología DarkFighter", "WDR real 140 dB para alto rango dinámico"]
+                    },
+                    { 
+                        model: "DS-2CD1083G2-LIU(F)", 
+                        titleSpecs: "[Dual Light] Bala IP 8 Megapixel (4K) / Lente 2.8 mm / 30 mts IR + 30 mts Luz Blanca / Micrófono Integrado / ACUSENSE Lite / Exterior IP67 / H.265 / PoE / Micro SD", 
+                        desc: "x",
+                        costUSD: 96.71,
+                        features: ["Resolución 8MP 4K (3840x2160)", "Lente 2.8 mm, ángulo 113°", "Detección dual: IR 30 mts + luz blanca 30 mts", "AcuSense Lite: filtro humano/vehículo por movimiento", "DORI: Detectar 79 mts, Reconocer 15 mts", "Diseño exterior IP67, -30°C a 60°C"]
+                    }
+                ]
+            },      
+            
             camaras_ip: { title: "Cámaras IP Profesionales", desc: "Cámaras con conexión por red nativa, resoluciones desde 2MP hasta 4K.", products: [] },
             camaras_ptz: { title: "Cámaras Domo PTZ", desc: "Equipos con movimiento robótico horizontal, vertical y zooms ópticos potentes.", products: [] },
             switch_rack: { title: "Switches para Rack", desc: "Conmutadores corporativos diseñados para montaje estructural en gabinetes.", products: [] },
@@ -1010,15 +1185,17 @@
                     const costoMXNSinIva = prod.costUSD * currentRate;
                     const costoMXNConIva = costoMXNSinIva * 1.16;
 
+                    // AJUSTE CRÍTICO: Markup elevado a 1.65 (65% sobre costo neto con IVA)
                     const basePublico = costoMXNConIva * 1.65; 
                     let precioFinalPublico = basePublico * (1 - currentDiscount);
 
+                    // CANDADO DE SEGURIDAD AUTOMÁTICO: El piso definitivo es Costo + 20% utilidad neta
                     const precioMinimoPermitido = costoMXNConIva * 1.20;
                     if (precioFinalPublico < precioMinimoPermitido) {
                         precioFinalPublico = precioMinimoPermitido;
                     }
 
-                    // Cálculo dinámico del Margen Real Asegurado basado en la selección actual (incluyendo el 5%)
+                    // ARITMÉTICA FIJA: Margen real basado exclusivamente en lo cobrado vs lo pagado
                     const margenAsegurado = precioFinalPublico - costoMXNConIva;
 
                     const sanitizedFilename = prod.model.replace(/\//g, '_');
@@ -1030,6 +1207,7 @@
                     let featuresHTML = '';
                     if (prod.features && prod.features.length > 0) {
                         featuresHTML = `<ul class="product-features-list">`;
+                        // Cambio aplicado aquí: Se eliminó el .slice(0, 6) para procesar todo el arreglo completo
                         prod.features.forEach(f => {
                             featuresHTML += `<li>${f}</li>`;
                         });
@@ -1142,6 +1320,7 @@
 
             let priceY = Math.max(nextY + 25, 205);
             
+            // Renderizado condicional del tachado si el precio final mutó por descuento
             if (Math.abs(basePrice - finalPrice) > 0.01) {
                 ctx.fillStyle = '#94a3b8';
                 ctx.font = '13px sans-serif';
@@ -1161,23 +1340,24 @@
 
             ctx.fillStyle = '#003366';
             ctx.font = 'bold 18px sans-serif';
-            ctx.fillText(`Tu precio: $${finalPrice.toFixed(2)} MXN`, 40, priceY);
+            ctx.fillText(`Precio Especial Público: $${finalPrice.toFixed(2)} MXN`, 40, priceY);
 
+            // Bloque fijo e inalterable de Diagnóstico Técnico
             let boxY = Math.max(priceY + 15, 245);
             ctx.fillStyle = '#f8fafc';
             ctx.fillRect(40, boxY, 360, 55);
             ctx.strokeStyle = '#e2e8f0';
             ctx.strokeRect(40, boxY, 360, 55);
+
             ctx.fillStyle = '#d32f2f';
-            
             ctx.font = 'bold 14px sans-serif';
-            ctx.fillText('Cotización sujeta a diagnóstico en sitio.', 53, boxY + 26);
-            ctx.fillText('No incluye mano de obra por instalación.', 53, boxY + 46);
+            ctx.fillText('Cotización sujeta a diagnóstico en sitio', 53, boxY + 26);
+            ctx.fillText('No incluye mano de obra', 53, boxY + 46);
 
             ctx.fillStyle = '#64748b';
             ctx.font = 'italic 11px sans-serif';
             ctx.fillText('* Vigencia ligada a existencia y tipo de cambio diario.', 40, 355);
-            ctx.fillText('Bytecomtec - Soporte Técnico Autorizado.', 40, 375);
+            ctx.fillText('Bytecomtec - Soporte Técnico Autorizado', 40, 375);
 
             const img = new Image();
             img.crossOrigin = "anonymous";
@@ -1220,52 +1400,13 @@
             };
         }
 
+        // Ventana modal nativa de previsualización
         function openModalWithCanvasData(canvas) {
             const modal = document.getElementById('imageModal');
             const modalImg = document.getElementById('modalTargetImg');
-            const btnAction = document.getElementById('btnClipboardAction');
-            
             if (modal && modalImg) {
                 modalImg.src = canvas.toDataURL('image/png');
                 modal.style.display = 'flex';
-                
-                if (btnAction) {
-                    btnAction.className = 'btn-copy-clipboard';
-                    btnAction.innerText = '📋 Copiar Ficha para WhatsApp';
-                }
-            }
-        }
-
-        async function copyCanvasToClipboard() {
-            const canvas = document.getElementById('processingCanvas');
-            const btnAction = document.getElementById('btnClipboardAction');
-            
-            try {
-                canvas.toBlob(async function(blob) {
-                    if (!blob) {
-                        alert("Error al procesar los datos de la ficha técnica.");
-                        return;
-                    }
-                    
-                    try {
-                        await navigator.clipboard.write([
-                            new ClipboardItem({
-                                [blob.type]: blob
-                            })
-                        ]);
-                        
-                        if (btnAction) {
-                            btnAction.className = 'btn-copy-clipboard success';
-                            btnAction.innerText = '✅ ¡Ficha Copiada! Pégala en WhatsApp (Ctrl+V)';
-                        }
-                    } catch (err) {
-                        console.error("Error en la API de portapapeles: ", err);
-                        alert("Tu navegador bloqueó la escritura directa de imágenes. Prueba dando clic derecho sobre la ficha de abajo.");
-                    }
-                }, 'image/png');
-                
-            } catch (error) {
-                console.error("Fallo general de procesamiento de imagen: ", error);
             }
         }
 
