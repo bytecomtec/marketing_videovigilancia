@@ -338,11 +338,7 @@
         renderProducts();
     }
 
-    /* ==========================================================================
-       CORRECCIÓN: Extracción dinámica de parámetros comerciales en tiempo real
-       ========================================================================== */
     function calculatePrices(costUSD) {
-        // Extrae los valores directamente del DOM para asegurar sincronización total
         const rateInput = document.getElementById('exchangeRate');
         const discountSelect = document.getElementById('discountSelect');
         
@@ -351,12 +347,10 @@
 
         const costoMXNSinIva = costUSD * currentRate;
         const costoMXNConIva = costoMXNSinIva * 1.16;
-        const basePublico = costoMXNConIva * 1.65; 
+        const basePublico = costoMXNConIva * 1.65; // PRECIO DE LISTA ORIGINAL REFERENCE
         
-        // Aplicación directa del descuento sobre el precio base estructurado
         let precioFinalPublico = basePublico * (1 - currentDiscount);
         
-        // Garantía de piso mínimo de recuperación (20% de utilidad bruta sobre costo con IVA)
         const precioMinimoPermitido = costoMXNConIva * 1.20;
         if (precioFinalPublico < precioMinimoPermitido) precioFinalPublico = precioMinimoPermitido;
         
@@ -394,6 +388,17 @@
             let videoButtonHTML = product.videoURL ? `<a href="${product.videoURL}" target="_blank" class="btn-video">🎬 Video</a>` : '';
             let featuresHTML = product.features.map(feat => `<li>${feat}</li>`).join('');
 
+            // RENDER DE PRECIOS: Muestra precio de lista tachado si hay descuento activo en UI
+            let priceDisplayHTML = '';
+            if (currentDiscount > 0 && calc.basePublico > calc.precioFinalPublico) {
+                priceDisplayHTML = `
+                    <span style="text-decoration: line-through; color: #94a3b8; font-size: 1rem; display: block;">Precio Lista: $${calc.basePublico.toFixed(2)} MXN</span>
+                    <span class="final-price" style="color: #2563eb;">$${calc.precioFinalPublico.toFixed(2)} MXN <small style="font-size:0.8rem; background:#dbeafe; color:#1e40af; padding:2px 6px; border-radius:4px;">-${currentDiscount * 100}%</small></span>
+                `;
+            } else {
+                priceDisplayHTML = `<span class="final-price">$${calc.precioFinalPublico.toFixed(2)} MXN</span>`;
+            }
+
             card.innerHTML = `
                 <div class="product-body">
                     <div class="product-main-info">
@@ -402,7 +407,7 @@
                             <div class="product-model">${product.model}</div>
                             <h3 class="product-title-specs">${product.titleSpecs}</h3>
                             <div class="product-price-list">
-                                <span class="final-price">$${calc.precioFinalPublico.toFixed(2)} MXN</span>
+                                ${priceDisplayHTML}
                                 <span class="usd-reference">Ref: $${product.costUSD.toFixed(2)} USD (c/IVA: $${calc.costoMXNConIva.toFixed(2)} MXN)</span>
                             </div>
                             <div class="margin-badge">Margen Real Asegurado: +$${calc.margenAsegurado.toFixed(2)} MXN</div>
@@ -424,13 +429,14 @@
 
     function updateAllPrices() { renderProducts(); }
 
+    /* ==========================================================================
+       RENDERING: Construcción de la Ficha Comercial con Lógica de Precios Tachados
+       ========================================================================== */
     function prepareTechnicalSheet(modelCode) {
         const product = catalogData[currentCategory].products.find(p => p.model === modelCode);
         if (!product) return;
 
         activeProductModel = product.model;
-        
-        // Ahora hereda los descuentos y tasas actualizadas automáticamente
         const calc = calculatePrices(product.costUSD);
         const safeModelName = product.model.replace(/\//g, "_");
         const productImgUrl = `${GITHUB_IMG_BASE}${safeModelName}.jpg`;
@@ -463,14 +469,42 @@
         ctx.font = '15px sans-serif';
         let nextY = wrapText(ctx, product.titleSpecs, 30, 190, 390, 22);
 
+        // EVALUACIÓN DE DESCUENTOS PARA EL RENDER EN CANVAS
         let priceY = nextY + 35;
-        ctx.fillStyle = '#003366';
-        ctx.font = 'bold 24px sans-serif';
-        ctx.fillText(`Precio Público: $${calc.precioFinalPublico.toFixed(2)} MXN`, 30, priceY);
+        if (currentDiscount > 0 && calc.basePublico > calc.precioFinalPublico) {
+            // 1. Dibujar texto del "Precio de Lista original" en color gris neutro
+            ctx.fillStyle = '#94a3b8';
+            ctx.font = 'bold 16px sans-serif';
+            let listPriceText = `Precio Lista: $${calc.basePublico.toFixed(2)} MXN`;
+            ctx.fillText(listPriceText, 30, priceY);
+
+            // 2. Trazar línea roja encima de dicho precio (Efecto Tachado)
+            let textWidth = ctx.measureText(listPriceText).width;
+            ctx.strokeStyle = '#d32f2f';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(30, priceY - 5);
+            ctx.lineTo(30 + textWidth, priceY - 5);
+            ctx.stroke();
+
+            // 3. Posicionar el nuevo precio rebajado abajo de forma dominante
+            priceY += 30;
+            ctx.fillStyle = '#2563eb'; // Azul promocional limpio
+            ctx.font = 'bold 25px sans-serif';
+            ctx.fillText(`Oferta Especial: $${calc.precioFinalPublico.toFixed(2)} MXN`, 30, priceY);
+        } else {
+            // Si no hay descuento, dibuja el precio normal directamente
+            ctx.fillStyle = '#003366';
+            ctx.font = 'bold 24px sans-serif';
+            ctx.fillText(`Precio Público: $${calc.precioFinalPublico.toFixed(2)} MXN`, 30, priceY);
+        }
 
         let imgBoxY = priceY + 25;
-        
         let boxY = imgBoxY + 195; 
+
+        // Si el precio se desplazó hacia abajo por la oferta, reajustamos el límite si es necesario
+        if (boxY > 600) { boxY = 590; }
+
         ctx.fillStyle = '#f8fafc';
         ctx.fillRect(30, boxY, 390, 75);
         ctx.strokeStyle = '#e2e8f0';
