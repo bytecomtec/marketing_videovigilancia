@@ -37,7 +37,6 @@
 
         .navbar h1 { margin: 0; font-size: 1.3rem; font-weight: 600; }
 
-        /* Panel de Parámetros Globales */
         .config-panel {
             display: flex; align-items: center; gap: 15px; flex-wrap: wrap;
         }
@@ -57,7 +56,6 @@
 
         @media (max-width: 900px) { .main-layout { flex-direction: column; } }
 
-        /* Sidebar Menú con Scroll Independiente */
         .sidebar { 
             width: 300px; background-color: var(--white); border-right: 1px solid var(--border-color); 
             padding: 20px 10px; box-sizing: border-box; max-height: calc(100vh - 70px); overflow-y: auto;
@@ -76,13 +74,11 @@
         .category-menu-item .qty-badge { background-color: #f1f5f9; color: #64748b; font-size: 0.75rem; padding: 2px 8px; border-radius: 10px; font-weight: 600; }
         .category-menu-item.active .qty-badge { background-color: #bae6fd; color: #0369a1; }
 
-        /* Showcase de Productos */
         .content-showcase { flex: 1; padding: 30px; box-sizing: border-box; }
         .showcase-header { margin-bottom: 20px; }
         .showcase-header h2 { margin: 0 0 8px 0; color: var(--primary-color); font-size: 1.7rem; }
         .showcase-header p { margin: 0; color: #64748b; font-size: 0.95rem; }
 
-        /* Contenedor del Buscador Dinámico */
         .search-container {
             margin-bottom: 25px;
             background-color: var(--white);
@@ -90,37 +86,18 @@
             border-radius: 6px;
             border: 1px solid var(--border-color);
         }
-        .search-box-wrapper {
-            position: relative;
-            max-width: 500px;
-        }
+        .search-box-wrapper { position: relative; max-width: 500px; }
         .search-box-wrapper input {
-            width: 100%;
-            padding: 10px 12px 10px 38px;
-            border-radius: 4px;
-            border: 1px solid #cbd5e1;
-            font-size: 0.9rem;
-            color: var(--text-main);
-            box-sizing: border-box;
-            outline: none;
-            transition: border-color 0.2s;
+            width: 100%; padding: 10px 12px 10px 38px; border-radius: 4px;
+            border: 1px solid #cbd5e1; font-size: 0.9rem; color: var(--text-main);
+            box-sizing: border-box; outline: none; transition: border-color 0.2s;
         }
-        .search-box-wrapper input:focus {
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 2px rgba(0, 51, 102, 0.1);
-        }
-        .search-box-wrapper i {
-            position: absolute;
-            left: 14px;
-            top: 13px;
-            color: #94a3b8;
-            font-size: 0.95rem;
-        }
+        .search-box-wrapper input:focus { border-color: var(--primary-color); box-shadow: 0 0 0 2px rgba(0, 51, 102, 0.1); }
+        .search-box-wrapper i { position: absolute; left: 14px; top: 13px; color: #94a3b8; font-size: 0.95rem; }
 
         .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(430px, 1fr)); gap: 25px; }
         @media (max-width: 500px) { .products-grid { grid-template-columns: 1fr; } }
 
-        /* Tarjetas de Producto */
         .product-card {
             background-color: var(--white); border: 1px solid var(--border-color); border-radius: 8px;
             padding: 20px; display: flex; flex-direction: column; justify-content: space-between;
@@ -144,19 +121,16 @@
         .product-price-list .final-price { color: #d32f2f; font-weight: bold; font-size: 1.4rem; display: block; margin-bottom: 2px; }
         .usd-reference { font-size: 0.8rem; color: #94a3b8; display: block; }
 
-        /* Badge de Margen Asegurado */
         .margin-badge {
             display: inline-block; background-color: #f0fdf4; color: #15803d; 
             padding: 6px 14px; border-radius: 6px; font-size: 0.85rem; font-weight: 700; 
             margin-top: 6px; border: 1px solid #bbf7d0; width: fit-content;
         }
 
-        /* Características */
         .product-features-list { margin: 10px 0 0 0; padding-left: 20px; list-style-type: none; }
         .product-features-list li { font-size: 0.9rem; color: #475569; line-height: 1.6; margin-bottom: 6px; position: relative; }
         .product-features-list li::before { content: "✓"; position: absolute; left: -18px; color: #10b981; font-weight: bold; }
 
-        /* Footer de la tarjeta y Botones */
         .product-footer { border-top: 1px solid #f1f5f9; padding-top: 15px; }
         .product-actions { display: flex; gap: 10px; }
         
@@ -175,14 +149,16 @@
         }
         .btn-video:hover { background-color: var(--accent-color); color: var(--white); }
 
-        /* MODAL DE PREVISUALIZACIÓN OPTIMIZADO PARA MÓVILES (PANTALLA COMPLETA VERTICAL) */
+        /* ==========================================================================
+           MODAL DE PREVISUALIZACIÓN DE IMAGEN VERTICAL EN SMARTPHONES
+           ========================================================================== */
         .custom-modal {
             display: none; position: fixed; z-index: 9999; top: 0; left: 0; width: 100%; height: 100%;
             background-color: rgba(15, 23, 42, 0.95); align-items: center; justify-content: center;
         }
         .modal-content-wrapper {
             position: relative; background-color: #f1f5f9; padding: 15px; border-radius: 8px;
-            max-width: 480px; width: 95%; max-height: 95vh; display: flex; flex-direction: column; 
+            max-width: 450px; width: 92%; max-height: 95vh; display: flex; flex-direction: column; 
             box-shadow: 0 20px 25px -5px rgba(0,0,0,0.3); box-sizing: border-box;
         }
         .image-scroll-container {
@@ -258,14 +234,14 @@
     <div id="imageModal" class="custom-modal" onclick="closeLightbox()">
         <div class="modal-content-wrapper" onclick="event.stopPropagation()">
             <button class="modal-close" onclick="closeLightbox()">&times;</button>
-            <div style="font-size: 0.95rem; color:#1e293b; font-weight:700; margin-bottom:8px; flex-shrink:0; text-align: left;">Vista Previa de Ficha:</div>
+            <div style="font-size: 0.95rem; color:#1e293b; font-weight:700; margin-bottom:8px; flex-shrink:0; text-align: left;">Ficha Técnica de Alta Visibilidad:</div>
             
             <div class="image-scroll-container">
                 <img id="modalTargetImg" class="output-composite-img" src="" alt="Ficha Comercial">
             </div>
             
             <button id="btnClipboardAction" class="btn-copy-clipboard" onclick="shareOrCopyCanvas()">
-                🚀 Compartir Directo a WhatsApp
+                🚀 Compartir Ficha por WhatsApp
             </button>
         </div>
     </div>
@@ -433,7 +409,7 @@
         function updateAllPrices() { renderProducts(); }
 
         /* ==========================================================================
-           LOGIC: ENFOQUE ADAPTATIVO TOTAL CON DISEÑO VERTICAL DE TARJETA DIGITAL
+           LOGIC: CORRECCIÓN DE LIENZO FORZADO EN FORMATO VERTICAL DIGITAL (450x750)
            ========================================================================== */
         function prepareTechnicalSheet(modelCode) {
             const product = catalogData[currentCategory].products.find(p => p.model === modelCode);
@@ -447,116 +423,65 @@
             const canvas = document.getElementById('processingCanvas');
             const ctx = canvas.getContext('2d');
 
-            // Detectar pantallas pequeñas de smartphones
-            const isMobile = window.innerWidth <= 600;
+            // FORZAMOS AL CANVAS A SER VERTICAL NATIVO (Especial para smartphones)
+            canvas.width = 450;
+            canvas.height = 750;
 
-            if (isMobile) {
-                // DISEÑO VERTICAL TIPO TARJETA MÓVIL (Llena la pantalla del celular sin achicar letras)
-                canvas.width = 450;
-                canvas.height = 780;
+            // Fondo del Lienzo
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, 450, 750);
 
-                ctx.fillStyle = '#ffffff';
-                ctx.fillRect(0, 0, 450, 780);
+            // Cabecera Institucional Azul Corporativa Ancha
+            ctx.fillStyle = '#003366';
+            ctx.fillRect(0, 0, 450, 110);
+            
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 18px sans-serif';
+            ctx.fillText('SOLUCIONES DE INGENIERÍA PERIMETRAL', 25, 45);
+            
+            ctx.fillStyle = '#ff6600';
+            ctx.font = 'bold 13px sans-serif';
+            ctx.fillText('FICHA COMERCIAL DE HARDWARE - BYTECOMTEC', 25, 75);
 
-                // Cabecera Corporativa Ancha
-                ctx.fillStyle = '#003366';
-                ctx.fillRect(0, 0, 450, 100);
-                
-                ctx.fillStyle = '#ffffff';
-                ctx.font = 'bold 18px sans-serif';
-                ctx.fillText('SOLUCIONES DE INGENIERÍA PERIMETRAL', 25, 42);
-                
-                ctx.fillStyle = '#ff6600';
-                ctx.font = 'bold 13px sans-serif';
-                ctx.fillText('FICHA COMERCIAL DE HARDWARE - BYTECOMTEC', 25, 70);
+            // Bloque Código del Modelo Principal
+            ctx.fillStyle = '#003399';
+            ctx.font = 'bold 22px sans-serif';
+            ctx.fillText(`MODELO: ${product.model}`, 30, 155);
 
-                // Bloque 1: Identificación del Equipo
-                ctx.fillStyle = '#003399';
-                ctx.font = 'bold 22px sans-serif';
-                ctx.fillText(`MODELO: ${product.model}`, 30, 145);
+            // Especificaciones Técnicas (Flujo dinámico hacia abajo con letra grande)
+            ctx.fillStyle = '#1e293b';
+            ctx.font = '15px sans-serif';
+            let nextY = wrapText(ctx, product.titleSpecs, 30, 190, 390, 22);
 
-                // Bloque 2: Especificaciones Técnicas (Ancho móvil dedicado)
-                ctx.fillStyle = '#1e293b';
-                ctx.font = '15px sans-serif';
-                let nextY = wrapText(ctx, product.titleSpecs, 30, 180, 390, 22);
+            // Bloque de Precio Destacado e Inteligente
+            let priceY = nextY + 35;
+            ctx.fillStyle = '#003366';
+            ctx.font = 'bold 24px sans-serif';
+            ctx.fillText(`Precio Público: $${calc.precioFinalPublico.toFixed(2)} MXN`, 30, priceY);
 
-                // Bloque 3: Precio Destacado e Impactante
-                let priceY = nextY + 35;
-                ctx.fillStyle = '#003366';
-                ctx.font = 'bold 24px sans-serif';
-                ctx.fillText(`Precio Público: $${calc.precioFinalPublico.toFixed(2)} MXN`, 30, priceY);
+            // Espacio Central Asignado para la Imagen del Equipo
+            let imgBoxY = priceY + 25;
+            
+            // Caja de Términos y Advertencias Técnicas de Diagnóstico
+            let boxY = imgBoxY + 195; 
+            ctx.fillStyle = '#f8fafc';
+            ctx.fillRect(30, boxY, 390, 75);
+            ctx.strokeStyle = '#e2e8f0';
+            ctx.strokeRect(30, boxY, 390, 75);
+            
+            ctx.fillStyle = '#d32f2f';
+            ctx.font = 'bold 14px sans-serif';
+            ctx.fillText('Cotización sujeta a diagnóstico en sitio.', 45, boxY + 30);
+            ctx.fillText('No incluye mano de obra por instalación.', 45, boxY + 54);
 
-                // Espacio Central para renderizar la imagen del equipo de forma grande
-                let imgBoxY = priceY + 25;
-                
-                // Bloque 4: Caja de Advertencias de Ingeniería y Términos Técnicos
-                let boxY = imgBoxY + 210; 
-                ctx.fillStyle = '#f8fafc';
-                ctx.fillRect(30, boxY, 390, 75);
-                ctx.strokeStyle = '#e2e8f0';
-                ctx.strokeRect(30, boxY, 390, 75);
-                
-                ctx.fillStyle = '#d32f2f';
-                ctx.font = 'bold 14px sans-serif';
-                ctx.fillText('Cotización sujeta a diagnóstico en sitio.', 45, boxY + 30);
-                ctx.fillText('No incluye mano de obra por instalación.', 45, boxY + 54);
+            // Firmas Técnicas al pie de la Ficha Comercial
+            ctx.fillStyle = '#64748b';
+            ctx.font = 'italic 12px sans-serif';
+            ctx.fillText('* Vigencia ligada a existencia y tipo de cambio diario.', 30, 700);
+            ctx.fillText('Bytecomtec - Soporte Técnico Autorizado.', 30, 722);
 
-                // Pie de Ficha con firmas institucionales
-                ctx.fillStyle = '#64748b';
-                ctx.font = 'italic 12px sans-serif';
-                ctx.fillText('* Vigencia ligada a existencia y tipo de cambio diario.', 30, 730);
-                ctx.fillText('Bytecomtec - Soporte Técnico Autorizado.', 30, 752);
-
-                // Dibujar Imagen escalada al centro del flujo vertical móvil
-                renderCanvasImage(ctx, productImgUrl, 125, imgBoxY, 200, 200, canvas);
-
-            } else {
-                // DISEÑO DE ESCRITORIO HORIZONTAL ORIGINAL (600x400)
-                canvas.width = 600;
-                canvas.height = 400;
-
-                ctx.fillStyle = '#ffffff';
-                ctx.fillRect(0, 0, 600, 400);
-
-                ctx.fillStyle = '#003366';
-                ctx.fillRect(0, 0, 600, 80);
-                ctx.fillStyle = '#ffffff';
-                ctx.font = 'bold 20px sans-serif';
-                ctx.fillText('SOLUCIONES DE INGENIERÍA PERIMETRAL', 30, 45);
-                ctx.fillStyle = '#ff6600';
-                ctx.font = 'bold 14px sans-serif';
-                ctx.fillText('FICHA COMERCIAL DE HARDWARE - BYTECOMTEC', 30, 68);
-
-                ctx.fillStyle = '#003399';
-                ctx.font = 'bold 22px sans-serif';
-                ctx.fillText(`MODELO: ${product.model}`, 40, 125);
-
-                ctx.fillStyle = '#1e293b';
-                ctx.font = '13px sans-serif';
-                let nextY = wrapText(ctx, product.titleSpecs, 40, 150, 360, 18);
-
-                let priceY = Math.max(nextY + 25, 220);
-                ctx.fillStyle = '#003366';
-                ctx.font = 'bold 18px sans-serif';
-                ctx.fillText(`Tu precio: $${calc.precioFinalPublico.toFixed(2)} MXN`, 40, priceY);
-
-                let boxY = Math.max(priceY + 15, 245);
-                ctx.fillStyle = '#f8fafc';
-                ctx.fillRect(40, boxY, 360, 55);
-                ctx.strokeStyle = '#e2e8f0';
-                ctx.strokeRect(40, boxY, 360, 55);
-                ctx.fillStyle = '#d32f2f';
-                ctx.font = 'bold 14px sans-serif';
-                ctx.fillText('Cotización sujeta a diagnóstico en sitio.', 53, boxY + 24);
-                ctx.fillText('No incluye mano de obra por instalación.', 53, boxY + 44);
-
-                ctx.fillStyle = '#64748b';
-                ctx.font = 'italic 11px sans-serif';
-                ctx.fillText('* Vigencia ligada a existencia y tipo de cambio diario.', 40, 355);
-                ctx.fillText('Bytecomtec - Soporte Técnico Autorizado.', 40, 375);
-
-                renderCanvasImage(ctx, productImgUrl, 420, 140, 140, 140, canvas);
-            }
+            // Invocamos la renderización de la imagen acoplada al centro del nuevo canvas vertical
+            renderCanvasImage(ctx, productImgUrl, 135, imgBoxY, 180, 180, canvas);
         }
 
         function renderCanvasImage(ctx, src, x, y, width, height, canvas) {
@@ -648,7 +573,7 @@
                         const file = new File([blob], cleanFileName, { type: 'image/png' });
                         await navigator.share({ files: [file] });
                     } catch (err) {
-                        console.log("Compartición cancelada por el usuario.");
+                        console.log("Compartición omitida.");
                     }
                 } else {
                     try {
