@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Control de Margen e Infraestructura - Bytecomtec</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* ==========================================================================
+           Variables de Paleta de Color Corporativa
+           ========================================================================== */
+        :root {
+            --primary-color: #003366;       /* Azul Corporativo */
+            --accent-color: #ff6600;        /* Naranja Técnico */
+            --bg-light: #f8fafc;            /* Fondo general sutil */
+            --text-main: #1e293b;           /* Texto principal */
+            --border-color: #e2e8f0;        /* Separadores */
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            margin: 0; padding: 0;
+            display: flex; flex-direction: column; min-height: 100vh;
+        }
+
+        .navbar {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 15px 30px;
+            display: flex; justify-content: space-between; align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            flex-wrap: wrap; gap: 15px;
+        }
+
+        .navbar h1 { margin: 0; font-size: 1.3rem; font-weight: 600; }
+
+        /* Panel de Parámetros Globales */
+        .config-panel {
+            display: flex; align-items: center; gap: 15px; flex-wrap: wrap;
+        }
+
+        .currency-controller {
+            display: flex; align-items: center; background: rgba(255, 255, 255, 0.1);
+            padding: 6px 12px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.2);
+            gap: 10px; font-size: 0.9rem;
+        }
+        .currency-controller input, .currency-controller select {
+            padding: 4px 6px; border-radius: 4px; border: none;
+            font-weight: bold; text-align: center; color: var(--primary-color); font-size: 0.95rem;
+            outline: none;
+        }
+
+        .main-layout { display: flex; flex: 1; max-width: 1440px; width: 100%; margin: 0 auto; }
+
+        @media (max-width: 900px) { .main-layout { flex-direction: column; } }
+
+        /* Sidebar Menú con Scroll Independiente */
+        .sidebar { 
+            width: 300px; background-color: var(--white); border-right: 1px solid var(--border-color); 
+            padding: 20px 10px; box-sizing: border-box; max-height: calc(100vh - 70px); overflow-y: auto;
+        }
+        @media (max-width: 900px) { .sidebar { width: 100%; max-height: none; border-right: none; border-bottom: 1px solid var(--border-color); } }
+
+        .sidebar-title { font-size: 0.85rem; font-weight: 700; text-transform: uppercase; color: #64748b; padding-left: 10px; margin-bottom: 15px; letter-spacing: 0.5px; }
+        .category-menu-list { list-style: none; padding: 0; margin: 0; }
+        .category-menu-item {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 11px 14px; color: var(--text-main); text-decoration: none;
+            font-size: 0.9rem; font-weight: 500; border-radius: 6px; margin-bottom: 4px; cursor: pointer; transition: all 0.2s;
+        }
+        .category-menu-item:hover { background-color: #f1f5f9; color: var(--primary-color); }
+        .category-menu-item.active { background-color: #e0f2fe; color: #0369a1; font-weight: 600; border-left: 4px solid #0284c7; }
+        .category-menu-item .qty-badge { background-color: #f1f5f9; color: #64748b; font-size: 0.75rem; padding: 2px 8px; border-radius: 10px; font-weight: 600; }
+        .category-menu-item.active .qty-badge { background-color: #bae6fd; color: #0369a1; }
+
+        /* Showcase de Productos */
+        .content-showcase { flex: 1; padding: 30px; box-sizing: border-box; }
+        .showcase-header { margin-bottom: 20px; }
+        .showcase-header h2 { margin: 0 0 8px 0; color: var(--primary-color); font-size: 1.7rem; }
+        .showcase-header p { margin: 0; color: #64748b; font-size: 0.95rem; }
+
+        /* Contenedor del Buscador */
+        .search-container {
+            margin-bottom: 25px;
+            background-color: var(--white);
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+        }
+        .search-box-wrapper {
+            position: relative;
+            max-width: 500px;
+        }
+        .search-box-wrapper input {
+            width: 100%;
+            padding: 10px 12px 10px 38px;
+            border-radius: 4px;
+            border: 1px solid #cbd5e1;
+            font-size: 0.9rem;
+            color: var(--text-main);
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .search-box-wrapper input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(0, 51, 102, 0.1);
+        }
+        .search-box-wrapper i {
+            position: absolute;
+            left: 14px;
+            top: 13px;
+            color: #94a3b8;
+            font-size: 0.95rem;
+        }
+
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(430px, 1fr)); gap: 25px; }
+        @media (max-width: 500px) { .products-grid { grid-template-columns: 1fr; } }
+
+        .product-card {
+            background-color: var(--white); border: 1px solid var(--border-color); border-radius: 8px;
+            padding: 20px; display: flex; flex-direction: column; justify-content: space-between;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .product-card:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.08); }
+        .product-body { display: flex; flex-direction: column; gap: 12px; margin-bottom: 15px; }
+        .product-main-info { display: flex; gap: 15px; align-items: flex-start; }
+
+        .product-img-box {
+            width: 110px; height: 110px; flex-shrink: 0; border: 1px solid #f1f5f9; border-radius: 6px;
+            display: flex; align-items: center; justify-content: center; background-color: #ffffff; overflow: hidden; cursor: pointer;
+        }
+        .product-img-box img { max-width: 100%; max-height: 100%; object-fit: contain; }
+
+        .product-details { flex-grow: 1; }
+        .product-model { color: #003399; font-weight: 700; font-size: 1.1rem; margin-bottom: 4px; }
+        .product-title-specs { font-size: 0.9rem; color: var(--text-main); font-weight: 600; line-height: 1.4; margin: 0 0 6px 0; }
+         
+        .product-price-list { font-size: 0.95rem; color: #475569; margin: 5px 0; font-weight: 500; }
+        .product-price-list .original-price { text-decoration: line-through; color: #94a3b8; font-size: 0.85rem; margin-right: 8px; }
+        .product-price-list .final-price { color: #d32f2f; font-weight: bold; font-size: 1.15rem; }
+        .usd-reference { font-size: 0.75rem; color: #64748b; display: block; margin-top: 2px; }
+
+        /* Características con Palomitas */
+        .product-features-list { margin: 8px 0 0 0; padding-left: 20px; list-style-type: none; }
+        .product-features-list li { font-size: 0.85rem; color: #475569; line-height: 1.5; margin-bottom: 4px; position: relative; }
+        .product-features-list li::before { content: "✓"; position: absolute; left: -16px; color: #10b981; font-weight: bold; }
+
+        .product-footer { border-top: 1px solid #f1f5f9; padding-top: 12px; }
+        .btn-prepare {
+            background-color: var(--primary-color); color: var(--white); border: none; border-radius: 4px;
+            padding: 9px 12px; font-size: 0.85rem; font-weight: 600; cursor: pointer; width: 100%; text-align: center;
+        }
+        .btn-prepare:hover { background-color: #002244; }
+
+        /* MODAL */
+        .custom-modal {
+            display: none; position: fixed; z-index: 9999; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(15, 23, 42, 0.85); align-items: center; justify-content: center;
+        }
+        .modal-content-wrapper {
+            position: relative; background-color: var(--white); padding: 25px; border-radius: 8px;
+            max-width: 650px; width: 90%; text-align: center;
+        }
+        .output-composite-img { max-width: 100%; max-height: 65vh; border: 1px solid #cbd5e1; border-radius: 6px; }
+        .modal-close { position: absolute; top: 10px; right: 15px; color: #94a3b8; font-size: 1.8rem; cursor: pointer; background: none; border: none; }
+         
+        /* Botón de Copiado Expreso */
+        .btn-copy-clipboard {
+            background-color: #10b981; color: var(--white); border: none; border-radius: 4px;
+            padding: 12px 20px; font-size: 0.95rem; font-weight: bold; cursor: pointer; width: 100%;
+            margin-top: 12px; display: flex; align-items: center; justify-content: center; gap: 8px;
+            transition: background-color 0.2s;
+        }
+        .btn-copy-clipboard:hover { background-color: #059669; }
+        .btn-copy-clipboard.success { background-color: #2563eb; }
+    </style>
+</head>
+<body>
+
+    <header class="navbar">
+        <h1>Bytecomtec - Centro de Control de Margen</h1>
+         
+        <div class="config-panel">
+            <div class="currency-controller">
+                <label for="exchangeRate">Tipo de cambio:</label>
+                <span>$</span>
+                <input type="number" id="exchangeRate" value="17.23" step="0.01" min="1" oninput="updateAllPrices()">
+                <span>MXN</span>
+            </div>
+
+            <div class="currency-controller">
+                <label for="discountSelect">Descuento Público:</label>
+                <select id="discountSelect" onchange="updateAllPrices()">
+                    <option value="0" selected> Precio de Lista Público</option>
+                    <option value="0.05">Aplicar 5% Preferencial</option>
+                    <option value="0.10">Aplicar 10% Especial</option>
+                    <option value="0.20">Aplicar 20% Máximo Autorizado</option>
+                </select>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-layout">
+        <nav class="sidebar">
+            <div class="sidebar-title">Líneas de Negocio</div>
+            <ul class="category-menu-list" id="menuList"></ul>
+        </nav>
+
+        <main class="content-showcase">
+            <div class="showcase-header">
+                <h2 id="categoryTitle">Cargando...</h2>
+                <p id="categoryDesc"></p>
+            </div>
+
+            <div class="search-container">
+                <div class="search-box-wrapper">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="categorySearchInput" onkeyup="filterActiveCategoryProducts()" placeholder="Buscar en esta categoría...">
+                </div>
+            </div>
+
+            <div class="products-grid" id="productsContainer"></div>
+        </main>
+    </div>
+
+    <div id="imageModal" class="custom-modal" onclick="closeLightbox()">
+        <div class="modal-content-wrapper" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeLightbox()">&times;</button>
+            <div style="font-size: 0.9rem; color:#475569; font-weight:600; margin-bottom:10px;">Vista Previa de Ficha Técnica:</div>
+            <img id="modalTargetImg" class="output-composite-img" src="" alt="Ficha Comercial">
+             
+            <button id="btnClipboardAction" class="btn-copy-clipboard" onclick="copyCanvasToClipboard()">
+                📋 Copiar Ficha para WhatsApp
+            </button>
+        </div>
+    </div>
+
+    <canvas id="processingCanvas" style="display: none;"></canvas>
+
+    <script>
+        let currentRate = 17.23;
+        let currentDiscount = 0;
+
+        const GITHUB_IMG_BASE = "https://bytecomtec.github.io/marketing_videovigilancia/";
+
+        const categoriesList = [
+            { id: "dvr", name: "DVR" },
+            { id: "nvr", name: "NVR" },
+            { id: "camaras_analogas", name: "Cámaras Análogas" },
+            { id: "almacenamiento", name: "Almacenamiento" },
+            { id: "accesorios", name: "Accesorios" },
+            { id: "nvs", name: "NVS" },
+            { id: "camaras_ip", name: "Cámaras IP" },
+            { id: "camaras_ptz", name: "Cámaras PTZ" },
+        ];
+
+        const catalogData = {
+            dvr: {
+                title: "Grabadores Digitales (DVR)",
+                desc: "Catálogo completo de soluciones TurboHD con costos integrados (IVA incluido) y factores de rentabilidad blindados.",
+                products: [
+                    { 
+                        model: "S04-TURBO-G3", 
+                        titleSpecs: "DVR 4 Canales TurboHD + 1 Canal IP / 2 Megapixel (1080p) Lite / Acusense Lite (Evita Falsas Alarmas) / Audio por coaxitron / 1 Bahía de Disco Duro / H.265+ / Salida de Vídeo Full HD", 
+                        desc: "Grabador compacto ideal para el resguardo eficiente de perímetros pequeños con optimización extrema de almacenamiento.",
+                        costUSD: 29.35,
+                        features: ["Soporte para 5 tecnologías: HDTVI/AHD/CVBS/CVI/IP", "Compresión H.265+ para reducir uso de disco", "Resolución 1080p Lite con tecnología TurboHD"]
+                    },
+                    { 
+                        model: "EX-5032-TURBO", 
+                        titleSpecs: "DVR 32 Canales TurboHD + 8 Canales IP / 5 Megapixel Lite - 3K Lite / Acusense (Evita Falsas Alarmas) / Audio Bidireccional / 2 Bahías de Disco Duro / H.265+ / Salida de Video en Full HD", 
+                        desc: "Grabador masivo insignia diseñado para gestionar la seguridad integral de infraestructuras complejas con máxima estabilidad de red.",
+                        costUSD: 385.82,
+                        features: ["Soporta cámaras de alta resolución 5 MP", "Detección facial activa multicanal", "Soporta 2 HDD de hasta 12 TB estructurales"]
+                    }
+                ]
+            },
+            nvr: {
+                title: "Grabadores de Red (NVR)",
+                desc: "Soluciones autónomas de grabación IP nativa con gestión remota y switches integrados.",
+                products: [
+                    { 
+                        model: "DS-7604NXI-K1/4P(E)", 
+                        titleSpecs: "[Acusearch] NVR 12 Megapíxel (4K) / 4 canales IP / 4 Puertos PoE+ / Reconocimiento Facial / AcuSense (Evita Falsas Alarmas) / 1 Bahías de Disco Duro / HDMI en 4K / 300 Metros PoE Modo Extendido", 
+                        desc: "Grabador IP autónomo provisto de puertos PoE nativos para energizar cámaras de forma directa.",
+                        costUSD: 136.18,
+                        features: ["Reconocimiento facial con base de datos masiva", "4 puertos PoE+ con 50W de potencia distribuida", "Filtro analítico avanzado AcuSearch perimetral"]
+                    }
+                ]
+            },
+            camaras_analogas: {
+                title: "Cámaras Análogas TurboHD",
+                desc: "Dispositivos bala, domo y ocultos de alta resistencia con transmisión sobre cable coaxial e iluminación inteligente.",
+                products: [
+                    {
+                        model: "DS-2CE76D0T-ITMFS",
+                        titleSpecs: "Cámara Domo Fija de 2 Megapíxel (1080p) / Audio Integrado por Coaxial / Lente de 2.8 mm / Metal / Visión Nocturna de 30m EXIR",
+                        desc: "Domo metálico de alta resistencia idóneo para pasillos escolares con micrófono interconstruido avanzado.",
+                        costUSD: 18.90,
+                        features: ["Micrófono integrado de alta sensibilidad por coaxial", "Gabinete metálico estructural de larga vida útil", "Tecnología EXIR 2.0 para iluminación uniforme"]
+                    }
+                ]
+            },
+            almacenamiento: {
+                title: "Discos Duros y Almacenamiento",
+                desc: "Unidades mecánicas de grado videovigilancia optimizadas para escritura continua ininterrumpida de flujos de video.",
+                products: [
+                    {
+                        model: "WD43PURZ",
+                        titleSpecs: "Disco Duro de 4 Terabytes Western Digital Purple / Grado Vigilancia Industrial / Caché de 256 MB / Alta Densidad de Datos",
+                        desc: "Capacidad recomendada para grabadores de 8 y 16 canales que requieren retención histórica de al menos 15 días.",
+                        costUSD: 98.20,
+                        features: ["Soporte de hasta 64 cámaras de alta definición", "Componentes internos resistentes a la corrosión", "Gran velocidad de transferencia SATA a 6 Gb/s"]
+                    }
+                ]
+            },
+            accesorios: {
+                title: "Accesorios de Instalación",
+                desc: "Baluns, transceptores, fuentes de poder unificadas y herrajes certificados para blindaje contra ruidos eléctricos.",
+                products: [
+                    {
+                        model: "XP4D",
+                        titleSpecs: "Fuente de Poder Distribuida Protek / 12 Vcc a 5 Amperes / 4 Salidas con Fusibles Independientes PTC",
+                        desc: "Gabinete de alimentación unificada para centralizar la energía de las cámaras con protección ante cortocomponentes.",
+                        costUSD: 24.60,
+                        features: ["Fusibles con reinicio automático electrónico PTC", "Indicadores LED individuales por cada canal", "Gabinete metálico con chapa de seguridad"]
+                    }
+                ]
+            },
+        };
+
+        // MODIFICACIÓN: Función de Filtrado Exclusivo para la Categoría en Pantalla
+        function filterActiveCategoryProducts() {
+            const query = document.getElementById('categorySearchInput').value.toLowerCase();
+            const cards = document.querySelectorAll('#productsContainer .product-card');
+
+            cards.forEach(card => {
+                // Captura todo el bloque de texto relevante de la tarjeta del producto
+                const searchableText = card.innerText.toLowerCase();
+                
+                if (searchableText.includes(query)) {
+                    card.style.display = "flex";
+                } else {
+                    card.style.display = "none";
+                }
+            });
+        }
+
+        function updateAllPrices() {
+            const rateInput = document.getElementById('exchangeRate');
+            const discountSelect = document.getElementById('discountSelect');
+            
+            if (rateInput) currentRate = parseFloat(rateInput.value) || 17.23;
+            if (discountSelect) currentDiscount = parseFloat(discountSelect.value) || 0;
+
+            const activeMenuItem = document.querySelector('.category-menu-item.active');
+            if (activeMenuItem) {
+                const categoryId = activeMenuItem.id.replace('menu-', '');
+                renderCategory(categoryId);
+            }
+        }
+
+        function renderCategory(categoryId) {
+            document.querySelectorAll('.category-menu-item').forEach(li => li.classList.remove('active'));
+            const activeLi = document.getElementById(`menu-${categoryId}`);
+            if (activeLi) activeLi.classList.add('active');
+
+            const container = document.getElementById('productsContainer');
+            const titleElem = document.getElementById('categoryTitle');
+            const descElem = document.getElementById('categoryDesc');
+
+            if (!container || !titleElem || !descElem) return;
+
+            // MODIFICACIÓN: Limpiar el cuadro de búsqueda al cambiar de categoría
+            const searchInput = document.getElementById('categorySearchInput');
+            if (searchInput) searchInput.value = '';
+
+            container.innerHTML = '';
+
+            if (catalogData[categoryId] && catalogData[categoryId].products.length > 0) {
+                titleElem.innerText = catalogData[categoryId].title;
+                descElem.innerText = catalogData[categoryId].desc;
+
+                catalogData[categoryId].products.forEach((prod) => {
+                    const costoMXNSinIva = prod.costUSD * currentRate;
+                    const costoMXNConIva = costoMXNSinIva * 1.16;
+
+                    const basePublico = costoMXNConIva * 1.65; 
+                    let precioFinalPublico = basePublico * (1 - currentDiscount);
+
+                    const precioMinimoPermitido = costoMXNConIva * 1.20;
+                    if (precioFinalPublico < precioMinimoPermitido) {
+                        precioFinalPublico = precioMinimoPermitido;
+                    }
+
+                    const margenAsegurado = precioFinalPublico - costoMXNConIva;
+
+                    const sanitizedFilename = prod.model.replace(/\//g, '_');
+                    const computedImgUrl = `${GITHUB_IMG_BASE}${sanitizedFilename}.jpg`;
+
+                    const card = document.createElement('div');
+                    card.className = 'product-card';
+                    
+                    let featuresHTML = '';
+                    if (prod.features && prod.features.length > 0) {
+                        featuresHTML = `<ul class="product-features-list">`;
+                        prod.features.forEach(f => {
+                            featuresHTML += `<li>${f}</li>`;
+                        });
+                        featuresHTML += `</ul>`;
+                    }
+
+                    const titleSpecsEscaped = prod.titleSpecs.replace(/\//g, '_');
+
+                    card.innerHTML = `
+                        <div class="product-body">
+                            <div class="product-main-info">
+                                <div class="product-img-box" onclick="triggerFlyerGeneration('${prod.model}', '${titleSpecsEscaped}', ${basePublico}, ${precioFinalPublico})">
+                                    <img src="${computedImgUrl}" alt="${prod.model}" onerror="this.src='byte.png'">
+                                </div>
+                                <div class="product-details">
+                                    <div class="product-model">${prod.model}</div>
+                                    <h3 class="product-title-specs">${prod.titleSpecs}</h3>
+                                    <div class="product-price-list">
+                                        ${currentDiscount > 0 && precioFinalPublico > precioMinimoPermitido ? `<span class="original-price">$${basePublico.toFixed(2)}</span>` : ''}
+                                        <span class="final-price">$${precioFinalPublico.toFixed(2)} MXN</span>
+                                        <span class="usd-reference">Ref. Distribuidor: $${prod.costUSD.toFixed(2)} USD (c/IVA: $${costoMXNConIva.toFixed(2)} MXN)</span>
+                                    </div>
+                                    <div style="background-color: #f0fdf4; color: #166534; padding: 6px 10px; border-radius: 4px; font-size: 0.8rem; font-weight: 700; margin-top: 5px; border: 1px solid #bbf7d0;">
+                                        Margen Real Asegurado: +$${margenAsegurado.toFixed(2)} MXN
+                                    </div>
+                                </div>
+                            </div>
+                            <p style="margin: 0; font-size: 0.85rem; color: #64748b; line-height: 1.4;">${prod.desc}</p>
+                            ${featuresHTML}
+                        </div>
+                        <div class="product-footer">
+                            <button class="btn-prepare" onclick="triggerFlyerGeneration('${prod.model}', '${titleSpecsEscaped}', ${basePublico}, ${precioFinalPublico})">🖼️ Generar Tarjeta Comercial</button>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+            } else {
+                const catName = categoriesList.find(c => c.id === categoryId)?.name || categoryId;
+                titleElem.innerText = `Línea: ${catName}`;
+                descElem.innerText = catalogData[categoryId]?.desc || `Módulo asignado a la ingeniería de ${catName.toLowerCase()}.`;
+                container.innerHTML = `<p style="grid-column: 1/-1; color: #64748b; font-style: italic; padding: 30px 0;">Las soluciones de hardware y flyers asociados a esta línea de negocio se encuentran actualmente en proceso de indexación técnica.</p>`;
+            }
+        }
+
+        function initMenu() {
+            const menuList = document.getElementById('menuList');
+            if (!menuList) return;
+            menuList.innerHTML = '';
+            categoriesList.forEach((cat) => {
+                const count = catalogData[cat.id] ? catalogData[cat.id].products.length : 0;
+                const li = document.createElement('li');
+                li.className = `category-menu-item ${cat.id === 'dvr' ? 'active' : ''}`;
+                li.id = `menu-${cat.id}`;
+                li.onclick = () => renderCategory(cat.id);
+                li.innerHTML = `<span>${cat.name}</span> <span class="qty-badge">${count}</span>`;
+                menuList.appendChild(li);
+            });
+            renderCategory("dvr");
+        }
+
+        function wrapText(context, text, x, y, maxWidth, lineHeight) {
+            const words = text.split(' ');
+            let line = '';
+            let currentY = y;
+
+            for (let n = 0; n < words.length; n++) {
+                let testLine = line + words[n] + ' ';
+                let metrics = context.measureText(testLine);
+                let testWidth = metrics.width;
+                if (testWidth > maxWidth && n > 0) {
+                    context.fillText(line, x, currentY);
+                    line = words[n] + ' ';
+                    currentY += lineHeight;
+                } else {
+                    line = testLine;
+                }
+            }
+            context.fillText(line, x, currentY);
+            return currentY;
+        }
+
+        function triggerFlyerGeneration(modelCode, titleSpecs, basePrice, finalPrice) {
+            const canvas = document.getElementById('processingCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            canvas.width = 600;
+            canvas.height = 400;
+
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, 600, 400);
+
+            ctx.fillStyle = '#003366';
+            ctx.fillRect(0, 0, 600, 80);
+
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 20px sans-serif';
+            ctx.fillText('SOLUCIONES DE INGENIERÍA PERIMETRAL', 30, 45);
+
+            ctx.fillStyle = '#ff6600';
+            ctx.font = 'bold 14px sans-serif';
+            ctx.fillText('FICHA COMERCIAL DE HARDWARE - BYTECOMTEC', 30, 68);
+
+            ctx.fillStyle = '#1e293b';
+            ctx.font = 'bold 22px sans-serif';
+            ctx.fillText(`MODELO: ${modelCode}`, 40, 125);
+
+            ctx.fillStyle = '#334155';
+            ctx.font = '12px sans-serif';
+            let nextY = wrapText(ctx, titleSpecs, 40, 150, 360, 18);
+
+            let priceY = Math.max(nextY + 25, 205);
+            
+            if (Math.abs(basePrice - finalPrice) > 0.01) {
+                ctx.fillStyle = '#94a3b8';
+                ctx.font = '13px sans-serif';
+                let origText = `Precio de Lista: $${basePrice.toFixed(2)} MXN`;
+                ctx.fillText(origText, 40, priceY);
+                
+                let textWidth = ctx.measureText(origText).width;
+                ctx.strokeStyle = '#94a3b8';
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.moveTo(40, priceY - 4);
+                ctx.lineTo(40 + textWidth, priceY - 4);
+                ctx.stroke();
+                
+                priceY += 20;
+            }
+            ctx.fillStyle = '#003366';
+            ctx.font = 'bold 18px sans-serif';
+            ctx.fillText(`Tu precio: $${finalPrice.toFixed(2)} MXN`, 40, priceY);
+
+            let boxY = Math.max(priceY + 15, 245);
+            ctx.fillStyle = '#f8fafc';
+            ctx.fillRect(40, boxY, 360, 55);
+            ctx.strokeStyle = '#e2e8f0';
+            ctx.strokeRect(40, boxY, 360, 55);
+            ctx.fillStyle = '#d32f2f';
+            
+            ctx.font = 'bold 14px sans-serif';
+            ctx.fillText('Cotización sujeta a diagnóstico en sitio.', 53, boxY + 26);
+            ctx.fillText('No incluye mano de obra por instalación.', 53, boxY + 46);
+
+            ctx.fillStyle = '#64748b';
+            ctx.font = 'italic 11px sans-serif';
+            ctx.fillText('* Vigencia ligada a existencia y tipo de cambio diario.', 40, 355);
+            ctx.fillText('Bytecomtec - Soporte Técnico Autorizado.', 40, 375);
+
+            const img = new Image();
+            img.crossOrigin = "anonymous";
+            
+            const sanitizedFilename = modelCode.replace('/', '_');
+            img.src = `${GITHUB_IMG_BASE}${sanitizedFilename}.jpg`;
+
+            img.onload = function() {
+                ctx.fillStyle = '#ffffff';
+                ctx.fillRect(420, 150, 140, 140);
+                ctx.strokeStyle = '#e2e8f0';
+                ctx.strokeRect(420, 150, 140, 140);
+                
+                const maxDim = 120;
+                let w = img.width;
+                let h = img.height;
+                if (w > h) {
+                    h = (h * maxDim) / w;
+                    w = maxDim;
+                } else {
+                    w = (w * maxDim) / h;
+                    h = maxDim;
+                }
+                const xOffset = 420 + (140 - w) / 2;
+                const yOffset = 150 + (140 - h) / 2;
+                
+                ctx.drawImage(img, xOffset, yOffset, w, h);
+                openModalWithCanvasData(canvas);
+            };
+            img.onerror = function() {
+                ctx.fillStyle = '#f1f5f9';
+                ctx.fillRect(420, 150, 140, 140);
+                ctx.strokeStyle = '#cbd5e1';
+                ctx.strokeRect(420, 150, 140, 140);
+                ctx.fillStyle = '#94a3b8';
+                ctx.font = 'bold 11px sans-serif';
+                ctx.fillText('[Imagen Indexada]', 440, 225);
+                openModalWithCanvasData(canvas);
+            };
+        }
+
+        function openModalWithCanvasData(canvas) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalTargetImg');
+            const btnAction = document.getElementById('btnClipboardAction');
+            
+            if (modal && modalImg) {
+                modalImg.src = canvas.toDataURL('image/png');
+                modal.style.display = 'flex';
+                
+                if (btnAction) {
+                    btnAction.className = 'btn-copy-clipboard';
+                    btnAction.innerText = '📋 Copiar Ficha para WhatsApp';
+                }
+            }
+        }
+
+        async function copyCanvasToClipboard() {
+            const canvas = document.getElementById('processingCanvas');
+            const btnAction = document.getElementById('btnClipboardAction');
+            
+            try {
+                canvas.toBlob(async function(blob) {
+                    if (!blob) {
+                        alert("Error al procesar los datos de la ficha técnica.");
+                        return;
+                    }
+                    
+                    try {
+                        await navigator.clipboard.write([
+                            new ClipboardItem({
+                                [blob.type]: blob
+                            })
+                        ]);
+                        
+                        if (btnAction) {
+                            btnAction.className = 'btn-copy-clipboard success';
+                            btnAction.innerText = '✅ ¡Ficha Copiada! Pégala en WhatsApp (Ctrl+V)';
+                        }
+                    } catch (err) {
+                        console.error("Error en la API de portapapeles: ", err);
+                        alert("Tu navegador bloqueó la escritura directa de imágenes. Prueba dando clic derecho sobre la ficha de abajo.");
+                    }
+                }, 'image/png');
+                
+            } catch (error) {
+                console.error("Fallo general de procesamiento de imagen: ", error);
+            }
+        }
+
+        function closeLightbox() {
+            const modal = document.getElementById('imageModal');
+            if (modal) modal.style.display = 'none';
+        }
+
+        window.onload = initMenu;
+    </script>
+</body>
+</html>
