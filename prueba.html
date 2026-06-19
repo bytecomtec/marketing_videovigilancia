@@ -120,7 +120,7 @@
         .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(430px, 1fr)); gap: 25px; }
         @media (max-width: 500px) { .products-grid { grid-template-columns: 1fr; } }
 
-        /* Estilo exacto basado en la vista de tarjetas original */
+        /* Tarjetas de Producto */
         .product-card {
             background-color: var(--white); border: 1px solid var(--border-color); border-radius: 8px;
             padding: 20px; display: flex; flex-direction: column; justify-content: space-between;
@@ -151,12 +151,12 @@
             margin-top: 6px; border: 1px solid #bbf7d0; width: fit-content;
         }
 
-        /* Características con Palomitas Verdes */
+        /* Características */
         .product-features-list { margin: 10px 0 0 0; padding-left: 20px; list-style-type: none; }
         .product-features-list li { font-size: 0.9rem; color: #475569; line-height: 1.6; margin-bottom: 6px; position: relative; }
         .product-features-list li::before { content: "✓"; position: absolute; left: -18px; color: #10b981; font-weight: bold; }
 
-        /* Footer de la tarjeta y Layout de Botones */
+        /* Footer de la tarjeta y Botones */
         .product-footer { border-top: 1px solid #f1f5f9; padding-top: 15px; }
         .product-actions { display: flex; gap: 10px; }
         
@@ -187,15 +187,15 @@
         .output-composite-img { max-width: 100%; height: auto; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
         .modal-close { position: absolute; top: 12px; right: 18px; color: #94a3b8; font-size: 1.8rem; cursor: pointer; background: none; border: none; }
         
-        /* Botón Verde de Copiado Expreso de Ficha */
+        /* Botón Verde de Compartir / Copiar */
         .btn-copy-clipboard {
-            background-color: #10b981; color: var(--white); border: none; border-radius: 4px;
+            background-color: #2563eb; color: var(--white); border: none; border-radius: 4px;
             padding: 14px 20px; font-size: 1rem; font-weight: bold; cursor: pointer; width: 100%;
             margin-top: 15px; display: flex; align-items: center; justify-content: center; gap: 8px;
             transition: background-color 0.2s;
         }
-        .btn-copy-clipboard:hover { background-color: #059669; }
-        .btn-copy-clipboard.success { background-color: #2563eb; }
+        .btn-copy-clipboard:hover { background-color: #1d4ed8; }
+        .btn-copy-clipboard.success { background-color: #10b981; }
     </style>
 </head>
 <body>
@@ -252,8 +252,8 @@
             <div style="font-size: 1rem; color:#1e293b; font-weight:700; margin-bottom:12px;">Vista Previa de Ficha Técnica:</div>
             <img id="modalTargetImg" class="output-composite-img" src="" alt="Ficha Comercial">
             
-            <button id="btnClipboardAction" class="btn-copy-clipboard" onclick="copyCanvasToClipboard()">
-                🖼️ Copiar Ficha para WhatsApp
+            <button id="btnClipboardAction" class="btn-copy-clipboard" onclick="shareOrCopyCanvas()">
+                🚀 Compartir Directo a WhatsApp
             </button>
         </div>
     </div>
@@ -264,6 +264,7 @@
         let currentRate = 17.23;
         let currentDiscount = 0;
         let currentCategory = "dvr";
+        let activeProductModel = ""; // Almacenar el modelo actual en procesamiento
 
         const GITHUB_IMG_BASE = "https://bytecomtec.github.io/marketing_videovigilancia/";
 
@@ -303,98 +304,9 @@
                         costUSD: 79.25,
                         features: ["Compresión H.265+/H.265/H.264+/H.264", "4 puertos PoE+ con 50W total", "Soporta disco duro de hasta 8TB", "Acceso remoto desde dispositivos móviles", "Salida de video 4K en HDMI"],
                         videoURL: ""
-                    },
-                    { 
-                        model: "DS-7604NXI-K1/4P(E)",
-                        titleSpecs: "[Acusearch] NVR 12 Megapíxel (4K) / 4 canales IP / 4 Puertos PoE+ / Reconocimiento Facial / AcuSense (Evita Falsas Alarmas) / 1 Bahías de Disco Duro / HDMI en 4K / 300 Metros PoE Modo Extendido", 
-                        desc: "Grabador IP autónomo provisto de puertos PoE nativos para energizar cámaras de forma directa.",
-                        costUSD: 117.40,
-                        features: ["Compresión H.265+/H.265/H.264+/H.264 para eficiencia", "4 puertos PoE+ con 50W potencia total", "Acceso remoto vía Hik-Connect y aplicaciones móviles"],
-                        videoURL: ""
-                    },
-                    { 
-                        model: "CS-X5S/8W",
-                        titleSpecs: "NVR Inalámbrico (WiFi) de 8 Canales IP / Admite Cámaras hasta 5 Megapixel (3K) / Salidas HDMI y VGA / H.265 / Almacenamiento Expandible hasta 8 TB", 
-                        desc: "Grabador de red eficiente diseñado para gestionar cámaras IP de alta definición continua.",
-                        costUSD: 46.55,
-                        features: ["Almacenamiento expandible hasta 8 TB", "Soporte para cámaras de hasta 5 MP (3K)", "Doble salida de video HDMI y VGA"],
-                        videoURL: ""
-                    },
-                    { 
-                        model: "DS-7608NI-Q1/8P(D)",
-                        titleSpecs: "NVR 8 Megapixel (4K) (Compatible con Cámaras ACUSENSE) / 8 canales IP / 8 Puertos PoE+ / 1 Bahía de Disco Duro / Salida de Vídeo en 4K / 300 Metros PoE Modo Extendido", 
-                        desc: "Grabador IP autónomo provisto de puertos PoE nativos para energizar cámaras de forma directa.",
-                        costUSD: 138.24,
-                        features: ["Compresión H.265+/H.265 con reducción del 50% en ancho de banda", "8 puertos PoE+ con 75W total y modo extendido 300m", "Soporta disco duro hasta 8TB con tecnología S.M.A.R.T"],
-                        videoURL: ""
-                    },
-                    { 
-                        model: "DS-7608NXI-K1(E)",
-                        titleSpecs: "[Acusearch] NVR 12 Megapíxel (4K) / 8 canales IP / AcuSense (Evita Falsas Alarmas) / Reconocimiento Facial / 1 Bahía de Disco Duro / HDMI en 4K / Sin Puertos PoE", 
-                        desc: "Grabador de red eficiente diseñado para gestionar cámaras IP de alta definición continua.",
-                        costUSD: 93.06,
-                        features: ["Compresión H.265+ para mayor eficiencia", "Tecnología ANR para grabación local en desconexión", "Reconocimiento facial hasta 20,000 rostros"],
-                        videoURL: ""
-                    },
-                    { 
-                        model: "DS-7616NXI-K1(E)",
-                        titleSpecs: "[Acusearch] NVR 12 Megapixel (4K) / 16 canales IP / AcuSense (Evita Falsas Alarmas) / Reconocimiento Facial / 1 Bahía de Disco Duro / HDMI en 4K / Sin Puertos PoE+", 
-                        desc: "Grabador IP autónomo provisto de puertos PoE nativos para energizar cámaras de forma directa.",
-                        costUSD: 133.48,
-                        features: ["Compresión H.265+/H.265 para reducción de ancho de banda", "Reconocimiento facial con base de datos de 50,000 rostros", "Soporte para resolución 12MP (4K) en 16 canales"],
-                        videoURL: ""
-                    },
-                    { 
-                        model: "DS-7616NXI-K2(E)",
-                        titleSpecs: "[Acusearch] NVR 12 Megapixel (4K) / 16 canales IP / AcuSense (Evita Falsas Alarmas) / Reconocimiento Facial / 2 Bahías de Disco Duro / HDMI en 4K / Sin Puertos PoE+ / Alarmas I/O", 
-                        desc: "Grabador de red eficiente diseñado para gestionar cámaras IP de alta definición continua.",
-                        costUSD: 148.63,
-                        features: ["Compresión H.265+ para mayor eficiencia", "Acceso remoto desde dispositivos móviles", "Soporta hasta 2 discos duros"],
-                        videoURL: ""
-                    },
-                    { 
-                        model: "DS-7616NXI-K2/16P(E)",
-                        titleSpecs: "[AcuSearch] NVR 12 Megapixel (4K) / 16 Canales IP / 16 Puertos PoE+ (10/100 Mbps) / Reconocimiento Facial / AcuSense / 2 Bahías para HDD de 16 TB / HDMI 4K / Alarmas I/O", 
-                        desc: "Grabador de red eficiente diseñado para gestionar cámaras IP de alta definición continua.",
-                        costUSD: 309.36,
-                        features: ["Compresión H.265+/H.265 con eficiencia energética", "16 puertos PoE+ 802.3 af/at con 200 W", "Soporta 2 HDD de hasta 16 TB"],
-                        videoURL: ""
-                    },
-                    { 
-                        model: "DS-7632NXI-K2(E)",
-                        titleSpecs: "[AcuSearch] NVR 12 Megapixel (4K) / 32 canales IP / AcuSense (Evita Falsas Alarmas) / Reconocimiento Facial / 2 Bahías de Disco Duro / HDMI en 4K / Sin Puertos PoE+", 
-                        desc: "Grabador IP autónomo provisto de puertos PoE nativos para energizar cámaras de forma directa.",
-                        costUSD: 225.65,
-                        features: ["Compresión H.265+/H.264+ para eficiencia", "2 bahías HDD soportan hasta 16TB", "AcuSense filtra falsas alarmas con IA"],
-                        videoURL: ""
-                    },
-                    { 
-                        model: "DS-7632NXI-K2/16P(E)",
-                        titleSpecs: "[AcuSearch] NVR 12 Megapixel (4K) / 32 canales IP / 16 Puertos PoE+ / Recocimiento Facial / AcuSense (Evita Falsas Alarmas) / 2 Bahías de Disco Duro / HDMI en 4K / Alarmas I/O / 300 Metros PoE Modo Extendido", 
-                        desc: "Grabador de red eficiente diseñado para gestionar cámaras IP de alta definición continua.",
-                        costUSD: 458.48,
-                        features: ["Compresión de video H.265+/H.265/H.264+/H.264", "16 puertos PoE+ 802.3 af/at (200W total)", "Tecnología AcuSense para detección precisa (humano/vehículo)"],
-                        videoURL: ""
-                    },
-                    { 
-                        model: "DS-9664NI-M8",
-                        titleSpecs: "[Doble Poder de Decodificación] NVR 32 Megapixel (8K) / 64 Canales IP / AcuSense / ANPR / Conteo de Personas / Heat Map / 8 Bahías de Disco Duro / Soporta RAID con Hot Swap / 2 HDMI en 8K / Soporta POS / Alarmas I/O / Smart Search", 
-                        desc: "Grabador IP autónomo provisto de puertos PoE nativos para energizar cámaras de forma directa.",
-                        costUSD: 2069.56,
-                        features: ["Doble decodificación 8K y 64 canales IP", "Tecnología AcuSense para detección precisa de humanos y vehículos", "Soporta RAID 0,1,5,6,10 con hot swap"],
-                        videoURL: ""
-                    },
-                    { 
-                        model: "DS-96128NI-M16/R",
-                        titleSpecs: "[Doble Poder de Decodificación] NVR 32 Megapixel (8K) / 128 Canales IP / AcuSense / ANPR / Conteo de Personas / 16 Bahías de Disco Duro / 2 Tarjetas de Red / Soporta RAID con Hot Swap / 2 HDMI en 8K / POS / Alarmas I/O / Smart Search", 
-                        desc: "Grabador de red eficiente diseñado para gestionar cámaras IP de alta definición continua.",
-                        costUSD: 4467.45,
-                        features: ["Compresión H.265+/H.265/H.264+/H.264 eficiente", "Hot swap con soporte RAID 0,1,5,6,10", "Acceso remoto multiplataforma con Hik-Connect"],
-                        videoURL: ""
                     }
                 ]
             },
-
             dvr: {
                 title: "Grabadores Digitales (DVR)",
                 desc: "Catálogo completo de soluciones TurboHD con costos integrados (IVA incluido) y factores de rentabilidad blindados.",
@@ -404,135 +316,7 @@
                         titleSpecs: "DVR 4 Canales TurboHD + 1 Canal IP / 2 Megapixel (1080p) Lite / Acusense Lite (Evita Falsas Alarmas) / Audio por coaxitron / 1 Bahía de Disco Duro / H.265+ / Salida de Vídeo Full HD", 
                         desc: "Grabador compacto ideal para el resguardo eficiente de perímetros pequeños con optimización extrema de almacenamiento.",
                         costUSD: 29.35,
-                        features: ["Soporte para 5 tecnologías: HDTVI/AHD/CVBS/CVI/IP", "Compresión H.265+ para reducir uso de disco", "Resolución 1080p Lite con tecnología TurboHD", "4 canales TurboHD y 1 canal IP", "Acceso remoto con Hik-Connect y compatibilidad multiplataforma", "Salida de video Full HD por HDMI y VGA"],
-                        videoURL: ""
-                    },
-                    { 
-                        model: "EV-4004TURBO-D", 
-                        titleSpecs: "DVR 4 Canales TurboHD + 2 Canales IP / 5 Megapixel Lite- 3K Lite / Acusense (Evista falsas alarmas) / Audio por Coaxitron / Bahía de Disco Duro / Salida de Video en Full HD", 
-                        desc: "Grabador balanceado analítico para entornos residenciales y pequeños comercios que exigen nitidez estructural superior.",
-                        costUSD: 53.57,
-                        features: ["Filtrado inteligente de humanos y vehículos con AcuSense", "Soporta TurboHD hasta 5 megapíxeles Lite", "Agrega cámaras IP por cada canal TurboHD apagado"],
-                        videoURL: ""
-                    },
-                    { 
-                        model: "IDS-7204HGHI-M1(T)", 
-                        titleSpecs: "[Audio Bidireccional] DVR 4 Canales TurboHD + 1 Canal IP / 2 Megapixel (1080p) Lite / Acusense Lite (Evita Falsas Alarmas) / Audio por Coaxitron / 1 Bahia de Disco Duro / H.265+ / Salida de Vídeo Full HD", 
-                        desc: "Solución analítica avanzada basada en algoritmos profundos para mitigar las falsas alarmas de entorno.",
-                        costUSD: 28.88,
-                        features: ["Audio bidireccional por coaxitron en todos los canales", "Acusense Lite detección humano/vehículo en todos los canales", "Compresión H.265+ para ahorro de almacenamiento"],
-                        videoURL: ""
-                    },
-                    { 
-                        model: "DVR-208G-M1(C)", 
-                        titleSpecs: "DVR 8 Canales TurboHD + 2 Canales IP / 2 Megapíxel (1080P) Lite / Motion Detection 2.0 (Evita Falsas Alarmas) / Audio por Coaxitron / 1 Bahía de Disco Duro / H.265+ / 1 Canal de Audio / Salida de Vídeo Full HD", 
-                        desc: "Grabador de entrada de la línea HiLook de Hikvision, óptimo para renovaciones de sistemas análogos tradicionales a bajo costo.",
-                        costUSD: 24.93,
-                        features: ["Visualización en vivo desde dispositivos móviles Hik-Connect", "Control centralizado de seguridad en una sola aplicación", "Soporte de audio por coaxitron en todos los canales"],
-                        videoURL: ""
-                    },
-                    { 
-                        model: "S08-TURBO-M/T", 
-                        titleSpecs: "DVR 8 Canales TurboHD 1080p / Chasis Metálico de Alta Durabilidad / Audio sobre Coaxial Multiplexado", 
-                        desc: "Grabador robustecido con chasis estructural metálico para protección superior en operaciones de rango continuo.",
-                        costUSD: 32.01,
-                        features: ["Audio bidireccional en todos los canales", "Filtro inteligente de movimiento para humanos y vehículos", "Soporta 10 canales: 8 TurboHD + 2 IP"],
-                        videoURL: ""
-                    },
-                    { 
-                        model: "IDS-7208HQHI-M1/XT", 
-                        titleSpecs: "DVR 8 Canales TURBOHD + 4 Canales IP / 5 Megapixel Lite - 3K Lite / Audio de Dos Vías por Coaxitron / Reconocimiento Facial / ACUSENSE (Evita falsas alarmas) / 1 Bahía de Disco Duro / Salida de Video en Full HD", 
-                        desc: "Equipo profesional de alta gama provisto de analíticas avanzadas para reconocimiento facial y protección perimetral estricta.",
-                        costUSD: 92.40,
-                        features: ["Soporta 12 canales: 8 TurboHD + 4 IP", "Detección inteligente ACUSENSE con filtro de humanos y vehículos", "Reconocimiento facial en 2 canales de video"],
-                        videoURL: ""
-                    },
-                    { 
-                        model: "EX-8004TURBO", 
-                        titleSpecs: "DVR 4 Canales TURBOHD + 2 Canales IP / 8 Megapixel (4K) / Audio Bidireccional por Coaxitron / ACUSENSE / Reconocimiento Facial / 1 Bahía de Disco Duro / Salida de Video en Full HD / H.265+", 
-                        desc: "Grabador digital insignia de Epcom ideal para proyectos de mediana envergadura que demandan analíticas fluidas.",
-                        costUSD: 86.31,
-                        features: ["Soporta audio bidireccional por coaxitron en todos los canales", "Compresión H.265+ para mayor eficiencia", "Reconocimiento facial en 2 canales"],
-                        videoURL: ""
-                    },
-                    { 
-                        model: "EX-5008-TURBO", 
-                        titleSpecs: "DVR 8 Canales TURBOHD + 4 Canales IP / 5 Megapixel Lite - 3K Lite / Audio Bidireccional por Coaxitron / Reconocimiento Facial / ACUSENSE (Evita falsas alarmas) / 1 Bahía de Disco Duro / Salida de Video en Full HD", 
-                        desc: "Grabador digital insignia de Epcom ideal para proyectos de mediana envergadura que demandan analíticas fluidas.",
-                        costUSD: 82.66,
-                        features: ["8 Canales TurboHD + 4 IP simultáneos", "Reconocimiento facial en 2 canales de video", "Tecnología Acusense para detección precisa de humanos y vehículos"],
-                        videoURL: ""
-                    },
-                    { 
-                        model: "S16-TURBO-G3", 
-                        titleSpecs: "DVR 16 Canales TurboHD + 2 Canales IP / 2 Megapixel (1080p) Lite / Acusense Lite (Evita Falsas Alarmas) / Audio por Coaxitron / 1 Bahía de Disco Duro / H.265+ / Salida de Video Full HD", 
-                        desc: "Grabador multicanal balanceado para instalaciones escolares que requieren cobertura total de cámaras con costos contenidos.",
-                        costUSD: 60.05,
-                        features: ["5 tecnologías: HD-TVI / AHD / CVI / CVBS / IP", "Audio por coaxitron sin cables adicionales", "Compresión H.265+ para menos uso de ancho de banda"],
-                        videoURL: ""
-                    },
-                    { 
-                        model: "S16-TURBO-M/T", 
-                        titleSpecs: "DVR 16 Canales TurboHD + 2 Canales IP / 2 Megapixel (1080p) Lite / Acusense Lite (Evita Falsas Alarmas) / Audio por Coaxitron y Bidireccional / 1 Bahía de Disco Duro / H.265+ / Salida de Video Full HD", 
-                        desc: "Grabador industrial de 16 vías optimizado para montaje seguro en gabinetes o racks de telecomunicaciones.",
-                        costUSD: 56.68,
-                        features: ["Tecnología TurboHD 1080p Lite con alta definición", "Soporte 5 tecnologías: TurboHD, CVBS, CVI, AHD, IP", "AcuSense Lite con detección humana y vehicular"],
-                        videoURL: ""
-                    },
-                    { 
-                        model: "IDS-7216HUHI-M1/T", 
-                        titleSpecs: "DVR 16 Canales TURBOHD + 16 Canales IP / 8 Megapixel (4K) / Audio Bidireccional / ACUSENSE / Audio Bidireccional / 1 Bahía de Disco Duro / Salida de Video en Full HD / H.265+", 
-                        desc: "Grabador profesional híbrido de ultra alta definición recomendado para monitorear detalles críticos con reconocimiento de objetivos.",
-                        costUSD: 269.15,
-                        features: ["Soporta audio por Coaxitron en todos los canales", "DVR pentahíbrido: HD-TVI, HD-CVI, IP, AHD, Analógico", "Compresión H.265+ para optimizar almacenamiento"],
-                        videoURL: ""
-                    },
-                    { 
-                        model: "IDS-7216HQHI-M1/XT", 
-                        titleSpecs: "DVR 16 Canales TURBOHD + 8 Canales IP / 5 Megapixel Lite - 3K Lite / Audio de Dos Vías por Coaxitron / Reconocimiento Facial / ACUSENSE (Evita falsas alarmas) / 1 Bahía de Disco Duro / Salida de Video en Full HD", 
-                        desc: "Plataforma multicanal corporativa que integra motores analíticos avanzados para búsquedas inmediatas por atributos.",
-                        costUSD: 136.83,
-                        features: ["Soporta audio bidireccional por coaxitron en todos los canales", "Reconocimiento facial en 4 canales TurboHD", "Tecnología AcuSense con filtro de humanos y vehículos en 8 canales"],
-                        videoURL: ""
-                    },
-                    { 
-                        model: "IDS-7216HQHI-M1/H/XT", 
-                        titleSpecs: "DVR 16 Canales TURBOHD + 8 Canales IP / 5 Megapixel Lite - 3K Lite / Salida Independiente HDMI - VGA / Audio de Dos Vías por Coaxitron / Reconocimiento Facial / ACUSENSE (Evista falsas alarmas) / 1 Bahía de Disco Duro / Salida de Video en Fu", 
-                        desc: "Grabador robusto diseñado para integraciones institucionales complejas donde coexisten infraestructuras análogas e IP.",
-                        costUSD: 173.34,
-                        features: ["Soporta audio bidireccional por Coaxitron en todos los canales", "Reconocimiento facial en 4 canales y tecnología AcuSense", "24 canales: 16 TurboHD + 8 IP con resolución 5MP Lite"],
-                        videoURL: ""
-                    },
-                    { 
-                        model: "EX-5016TURBO", 
-                        titleSpecs: "DVR 16 Canales TURBOHD + 8 Canales IP / 5 Megapixel Lite - 3K Lite / Audio Bidireccional por Coaxitron / Reconocimiento Facial / ACUSENSE (Evita falsas alarmas) / 1 Bahía de Disco Duro / Salida de Video en Full HD", 
-                        desc: "Solución de videovigilancia robustecida y escalable para medianas empresas con flujos operativos ininterrumpidos.",
-                        costUSD: 138.16,
-                        features: ["16 canales TurboHD + 8 IP, total 24", "Compresión H.265+ para eficiente almacenamiento", "DVR pentahíbrido: HD-TVI/HD-CVI/Analógico/IP/AHD"],
-                        videoURL: ""
-                    },
-                    { 
-                        model: "IDS-7232HGHI-M2", 
-                        titleSpecs: "DVR 32 Canales TurboHD + 2 Canales IP / 2 Megapixel (1080p) Lite / Acusense (Evita Falsas Alarmas) / Audio por Coaxitron / H.265+ / Salida de Video en Full HD", 
-                        desc: "Sistema centralizado de alta densidad idóneo para proyectos escolares amplios o naves industriales de despliegue masivo.",
-                        costUSD: 213.46,
-                        features: ["Hasta 18 cámaras IP en total", "Soporta 2 HDD de 10 TB", "Serie Turbo HD 5.0 con 16 canales apagables"],
-                        videoURL: ""
-                    },
-                    { 
-                        model: "IDS-7232HQHI-M2/XT", 
-                        titleSpecs: "[Audio Bidireccional] DVR 32 Canales TurboHD + 8 Canales IP / 5 Megapixel Lite - 3K Lite / Acusense / Reconocimiento Facial / Audio por Coaxitron / 2 Bahías de Disco Duro / H.265+ / Salida de Video en Full HD", 
-                        desc: "Grabador de alta gama que unifica analíticas avanzadas de IA en una infraestructura masiva de cámaras de seguridad perimetral.",
-                        costUSD: 342.59,
-                        features: ["40 canales: 32 TurboHD + 8 IP simultáneos", "Reconocimiento facial en 4 canales HD", "Acceso remoto vía Hik-Connect P2P"],
-                        videoURL: ""
-                    },
-                    { 
-                        model: "EX-5032-TURBO", 
-                        titleSpecs: "DVR 32 Canales TurboHD + 8 Canales IP / 5 Megapixel Lite - 3K Lite / Acusense (Evita Falsas Alarmas) / Audio Bidireccional / 2 Bahías de Disco Duro / H.265+ / Salida de Video en Full HD", 
-                        desc: "Grabador masivo insignia diseñado para gestionar la seguridad integral de infraestructuras complejas con máxima estabilidad de red.",
-                        costUSD: 332.61,
-                        features: ["Soporta cámaras TurboHD de hasta 5 MP", "Detección facial en 4 canales", "Hasta 40 canales IP con 6 MP"],
+                        features: ["Soporte para 5 tecnologías: HDTVI/AHD/CVBS/CVI/IP", "Compresión H.265+ para reducir uso de disco", "Resolución 1080p Lite con tecnología TurboHD", "4 canales TurboHD y 1 canal IP"],
                         videoURL: ""
                     }
                 ]
@@ -582,7 +366,6 @@
             renderProducts();
         }
 
-        // Lógica de cálculo unificada
         function calculatePrices(costUSD) {
             const costoMXNSinIva = costUSD * currentRate;
             const costoMXNConIva = costoMXNSinIva * 1.16;
@@ -629,7 +412,6 @@
                 const card = document.createElement('div');
                 card.className = 'product-card';
 
-                // Corrección de caracteres para imágenes locales en GitHub Pages
                 const safeModelName = product.model.replace(/\//g, "_");
                 const imgSrc = `${GITHUB_IMG_BASE}${safeModelName}.jpg`;
 
@@ -691,6 +473,7 @@
             const product = catalogData[currentCategory].products.find(p => p.model === modelCode);
             if (!product) return;
 
+            activeProductModel = product.model; // Guardamos el nombre limpio para el archivo a compartir
             const calc = calculatePrices(product.costUSD);
             const safeModelName = product.model.replace(/\//g, "_");
             const productImgUrl = `${GITHUB_IMG_BASE}${safeModelName}.jpg`;
@@ -698,14 +481,13 @@
             const canvas = document.getElementById('processingCanvas');
             const ctx = canvas.getContext('2d');
 
-            // Dimensiones óptimas de tu lienzo comercial express
             canvas.width = 600;
             canvas.height = 400;
 
             ctx.fillStyle = '#ffffff';
             ctx.fillRect(0, 0, 600, 400);
 
-            // Banner azul institucional idéntico a tu captura real
+            // Banner superior azul
             ctx.fillStyle = '#003366';
             ctx.fillRect(0, 0, 600, 80);
 
@@ -717,23 +499,23 @@
             ctx.font = 'bold 14px sans-serif';
             ctx.fillText('FICHA COMERCIAL DE HARDWARE - BYTECOMTEC', 30, 68);
 
-            // Código del modelo del equipo
+            // Código de modelo
             ctx.fillStyle = '#003399';
             ctx.font = 'bold 22px sans-serif';
             ctx.fillText(`MODELO: ${product.model}`, 40, 125);
 
-            // Especificaciones técnicas
+            // Texto técnico
             ctx.fillStyle = '#1e293b';
             ctx.font = '13px sans-serif';
             let nextY = wrapText(ctx, product.titleSpecs, 40, 150, 360, 18);
 
-            // Precio calculado dinámicamente con margen real
+            // Precio
             let priceY = Math.max(nextY + 25, 220);
             ctx.fillStyle = '#003366';
             ctx.font = 'bold 18px sans-serif';
             ctx.fillText(`Tu precio: $${calc.precioFinalPublico.toFixed(2)} MXN`, 40, priceY);
 
-            // Bloque gris con advertencias en rojo (Basado estrictamente en la captura cambios1.png)
+            // Caja gris inferior con letras rojas
             let boxY = Math.max(priceY + 15, 245);
             ctx.fillStyle = '#f8fafc';
             ctx.fillRect(40, boxY, 360, 55);
@@ -745,7 +527,7 @@
             ctx.fillText('Cotización sujeta a diagnóstico en sitio.', 53, boxY + 24);
             ctx.fillText('No incluye mano de obra por instalación.', 53, boxY + 44);
 
-            // Pie de página legal informativo
+            // Elementos informativos al pie
             ctx.fillStyle = '#64748b';
             ctx.font = 'italic 11px sans-serif';
             ctx.fillText('* Vigencia ligada a existencia y tipo de cambio diario.', 40, 355);
@@ -818,34 +600,53 @@
                 modal.style.display = 'flex';
                 
                 if (btnAction) {
+                    // Si el dispositivo soporta compartir archivos de forma nativa, cambia el texto para mejor UX
+                    if (navigator.canShare && navigator.share) {
+                        btnAction.innerText = '🚀 Compartir Ficha por WhatsApp';
+                    } else {
+                        btnAction.innerText = '📋 Copiar Imagen al Portapapeles';
+                    }
                     btnAction.className = 'btn-copy-clipboard';
-                    btnAction.innerText = '🖼️ Copiar Ficha para WhatsApp';
                 }
             }
         }
 
-        async function copyCanvasToClipboard() {
+        // Esta función unifica el proceso para que mande el archivo real limpio en smartphones
+        function shareOrCopyCanvas() {
             const canvas = document.getElementById('processingCanvas');
             const btnAction = document.getElementById('btnClipboardAction');
-            
-            try {
-                canvas.toBlob(async function(blob) {
-                    if (!blob) return;
+            const cleanFileName = `Ficha_${activeProductModel.replace(/[^a-zA-Z0-9]/g, '_')}.png`;
+
+            canvas.toBlob(async function(blob) {
+                if (!blob) return;
+
+                // 1. Caso Móvil: Si soporta la API nativa de compartición de archivos
+                if (navigator.canShare && navigator.share) {
+                    try {
+                        const file = new File([blob], cleanFileName, { type: 'image/png' });
+                        await navigator.share({
+                            files: [file] // Enviamos ÚNICAMENTE el archivo de la imagen, sin campos de URL ni texto
+                        });
+                    } catch (err) {
+                        // El usuario canceló la acción o falló la API, no hacemos nada o pasamos al fallback
+                        console.log("Compartición nativa cancelada o no disponible.");
+                    }
+                } 
+                // 2. Caso Computadora / Fallback: Copiado tradicional al portapapeles
+                else {
                     try {
                         await navigator.clipboard.write([
                             new ClipboardItem({ [blob.type]: blob })
                         ]);
                         if (btnAction) {
                             btnAction.className = 'btn-copy-clipboard success';
-                            btnAction.innerText = '✅ ¡Ficha Copiada! Pégala en WhatsApp (Ctrl+V)';
+                            btnAction.innerText = '✅ ¡Ficha Copiada! Pégala directamente (Ctrl+V)';
                         }
                     } catch (err) {
-                        alert("Tu navegador bloqueó el copiado automático. Haz clic derecho en la imagen inferior para guardarla.");
+                        alert("Tu navegador no soporta el copiado directo. Mantén presionada la imagen abajo para guardarla.");
                     }
-                }, 'image/png');
-            } catch (error) {
-                console.error(error);
-            }
+                }
+            }, 'image/png');
         }
 
         function closeLightbox() {
