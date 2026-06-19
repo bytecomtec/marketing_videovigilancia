@@ -127,10 +127,20 @@
         }
         .modal-content-wrapper {
             position: relative; background-color: var(--white); padding: 25px; border-radius: 8px;
-            max-width: 850px; width: 95%; text-align: center;
+            max-width: 650px; width: 90%; text-align: center;
         }
-        .output-composite-img { max-width: 100%; max-height: 75vh; border: 1px solid #cbd5e1; border-radius: 6px; }
+        .output-composite-img { max-width: 100%; max-height: 65vh; border: 1px solid #cbd5e1; border-radius: 6px; }
         .modal-close { position: absolute; top: 10px; right: 15px; color: #94a3b8; font-size: 1.8rem; cursor: pointer; background: none; border: none; }
+        
+        /* Botón de Copiado Expreso */
+        .btn-copy-clipboard {
+            background-color: #10b981; color: var(--white); border: none; border-radius: 4px;
+            padding: 12px 20px; font-size: 0.95rem; font-weight: bold; cursor: pointer; width: 100%;
+            margin-top: 12px; display: flex; align-items: center; justify-content: center; gap: 8px;
+            transition: background-color 0.2s;
+        }
+        .btn-copy-clipboard:hover { background-color: #059669; }
+        .btn-copy-clipboard.success { background-color: #2563eb; }
     </style>
 </head>
 <body>
@@ -140,7 +150,7 @@
         
         <div class="config-panel">
             <div class="currency-controller">
-                <label for="exchangeRate">Dólar SYSCOM:</label>
+                <label for="exchangeRate">Tipo de cambio:</label>
                 <span>$</span>
                 <input type="number" id="exchangeRate" value="17.23" step="0.01" min="1" oninput="updateAllPrices()">
                 <span>MXN</span>
@@ -150,6 +160,7 @@
                 <label for="discountSelect">Descuento Público:</label>
                 <select id="discountSelect" onchange="updateAllPrices()">
                     <option value="0" selected> Precio de Lista Público</option>
+                    <option value="0.05">Aplicar 5% Preferencial</option>
                     <option value="0.10">Aplicar 10% Especial</option>
                     <option value="0.20">Aplicar 20% Máximo Autorizado</option>
                 </select>
@@ -177,7 +188,10 @@
             <button class="modal-close" onclick="closeLightbox()">&times;</button>
             <div style="font-size: 0.9rem; color:#475569; font-weight:600; margin-bottom:10px;">Vista Previa de Ficha Técnica:</div>
             <img id="modalTargetImg" class="output-composite-img" src="" alt="Ficha Comercial">
-            <div style="color:#0284c7; font-size:0.85rem; font-weight:bold; margin-top:10px;">👉 Clic derecho para copiar y pegar directo en WhatsApp</div>
+            
+            <button id="btnClipboardAction" class="btn-copy-clipboard" onclick="copyCanvasToClipboard()">
+                📋 Copiar Ficha para WhatsApp
+            </button>
         </div>
     </div>
 
@@ -190,19 +204,19 @@
         const GITHUB_IMG_BASE = "https://bytecomtec.github.io/marketing_videovigilancia/";
 
         const categoriesList = [
-            { id: "nvr", name: "NVR" },
             { id: "dvr", name: "DVR" },
-            { id: "nvs", name: "NVS" },
-            { id: "kits", name: "Kits" },
-            { id: "almacenamiento", name: "Almacenamiento" },
-            { id: "camaras_ip", name: "Cámaras IP" },
+            { id: "nvr", name: "NVR" },
             { id: "camaras_analogas", name: "Cámaras Análogas" },
-            { id: "camaras_ptz", name: "Cámaras PTZ" },
+            { id: "almacenamiento", name: "Almacenamiento" },
             { id: "accesorios", name: "Accesorios" },
-            { id: "switch_poe", name: "Switch PoE" },
+            { id: "nvs", name: "NVS" },
+            { id: "camaras_ip", name: "Cámaras IP" },
+            { id: "camaras_ptz", name: "Cámaras PTZ" },
             { id: "switch_rack", name: "Switch para Rack" },
+            { id: "switch_poe", name: "Switch PoE" },
+            { id: "kits", name: "Kits" },
             { id: "monitores", name: "Monitores" },
-            { id: "accesorios_extra", name: "Accesorios Extra" }        
+            { id: "accesorios_extra", name: "Accesorios Extra" }
         ];
 
         const catalogData = {
@@ -953,7 +967,7 @@
             },
 
             camaras_ip: {
-                title: "Accesorios complementarios para videovigilancia",
+                title: "Cámaras IP de Videovigilancia.",
                 desc: "Catálogo completo de accesorios con costos integrados (IVA incluido) y factores de rentabilidad blindados.",
                 products: [
                     { 
@@ -1139,7 +1153,8 @@
                         features: ["Resolución 8MP 4K (3840x2160)", "Lente 2.8 mm, ángulo 113°", "Detección dual: IR 30 mts + luz blanca 30 mts", "AcuSense Lite: filtro humano/vehículo por movimiento", "DORI: Detectar 79 mts, Reconocer 15 mts", "Diseño exterior IP67, -30°C a 60°C"]
                     }
                 ]
-            },           
+            },
+            nvs: { title: "Servidores de Video (NVS)", desc: "Codificadores y servidores dedicados para entornos de red complejos.", products: [] },
             camaras_ip: { title: "Cámaras IP Profesionales", desc: "Cámaras con conexión por red nativa, resoluciones desde 2MP hasta 4K.", products: [] },
             camaras_ptz: { title: "Cámaras Domo PTZ", desc: "Equipos con movimiento robótico horizontal, vertical y zooms ópticos potentes.", products: [] },
             switch_rack: { title: "Switches para Rack", desc: "Conmutadores corporativos diseñados para montaje estructural en gabinetes.", products: [] },
@@ -1184,17 +1199,15 @@
                     const costoMXNSinIva = prod.costUSD * currentRate;
                     const costoMXNConIva = costoMXNSinIva * 1.16;
 
-                    // AJUSTE CRÍTICO: Markup elevado a 1.65 (65% sobre costo neto con IVA)
                     const basePublico = costoMXNConIva * 1.65; 
                     let precioFinalPublico = basePublico * (1 - currentDiscount);
 
-                    // CANDADO DE SEGURIDAD AUTOMÁTICO: El piso definitivo es Costo + 20% utilidad neta
                     const precioMinimoPermitido = costoMXNConIva * 1.20;
                     if (precioFinalPublico < precioMinimoPermitido) {
                         precioFinalPublico = precioMinimoPermitido;
                     }
 
-                    // ARITMÉTICA FIJA: Margen real basado exclusivamente en lo cobrado vs lo pagado
+                    // Cálculo dinámico del Margen Real Asegurado basado en la selección actual (incluyendo el 5%)
                     const margenAsegurado = precioFinalPublico - costoMXNConIva;
 
                     const sanitizedFilename = prod.model.replace(/\//g, '_');
@@ -1206,7 +1219,6 @@
                     let featuresHTML = '';
                     if (prod.features && prod.features.length > 0) {
                         featuresHTML = `<ul class="product-features-list">`;
-                        // Cambio aplicado aquí: Se eliminó el .slice(0, 6) para procesar todo el arreglo completo
                         prod.features.forEach(f => {
                             featuresHTML += `<li>${f}</li>`;
                         });
@@ -1319,7 +1331,6 @@
 
             let priceY = Math.max(nextY + 25, 205);
             
-            // Renderizado condicional del tachado si el precio final mutó por descuento
             if (Math.abs(basePrice - finalPrice) > 0.01) {
                 ctx.fillStyle = '#94a3b8';
                 ctx.font = '13px sans-serif';
@@ -1339,24 +1350,23 @@
 
             ctx.fillStyle = '#003366';
             ctx.font = 'bold 18px sans-serif';
-            ctx.fillText(`Precio Especial Público: $${finalPrice.toFixed(2)} MXN`, 40, priceY);
+            ctx.fillText(`Tu precio: $${finalPrice.toFixed(2)} MXN`, 40, priceY);
 
-            // Bloque fijo e inalterable de Diagnóstico Técnico
             let boxY = Math.max(priceY + 15, 245);
             ctx.fillStyle = '#f8fafc';
             ctx.fillRect(40, boxY, 360, 55);
             ctx.strokeStyle = '#e2e8f0';
             ctx.strokeRect(40, boxY, 360, 55);
-
             ctx.fillStyle = '#d32f2f';
+            
             ctx.font = 'bold 14px sans-serif';
-            ctx.fillText('Cotización sujeta a diagnóstico en sitio', 53, boxY + 26);
-            ctx.fillText('No incluye mano de obra', 53, boxY + 46);
+            ctx.fillText('Cotización sujeta a diagnóstico en sitio.', 53, boxY + 26);
+            ctx.fillText('No incluye mano de obra por instalación.', 53, boxY + 46);
 
             ctx.fillStyle = '#64748b';
             ctx.font = 'italic 11px sans-serif';
             ctx.fillText('* Vigencia ligada a existencia y tipo de cambio diario.', 40, 355);
-            ctx.fillText('Bytecomtec - Soporte Técnico Autorizado', 40, 375);
+            ctx.fillText('Bytecomtec - Soporte Técnico Autorizado.', 40, 375);
 
             const img = new Image();
             img.crossOrigin = "anonymous";
@@ -1399,13 +1409,52 @@
             };
         }
 
-        // Ventana modal nativa de previsualización
         function openModalWithCanvasData(canvas) {
             const modal = document.getElementById('imageModal');
             const modalImg = document.getElementById('modalTargetImg');
+            const btnAction = document.getElementById('btnClipboardAction');
+            
             if (modal && modalImg) {
                 modalImg.src = canvas.toDataURL('image/png');
                 modal.style.display = 'flex';
+                
+                if (btnAction) {
+                    btnAction.className = 'btn-copy-clipboard';
+                    btnAction.innerText = '📋 Copiar Ficha para WhatsApp';
+                }
+            }
+        }
+
+        async function copyCanvasToClipboard() {
+            const canvas = document.getElementById('processingCanvas');
+            const btnAction = document.getElementById('btnClipboardAction');
+            
+            try {
+                canvas.toBlob(async function(blob) {
+                    if (!blob) {
+                        alert("Error al procesar los datos de la ficha técnica.");
+                        return;
+                    }
+                    
+                    try {
+                        await navigator.clipboard.write([
+                            new ClipboardItem({
+                                [blob.type]: blob
+                            })
+                        ]);
+                        
+                        if (btnAction) {
+                            btnAction.className = 'btn-copy-clipboard success';
+                            btnAction.innerText = '✅ ¡Ficha Copiada! Pégala en WhatsApp (Ctrl+V)';
+                        }
+                    } catch (err) {
+                        console.error("Error en la API de portapapeles: ", err);
+                        alert("Tu navegador bloqueó la escritura directa de imágenes. Prueba dando clic derecho sobre la ficha de abajo.");
+                    }
+                }, 'image/png');
+                
+            } catch (error) {
+                console.error("Fallo general de procesamiento de imagen: ", error);
             }
         }
 
