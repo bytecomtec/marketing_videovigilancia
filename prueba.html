@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel de Control de Margen e Infraestructura - Bytecomtec</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         /* ==========================================================================
            Variables de Paleta de Color Corporativa
@@ -77,13 +78,49 @@
 
         /* Showcase de Productos */
         .content-showcase { flex: 1; padding: 30px; box-sizing: border-box; }
-        .showcase-header { margin-bottom: 25px; }
+        .showcase-header { margin-bottom: 20px; }
         .showcase-header h2 { margin: 0 0 8px 0; color: var(--primary-color); font-size: 1.7rem; }
         .showcase-header p { margin: 0; color: #64748b; font-size: 0.95rem; }
+
+        /* Contenedor del Buscador Dinámico */
+        .search-container {
+            margin-bottom: 25px;
+            background-color: var(--white);
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+        }
+        .search-box-wrapper {
+            position: relative;
+            max-width: 500px;
+        }
+        .search-box-wrapper input {
+            width: 100%;
+            padding: 10px 12px 10px 38px;
+            border-radius: 4px;
+            border: 1px solid #cbd5e1;
+            font-size: 0.9rem;
+            color: var(--text-main);
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .search-box-wrapper input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(0, 51, 102, 0.1);
+        }
+        .search-box-wrapper i {
+            position: absolute;
+            left: 14px;
+            top: 13px;
+            color: #94a3b8;
+            font-size: 0.95rem;
+        }
 
         .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(430px, 1fr)); gap: 25px; }
         @media (max-width: 500px) { .products-grid { grid-template-columns: 1fr; } }
 
+        /* Estilo exacto basado en la vista de tarjetas original */
         .product-card {
             background-color: var(--white); border: 1px solid var(--border-color); border-radius: 8px;
             padding: 20px; display: flex; flex-direction: column; justify-content: space-between;
@@ -91,63 +128,70 @@
         }
         .product-card:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.08); }
         .product-body { display: flex; flex-direction: column; gap: 12px; margin-bottom: 15px; }
-        .product-main-info { display: flex; gap: 15px; align-items: flex-start; }
+        .product-main-info { display: flex; gap: 20px; align-items: flex-start; }
 
         .product-img-box {
-            width: 110px; height: 110px; flex-shrink: 0; border: 1px solid #f1f5f9; border-radius: 6px;
-            display: flex; align-items: center; justify-content: center; background-color: #ffffff; overflow: hidden; cursor: pointer;
+            width: 120px; height: 120px; flex-shrink: 0; border: 1px solid #f1f5f9; border-radius: 6px;
+            display: flex; align-items: center; justify-content: center; background-color: #ffffff; overflow: hidden;
         }
         .product-img-box img { max-width: 100%; max-height: 100%; object-fit: contain; }
 
         .product-details { flex-grow: 1; }
-        .product-model { color: #003399; font-weight: 700; font-size: 1.1rem; margin-bottom: 4px; }
-        .product-title-specs { font-size: 0.9rem; color: var(--text-main); font-weight: 600; line-height: 1.4; margin: 0 0 6px 0; }
+        .product-model { color: #003399; font-weight: 700; font-size: 1.25rem; margin-bottom: 4px; }
+        .product-title-specs { font-size: 0.95rem; color: var(--text-main); font-weight: 700; line-height: 1.4; margin: 0 0 8px 0; }
         
-        .product-price-list { font-size: 0.95rem; color: #475569; margin: 5px 0; font-weight: 500; }
-        .product-price-list .original-price { text-decoration: line-through; color: #94a3b8; font-size: 0.85rem; margin-right: 8px; }
-        .product-price-list .final-price { color: #d32f2f; font-weight: bold; font-size: 1.15rem; }
-        .usd-reference { font-size: 0.75rem; color: #64748b; display: block; margin-top: 2px; }
+        .product-price-list { font-size: 0.95rem; color: #64748b; margin: 8px 0; font-weight: 500; }
+        .product-price-list .final-price { color: #d32f2f; font-weight: bold; font-size: 1.4rem; display: block; margin-bottom: 2px; }
+        .usd-reference { font-size: 0.8rem; color: #94a3b8; display: block; }
 
-        /* Características con Palomitas */
-        .product-features-list { margin: 8px 0 0 0; padding-left: 20px; list-style-type: none; }
-        .product-features-list li { font-size: 0.85rem; color: #475569; line-height: 1.5; margin-bottom: 4px; position: relative; }
-        .product-features-list li::before { content: "✓"; position: absolute; left: -16px; color: #10b981; font-weight: bold; }
+        /* Badge de Margen Asegurado */
+        .margin-badge {
+            display: inline-block; background-color: #f0fdf4; color: #15803d; 
+            padding: 6px 14px; border-radius: 6px; font-size: 0.85rem; font-weight: 700; 
+            margin-top: 6px; border: 1px solid #bbf7d0; width: fit-content;
+        }
 
-        /* Contenedor y Botones del Footer de la Tarjeta */
-        .product-footer { border-top: 1px solid #f1f5f9; padding-top: 12px; }
-        .product-actions { display: flex; gap: 10px; margin-top: 5px; }
+        /* Características con Palomitas Verdes */
+        .product-features-list { margin: 10px 0 0 0; padding-left: 20px; list-style-type: none; }
+        .product-features-list li { font-size: 0.9rem; color: #475569; line-height: 1.6; margin-bottom: 6px; position: relative; }
+        .product-features-list li::before { content: "✓"; position: absolute; left: -18px; color: #10b981; font-weight: bold; }
+
+        /* Footer de la tarjeta y Layout de Botones */
+        .product-footer { border-top: 1px solid #f1f5f9; padding-top: 15px; }
+        .product-actions { display: flex; gap: 10px; }
+        
         .btn-prepare {
             background-color: var(--primary-color); color: var(--white); border: none; border-radius: 4px;
-            padding: 9px 12px; font-size: 0.85rem; font-weight: 600; cursor: pointer; flex: 1; text-align: center;
+            padding: 11px 14px; font-size: 0.9rem; font-weight: 600; cursor: pointer; flex: 2;
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
         }
         .btn-prepare:hover { background-color: #002244; }
 
-        /* Estilos del Nuevo Botón de Video Explicativo */
         .btn-video {
             background-color: transparent; color: var(--accent-color); border: 1px solid var(--accent-color);
-            border-radius: 4px; padding: 8px 12px; font-size: 0.85rem; font-weight: 600; cursor: pointer;
-            display: inline-flex; align-items: center; justify-content: center; gap: 6px; text-decoration: none;
+            border-radius: 4px; padding: 11px 14px; font-size: 0.9rem; font-weight: 600; cursor: pointer;
+            flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 6px; text-decoration: none;
             transition: all 0.2s; box-sizing: border-box;
         }
         .btn-video:hover { background-color: var(--accent-color); color: var(--white); }
 
-        /* MODAL */
+        /* MODAL VISTA PREVIA */
         .custom-modal {
             display: none; position: fixed; z-index: 9999; top: 0; left: 0; width: 100%; height: 100%;
             background-color: rgba(15, 23, 42, 0.85); align-items: center; justify-content: center;
         }
         .modal-content-wrapper {
-            position: relative; background-color: var(--white); padding: 25px; border-radius: 8px;
-            max-width: 650px; width: 90%; text-align: center;
+            position: relative; background-color: #f1f5f9; padding: 25px; border-radius: 8px;
+            max-width: 650px; width: 90%; text-align: center; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.3);
         }
-        .output-composite-img { max-width: 100%; max-height: 65vh; border: 1px solid #cbd5e1; border-radius: 6px; }
-        .modal-close { position: absolute; top: 10px; right: 15px; color: #94a3b8; font-size: 1.8rem; cursor: pointer; background: none; border: none; }
+        .output-composite-img { max-width: 100%; height: auto; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .modal-close { position: absolute; top: 12px; right: 18px; color: #94a3b8; font-size: 1.8rem; cursor: pointer; background: none; border: none; }
         
-        /* Botón de Copiado Expreso */
+        /* Botón Verde de Copiado Expreso de Ficha */
         .btn-copy-clipboard {
             background-color: #10b981; color: var(--white); border: none; border-radius: 4px;
-            padding: 12px 20px; font-size: 0.95rem; font-weight: bold; cursor: pointer; width: 100%;
-            margin-top: 12px; display: flex; align-items: center; justify-content: center; gap: 8px;
+            padding: 14px 20px; font-size: 1rem; font-weight: bold; cursor: pointer; width: 100%;
+            margin-top: 15px; display: flex; align-items: center; justify-content: center; gap: 8px;
             transition: background-color 0.2s;
         }
         .btn-copy-clipboard:hover { background-color: #059669; }
@@ -190,6 +234,14 @@
                 <h2 id="categoryTitle">Cargando...</h2>
                 <p id="categoryDesc"></p>
             </div>
+
+            <div class="search-container">
+                <div class="search-box-wrapper">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="categorySearchInput" onkeyup="filterActiveCategoryProducts()" placeholder="Buscar en esta categoría...">
+                </div>
+            </div>
+
             <div class="products-grid" id="productsContainer"></div>
         </main>
     </div>
@@ -197,11 +249,11 @@
     <div id="imageModal" class="custom-modal" onclick="closeLightbox()">
         <div class="modal-content-wrapper" onclick="event.stopPropagation()">
             <button class="modal-close" onclick="closeLightbox()">&times;</button>
-            <div style="font-size: 0.9rem; color:#475569; font-weight:600; margin-bottom:10px;">Vista Previa de Ficha Técnica:</div>
+            <div style="font-size: 1rem; color:#1e293b; font-weight:700; margin-bottom:12px;">Vista Previa de Ficha Técnica:</div>
             <img id="modalTargetImg" class="output-composite-img" src="" alt="Ficha Comercial">
             
             <button id="btnClipboardAction" class="btn-copy-clipboard" onclick="copyCanvasToClipboard()">
-                📋 Copiar Ficha para WhatsApp
+                🖼️ Copiar Ficha para WhatsApp
             </button>
         </div>
     </div>
@@ -211,7 +263,7 @@
     <script>
         let currentRate = 17.23;
         let currentDiscount = 0;
-        let currentCategory = "dvr"; // Categoría por defecto al iniciar
+        let currentCategory = "dvr";
 
         const GITHUB_IMG_BASE = "https://bytecomtec.github.io/marketing_videovigilancia/";
 
@@ -242,7 +294,7 @@
                         desc: "Grabador IP autónomo provisto de puertos PoE nativos para energizar cámaras de forma directa.",
                         costUSD: 62.14,
                         features: ["Codificación H.265+/H.265/H.264+/H.264", "Almacenamiento 1 disco hasta 6 TB", "Throughput entrada 50 Mbps, salida 40 Mbps", "Reproducción sincrónica 4 canales Full HD", "2 antenas Wi-Fi MIMO 2.4 GHz"],
-                        videoURL: "https://bytecomtec.github.io/videos_videovigilancia/videovigilancia.mp4" // Video añadido
+                        videoURL: "https://bytecomtec.github.io/videos_videovigilancia/videovigilancia.mp4"
                     },
                     { 
                         model: "DS-7604NI-Q1/4P(D)",
@@ -257,7 +309,7 @@
                         titleSpecs: "[Acusearch] NVR 12 Megapíxel (4K) / 4 canales IP / 4 Puertos PoE+ / Reconocimiento Facial / AcuSense (Evita Falsas Alarmas) / 1 Bahías de Disco Duro / HDMI en 4K / 300 Metros PoE Modo Extendido", 
                         desc: "Grabador IP autónomo provisto de puertos PoE nativos para energizar cámaras de forma directa.",
                         costUSD: 117.40,
-                        features: ["Compresión H.265+/H.265/H.264+/H.264 para eficiencia", "4 puertos PoE+ con 50W potencia total", "Acceso remoto vía Hik-Connect y aplicaciones móviles", "Reconocimiento facial hasta 50,000 rostros en 4 canales", "Modo PoE extendido hasta 300 metros de distancia"],
+                        features: ["Compresión H.265+/H.265/H.264+/H.264 para eficiencia", "4 puertos PoE+ con 50W potencia total", "Acceso remoto vía Hik-Connect y aplicaciones móviles"],
                         videoURL: ""
                     },
                     { 
@@ -265,7 +317,7 @@
                         titleSpecs: "NVR Inalámbrico (WiFi) de 8 Canales IP / Admite Cámaras hasta 5 Megapixel (3K) / Salidas HDMI y VGA / H.265 / Almacenamiento Expandible hasta 8 TB", 
                         desc: "Grabador de red eficiente diseñado para gestionar cámaras IP de alta definición continua.",
                         costUSD: 46.55,
-                        features: ["Almacenamiento expandible hasta 8 TB", "Soporte para cámaras de hasta 5 MP (3K)", "Doble salida de video HDMI y VGA", "Conexión inalámbrica WiFi para 8 canales", "Diseño resistente para entornos exigentes"],
+                        features: ["Almacenamiento expandible hasta 8 TB", "Soporte para cámaras de hasta 5 MP (3K)", "Doble salida de video HDMI y VGA"],
                         videoURL: ""
                     },
                     { 
@@ -273,7 +325,7 @@
                         titleSpecs: "NVR 8 Megapixel (4K) (Compatible con Cámaras ACUSENSE) / 8 canales IP / 8 Puertos PoE+ / 1 Bahía de Disco Duro / Salida de Vídeo en 4K / 300 Metros PoE Modo Extendido", 
                         desc: "Grabador IP autónomo provisto de puertos PoE nativos para energizar cámaras de forma directa.",
                         costUSD: 138.24,
-                        features: ["Compresión H.265+/H.265 con reducción del 50% en ancho de banda", "8 puertos PoE+ con 75W total y modo extendido 300m", "Soporta disco duro hasta 8TB con tecnología S.M.A.R.T", "Resolución 4K en 8 canales a 30fps", "Detección AcuSense en 8 canales para humanos y vehículos", "Salida simultánea HDMI y VGA en múltiples resoluciones"],
+                        features: ["Compresión H.265+/H.265 con reducción del 50% en ancho de banda", "8 puertos PoE+ con 75W total y modo extendido 300m", "Soporta disco duro hasta 8TB con tecnología S.M.A.R.T"],
                         videoURL: ""
                     },
                     { 
@@ -281,7 +333,7 @@
                         titleSpecs: "[Acusearch] NVR 12 Megapíxel (4K) / 8 canales IP / AcuSense (Evita Falsas Alarmas) / Reconocimiento Facial / 1 Bahía de Disco Duro / HDMI en 4K / Sin Puertos PoE", 
                         desc: "Grabador de red eficiente diseñado para gestionar cámaras IP de alta definición continua.",
                         costUSD: 93.06,
-                        features: ["Compresión H.265+ para mayor eficiencia", "Tecnología ANR para grabación local en desconexión", "Reconocimiento facial hasta 20,000 rostros", "Soporta 1 HDD de hasta 16TB", "Detección AcuSense: humano y vehículo", "Salida HDMI 4K/UHD"],
+                        features: ["Compresión H.265+ para mayor eficiencia", "Tecnología ANR para grabación local en desconexión", "Reconocimiento facial hasta 20,000 rostros"],
                         videoURL: ""
                     },
                     { 
@@ -289,7 +341,7 @@
                         titleSpecs: "[Acusearch] NVR 12 Megapixel (4K) / 16 canales IP / AcuSense (Evita Falsas Alarmas) / Reconocimiento Facial / 1 Bahía de Disco Duro / HDMI en 4K / Sin Puertos PoE+", 
                         desc: "Grabador IP autónomo provisto de puertos PoE nativos para energizar cámaras de forma directa.",
                         costUSD: 133.48,
-                        features: ["Compresión H.265+/H.265 para reducción de ancho de banda", "Reconocimiento facial con base de datos de 50,000 rostros", "Soporte para resolución 12MP (4K) en 16 canales", "Detección de movimiento multizona con filtro de falsas alarmas", "1 puerto HDMI 4K y 1 puerto VGA simultáneos"],
+                        features: ["Compresión H.265+/H.265 para reducción de ancho de banda", "Reconocimiento facial con base de datos de 50,000 rostros", "Soporte para resolución 12MP (4K) en 16 canales"],
                         videoURL: ""
                     },
                     { 
@@ -297,7 +349,7 @@
                         titleSpecs: "[Acusearch] NVR 12 Megapixel (4K) / 16 canales IP / AcuSense (Evita Falsas Alarmas) / Reconocimiento Facial / 2 Bahías de Disco Duro / HDMI en 4K / Sin Puertos PoE+ / Alarmas I/O", 
                         desc: "Grabador de red eficiente diseñado para gestionar cámaras IP de alta definición continua.",
                         costUSD: 148.63,
-                        features: ["Compresión H.265+ para mayor eficiencia", "Acceso remoto desde dispositivos móviles", "Soporta hasta 2 discos duros", "Reconocimiento facial para 20,000 rostros", "Salida HDMI 4K para alta resolución"],
+                        features: ["Compresión H.265+ para mayor eficiencia", "Acceso remoto desde dispositivos móviles", "Soporta hasta 2 discos duros"],
                         videoURL: ""
                     },
                     { 
@@ -305,7 +357,7 @@
                         titleSpecs: "[AcuSearch] NVR 12 Megapixel (4K) / 16 Canales IP / 16 Puertos PoE+ (10/100 Mbps) / Reconocimiento Facial / AcuSense / 2 Bahías para HDD de 16 TB / HDMI 4K / Alarmas I/O", 
                         desc: "Grabador de red eficiente diseñado para gestionar cámaras IP de alta definición continua.",
                         costUSD: 309.36,
-                        features: ["Compresión H.265+/H.265 con eficiencia energética", "16 puertos PoE+ 802.3 af/at con 200 W", "Soporta 2 HDD de hasta 16 TB", "Reconocimiento facial hasta 50,000 rostros", "Resolución 4K (3840x2160) a 30 Hz", "Detección inteligente: facial, ANPR y áreas restringidas"],
+                        features: ["Compresión H.265+/H.265 con eficiencia energética", "16 puertos PoE+ 802.3 af/at con 200 W", "Soporta 2 HDD de hasta 16 TB"],
                         videoURL: ""
                     },
                     { 
@@ -313,7 +365,7 @@
                         titleSpecs: "[AcuSearch] NVR 12 Megapixel (4K) / 32 canales IP / AcuSense (Evita Falsas Alarmas) / Reconocimiento Facial / 2 Bahías de Disco Duro / HDMI en 4K / Sin Puertos PoE+", 
                         desc: "Grabador IP autónomo provisto de puertos PoE nativos para energizar cámaras de forma directa.",
                         costUSD: 225.65,
-                        features: ["Compresión H.265+/H.264+ para eficiencia", "2 bahías HDD soportan hasta 16TB", "AcuSense filtra falsas alarmas con IA", "Salida HDMI 4K (8MP/12MP)", "Compatible con gabinete metálico GABVID2R3"],
+                        features: ["Compresión H.265+/H.264+ para eficiencia", "2 bahías HDD soportan hasta 16TB", "AcuSense filtra falsas alarmas con IA"],
                         videoURL: ""
                     },
                     { 
@@ -321,7 +373,7 @@
                         titleSpecs: "[AcuSearch] NVR 12 Megapixel (4K) / 32 canales IP / 16 Puertos PoE+ / Recocimiento Facial / AcuSense (Evita Falsas Alarmas) / 2 Bahías de Disco Duro / HDMI en 4K / Alarmas I/O / 300 Metros PoE Modo Extendido", 
                         desc: "Grabador de red eficiente diseñado para gestionar cámaras IP de alta definición continua.",
                         costUSD: 458.48,
-                        features: ["Compresión de video H.265+/H.265/H.264+/H.264", "16 puertos PoE+ 802.3 af/at (200W total)", "Tecnología AcuSense para detección precisa (humano/vehículo)", "Soporta 2 HDD's de hasta 16 TB (no incluido)", "Compatible con gabinete metálico GABVID2R3"],
+                        features: ["Compresión de video H.265+/H.265/H.264+/H.264", "16 puertos PoE+ 802.3 af/at (200W total)", "Tecnología AcuSense para detección precisa (humano/vehículo)"],
                         videoURL: ""
                     },
                     { 
@@ -329,7 +381,7 @@
                         titleSpecs: "[Doble Poder de Decodificación] NVR 32 Megapixel (8K) / 64 Canales IP / AcuSense / ANPR / Conteo de Personas / Heat Map / 8 Bahías de Disco Duro / Soporta RAID con Hot Swap / 2 HDMI en 8K / Soporta POS / Alarmas I/O / Smart Search", 
                         desc: "Grabador IP autónomo provisto de puertos PoE nativos para energizar cámaras de forma directa.",
                         costUSD: 2069.56,
-                        features: ["Doble decodificación 8K y 64 canales IP", "Tecnología AcuSense para detección precisa de humanos y vehículos", "Soporta RAID 0,1,5,6,10 con hot swap", "Doble salida HDMI 8K y VGA simultánea", "8 bahías para discos duros de hasta 16TB"],
+                        features: ["Doble decodificación 8K y 64 canales IP", "Tecnología AcuSense para detección precisa de humanos y vehículos", "Soporta RAID 0,1,5,6,10 con hot swap"],
                         videoURL: ""
                     },
                     { 
@@ -337,7 +389,7 @@
                         titleSpecs: "[Doble Poder de Decodificación] NVR 32 Megapixel (8K) / 128 Canales IP / AcuSense / ANPR / Conteo de Personas / 16 Bahías de Disco Duro / 2 Tarjetas de Red / Soporta RAID con Hot Swap / 2 HDMI en 8K / POS / Alarmas I/O / Smart Search", 
                         desc: "Grabador de red eficiente diseñado para gestionar cámaras IP de alta definición continua.",
                         costUSD: 4467.45,
-                        features: ["Compresión H.265+/H.265/H.264+/H.264 eficiente", "Hot swap con soporte RAID 0,1,5,6,10", "Acceso remoto multiplataforma con Hik-Connect", "Soporte ONVIF para múltiples marcas de cámaras", "Soporta 16 HDDs de hasta 16 TB", "Doble salida HDMI 8K/4K para visualización"],
+                        features: ["Compresión H.265+/H.265/H.264+/H.264 eficiente", "Hot swap con soporte RAID 0,1,5,6,10", "Acceso remoto multiplataforma con Hik-Connect"],
                         videoURL: ""
                     }
                 ]
@@ -360,7 +412,7 @@
                         titleSpecs: "DVR 4 Canales TurboHD + 2 Canales IP / 5 Megapixel Lite- 3K Lite / Acusense (Evista falsas alarmas) / Audio por Coaxitron / Bahía de Disco Duro / Salida de Video en Full HD", 
                         desc: "Grabador balanceado analítico para entornos residenciales y pequeños comercios que exigen nitidez estructural superior.",
                         costUSD: 53.57,
-                        features: ["Filtrado inteligente de humanos y vehículos con AcuSense", "Soporta TurboHD hasta 5 megapíxeles Lite", "Agrega cámaras IP por cada canal TurboHD apagado", "Cruce de línea en 90 segundos con AcuSense", "Audio, video y datos por un solo cable", "Soporta hasta 1 disco duro de 10TB"],
+                        features: ["Filtrado inteligente de humanos y vehículos con AcuSense", "Soporta TurboHD hasta 5 megapíxeles Lite", "Agrega cámaras IP por cada canal TurboHD apagado"],
                         videoURL: ""
                     },
                     { 
@@ -368,7 +420,7 @@
                         titleSpecs: "[Audio Bidireccional] DVR 4 Canales TurboHD + 1 Canal IP / 2 Megapixel (1080p) Lite / Acusense Lite (Evita Falsas Alarmas) / Audio por Coaxitron / 1 Bahia de Disco Duro / H.265+ / Salida de Vídeo Full HD", 
                         desc: "Solución analítica avanzada basada en algoritmos profundos para mitigar las falsas alarmas de entorno.",
                         costUSD: 28.88,
-                        features: ["Audio bidireccional por coaxitron en todos los canales", "Acusense Lite detección humano/vehículo en todos los canales", "Compresión H.265+ para ahorro de almacenamiento", "Salida de video Full HD simultánea HDMI y VGA", "Soporta hasta 4 TB de almacenamiento HDD", "Modo NVR completo con 5 canales IP"],
+                        features: ["Audio bidireccional por coaxitron en todos los canales", "Acusense Lite detección humano/vehículo en todos los canales", "Compresión H.265+ para ahorro de almacenamiento"],
                         videoURL: ""
                     },
                     { 
@@ -376,7 +428,7 @@
                         titleSpecs: "DVR 8 Canales TurboHD + 2 Canales IP / 2 Megapíxel (1080P) Lite / Motion Detection 2.0 (Evita Falsas Alarmas) / Audio por Coaxitron / 1 Bahía de Disco Duro / H.265+ / 1 Canal de Audio / Salida de Vídeo Full HD", 
                         desc: "Grabador de entrada de la línea HiLook de Hikvision, óptimo para renovaciones de sistemas análogos tradicionales a bajo costo.",
                         costUSD: 24.93,
-                        features: ["Visualización en vivo desde dispositivos móviles Hik-Connect", "Control centralizado de seguridad en una sola aplicación", "Soporte de audio por coaxitron en todos los canales", "Combinación fácil de cámara y micrófono interconstruido", "Actualizaciones constantes para rendimiento óptimo de Hik-Connect", "Detección Motion Detection 2.0 para humanos y vehículos por movimiento"],
+                        features: ["Visualización en vivo desde dispositivos móviles Hik-Connect", "Control centralizado de seguridad en una sola aplicación", "Soporte de audio por coaxitron en todos los canales"],
                         videoURL: ""
                     },
                     { 
@@ -384,7 +436,7 @@
                         titleSpecs: "DVR 8 Canales TurboHD 1080p / Chasis Metálico de Alta Durabilidad / Audio sobre Coaxial Multiplexado", 
                         desc: "Grabador robustecido con chasis estructural metálico para protección superior en operaciones de rango continuo.",
                         costUSD: 32.01,
-                        features: ["Audio bidireccional en todos los canales", "Filtro inteligente de movimiento para humanos y vehículos", "Soporta 10 canales: 8 TurboHD + 2 IP", "Compresión H.265+ para mayor eficiencia", "Compatibilidad con 5 tecnologías: TurboHD, CVBS, CVI, AHD, IP", "Soporta cámaras PTZ en todos los canales"],
+                        features: ["Audio bidireccional en todos los canales", "Filtro inteligente de movimiento para humanos y vehículos", "Soporta 10 canales: 8 TurboHD + 2 IP"],
                         videoURL: ""
                     },
                     { 
@@ -392,7 +444,7 @@
                         titleSpecs: "DVR 8 Canales TURBOHD + 4 Canales IP / 5 Megapixel Lite - 3K Lite / Audio de Dos Vías por Coaxitron / Reconocimiento Facial / ACUSENSE (Evita falsas alarmas) / 1 Bahía de Disco Duro / Salida de Video en Full HD", 
                         desc: "Equipo profesional de alta gama provisto de analíticas avanzadas para reconocimiento facial y protección perimetral estricta.",
                         costUSD: 92.40,
-                        features: ["Soporta 12 canales: 8 TurboHD + 4 IP", "Detección inteligente ACUSENSE con filtro de humanos y vehículos", "Reconocimiento facial en 2 canales de video", "Compresión H.265+ para mayor eficiencia de almacenamiento", "Soporta HDD de hasta 10 TB", "Salida de video simultánea en HDMI y VGA Full HD"],
+                        features: ["Soporta 12 canales: 8 TurboHD + 4 IP", "Detección inteligente ACUSENSE con filtro de humanos y vehículos", "Reconocimiento facial en 2 canales de video"],
                         videoURL: ""
                     },
                     { 
@@ -400,7 +452,7 @@
                         titleSpecs: "DVR 4 Canales TURBOHD + 2 Canales IP / 8 Megapixel (4K) / Audio Bidireccional por Coaxitron / ACUSENSE / Reconocimiento Facial / 1 Bahía de Disco Duro / Salida de Video en Full HD / H.265+", 
                         desc: "Grabador digital insignia de Epcom ideal para proyectos de mediana envergadura que demandan analíticas fluidas.",
                         costUSD: 86.31,
-                        features: ["Soporta audio bidireccional por coaxitron en todos los canales", "Compresión H.265+ para mayor eficiencia", "Reconocimiento facial en 2 canales", "Tecnología AcuSense para detección precisa", "Soporta HDD hasta 10 TB", "Salida de video Full HD HDMI/VGA"],
+                        features: ["Soporta audio bidireccional por coaxitron en todos los canales", "Compresión H.265+ para mayor eficiencia", "Reconocimiento facial en 2 canales"],
                         videoURL: ""
                     },
                     { 
@@ -408,7 +460,7 @@
                         titleSpecs: "DVR 8 Canales TURBOHD + 4 Canales IP / 5 Megapixel Lite - 3K Lite / Audio Bidireccional por Coaxitron / Reconocimiento Facial / ACUSENSE (Evita falsas alarmas) / 1 Bahía de Disco Duro / Salida de Video en Full HD", 
                         desc: "Grabador digital insignia de Epcom ideal para proyectos de mediana envergadura que demandan analíticas fluidas.",
                         costUSD: 82.66,
-                        features: ["8 Canales TurboHD + 4 IP simultáneos", "Reconocimiento facial en 2 canales de video", "Tecnología Acusense para detección precisa de humanos y vehículos", "DVR pentahíbrido con compatibilidad HD-TVI/HD-CVI/Analógico/IP/AHD", "Soporta hasta 8 canales IP mediante conversión de canales TurboHD"],
+                        features: ["8 Canales TurboHD + 4 IP simultáneos", "Reconocimiento facial en 2 canales de video", "Tecnología Acusense para detección precisa de humanos y vehículos"],
                         videoURL: ""
                     },
                     { 
@@ -416,7 +468,7 @@
                         titleSpecs: "DVR 16 Canales TurboHD + 2 Canales IP / 2 Megapixel (1080p) Lite / Acusense Lite (Evita Falsas Alarmas) / Audio por Coaxitron / 1 Bahía de Disco Duro / H.265+ / Salida de Video Full HD", 
                         desc: "Grabador multicanal balanceado para instalaciones escolares que requieren cobertura total de cámaras con costos contenidos.",
                         costUSD: 60.05,
-                        features: ["5 tecnologías: HD-TVI / AHD / CVI / CVBS / IP", "Audio por coaxitron sin cables adicionales", "Compresión H.265+ para menos uso de ancho de banda", "Compatible con Hik-Connect P2P para acceso remoto fácil", "16 canales TurboHD + 2 canales IP (total 18)", "Salida Full HD HDMI y VGA simultánea", "Capacidad de disco duro: 1 de hasta 10 TB"],
+                        features: ["5 tecnologías: HD-TVI / AHD / CVI / CVBS / IP", "Audio por coaxitron sin cables adicionales", "Compresión H.265+ para menos uso de ancho de banda"],
                         videoURL: ""
                     },
                     { 
@@ -424,7 +476,7 @@
                         titleSpecs: "DVR 16 Canales TurboHD + 2 Canales IP / 2 Megapixel (1080p) Lite / Acusense Lite (Evita Falsas Alarmas) / Audio por Coaxitron y Bidireccional / 1 Bahía de Disco Duro / H.265+ / Salida de Video Full HD", 
                         desc: "Grabador industrial de 16 vías optimizado para montaje seguro en gabinetes o racks de telecomunicaciones.",
                         costUSD: 56.68,
-                        features: ["Tecnología TurboHD 1080p Lite con alta definición", "Soporte 5 tecnologías: TurboHD, CVBS, CVI, AHD, IP", "AcuSense Lite con detección humana y vehicular", "Compresión H.265+ para eficiencia en almacenamiento", "Soporta hasta 4TB de almacenamiento en HDD", "Salida Full HD simultánea por HDMI y VGA"],
+                        features: ["Tecnología TurboHD 1080p Lite con alta definición", "Soporte 5 tecnologías: TurboHD, CVBS, CVI, AHD, IP", "AcuSense Lite con detección humana y vehicular"],
                         videoURL: ""
                     },
                     { 
@@ -432,7 +484,7 @@
                         titleSpecs: "DVR 16 Canales TURBOHD + 16 Canales IP / 8 Megapixel (4K) / Audio Bidireccional / ACUSENSE / Audio Bidireccional / 1 Bahía de Disco Duro / Salida de Video en Full HD / H.265+", 
                         desc: "Grabador profesional híbrido de ultra alta definición recomendado para monitorear detalles críticos con reconocimiento de objetivos.",
                         costUSD: 269.15,
-                        features: ["Soporta audio por Coaxitron en todos los canales", "DVR pentahíbrido: HD-TVI, HD-CVI, IP, AHD, Analógico", "Compresión H.265+ para optimizar almacenamiento", "Hasta 32 canales IP apagando 16 canales turboHD", "Resolución 8MP (4K) en canales TurboHD", "Soporta 1 HDD de hasta 10TB"],
+                        features: ["Soporta audio por Coaxitron en todos los canales", "DVR pentahíbrido: HD-TVI, HD-CVI, IP, AHD, Analógico", "Compresión H.265+ para optimizar almacenamiento"],
                         videoURL: ""
                     },
                     { 
@@ -440,7 +492,7 @@
                         titleSpecs: "DVR 16 Canales TURBOHD + 8 Canales IP / 5 Megapixel Lite - 3K Lite / Audio de Dos Vías por Coaxitron / Reconocimiento Facial / ACUSENSE (Evita falsas alarmas) / 1 Bahía de Disco Duro / Salida de Video en Full HD", 
                         desc: "Plataforma multicanal corporativa que integra motores analíticos avanzados para búsquedas inmediatas por atributos.",
                         costUSD: 136.83,
-                        features: ["Soporta audio bidireccional por coaxitron en todos los canales", "Reconocimiento facial en 4 canales TurboHD", "Tecnología AcuSense con filtro de humanos y vehículos en 8 canales", "24 canales totales (16 TurboHD + 8 IP) con conversión a IP", "Compresión H.265+ para ahorro de almacenamiento", "Salida de video Full HD en HDMI y VGA simultáneas", "Soporta 1 HDD hasta 10 TB (no incluido)"],
+                        features: ["Soporta audio bidireccional por coaxitron en todos los canales", "Reconocimiento facial en 4 canales TurboHD", "Tecnología AcuSense con filtro de humanos y vehículos en 8 canales"],
                         videoURL: ""
                     },
                     { 
@@ -448,7 +500,7 @@
                         titleSpecs: "DVR 16 Canales TURBOHD + 8 Canales IP / 5 Megapixel Lite - 3K Lite / Salida Independiente HDMI - VGA / Audio de Dos Vías por Coaxitron / Reconocimiento Facial / ACUSENSE (Evista falsas alarmas) / 1 Bahía de Disco Duro / Salida de Video en Fu", 
                         desc: "Grabador robusto diseñado para integraciones institucionales complejas donde coexisten infraestructuras análogas e IP.",
                         costUSD: 173.34,
-                        features: ["Soporta audio bidireccional por Coaxitron en todos los canales", "Reconocimiento facial en 4 canales y tecnología AcuSense", "24 canales: 16 TurboHD + 8 IP con resolución 5MP Lite", "Compresión H.265+ para ahorro del 50% en almacenamiento", "DVR pentahíbrido: HD-TVI, HD-CVI, Análogo, IP, AHD", "Salida de video independiente HDMI y VGA Full HD", "Soporta 1 HDD de hasta 12 TB (no incluido)"],
+                        features: ["Soporta audio bidireccional por Coaxitron en todos los canales", "Reconocimiento facial en 4 canales y tecnología AcuSense", "24 canales: 16 TurboHD + 8 IP con resolución 5MP Lite"],
                         videoURL: ""
                     },
                     { 
@@ -456,7 +508,7 @@
                         titleSpecs: "DVR 16 Canales TURBOHD + 8 Canales IP / 5 Megapixel Lite - 3K Lite / Audio Bidireccional por Coaxitron / Reconocimiento Facial / ACUSENSE (Evita falsas alarmas) / 1 Bahía de Disco Duro / Salida de Video en Full HD", 
                         desc: "Solución de videovigilancia robustecida y escalable para medianas empresas con flujos operativos ininterrumpidos.",
                         costUSD: 138.16,
-                        features: ["16 canales TurboHD + 8 IP, total 24", "Compresión H.265+ para eficiente almacenamiento", "DVR pentahíbrido: HD-TVI/HD-CVI/Analógico/IP/AHD", "Acceso remoto desde PC y smartphones", "Audio bidireccional con cámaras turboHD compatibles", "Reconocimiento facial en 4 canales HD", "Soporta 1 HDD de hasta 10 TB (no incluido)"],
+                        features: ["16 canales TurboHD + 8 IP, total 24", "Compresión H.265+ para eficiente almacenamiento", "DVR pentahíbrido: HD-TVI/HD-CVI/Analógico/IP/AHD"],
                         videoURL: ""
                     },
                     { 
@@ -464,7 +516,7 @@
                         titleSpecs: "DVR 32 Canales TurboHD + 2 Canales IP / 2 Megapixel (1080p) Lite / Acusense (Evita Falsas Alarmas) / Audio por Coaxitron / H.265+ / Salida de Video en Full HD", 
                         desc: "Sistema centralizado de alta densidad idóneo para proyectos escolares amplios o naves industriales de despliegue masivo.",
                         costUSD: 213.46,
-                        features: ["Hasta 18 cámaras IP en total", "Soporta 2 HDD de 10 TB", "Serie Turbo HD 5.0 con 16 canales apagables", "Detección IA: filtro de humanos y vehículos", "Compatibilidad múltiple: HD-TVI, HD-CVI, AHD, IP", "Soporta 2 HDD de hasta 10 TB (no incluido)"],
+                        features: ["Hasta 18 cámaras IP en total", "Soporta 2 HDD de 10 TB", "Serie Turbo HD 5.0 con 16 canales apagables"],
                         videoURL: ""
                     },
                     { 
@@ -472,7 +524,7 @@
                         titleSpecs: "[Audio Bidireccional] DVR 32 Canales TurboHD + 8 Canales IP / 5 Megapixel Lite - 3K Lite / Acusense / Reconocimiento Facial / Audio por Coaxitron / 2 Bahías de Disco Duro / H.265+ / Salida de Video en Full HD", 
                         desc: "Grabador de alta gama que unifica analíticas avanzadas de IA en una infraestructura masiva de cámaras de seguridad perimetral.",
                         costUSD: 342.59,
-                        features: ["40 canales: 32 TurboHD + 8 IP simultáneos", "Reconocimiento facial en 4 canales HD", "Acceso remoto vía Hik-Connect P2P", "2 bahías HDD soportan hasta 12 TB", "Audio bidireccional por Coaxitron en todos los canales"],
+                        features: ["40 canales: 32 TurboHD + 8 IP simultáneos", "Reconocimiento facial en 4 canales HD", "Acceso remoto vía Hik-Connect P2P"],
                         videoURL: ""
                     },
                     { 
@@ -480,64 +532,76 @@
                         titleSpecs: "DVR 32 Canales TurboHD + 8 Canales IP / 5 Megapixel Lite - 3K Lite / Acusense (Evita Falsas Alarmas) / Audio Bidireccional / 2 Bahías de Disco Duro / H.265+ / Salida de Video en Full HD", 
                         desc: "Grabador masivo insignia diseñado para gestionar la seguridad integral de infraestructuras complejas con máxima estabilidad de red.",
                         costUSD: 332.61,
-                        features: ["Soporta cámaras TurboHD de hasta 5 MP", "Detección facial en 4 canales", "Hasta 40 canales IP con 6 MP", "Audio bidireccional por coaxitron en todos los canales", "Soporta 2 HDD de hasta 12 TB (no incluido)"],
+                        features: ["Soporta cámaras TurboHD de hasta 5 MP", "Detección facial en 4 canales", "Hasta 40 canales IP con 6 MP"],
                         videoURL: ""
                     }
                 ]
             }
         };
 
+        function filterActiveCategoryProducts() {
+            const query = document.getElementById('categorySearchInput').value.toLowerCase();
+            const cards = document.querySelectorAll('#productsContainer .product-card');
+            cards.forEach(card => {
+                if (card.innerText.toLowerCase().includes(query)) {
+                    card.style.display = "flex";
+                } else {
+                    card.style.display = "none";
+                }
+            });
+        }
+
         function initMenu() {
             const menuContainer = document.getElementById('menuList');
             menuContainer.innerHTML = '';
-
             categoriesList.forEach(cat => {
                 const li = document.createElement('li');
-                const hasData = catalogData[cat.id] && catalogData[cat.id].products;
-                const count = hasData ? catalogData[cat.id].products.length : 0;
-
+                const count = catalogData[cat.id] ? catalogData[cat.id].products.length : 0;
+                
                 const a = document.createElement('a');
                 a.className = `category-menu-item ${cat.id === currentCategory ? 'active' : ''}`;
+                a.id = `menu-${cat.id}`;
                 a.onclick = () => selectCategory(cat.id);
-                a.innerHTML = `${cat.name} <span class="qty-badge">${count}</span>`;
-
+                a.innerHTML = `<span>${cat.name}</span> <span class="qty-badge">${count}</span>`;
+                
                 li.appendChild(a);
                 menuContainer.appendChild(li);
             });
-
             renderProducts();
         }
 
         function selectCategory(catId) {
             currentCategory = catId;
+            document.querySelectorAll('.category-menu-item').forEach(item => item.classList.remove('active'));
+            const activeItem = document.getElementById(`menu-${catId}`);
+            if (activeItem) activeItem.classList.add('active');
             
-            // Actualizar clases activas del menú sidebar
-            const items = document.querySelectorAll('.category-menu-item');
-            items.forEach((item, index) => {
-                if(categoriesList[index].id === catId) {
-                    item.classList.add('active');
-                } else {
-                    item.classList.remove('active');
-                }
-            });
-
+            const searchInput = document.getElementById('categorySearchInput');
+            if (searchInput) searchInput.value = '';
+            
             renderProducts();
         }
 
+        // Lógica de cálculo unificada
         function calculatePrices(costUSD) {
-            const factorRentabilidad = 1.45; 
-            const iva = 1.16;
+            const costoMXNSinIva = costUSD * currentRate;
+            const costoMXNConIva = costoMXNSinIva * 1.16;
+            
+            const basePublico = costoMXNConIva * 1.65; 
+            let precioFinalPublico = basePublico * (1 - currentDiscount);
+            
+            const precioMinimoPermitido = costoMXNConIva * 1.20;
+            if (precioFinalPublico < precioMinimoPermitido) {
+                precioFinalPublico = precioMinimoPermitido;
+            }
 
-            let priceUSD = costUSD * factorRentabilidad * iva; 
-            let priceMXN = priceUSD * currentRate;
-
-            let finalPriceUSD = priceUSD * (1 - currentDiscount);
-            let finalPriceMXN = priceMXN * (1 - currentDiscount);
+            const margenAsegurado = precioFinalPublico - costoMXNConIva;
 
             return {
-                originalMXN: priceMXN,
-                finalMXN: finalPriceMXN,
-                finalUSD: finalPriceUSD
+                costoMXNConIva: costoMXNConIva,
+                basePublico: basePublico,
+                precioFinalPublico: precioFinalPublico,
+                margenAsegurado: margenAsegurado
             };
         }
 
@@ -548,9 +612,11 @@
 
             container.innerHTML = '';
 
-            if (!catalogData[currentCategory]) {
-                titleEl.innerText = "Línea No Disponible";
-                descEl.innerText = "Actualmente no hay productos cargados en esta categoría.";
+            if (!catalogData[currentCategory] || catalogData[currentCategory].products.length === 0) {
+                const catName = categoriesList.find(c => c.id === currentCategory)?.name || currentCategory;
+                titleEl.innerText = `Línea: ${catName}`;
+                descEl.innerText = catalogData[currentCategory]?.desc || `Módulo asignado a la ingeniería de ${catName.toLowerCase()}.`;
+                container.innerHTML = `<p style="grid-column: 1/-1; color: #64748b; font-style: italic; padding: 30px 0;">Las soluciones de hardware y flyers asociados a esta línea de negocio se encuentran actualmente en proceso de indexación técnica.</p>`;
                 return;
             }
 
@@ -559,21 +625,19 @@
             descEl.innerText = categoryInfo.desc;
 
             categoryInfo.products.forEach(product => {
-                const prices = calculatePrices(product.costUSD);
-                
+                const calc = calculatePrices(product.costUSD);
                 const card = document.createElement('div');
                 card.className = 'product-card';
 
-                // Reemplazo de diagonales para la ruta de la imagen local
-                const safeModelName = product.model.replace(/\//g, "-");
+                // Corrección de caracteres para imágenes locales en GitHub Pages
+                const safeModelName = product.model.replace(/\//g, "_");
                 const imgSrc = `${GITHUB_IMG_BASE}${safeModelName}.jpg`;
 
-                // Construcción condicional del botón de video explicativo
                 let videoButtonHTML = '';
                 if (product.videoURL && product.videoURL.trim() !== "") {
                     videoButtonHTML = `
                         <a href="${product.videoURL}" target="_blank" class="btn-video" title="Ver video explicativo">
-                            🎬 Video Tutorial
+                            🎬 Video
                         </a>
                     `;
                 }
@@ -586,20 +650,22 @@
                 card.innerHTML = `
                     <div class="product-body">
                         <div class="product-main-info">
-                            <div class="product-img-box" onclick="openLightbox('${imgSrc}')">
-                                <img src="${imgSrc}" alt="${product.model}" onerror="this.src='https://placehold.co/110x110?text=${safeModelName}'">
+                            <div class="product-img-box">
+                                <img src="${imgSrc}" alt="${product.model}" onerror="this.src='byte.png'">
                             </div>
                             <div class="product-details">
                                 <div class="product-model">${product.model}</div>
                                 <h3 class="product-title-specs">${product.titleSpecs}</h3>
-                                <p style="font-size: 0.85rem; color: #475569; margin: 0 0 8px 0; line-height:1.4;">${product.desc}</p>
                                 <div class="product-price-list">
-                                    <span class="original-price">$${prices.originalMXN.toFixed(2)}</span>
-                                    <span class="final-price">$${prices.finalMXN.toFixed(2)} MXN</span>
-                                    <span class="usd-reference">Ref: $${prices.finalUSD.toFixed(2)} USD (IVA Incluido)</span>
+                                    <span class="final-price">$${calc.precioFinalPublico.toFixed(2)} MXN</span>
+                                    <span class="usd-reference">Ref. Distribuidor: $${product.costUSD.toFixed(2)} USD (c/IVA: $${calc.costoMXNConIva.toFixed(2)} MXN)</span>
+                                </div>
+                                <div class="margin-badge">
+                                    Margen Real Asegurado: +$${calc.margenAsegurado.toFixed(2)} MXN
                                 </div>
                             </div>
                         </div>
+                        <p style="margin: 0; font-size: 0.9rem; color: #64748b; line-height: 1.4;">${product.desc}</p>
                         <ul class="product-features-list">
                             ${featuresHTML}
                         </ul>
@@ -607,163 +673,154 @@
                     <div class="product-footer">
                         <div class="product-actions">
                             <button class="btn-prepare" onclick="prepareTechnicalSheet('${product.model}')">
-                                📋 Generar Ficha
+                                🖼️ Generar Tarjeta Comercial
                             </button>
                             ${videoButtonHTML}
                         </div>
                     </div>
                 `;
-
                 container.appendChild(card);
             });
         }
 
         function updateAllPrices() {
-            const rateInput = document.getElementById('exchangeRate');
-            const discountSelect = document.getElementById('discountSelect');
-
-            currentRate = parseFloat(rateInput.value) || 17.23;
-            currentDiscount = parseFloat(discountSelect.value) || 0;
-
             renderProducts();
-        }
-
-        function openLightbox(src) {
-            const modal = document.getElementById('imageModal');
-            const modalImg = document.getElementById('modalTargetImg');
-            if(modal && modalImg) {
-                modalImg.src = src;
-                modal.style.display = 'flex';
-                
-                // Resetear estado del botón de portapapeles
-                const btnAction = document.getElementById('btnClipboardAction');
-                if (btnAction) {
-                    btnAction.className = 'btn-copy-clipboard';
-                    btnAction.innerText = '📋 Copiar Ficha para WhatsApp';
-                }
-            }
         }
 
         function prepareTechnicalSheet(modelCode) {
             const product = catalogData[currentCategory].products.find(p => p.model === modelCode);
             if (!product) return;
 
-            const prices = calculatePrices(product.costUSD);
-            const safeModelName = product.model.replace(/\//g, "-");
+            const calc = calculatePrices(product.costUSD);
+            const safeModelName = product.model.replace(/\//g, "_");
             const productImgUrl = `${GITHUB_IMG_BASE}${safeModelName}.jpg`;
 
             const canvas = document.getElementById('processingCanvas');
             const ctx = canvas.getContext('2d');
 
+            // Dimensiones óptimas de tu lienzo comercial express
             canvas.width = 600;
-            canvas.height = 360;
+            canvas.height = 400;
 
-            // Fondo Blanco Sólido
             ctx.fillStyle = '#ffffff';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillRect(0, 0, 600, 400);
 
-            // Encabezado Corporativo (Azul)
+            // Banner azul institucional idéntico a tu captura real
             ctx.fillStyle = '#003366';
-            ctx.fillRect(0, 0, canvas.width, 45);
+            ctx.fillRect(0, 0, 600, 80);
 
             ctx.fillStyle = '#ffffff';
-            ctx.font = 'bold 15px sans-serif';
-            ctx.fillText('Bytecomtec Ingeniería - Ficha Comercial Express', 15, 28);
-
-            // Carga de Imagen del Producto de forma asíncrona
-            const pImg = new Image();
-            pImg.crossOrigin = "anonymous";
-            pImg.src = productImgUrl;
-
-            pImg.onload = function() {
-                // Dibujar Imagen escalada de forma proporcional
-                ctx.drawImage(pImg, 20, 65, 120, 120);
-                finalizeCanvasDraw(ctx, canvas, product, prices);
-            };
-
-            pImg.onerror = function() {
-                // Rectángulo gris de respaldo si falla la imagen
-                ctx.fillStyle = '#f1f5f9';
-                ctx.fillRect(20, 65, 120, 120);
-                ctx.fillStyle = '#64748b';
-                ctx.font = '11px sans-serif';
-                ctx.fillText('Imagen', 60, 120);
-                finalizeCanvasDraw(ctx, canvas, product, prices);
-            };
-        }
-
-        function finalizeCanvasDraw(ctx, canvas, product, prices) {
-            // Modelo
-            ctx.fillStyle = '#003399';
-            ctx.font = 'bold 18px sans-serif';
-            ctx.fillText(product.model, 160, 82);
-
-            // Título Técnico de Especificaciones (con salto de línea si es largo)
-            ctx.fillStyle = '#1e293b';
-            ctx.font = 'bold 12px sans-serif';
-            wrapText(ctx, product.titleSpecs, 160, 105, 420, 16);
-
-            // Cuadro de Precios Destacado (Naranja Técnico)
-            ctx.fillStyle = '#fff7ed';
-            ctx.fillRect(160, 160, 420, 55);
-            ctx.strokeStyle = '#ff6600';
-            ctx.lineWidth = 1;
-            ctx.strokeRect(160, 160, 420, 55);
+            ctx.font = 'bold 20px sans-serif';
+            ctx.fillText('SOLUCIONES DE INGENIERÍA PERIMETRAL', 30, 45);
 
             ctx.fillStyle = '#ff6600';
-            ctx.font = 'bold 16px sans-serif';
-            ctx.fillText(`Precio Neto: $${prices.finalMXN.toFixed(2)} MXN`, 175, 194);
+            ctx.font = 'bold 14px sans-serif';
+            ctx.fillText('FICHA COMERCIAL DE HARDWARE - BYTECOMTEC', 30, 68);
 
-            ctx.fillStyle = '#475569';
-            ctx.font = '10px sans-serif';
-            ctx.fillText(`Antes: $${prices.originalMXN.toFixed(2)} MXN (Precios incluyen IVA)`, 390, 193);
+            // Código del modelo del equipo
+            ctx.fillStyle = '#003399';
+            ctx.font = 'bold 22px sans-serif';
+            ctx.fillText(`MODELO: ${product.model}`, 40, 125);
 
-            // Características Principales (Solo las 3 primeras para evitar sobrecupo)
-            ctx.fillStyle = '#334155';
-            ctx.font = 'bold 12px sans-serif';
-            ctx.fillText('Especificaciones clave:', 25, 240);
+            // Especificaciones técnicas
+            ctx.fillStyle = '#1e293b';
+            ctx.font = '13px sans-serif';
+            let nextY = wrapText(ctx, product.titleSpecs, 40, 150, 360, 18);
 
-            ctx.font = '11px sans-serif';
-            let currentY = 260;
-            product.features.slice(0, 3).forEach(feat => {
-                ctx.fillText(`• ${feat}`, 25, currentY);
-                currentY += 18;
-            });
+            // Precio calculado dinámicamente con margen real
+            let priceY = Math.max(nextY + 25, 220);
+            ctx.fillStyle = '#003366';
+            ctx.font = 'bold 18px sans-serif';
+            ctx.fillText(`Tu precio: $${calc.precioFinalPublico.toFixed(2)} MXN`, 40, priceY);
 
-            // Pie de Ficha Legal
+            // Bloque gris con advertencias en rojo (Basado estrictamente en la captura cambios1.png)
+            let boxY = Math.max(priceY + 15, 245);
             ctx.fillStyle = '#f8fafc';
-            ctx.fillRect(0, 325, canvas.width, 35);
-            ctx.fillStyle = '#64748b';
-            ctx.font = 'italic 10px sans-serif';
-            ctx.fillText('Cotización express para uso institucional. Vigencia de precios sujeta a variaciones del mercado.', 15, 346);
+            ctx.fillRect(40, boxY, 360, 55);
+            ctx.strokeStyle = '#e2e8f0';
+            ctx.strokeRect(40, boxY, 360, 55);
+            
+            ctx.fillStyle = '#d32f2f';
+            ctx.font = 'bold 14px sans-serif';
+            ctx.fillText('Cotización sujeta a diagnóstico en sitio.', 53, boxY + 24);
+            ctx.fillText('No incluye mano de obra por instalación.', 53, boxY + 44);
 
-            // Mostrar resultado en el Lightbox
-            const dataUrl = canvas.toDataURL('image/png');
-            openLightbox(dataUrl);
+            // Pie de página legal informativo
+            ctx.fillStyle = '#64748b';
+            ctx.font = 'italic 11px sans-serif';
+            ctx.fillText('* Vigencia ligada a existencia y tipo de cambio diario.', 40, 355);
+            ctx.fillText('Bytecomtec - Soporte Técnico Autorizado.', 40, 375);
+
+            const img = new Image();
+            img.crossOrigin = "anonymous";
+            img.src = productImgUrl;
+
+            img.onload = function() {
+                ctx.fillStyle = '#ffffff';
+                ctx.fillRect(420, 140, 140, 140);
+                ctx.strokeStyle = '#e2e8f0';
+                ctx.strokeRect(420, 140, 140, 140);
+                
+                const maxDim = 120;
+                let w = img.width;
+                let h = img.height;
+                if (w > h) {
+                    h = (h * maxDim) / w;
+                    w = maxDim;
+                } else {
+                    w = (w * maxDim) / h;
+                    h = maxDim;
+                }
+                const xOffset = 420 + (140 - w) / 2;
+                const yOffset = 140 + (140 - h) / 2;
+                
+                ctx.drawImage(img, xOffset, yOffset, w, h);
+                openModalWithCanvasData(canvas);
+            };
+            img.onerror = function() {
+                ctx.fillStyle = '#f1f5f9';
+                ctx.fillRect(420, 140, 140, 140);
+                ctx.strokeStyle = '#cbd5e1';
+                ctx.strokeRect(420, 140, 140, 140);
+                ctx.fillStyle = '#94a3b8';
+                ctx.font = 'bold 11px sans-serif';
+                ctx.fillText('[Imagen]', 465, 215);
+                openModalWithCanvasData(canvas);
+            };
         }
 
-        function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
+        function wrapText(context, text, x, y, maxWidth, lineHeight) {
             const words = text.split(' ');
             let line = '';
             let currentY = y;
-            let linesCount = 0;
 
             for (let n = 0; n < words.length; n++) {
                 let testLine = line + words[n] + ' ';
-                let metrics = ctx.measureText(testLine);
-                let testWidth = metrics.width;
-                if (testWidth > maxWidth && n > 0) {
-                    ctx.fillText(line, x, currentY);
+                if (context.measureText(testLine).width > maxWidth && n > 0) {
+                    context.fillText(line, x, currentY);
                     line = words[n] + ' ';
                     currentY += lineHeight;
-                    linesCount++;
-                    if (linesCount >= 3) return; // Forzar límite de renglones en la ficha
                 } else {
                     line = testLine;
                 }
             }
-            if (linesCount < 3) {
-                ctx.fillText(line, x, currentY);
+            context.fillText(line, x, currentY);
+            return currentY;
+        }
+
+        function openModalWithCanvasData(canvas) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalTargetImg');
+            const btnAction = document.getElementById('btnClipboardAction');
+            
+            if (modal && modalImg) {
+                modalImg.src = canvas.toDataURL('image/png');
+                modal.style.display = 'flex';
+                
+                if (btnAction) {
+                    btnAction.className = 'btn-copy-clipboard';
+                    btnAction.innerText = '🖼️ Copiar Ficha para WhatsApp';
+                }
             }
         }
 
@@ -773,30 +830,21 @@
             
             try {
                 canvas.toBlob(async function(blob) {
-                    if (!blob) {
-                        alert("Error al procesar los datos de la ficha técnica.");
-                        return;
-                    }
-                    
+                    if (!blob) return;
                     try {
                         await navigator.clipboard.write([
-                            new ClipboardItem({
-                                [blob.type]: blob
-                            })
+                            new ClipboardItem({ [blob.type]: blob })
                         ]);
-                        
                         if (btnAction) {
                             btnAction.className = 'btn-copy-clipboard success';
                             btnAction.innerText = '✅ ¡Ficha Copiada! Pégala en WhatsApp (Ctrl+V)';
                         }
                     } catch (err) {
-                        console.error("Error en la API de portapapeles: ", err);
-                        alert("Tu navegador bloqueó la escritura directa de imágenes. Prueba dando clic derecho sobre la ficha de abajo.");
+                        alert("Tu navegador bloqueó el copiado automático. Haz clic derecho en la imagen inferior para guardarla.");
                     }
                 }, 'image/png');
-                
             } catch (error) {
-                console.error("Fallo general de procesamiento de imagen: ", error);
+                console.error(error);
             }
         }
 
