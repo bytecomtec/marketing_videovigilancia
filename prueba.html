@@ -175,25 +175,26 @@
         }
         .btn-video:hover { background-color: var(--accent-color); color: var(--white); }
 
-        /* MODAL VISTA PREVIA OPTIMIZADO PARA PANTALLA COMPLETA EN CELULAR */
+        /* MODAL DE PREVISUALIZACIÓN OPTIMIZADO PARA MÓVILES (PANTALLA COMPLETA VERTICAL) */
         .custom-modal {
             display: none; position: fixed; z-index: 9999; top: 0; left: 0; width: 100%; height: 100%;
             background-color: rgba(15, 23, 42, 0.95); align-items: center; justify-content: center;
         }
         .modal-content-wrapper {
             position: relative; background-color: #f1f5f9; padding: 15px; border-radius: 8px;
-            max-width: 500px; width: 95%; max-height: 98vh; display: flex; flex-direction: column; 
+            max-width: 480px; width: 95%; max-height: 95vh; display: flex; flex-direction: column; 
             box-shadow: 0 20px 25px -5px rgba(0,0,0,0.3); box-sizing: border-box;
         }
         .image-scroll-container {
-            flex: 1; overflow-y: auto; margin-bottom: 10px; border-radius: 4px;
-            display: flex; align-items: flex-start; justify-content: center;
+            flex: 1; overflow-y: auto; margin-bottom: 12px; border-radius: 4px;
+            display: flex; align-items: flex-start; justify-content: center; background-color: #cbd5e1;
         }
         .output-composite-img { width: 100%; height: auto; border-radius: 4px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); display: block; }
+        
         .modal-close { position: absolute; top: -40px; right: 0; color: #ffffff; font-size: 2.2rem; cursor: pointer; background: none; border: none; }
         
         @media (max-width: 600px) {
-            .modal-close { top: 5px; right: 10px; color: #1e293b; background: rgba(255,255,255,0.8); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; z-index: 10; }
+            .modal-close { top: 5px; right: 10px; color: #1e293b; background: rgba(255,255,255,0.9); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; z-index: 10; }
         }
 
         .btn-copy-clipboard {
@@ -432,7 +433,7 @@
         function updateAllPrices() { renderProducts(); }
 
         /* ==========================================================================
-           LOGIC: DETECCIÓN Y REDISEÑO DINÁMICO DEL LIENZO (CANVAS RESPONSIVO)
+           LOGIC: ENFOQUE ADAPTATIVO TOTAL CON DISEÑO VERTICAL DE TARJETA DIGITAL
            ========================================================================== */
         function prepareTechnicalSheet(modelCode) {
             const product = catalogData[currentCategory].products.find(p => p.model === modelCode);
@@ -446,68 +447,71 @@
             const canvas = document.getElementById('processingCanvas');
             const ctx = canvas.getContext('2d');
 
-            // Detectar si el asesor está operando desde una pantalla móvil vertical
+            // Detectar pantallas pequeñas de smartphones
             const isMobile = window.innerWidth <= 600;
 
             if (isMobile) {
-                // REDISEÑO VERTICAL OPTIMIZADO PARA MÓVILES (Toda la pantalla)
-                canvas.width = 420;
-                canvas.height = 680;
+                // DISEÑO VERTICAL TIPO TARJETA MÓVIL (Llena la pantalla del celular sin achicar letras)
+                canvas.width = 450;
+                canvas.height = 780;
 
                 ctx.fillStyle = '#ffffff';
-                ctx.fillRect(0, 0, 420, 680);
+                ctx.fillRect(0, 0, 450, 780);
 
-                // Banner Superior Completo
+                // Cabecera Corporativa Ancha
                 ctx.fillStyle = '#003366';
-                ctx.fillRect(0, 0, 420, 90);
-                ctx.fillStyle = '#ffffff';
-                ctx.font = 'bold 16px sans-serif';
-                ctx.fillText('SOLUCIONES DE INGENIERÍA PERIMETRAL', 20, 40);
-                ctx.fillStyle = '#ff6600';
-                ctx.font = 'bold 12px sans-serif';
-                ctx.fillText('FICHA COMERCIAL DE HARDWARE - BYTECOMTEC', 20, 65);
-
-                // Código del modelo principal centrado
-                ctx.fillStyle = '#003399';
-                ctx.font = 'bold 20px sans-serif';
-                ctx.fillText(`MODELO: ${product.model}`, 25, 135);
-
-                // Especificaciones Técnicas (Texto envuelto en ancho móvil)
-                ctx.fillStyle = '#1e293b';
-                ctx.font = '14px sans-serif';
-                let nextY = wrapText(ctx, product.titleSpecs, 25, 165, 370, 20);
-
-                // Precio Destacado Grande
-                let priceY = nextY + 30;
-                ctx.fillStyle = '#003366';
-                ctx.font = 'bold 22px sans-serif';
-                ctx.fillText(`Precio Público: $${calc.precioFinalPublico.toFixed(2)} MXN`, 25, priceY);
-
-                // Contenedor para la imagen del equipo centrado abajo del precio
-                let imgBoxY = priceY + 20;
+                ctx.fillRect(0, 0, 450, 100);
                 
-                // Caja Gris de Advertencias (cambios1.png) empujada al bloque inferior
-                let boxY = imgBoxY + 170;
-                ctx.fillStyle = '#f8fafc';
-                ctx.fillRect(25, boxY, 370, 65);
-                ctx.strokeStyle = '#e2e8f0';
-                ctx.strokeRect(25, boxY, 370, 65);
-                ctx.fillStyle = '#d32f2f';
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 18px sans-serif';
+                ctx.fillText('SOLUCIONES DE INGENIERÍA PERIMETRAL', 25, 42);
+                
+                ctx.fillStyle = '#ff6600';
                 ctx.font = 'bold 13px sans-serif';
-                ctx.fillText('Cotización sujeta a diagnóstico en sitio.', 38, boxY + 26);
-                ctx.fillText('No incluye mano de obra por instalación.', 38, boxY + 48);
+                ctx.fillText('FICHA COMERCIAL DE HARDWARE - BYTECOMTEC', 25, 70);
 
-                // Textos informativos de vigencia al pie
+                // Bloque 1: Identificación del Equipo
+                ctx.fillStyle = '#003399';
+                ctx.font = 'bold 22px sans-serif';
+                ctx.fillText(`MODELO: ${product.model}`, 30, 145);
+
+                // Bloque 2: Especificaciones Técnicas (Ancho móvil dedicado)
+                ctx.fillStyle = '#1e293b';
+                ctx.font = '15px sans-serif';
+                let nextY = wrapText(ctx, product.titleSpecs, 30, 180, 390, 22);
+
+                // Bloque 3: Precio Destacado e Impactante
+                let priceY = nextY + 35;
+                ctx.fillStyle = '#003366';
+                ctx.font = 'bold 24px sans-serif';
+                ctx.fillText(`Precio Público: $${calc.precioFinalPublico.toFixed(2)} MXN`, 30, priceY);
+
+                // Espacio Central para renderizar la imagen del equipo de forma grande
+                let imgBoxY = priceY + 25;
+                
+                // Bloque 4: Caja de Advertencias de Ingeniería y Términos Técnicos
+                let boxY = imgBoxY + 210; 
+                ctx.fillStyle = '#f8fafc';
+                ctx.fillRect(30, boxY, 390, 75);
+                ctx.strokeStyle = '#e2e8f0';
+                ctx.strokeRect(30, boxY, 390, 75);
+                
+                ctx.fillStyle = '#d32f2f';
+                ctx.font = 'bold 14px sans-serif';
+                ctx.fillText('Cotización sujeta a diagnóstico en sitio.', 45, boxY + 30);
+                ctx.fillText('No incluye mano de obra por instalación.', 45, boxY + 54);
+
+                // Pie de Ficha con firmas institucionales
                 ctx.fillStyle = '#64748b';
-                ctx.font = 'italic 11px sans-serif';
-                ctx.fillText('* Vigencia ligada a existencia y tipo de cambio diario.', 25, 635);
-                ctx.fillText('Bytecomtec - Soporte Técnico Autorizado.', 25, 655);
+                ctx.font = 'italic 12px sans-serif';
+                ctx.fillText('* Vigencia ligada a existencia y tipo de cambio diario.', 30, 730);
+                ctx.fillText('Bytecomtec - Soporte Técnico Autorizado.', 30, 752);
 
-                // Carga de la imagen corporativa colocada en el layout vertical
-                renderCanvasImage(ctx, productImgUrl, 135, imgBoxY, 150, 150, canvas);
+                // Dibujar Imagen escalada al centro del flujo vertical móvil
+                renderCanvasImage(ctx, productImgUrl, 125, imgBoxY, 200, 200, canvas);
 
             } else {
-                // REDISEÑO HORIZONTAL ORIGINAL PARA ESCRITORIO / TABLETS
+                // DISEÑO DE ESCRITORIO HORIZONTAL ORIGINAL (600x400)
                 canvas.width = 600;
                 canvas.height = 400;
 
@@ -588,7 +592,7 @@
                 ctx.strokeStyle = '#cbd5e1';
                 ctx.strokeRect(x, y, width, height);
                 ctx.fillStyle = '#94a3b8';
-                ctx.font = 'bold 12px sans-serif';
+                ctx.font = 'bold 13px sans-serif';
                 ctx.fillText('[Imagen]', x + (width/2) - 25, y + (height/2) + 5);
                 openModalWithCanvasData(canvas);
             };
@@ -644,14 +648,14 @@
                         const file = new File([blob], cleanFileName, { type: 'image/png' });
                         await navigator.share({ files: [file] });
                     } catch (err) {
-                        console.log("Compartición cancelada.");
+                        console.log("Compartición cancelada por el usuario.");
                     }
                 } else {
                     try {
                         await navigator.clipboard.write([new ClipboardItem({ [blob.type]: blob })]);
                         if (btnAction) {
                             btnAction.className = 'btn-copy-clipboard success';
-                            btnAction.innerText = '✅ ¡Copiada! Pégala en tu chat (Ctrl+V)';
+                            btnAction.innerText = '✅ ¡Ficha Copiada! Pégala en tu chat (Ctrl+V)';
                         }
                     } catch (err) {
                         alert("Mantén presionada la imagen para guardarla.");
