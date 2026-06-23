@@ -266,7 +266,7 @@
         { id: "almacenamiento", name: "Almacenamiento" },
         { id: "accesorios", name: "Accesorios" },
         { id: "camaras_ptz", name: "Cámaras PTZ" },
-        { id: "switch_rack", name: "Switch para Rack" },
+        { id: "extensores", name: "Extensores HDMI" },
         { id: "switch_poe", name: "Switch PoE" },
         { id: "kits", name: "Kits" },
         { id: "monitores", name: "Monitores" },
@@ -1318,6 +1318,493 @@
                 ]
             },
 
+            extensores: {
+                title: "Extensores HDMI",
+                desc: "Kit Extensor HDMI",
+                products: [
+                    { 
+                        model: "EPC-ED970", // Cambié el modelo para diferenciarlo del DVR
+                        titleSpecs: "Kit Extensor HDMI | 4K2K@40m | 1080p@70m | Cat5e/Cat6 | Soporte PoC | HDMI Loop | Transmisión IR", 
+                        desc: "Extensores HDMI",
+                        costUSD: 37.35,
+                        features: ["Extensión HDMI 4K30 hasta 40 m (131 pies)", "Transmisión sin comprimir y sin retardo hasta 70 m", "Soporte EDID local/remoto seleccionable", "Audio HD hasta 7.1 canales","Diseño compacto para instalación flexible", "Conexión en cascada mediante HDMI Loop"],
+                        videoURL: ""   
+                    },
+                    { 
+                        model: "EPC-SP914C70", // Cambié el modelo para diferenciarlo del DVR
+                        titleSpecs: "Splitter HDMI 1x4 | Extensor HDMI | 4K@30Hz 40m | 1080p@60Hz 70m | Función PoC | 4:4:4", 
+                        desc: "Extensores HDMI",
+                        costUSD: 97.70,
+                        features: ["Distribución HDMI 1x4 a 4 dispositivos simultáneos", "Resolución 4K@30Hz 4:4:4 y 1080p@60Hz", "Transmisión hasta 40m (4K) o 70m (1080p) Cat6", "Compatibilidad HDCP 1.4 y HDMI 1.4","Soporte audio LPCM 7.1, Dolby TrueHD, DTS-HD", "Función PoC para alimentación sobre cable Cat"],
+                        videoURL: ""   
+                    },
+                    { 
+                        model: "TT-672PRO", // Cambié el modelo para diferenciarlo del DVR
+                        titleSpecs: "Kit Extensor HDMI para distancias de 70 metros / Resolución 4K x 2K@ 60 Hz/ Cat 6, 6a y 7 / IPCOLOR / CERO LATENCIA / SIN COMPRIMIR / Salida Loop / Control IR / Salida de audio de 3.5mm / PoC",
+                        costUSD: 63.68,
+                        features: ["Extiende señal HDMI hasta 70 metros sin compresión", "Resolución 4K a 60 Hz (3840x2160p)", "Tecnología IPColor con cero latencia y sin compresión", "Compatibilidad con cables Cat6/6a/7 para mayor distancia","Salida Loop HDMI para conexión múltiple", "Soporta audio 3.5mm y control IR bidireccional"],
+                        videoURL: ""   
+                    },
+                    { 
+                        model: "TT-676E", // Cambié el modelo para diferenciarlo del DVR
+                        titleSpecs: "Kit Extensor HDMI para distancias de 70 metros / Resolución 4K x 2K@ 60 Hz/ Cat 6, 6a y 7 / IPCOLOR / CERO LATENCIA / SIN COMPRIMIR / Uso 24/7 / Puerto S/PDIF / Salida Loop / Alimente solo el Tx (PoC) / Control IR",
+                        costUSD: 62.33,
+                        features: ["Tecnología IPColor para 4K sin comprimir, cero latencia", "Extensión HDMI hasta 70 metros con cable Cat6/6a/7", "Soporte HDR10 y resolución 4K@60Hz (3840x2160)", "Operación continua 24/7 con diseño industrial robusto","Transferencia IR bidireccional (20-60kHz) para control remoto", "PoC (Alimentación sobre cable) solo para transmisor"],
+                        videoURL: ""   
+                    },
+                    { 
+                        model: "TT683-4.0-RX", // Cambié el modelo para diferenciarlo del DVR
+                        titleSpecs: "Receptor Compatible para Kits TT683-4.0 / Resolución 4K@30Hz / Cat 5e/6 / Distancia de 120 m / Control IR / Soporta HDbitT/ Compatible con Switch Gigabit.",
+                        costUSD: 47.38,
+                        features: ["Transmisión HDMI 4K hasta 120 metros por CAT5e/6", "Soporte para múltiples receptores en red flexible", "Resolución 4K @ 30Hz con imágenes nítidas", "Compatible con protocolo HDbitT y estándar HDCP1.3","Baja latencia en transmisión de video eficiente", "Conexión Gigabit Switch para expansión ilimitada de señal"],
+                        videoURL: ""   
+                    },
+                    { 
+                        model: "TT372EDID4K", // Cambié el modelo para diferenciarlo del DVR
+                        titleSpecs: "Kit Extensor HDMI | Hasta 70m 1080p | 40m 4K@30Hz | Compatible con HDCP | Cable Cat 6 Recomendado | Soporta Múltiples Resoluciones | Soporta PoC | Salida Loop",
+                        costUSD: 45.87,
+                        features: ["Extensión HDMI hasta 70m a 1080p con Cat 6", "Transmisión 4K@30Hz hasta 40m con cable Cat 6", "Soporta múltiples resoluciones hasta 3840x2160", "Tecnología PoC con alimentación solo en transmisor","Salida loop HDMI para monitoreo local", "Compatible con HDCP y audio 7.1"],
+                        videoURL: ""   
+                    },
+                    { 
+                        model: "TT582KVM", // Cambié el modelo para diferenciarlo del DVR
+                        titleSpecs: "Kit Extensor KVM (HDMI y USB) hasta 120 metros | Transmite el Video y Controla tu DVR vía USB a distancia | Soporta resolución 4K @60Hz | Cat 6, 6a y 7 | Salida Loop en el Tx para visualización local", 
+                        desc: "Grabador de red eficiente diseñado para gestionar cámaras IP de alta definición continua.",
+                        costUSD: 157.15,
+                        features: ["Extensión HDMI 4K@60Hz hasta 120 metros", "Soporta conexiones uno a muchos vía Gigabit", "Bucle HDMI, KVM y paso RS-232 integrado", "Ancho de banda de 18 Gbps para video 4K","Diseño compacto de 106x103x20.6 mm", "Alimentación 5V/2A con bajo consumo energético"],
+                        videoURL: ""   
+                    },
+                    { 
+                        model: "TT676KVM", // Cambié el modelo para diferenciarlo del DVR
+                        titleSpecs: "Kit extensor KVM (HDMI y USB) hasta 70 metros | Resolución 4K @ 60 Hz | Cat 6, 6a y 7 | IPCOLOR | CERO LATENCIA | HDR10 | Salida Loop | Puerto S/PDIF | Uso 24/7 | Transmite el Video y Controla tu DVR vía USB a distancia.", 
+                        desc: "Grabador de red eficiente diseñado para gestionar cámaras IP de alta definición continua.",
+                        costUSD: 119.42,
+                        features: ["Transmisión 4K @ 60Hz sin comprimir y cero latencia", "Extiende HDMI hasta 70 metros con CAT6/6A/7", "Tecnología IPColor para video UHD con mayor calidad", "Control USB remoto de teclado y mouse","Uso profesional en centros de control y seguridad", "HDR10 para mayor rango dinámico y colores"],
+                        videoURL: ""   
+                    },
+                    { 
+                        model: "TT6834K", // Cambié el modelo para diferenciarlo del DVR de 4 canales
+                        titleSpecs: "Kit extensor para distancias de hasta 200 metros | Resolución 4K @60Hz | Cat 6 | Conexión uno a uno y uno a muchos hasta 120 mts | Compatible con Switch gigabit | Control IR", 
+                        desc: "Cámaras PT y PTZ Análogas e IP.",
+                        costUSD: 97.98,
+                        features: ["Extensión HDMI 4K@60Hz hasta 120 metros", "Soporta HDR10 y HDCP 2.2", "Ancho de banda de 18 Gbps","Conexión uno a muchos hasta 120 m", "Transferencia IR bidireccional integrada"],
+                        videoURL: ""   
+                    },
+                    { 
+                        model: "EPC-SP914C70", // Cambié el modelo para diferenciarlo del DVR
+                        titleSpecs: "Splitter HDMI 1x4 | Extensor HDMI | 4K@30Hz 40m | 1080p@60Hz 70m | Función PoC | 4:4:4", 
+                        desc: "Grabador de red eficiente diseñado para gestionar cámaras IP de alta definición continua.",
+                        costUSD: 97.70,
+                        features: ["Distribución HDMI 1x4 a 4 dispositivos simultáneos", "Resolución 4K@30Hz 4:4:4 y 1080p@60Hz", "Transmisión hasta 40m (4K) o 70m (1080p) Cat6", "Compatibilidad HDCP 1.4 y HDMI 1.4","Soporte audio LPCM 7.1, Dolby TrueHD, DTS-HD", "Función PoC para alimentación sobre cable Cat"],
+                        videoURL: ""   
+                    }
+                ]
+            },
+
+            kits: {
+                title: "Extensores HDMI",
+                desc: "Kit Extensor HDMI",
+                products: [
+                    { 
+                        model: "B8-KIT-MIC", // Cambié el modelo para diferenciarlo del DVR
+                        titleSpecs: "(MICRÓFONO Integrado) Kit TurboHD 1080p Lite / DVR 4 canales / Audio por Coaxitron / 4 Cámaras Bala de Metal con Micrófono Integrado",
+                        costUSD: 118.90,
+                        features: ["DVR 4 canales 720p, soporta 1080p Lite", "Salida de video Full HD: VGA y HDMI", "Compatible con 5 tecnologías: TVI/AHD/CVI/CVBS/IP", "Cámara bala 2 MP, lente 2.8mm, 106.4º visión","Visión nocturna 25 metros con tecnología IR EXIR", "Audio por coaxitron con micrófonos integrados en cámaras"],
+                        videoURL: ""   
+                    },
+                    { 
+                        model: "B8-KIT-CV/A", // Cambié el modelo para diferenciarlo del DVR
+                        titleSpecs: "Kit TurboHD 1080p / DVR 4 Canales / 4 Cámaras Bala ColorVu con Microfono Integrado / Fuente de Poder / Accesorios de Instalación", 
+                        desc: "Extensores HDMI",
+                        costUSD: 111.64,
+                        features: ["DVR 4 canales con soporte 1080p Lite", "Compatibilidad con 5 tecnologías (TVI/AHD/CVI/CVBS/IP)", "Resolución máxima cámaras 2MP (1920x1080)", "Soporta AcuSense detección de movimiento en todos los canales","Salida de video Full HD VGA/HDMI simultánea", "4 cámaras ColorVu con luz blanca hasta 20m"],
+                        videoURL: ""   
+                    },
+                    { 
+                        model: "HL-1080-CV/A", // Cambié el modelo para diferenciarlo del DVR
+                        titleSpecs: "Kit TurboHD 1080p / DVR 4 Canales / 4 Cámaras Bala ColorVu con Micrófono Integrado / Fuente de Poder / Accesorios de Instalación", 
+                        desc: "Extensores HDMI",
+                        costUSD: 110.76,
+                        features: ["Resolución 2 MP (1920 x 1080)", "Lente fijo 2.8 mm, ángulo 98°", "4 canales TurboHD + 1 canal IP", "20 metros visión a color con luz blanca","Soporta 4 tecnologías HD-TVI/HD-CVI/AHD/CVBS", "S4 entradas de audio por coaxitron"],
+                        videoURL: ""   
+                    },
+                    { 
+                        model: "HL-1080P-4B-TWA", // Cambié el modelo para diferenciarlo del DVR
+                        titleSpecs: "Kit HiLook Audio Bidireccional TurboHD 1080p / DVR Metalico 4 Canales / 4 Cámaras Bala (Exterior) con Bocina y Micrófono Integrado / 1 Fuente de Poder / Accesorios", 
+                        desc: "Extensores HDMI",
+                        costUSD: 135.02,
+                        features: ["DVR 4 canales TurboHD + 1 canal IP", "Resolución 1080p Lite en todas las cámaras", "Doble luz 30m + IR 20m en cámaras", "Fuente de poder 12-15VCC, 1A por salida","Cable de alimentación 120-240VCA, longitud 1m", "Kit completo con accesorios e instalación sencilla"],
+                        videoURL: ""   
+                    },
+                    { 
+                        model: "HL24TKIT", // Cambié el modelo para diferenciarlo del DVR
+                        titleSpecs: "[Kit] DVR 4 Canales TurboHD + 1 Canal IP / 2 Megapixel (1080pLite) / AcuSense Lite / Audio por coaxitron / 1 Bahia de disco duro / 4 Cámaras Metalicas / 2 Megapixel tipo turret / ColorVu Lite + Microfono Integrado.", 
+                        desc: "Extensores HDMI",
+                        costUSD: 80.01,
+                        features: ["4 Canales TurboHD + 1 IP", "Compresión H.265+/H.265/H.264", "Grabación 2 Megapixel (1080pLite)", "Audio por coaxitron y RCA","1 Bahía para disco duro", "Cámaras ColorVu Lite con luz blanca"],
+                        videoURL: ""   
+                    },
+                    { 
+                        model: "KESTXLT4BC", // Cambié el modelo para diferenciarlo del DVR
+                        titleSpecs: "KIT COLORVU TURBOHD 1080p Lite / DVR 4 Canales / 4 Cámaras Bala (exterior 2.8 mm) / Transceptores / Conectores / Fuente de Poder Profesional", 
+                        desc: "Extensores HDMI",
+                        costUSD: 175.00,
+                        features: ["DVR pentahíbrido con soporte para 5 tecnologías (TVI/AHD/CVI/CVBS/IP)", "Cámaras bala exterior con lente 2.8 mm, ángulo visión 105°", "Transceptores pasivos TurboHD sin alimentación, transmisión tiempo real UTP Cat5e/6", "Fuente poder regulada 12V/13.5V/15V con regleta conexión fácil instalación","Soporte video 1080p Lite y audio coaxitron en todos canales", "Visión color 24/7 con 20 metros alcance luz blanca"],
+                        videoURL: ""   
+                    },
+                    { 
+                        model: "KEVTX8T4BW", // Cambié el modelo para diferenciarlo del DVR
+                        titleSpecs: "KIT TurboHD 1080p / DVR 4 Canales / 4 Cámaras Bala Metálicas (exterior 2.8 mm) / Transceptores / Conectores / Fuente de Poder Profesional", 
+                        desc: "Grabador de red eficiente diseñado para gestionar cámaras IP de alta definición continua.",
+                        costUSD: 135.61,
+                        features: ["DVR pentahíbrido soporta HD-TVI, HD-CVI, IP, AHD", "Cámaras 1080p con lente de 2.8mm, visión 92°", "Fuente de poder regulada 12V/13.5V/15V, fácil instalación", "Transceptores pasivos UTP, transmisión tiempo real","Cámaras con 20mts IR EXIR, visión nocturna", "Conexión remota vía Hik-Connect, inteligencia artificial"],
+                        videoURL: ""   
+                    },
+                    { 
+                        model: "KEVTX8T4EW", // Cambié el modelo para diferenciarlo del DVR
+                        titleSpecs: "KIT TurboHD 1080p / DVR 4 Canales / 4 Cámaras Eyeball (exterior 2.8 mm) / Transceptores / Conectores / Fuente de Poder Profesional.", 
+                        desc: "Grabador de red eficiente diseñado para gestionar cámaras IP de alta definición continua.",
+                        costUSD: 132.04,
+                        features: ["DVR pentahíbrido: HD-TVI, HD-CVI, Analógico, IP, AHD", "Cámara 1080p con visión nocturna hasta 20 mts", "Fuente de poder regulada, voltajes 12VCC/13.5VCC/15VCC", "Transceptores pasivos para transmisión UTP en tiempo real","Lente 2.8mm con ángulo de visión de 92°", "Conectores JR-52 con calibre 18 para cable de alimentación"],
+                        videoURL: ""   
+                    },
+                    { 
+                        model: "KH-1080P-2E-TWA", // Cambié el modelo para diferenciarlo del DVR de 4 canales
+                        titleSpecs: "Kit Audio Bidireccional TurboHD 1080p / DVR 4 Canales / 2 Cámaras Eyeball (Exterior) con Bocina y Microfóno Integrado / 2 Fuentes de Poder / Accesorios", 
+                        desc: "Cámaras PT y PTZ Análogas e IP.",
+                        costUSD: 108.63,
+                        features: ["DVR 4 canales TurboHD + 1 canal IP", "Resolución 1080p Lite con AcuSense Lite", "Cámara 2MP con visión color y Dual Light","Soporta disco duro hasta 4TB no incluido", "Dual Light 40m + 40m IR alcance"],
+                        videoURL: ""   
+                    },
+                    { 
+                        model: "KH1080P4BC", // Cambié el modelo para diferenciarlo del DVR de 4 canales
+                        titleSpecs: "KIT COLORVU TURBOHD 1080p / DVR 4 Canales / 4 Cámaras Bala (exterior) lente 2.8mm / Fuente de poder profesional / Transceptores de video y Accesorios de corriente", 
+                        desc: "Cámaras PT y PTZ Análogas e IP.",
+                        costUSD: 171.95,
+                        features: ["DVR pentahíbrido soporta HD-TVI, HD-CVI, analógico, IP, AHD", "Visualización remota Hik-Connect con inteligencia artificial", "Cámaras bala 1080p con visión a color 24/7","Transceptores pasivos con transmisión UTP en tiempo real", "Fuente de poder regulada 12VCC/13.5VCC/15VCC", "Lente 2.8mm con ángulo de visión 98°"],
+                        videoURL: ""   
+                    },
+                    { 
+                        model: "KH1080P4EC", // Cambié el modelo para diferenciarlo del DVR de 4 canales
+                        titleSpecs: "KIT COLORVU TURBOHD 1080p / DVR 4 Canales / 4 Cámaras eyeball (exterior) lente 2.8mm / Fuente de poder profesional / Transceptores de video y Accesorios de corriente", 
+                        desc: "Cámaras PT y PTZ Análogas e IP.",
+                        costUSD: 169.58,
+                        features: ["DVR pentahíbrido soporta HD-TVI/HD-CVI/Analógico/IP/AHD", "Cámaras 1080p exteriores con visión color 24/7", "Fuente regulada: 12VCC/13.5VCC/15VCC fácil instalación","Transceptores pasivos, transmisión real por cable UTP", "Inteligencia artificial filtra humanos y vehículos", "Lente 2.8mm con ángulo 98° en cámaras"],
+                        videoURL: ""   
+                    },
+                    { 
+                        model: "KH1080PL4EC", // Cambié el modelo para diferenciarlo del DVR de 4 canales
+                        titleSpecs: "KIT COLORVU TURBOHD 1080pLite / DVR 4 Canales / 4 Cámaras Eyeball (exterior) / Transceptores / Conectores / Fuente de Poder Profesional", 
+                        desc: "Cámaras PT y PTZ Análogas e IP.",
+                        costUSD: 148.64,
+                        features: ["DVR pentahíbrido soporta HD-TVI, CVI, analógico, IP, AHD", "Cámaras 1080p exterior con visión 98° y luz 24/7", "Audio coaxitron en todos los canales disponibles","Transceptores pasivos no requieren alimentación externa", "Fuente regulada 12VCC/13.5VCC/15VCC instalación fácil", "Diseño compacto ideal para espacios reducidos"],
+                        videoURL: ""   
+                    },
+                    { 
+                        model: "KIPCV2M/4B", // Cambié el modelo para diferenciarlo del DVR
+                        titleSpecs: "Kit IP 1080p (2 Megapixel) / NVR de 4 Canales con 4 Puertos PoE / 4 Cámaras IP Bala ColorVu Lite y Motion Detection 2.0 / Micrófono Integrado", 
+                        desc: "Grabador de red eficiente diseñado para gestionar cámaras IP de alta definición continua.",
+                        costUSD: 283.24,
+                        features: ["Compresión H.265+ para almacenamiento eficiente", "4 puertos PoE+ con 36 W totales", "Soporta 1 HDD hasta 6 TB", "Cámaras 2 MP con lente 2.8 mm","Iluminación mínima 0.001 lux para entornos oscuros", "Detección de movimiento y micrófono integrado"],
+                        videoURL: ""   
+                    },
+                    { 
+                        model: "B50-KIT-MIC", // Cambié el modelo para diferenciarlo del DVR
+                        titleSpecs: "Kit TURBOHD 5 Megapixel / DVR 4 Canales / 4 Cámaras de 5 Megapixel con Micrófono Integrado / 4 Cables 18 Metros / Fuente de Poder Profesional", 
+                        desc: "Grabador de red eficiente diseñado para gestionar cámaras IP de alta definición continua.",
+                        costUSD: 133.13,
+                        features: ["DVR 4 canales 8MP con grabación 8MP Lite", "Soporta 6 canales (4 analógicos + 2 IP)", "Compatibilidad con 5 tecnologías (TVI, AHD, CVI, CVBS, IP)", "Salida Full HD en VGA y HDMI simultáneos","Cámaras 5MP con visión nocturna 30 metros", "Micrófono integrado en cámaras para audio por coaxitron"],
+                        videoURL: ""   
+                    },
+                    { 
+                        model: "KIT-3K-DL", // Cambié el modelo para diferenciarlo del DVR
+                        titleSpecs: "[Dual Light] Kit TurboHD 3K (5 Megapixel) / DVR 4 Canales / 4 Cámaras Bala para Exterior y Metal / Micrófono Integrado / Accesorios de Interconexión / Fuente de Poder", 
+                        desc: "Grabador de red eficiente diseñado para gestionar cámaras IP de alta definición continua.",
+                        costUSD: 141.78,
+                        features: ["Resolución 3K (5MP) con imagen ultra nítida", "Iluminación dual IR + luz blanca hasta 30m", "Tecnología AcuSense Lite para detección inteligente", "Compresión H.265+ para mayor eficiencia de almacenamiento","Protección IP67 ideal para uso exterior", "Cables de 18.3m para fácil instalación"],
+                        videoURL: ""   
+                    },
+                    { 
+                        model: "KEVTX8T8BW", // Cambié el modelo para diferenciarlo del DVR
+                        titleSpecs: "KIT TurboHD 1080p / DVR 8 Canales / 8 Cámaras Bala (exterior 2.8 mm) / Transceptores / Conectores / Fuente de Poder Profesional hasta 15 Vcc para Larga Distancias", 
+                        desc: "Grabador de red eficiente diseñado para gestionar cámaras IP de alta definición continua.",
+                        costUSD: 228.56,
+                        features: ["DVR pentahíbrido con soporte HD-TVI, HD-CVI, AHD, IP y analógico", "Cámaras bala 1080p con lente 2.8mm y visión nocturna 20m", "Fuente de poder regulada con 3 niveles de salida: 12V, 13.5V y 15V", "Transceptores pasivos TurboHD para transmisión UTP en tiempo real","Conectores JR-52 con especificaciones profesionales para instalación segura", "Diseño profesional para largas distancias con voltaje hasta 15Vcc"],
+                        videoURL: ""   
+                    },
+                    { 
+                        model: "KEVTX8T8EW", // Cambié el modelo para diferenciarlo del DVR
+                        titleSpecs: "KIT TurboHD 1080p / DVR 8 Canales / 8 Cámaras Eyeball (exterior 2.8 mm) / Transceptores / Conectores / Fuente de Poder Profesional hasta 15 Vcc para Larga Distancia", 
+                        desc: "Grabador de red eficiente diseñado para gestionar cámaras IP de alta definición continua.",
+                        costUSD: 221.41,
+                        features: ["DVR pentahíbrido con soporte para 5 tecnologías", "Cámaras 1080p con visión nocturna 20 metros", "Fuente de poder regulada con 3 voltajes ajustables", "Transceptores pasivos para transmisión por cable UTP","Lente 2.8mm con ángulo visión 103°", "Conexión coaxitron para audio bidireccional en todos canales"],
+                        videoURL: ""   
+                    },
+                    { 
+                        model: "KIPH4B/2MP", // Cambié el modelo para diferenciarlo del DVR
+                        titleSpecs: "Kit IP 2 Megapixel / NVR de 8 Canales con 8 Puertos PoE / 4 Cámaras IP Bala para Exterior", 
+                        desc: "Grabador de red eficiente diseñado para gestionar cámaras IP de alta definición continua.",
+                        costUSD: 166.93,
+                        features: ["Resolución 2 MP (1920x1080) en cámaras", "8 puertos PoE+ (AF/AT) con 75 W totales", "Compresión H.265+/H.265 para mayor eficiencia", "Soporte para disco duro de hasta 6 TB","Detección de movimiento y alertas en tiempo real", "Material duradero de metal y policarbonato"],
+                        videoURL: ""   
+                    },
+                    { 
+                        model: "KESTG8T8BG/A", // Cambié el modelo para diferenciarlo del DVR
+                        titleSpecs: "KIT TurboHD con Audio 1080p / DVR 8 Canales 1080p lite / 8 Cámaras Bala (exterior 2.8 mm) / Transceptores / Conectores / Fuente de Poder / AUDIO POR COAXITRON", 
+                        desc: "Grabador de red eficiente diseñado para gestionar cámaras IP de alta definición continua.",
+                        costUSD: 218.96,
+                        features: ["Compatibilidad con 5 tecnologías: HD-TVI, HD-CVI, AHD, analógico e IP", "Ángulo de visión de 105° con lente 2.8 mm", "Ángulo de visión de 105° con lente 2.8 mm", "Visión nocturna 20 metros con luz blanca inteligente","Transceptores TurboHD sin alimentación externa", "Fuente de poder regulada con múltiples voltajes"],
+                        videoURL: ""   
+                    },
+                    { 
+                        model: "KEVTX8T16BW", // Cambié el modelo para diferenciarlo del DVR
+                        titleSpecs: "KIT TurboHD 1080p / DVR 16 Canales / 16 Cámaras Bala (exterior 2.8 mm) / Transceptores / Conectores / Fuente de Poder Profesional", 
+                        desc: "Grabador de red eficiente diseñado para gestionar cámaras IP de alta definición continua.",
+                        costUSD: 418.71,
+                        features: ["Sistema TurboHD 4.0 para transmisión 4MP Lite", "Compresión H.265+ que ahorra ancho de banda y almacenamiento", "DVR 16 canales con soporte IP, HD-TVI, HD-CVI, AHD y analógico", "Cámaras bala 1080p con 20 metros IR Exir y lente 2.8mm","Fuente de poder profesional con protección contra sobretensión, sobrecorriente, sobrecalentamiento y cortocircuito", "Transceptores pasivos TurboHD para transmisión en tiempo real por UTP Cat5e/6"],
+                        videoURL: ""   
+                    },
+                    { 
+                        model: "KEVTX8T16EW", // Cambié el modelo para diferenciarlo del DVR
+                        titleSpecs: "KIT TurboHD 1080p / DVR 16 Canales / 16 Cámaras Eyeball (exterior 2.8 mm) / Transceptores / Conectores / Fuente de Poder Profesional", 
+                        desc: "Grabador de red eficiente diseñado para gestionar cámaras IP de alta definición continua.",
+                        costUSD: 405.50,
+                        features: ["DVR pentahíbrido con soporte para 5 tecnologías simultáneas", "Cámaras 1080p con visión nocturna 20 metros", "Fuente de poder 16 canales, 20A regulable 11-15VCC", "Transceptores pasivos TurboHD para transmisión en tiempo real UTP","Conectores 2.1mm x 5.5mm con cable calibre 18 recomendado", "Kit completo para instalación profesional en exterior e interior"],
+                        videoURL: ""   
+                    }
+                ]
+            },
+
+            energia: {
+                title: "Fuentes de energía",
+                desc: "Equipos de alimentación CCTV",
+                products: [
+                    { 
+                        model: "PS12DC4PBK", // Cambié el modelo para diferenciarlo del DVR
+                        titleSpecs: "Fuente de Poder con Gabinete de 4 Salidas de 11 - 15 Vcc / 5 Amper / Soporta Batería de Respaldo / Voltaje de Entrada: 96 - 264 Vca / Soporta Protección contra Sobrecorriente de Salida, Protección contra Cortocircuito /",
+                        costUSD: 19.07,
+                        features: ["Voltaje de salida ajustable 11-15 VCC", "Corriente total de salida de 5 A", "Protección contra sobrecorriente y cortocircuitos", "Monitoreo automático de batería con corte a 10.5 V","Reinicio automático al recuperar energía", "Diseño compacto para fácil instalación"],
+                        videoURL: ""   
+                    },
+                    { 
+                        model: "DS-2FA1225-C4/K", // Cambié el modelo para diferenciarlo del DVR
+                        titleSpecs: "Fuente de Poder Regulada 12 Vcc / 13.5 Vcc / 15 Vcc para 4 Cámaras / 4 Amp (1 Amp por Salida) / Voltaje de Entrada 90 - 130 VCA / Filtro de Ruido para Cámaras 4K / Modo para Largas Distancias",
+                        costUSD: 17.37,
+                        features: ["Fuente de poder regulada para mayor estabilidad", "Voltaje de entrada 90-130 V ~ 50/60 Hz", "Amperaje máximo de 1 Amp por salida", "Amperaje máximo de 1 Amp por salida","Dimensiones compactas: 144 x 80 x 33 mm", "Filtro de ruido para cámaras 4K"],
+                        videoURL: ""   
+                    },
+                    { 
+                        model: "PS-12-DC-4C", // Cambié el modelo para diferenciarlo del DVR
+                        titleSpecs: "Fuente de Poder de 4 Salidas de 11 - 15 Vcc / 5 Amper / Voltaje de Entrada 110- 240 Vac / Fusible Termico PTC Integrado para Protección / Salida de Voltaje Inteligente hasta 3 Amper por Salida",
+                        costUSD: 8.52,
+                        features: ["Soporte 12.5V para cámaras analógicas y TurboHD", "Salida ajustable 11-15 VCC con 5A inteligente", "3 amperios por salida sin sobrecarga", "Fusible térmico PTC integrado de 6A","Voltaje entrada universal 110-240 VCA", "Diseño compacto 13x5x3 cm para fácil instalación"],
+                        videoURL: ""   
+                    },
+                    { 
+                        model: "PS-12DC4KV", // Cambié el modelo para diferenciarlo del DVR
+                        titleSpecs: "Fuente de Poder de 12 Vcc @ 5A / 4 Cámaras / FILTRO DE RUIDO ESPECIAL PARA CAMARAS 4K / Fusible Reseteable Inter Construido PTC / Protección Contra Sobre-Tensiones y Contra Cortocircuito / Recomendado para cámaras 4K.",
+                        costUSD: 11.98,
+                        features: ["Salida 12V DC con hasta 5 amperios", "Compatible con cámaras 4K TurboHD (8 Megapíxeles)", "Filtro de ruido especial para reducir interferencia", "Voltaje entrada 110-240V CA, salida regulada","Fusible reseteable PTC integrado para protección", "Certificación UL Listed y CE de seguridad"],
+                        videoURL: ""   
+                    },
+                    { 
+                        model: "DS-2FA1205-C8/K", // Cambié el modelo para diferenciarlo del DVR
+                        titleSpecs: "Fuente de Poder Regulada 12 Vcc / 13.5 Vcc / 15 Vcc para 8 Cámaras / 8 Amperes (1 Amp por Salida) / Voltaje de Entrada 90 - 130 VCA / Filtro de Ruido para Cámaras 4K / Modo para Largas Distancias",
+                        costUSD: 26.95,
+                        features: ["Voltaje entrada 90-130 VCA para flexibilidad", "Tres niveles salida: 12/13.5/15 VCC ajustables", "Amperaje máximo 1 Amp por salida", "Diseño compacto 130 x 94 x 34 mm","Cable tipo L de 1 metro incluido", "Filtro de ruido para cámaras 4K"],
+                        videoURL: ""   
+                    },
+                    { 
+                        model: "PLK12DC8ABK", // Cambié el modelo para diferenciarlo del DVR
+                        titleSpecs: "Fuente de Poder con ajuste de voltaje de 11- 15 Vcc / 10 A / 9 Salidas / Capacidad de Batería de Respaldo / Requiere Batería / Voltaje de Entrada 96-264 Vca",
+                        costUSD: 58.36,
+                        features: ["Voltaje de salida 11-15 VCC con 10 A", "Protección contra sobretensión y cortocircuitos", "Monitoreo automático del voltaje de batería", "9 salidas con 2 A por canal","Entrada de alimentación 96-264 VCA", "Corte automático a 10.5 V para protección de batería"],
+                        videoURL: ""   
+                    },
+                    { 
+                        model: "XP9DC16HD", // Cambié el modelo para diferenciarlo del DVR
+                        titleSpecs: "Fuente PREMIUM / 11-15 V / 9 canales / 16 A / Alta tecnología en seguridad / Doble ventilador / Hasta 1.8 Amperes por Salida / Filtro de ruido por canal / Diseño de alta gama.",
+                        costUSD: 35.56,
+                        features: ["9 canales con corriente de 16 A para seguridad y comunicaciones", "Voltaje ajustable 11-15 VCC por canal", "1.8 A máximos por salida", "Protección múltiple OVP/OCP/OTP/SCP","Diseño metálico para alta durabilidad", "Operación en rango ampliado -20°C a 70°C"],
+                        videoURL: ""   
+                    },
+                    { 
+                        model: "DS-2FA1208-C16/K", // Cambié el modelo para diferenciarlo del DVR
+                        titleSpecs: "Fuente de Poder Regulada 12 Vcc / 13.5 Vcc / 15 Vcc para 16 Cámaras / 16 Amp (1 Amp por Salida) / Voltaje de Entrada 90 - 130 VCA / Soporta 4K / Modo para Largas Distancias", 
+                        desc: "Grabador de red eficiente diseñado para gestionar cámaras IP de alta definición continua.",
+                        costUSD: 39.83,
+                        features: ["Fuente de poder regulada con 16 salidas independientes", "Voltaje de entrada 90-130 VCA para mayor flexibilidad", "Tres niveles de salida: 12/13.5/15 VCC seleccionables", "1 Amp por salida para cámaras hasta 4K","Modo largas distancias para instalaciones extendidas", "Diseño compacto de 130 x 94 x 34 mm"],
+                        videoURL: ""   
+                    },
+                    { 
+                        model: "PLK12DC20ABK", // Cambié el modelo para diferenciarlo del DVR de 4 canales
+                        titleSpecs: "Fuente de Poder Profesional de 12 Vcc @ 20 A / Soporta 18 Cámaras / Capacidad de Batería de Respaldo (No Incluida) / Voltaje de Entrada de 96-264 Vca", 
+                        desc: "Cámaras PT y PTZ Análogas e IP.",
+                        costUSD: 67.00,
+                        features: ["Salida ajustable 11-15 VCC @ 20 A", "18 canales con 2 A máximo por salida", "Protección contra sobretensión, cortocircuitos e interferencias","Monitoreo automático de batería a 10.5 V", "Reinicio automático tras falla de energía"],
+                        videoURL: ""   
+                    },
+                    { 
+                        model: "XP18DC20HD", // Cambié el modelo para diferenciarlo del DVR de 4 canales
+                        titleSpecs: "Fuente PREMIUM / 11-15 V / 18 canales / 20 A / Alta tecnología en seguridad / Doble ventilador / Hasta 1.8 Amperes por Salida / Filtro de ruido por canal / Diseño de alta gama.", 
+                        desc: "Cámaras PT y PTZ Análogas e IP.",
+                        costUSD: 53.47,
+                        features: ["18 canales con 20 amperios para versatilidad máxima", "Voltaje ajustable 11-15 VCC para compatibilidad universal", "Salida de 200 W para alta potencia","Rango térmico ampliado -20°C a 70°C", "Carcaza metálica industrial con diseño premium"],
+                        videoURL: ""   
+                    },
+                    { 
+                        model: "XP18DC30UD", // Cambié el modelo para diferenciarlo del DVR de 4 canales
+                        titleSpecs: "Fuente PREMIUM / 11-15 V / 18 canales / 30 A / Alta tecnología en seguridad / Doble ventilador / Hasta 1.85 Amperes por Salida / Filtro de Ruido por canal / Diseño de alta gama.", 
+                        desc: "Cámaras PT y PTZ Análogas e IP.",
+                        costUSD: 69.67,
+                        features: ["Voltaje de salida ajustable 11-15 VCC", "Entrada universal 100-240 VCA", "Gabinete de metal, color blanco","Operación eficiente entre -20°C y 70°C", "Fuente de alimentación de 30 Amperes totales", "18 canales con 1.85 Amperes por salida"],
+                        videoURL: ""   
+                    },
+                    { 
+                        model: "KPL-040F-VI", // Cambié el modelo para diferenciarlo del DVR de 4 canales
+                        titleSpecs: "Fuente de Poder Regulada 12 Vcc / 3.3 A / Conector DIN 4 Pin / Compatible con DVR&acute;s EV4000, EV5000", 
+                        desc: "Cámaras PT y PTZ Análogas e IP.",
+                        costUSD: 13.47,
+                        features: ["Entrada 100-240V~ 50/60Hz para compatibilidad global", "Salida 12 VCC con regulación precisal", "Amperaje máximo de salida 3.33 A","Conector DIN de 4 pines estándar", "Diseño compacto para fácil instalación", "Compatible con DVRs EV4000 y EV5000"],
+                        videoURL: ""   
+                    },
+                    { 
+                        model: "P12DC3A", // Cambié el modelo para diferenciarlo del DVR de 4 canales
+                        titleSpecs: "Fuente de Poder 12 V / 3 Amp / Regulados.", 
+                        desc: "Cámaras PT y PTZ Análogas e IP.",
+                        costUSD: 8.92,
+                        features: ["Voltaje de entrada universal 100-240 VCA", "Salida 12 VCC regulado con precisión", "Corriente de salida 3 Amperios continuos","Protección contra sobretensiones y anti-interferencia", "Operación en rango ampliado -20°C a 45°C", "Diseño compacto 88 x 50 x 35 mm"],
+                        videoURL: ""   
+                    },
+                    { 
+                        model: "PL-DC-1000", // Cambié el modelo para diferenciarlo del DVR de 4 canales
+                        titleSpecs: "Fuente de poder de 12 Vcc @ 1 Amp Regulado / Uso en Interior / Múltiples Usos / Con cable de 95 cm.", 
+                        desc: "Cámaras PT y PTZ Análogas e IP.",
+                        costUSD: 2.64,
+                        features: ["Voltaje entrada 100-240 VCA, salida 12 VCC ±5%", "Corriente salida 1 A, alta eficiencia energética", "Protección sobretensiones y anti-interferencia","Diseño compacto 70x65x24 mm, fácil instalación", "Operación segura 0°C a 40°C", "Uso interior, múltiples aplicaciones"],
+                        videoURL: ""   
+                    },
+                    { 
+                        model: "PL12DC2AW", // Cambié el modelo para diferenciarlo del DVR de 4 canales
+                        titleSpecs: "Fuente de Poder para Exterior / 12 Vcc / 2 Amp / 1 Salida / Voltaje de Entrada de 100 - 240 VCA.", 
+                        desc: "Cámaras PT y PTZ Análogas e IP.",
+                        costUSD: 6.18,
+                        features: ["Voltaje entrada 100-240 VCA adaptable global", "Salida regulada 12 VCC @ 2A", "Eficiencia energética optimizada para seguridad electrónica","Protección sobretensiones y anti-interferencia EMI/RFI", "Diseño compacto 131 x 86 x 42.5 mm", "Certificaciones internacionales de seguridad eléctrica"],
+                        videoURL: ""   
+                    },                    { 
+                        model: "PLK12DC6CH", // Cambié el modelo para diferenciarlo del DVR de 4 canales
+                        titleSpecs: "Fuente de Poder de 6 Salidas tipo Jack Macho de 12 Vcc / 6 Amper.", 
+                        desc: "Cámaras PT y PTZ Análogas e IP.",
+                        costUSD: 11.36,
+                        features: ["Voltaje de entrada 100-240 VCA adaptable globalmente", "Alta eficiencia superior al 85% consumo optimizado", "Filtro EMI integrado para reducir interferencias","Protección contra sobretensiones y descargas eléctricas", "Salida 12 VCC con 6 canales hasta 6 A", "Diseño compacto 117x62x34.2 mm para fácil instalación"],
+                        videoURL: ""   
+                    },                    
+                    { 
+                        model: "PSD1202D", // Cambié el modelo para diferenciarlo del DVR
+                        titleSpecs: "Fuente de Poder de 12 Vcc Regulada / 2 Amp / Voltaje de Entrada de 100 - 240 VCA / Longitud del cable 96 cms..",
+                        costUSD: 3.60,
+                        features: ["Voltaje de entrada universal 100-240 VCA", "Salida estable 12 VCC regulada a 2 A", "Protección contra sobretensiones y anti-interferencias EMI/RFI", "Diseño compacto 71.4 x 45.3 x 37.7 mm","Operación en rango amplio -20°C a 45°C", "Cable de 96 cm para fácil instalación"],
+                        videoURL: ""   
+                    },
+                    { 
+                        model: "CP425SLG", // Cambié el modelo para diferenciarlo del DVR de 4 canales
+                        titleSpecs: "UPS de 425 VA/255 W, Topología Standby, Entrada 120 Vca NEMA 5-15P, Tipo Gabinete Compacto, Con 8 Tomas NEMA 5-15R.", 
+                        desc: "Cámaras PT y PTZ Análogas e IP.",
+                        costUSD: 67.85,
+                        features: ["Respaldo 7 minutos con media carga (127.5W)", "Tecnología GreenPower UPS™ para ahorro energético", "Puerto USB para administración por software PowerPanel®","Protección contra sobretensiones y descargas eléctricas", "Protección contra sobretensiones y picos de voltaje", "8 tomas NEMA 5-15R con 4 batería y 4 solo protección", "Indicadores LED de estado y falla de cableado"],
+                        videoURL: ""   
+                    },
+                    { 
+                        model: "DS-UPS600-X", // Cambié el modelo para diferenciarlo del DVR de 4 canales
+                        titleSpecs: "UPS de 600 VA / 360W / Protección Contra Sobrecarga y Descarga / Entrada y Salida 120 VCA / 6 Tomas NEMA 5-15R (4 con Respaldo y 2 sin Respaldo).", 
+                        desc: "Cámaras PT y PTZ Análogas e IP.",
+                        costUSD: 42.63,
+                        features: ["Capacidad 600 VA / 360 W para respaldo eficiente", "Alta eficiencia superior al 85% consumo optimizado", "6 salidas totales, 4 con respaldo alimenticio","Voltaje de entrada 85-150 V, salida 102-132 V", "Dimensiones compactas de 274 x 95 x 139 mm", "Protección contra sobrecarga y descarga automática"],
+                        videoURL: ""   
+                    },
+                    { 
+                        model: "EPU600L", // Cambié el modelo para diferenciarlo del DVR de 4 canales
+                        titleSpecs: "UPS de 600VA/360W / Topología Línea Interactiva / Entrada y Salida 120 Vca / Clavija NEMA 5-15P / 4 Tomas NEMA 5-15R/ Sin Protector RJ11 ni RJ45.", 
+                        desc: "Cámaras PT y PTZ Análogas e IP.",
+                        costUSD: 36.76,
+                        features: ["Capacidad de 600 VA / 360 W", "Topología línea interactiva con protección continua", "Regulador automático de voltaje (AVR)","4 salidas NEMA 5-15R con respaldo", "Batería interna 1 x 12V/7Ah, reemplazo 1 pieza LK9.512", "Diseño compacto en formato torre"],
+                        videoURL: ""   
+                    },
+                    { 
+                        model: "EPU600LCD", // Cambié el modelo para diferenciarlo del DVR de 4 canales
+                        titleSpecs: "UPS de 600VA/360W / Topología Línea Interactiva / Entrada y Salida 120 Vca / Clavija NEMA 5-15P / 4 Tomas NEMA 5-15R.", 
+                        desc: "Cámaras PT y PTZ Análogas e IP.",
+                        costUSD: 46.47,
+                        features: ["Capacidad de 600 VA / 360 W", "Topología interactiva con pantalla LCD", "Regulador automático de voltaje en boost y buck","4 salidas NEMA 5-15R, 1 sin respaldo", "Batería reemplazable 1 x 12V/7Ah, modelo LK9.512", "Tiempo de respaldo ajustado por carga conectada"],
+                        videoURL: ""   
+                    },
+                    { 
+                        model: "AVRG750LCD", // Cambié el modelo para diferenciarlo del DVR de 4 canales
+                        titleSpecs: "UPS de 750 VA/450 W, Topología Línea Interactiva, Entrada 120 Vca NEMA 5-15P, Tipo Gabinete Compacto, Con 12 Tomas NEMA 5-15R.", 
+                        desc: "Cámaras PT y PTZ Análogas e IP.",
+                        costUSD: 135.81,
+                        features: ["Topología interactiva de línea con AVR integrado", "Compatible con Energy Star para ahorro energético significativo", "Puerto RJ11/RJ45 para protección de datos","Pantalla LCD para monitoreo del estado del UPS", "Batería reemplazable por usuario y puerto USB de carga", "12 tomas NEMA 5-15R con 6 con respaldo de batería"],
+                        videoURL: ""   
+                    },
+                    { 
+                        model: "OM750ATLCD", // Cambié el modelo para diferenciarlo del DVR de 4 canales
+                        titleSpecs: "UPS de 750 VA/300 W, Topología Línea Interactiva, Entrada 120 Vca NEMA 5-15P, y 6 Salidas NEMA 5-15R, Con Regulador de Voltaje (AVR).", 
+                        desc: "Cámaras PT y PTZ Análogas e IP.",
+                        costUSD: 80.56,
+                        features: ["Topología interactiva de línea para mayor protección", "Salida de onda sinusoidal simulada para equipos sensibles", "Regulación automática de voltaje (AVR) sin uso de batería","6 salidas NEMA 5-15R con protección y 3 con respaldo", "Supresión de picos de 245 Joules", "Pantalla LCD para monitoreo en tiempo real"],
+                        videoURL: ""   
+                    },
+                    { 
+                        model: "EPU850L", // Cambié el modelo para diferenciarlo del DVR de 4 canales
+                        titleSpecs: "UPS de 850VA/510W / Topología Línea Interactiva / Entrada y Salida 120 Vca / Regulador de Voltaje AVR 80-150 Vca / Clavija NEMA 5-15P / 4 Tomas NEMA 5-15R /Sin RJ11 ni RJ45.", 
+                        desc: "Cámaras PT y PTZ Análogas e IP.",
+                        costUSD: 45.12,
+                        features: ["Capacidad 850 VA / 510 W para pequeñas empresas", "Topología línea interactiva con AVR 80-150 VCA", "Regulador automático de voltaje boost y buck","4 salidas NEMA 5-15R con respaldo energético", "Batería 1 x 12V/8Ah, reemplazo 1 pieza LK9.512", "Diseño compacto sin protección RJ11/RJ45"],
+                        videoURL: ""   
+                    },
+                    { 
+                        model: "EPU850LCD", // Cambié el modelo para diferenciarlo del DVR de 4 canales
+                        titleSpecs: "UPS de 850VA/510W / Topología Línea Interactiva / Entrada y Salida 120 Vca / Clavija NEMA 5-15P / 6 Tomas NEMA 5-15R / Sin RJ11 ni RJ45.", 
+                        desc: "Cámaras PT y PTZ Análogas e IP.",
+                        costUSD: 52.08,
+                        features: ["Capacidad 850 VA / 510 W para equipos esenciales", "Topología línea interactiva con protección contra sobrevoltajes y picos", "Salida 120 VCA ±5% con regulación automática","6 Tomas NEMA 5-15R, 2 con protección exclusiva", "Batería 1 x 12V/8Ah, reemplazo 1 pieza LK9.512", "Tiempo de respaldo variable según carga: hasta 40 minutos"],
+                        videoURL: ""   
+                    },
+                    { 
+                        model: "OM900ATLCD", // Cambié el modelo para diferenciarlo del DVR de 4 canales
+                        titleSpecs: "UPS de 900 VA/420 W, Topología Línea Interactiva, Entrada 120 Vca NEMA 5-15P, y 6 Salidas NEMA 5-15R, Con Regulador de Voltaje (AVR).", 
+                        desc: "Cámaras PT y PTZ Análogas e IP.",
+                        costUSD: 102.30,
+                        features: ["Topología interactiva de línea con AVR integrado", "Capacidad de 900 VA / 420 W", "6 salidas NEMA 5-15R con protección integral","Regulación automática de voltaje (AVR) sin batería", "Supresión de picos de 245 Joules", "Pantalla LCD y puerto USB para monitoreo"],
+                        videoURL: ""   
+                    },
+                    { 
+                        model: "DS-UPS1000-X", // Cambié el modelo para diferenciarlo del DVR de 4 canales
+                        titleSpecs: "UPS de 1000 VA / 600 W / Protección Contra Sobrecarga y Descarga / Entrada y Salida 120 VCA / 6 Tomas NEMA 5-15R (4 con Respaldo y 2 sin Respaldo).", 
+                        desc: "Cámaras PT y PTZ Análogas e IP.",
+                        costUSD: 53.59,
+                        features: ["Capacidad de 1000 VA / 600 W", "Batería de 12 V / 9 Ah", "6 salidas (4 con respaldo, 2 sin)","Voltaje de salida 102 - 132 V", "Tiempo de respaldo hasta 280 minutos", "Puerto USB para monitoreo local"],
+                        videoURL: ""   
+                    },
+                    { 
+                        model: "UT-1000GU", // Cambié el modelo para diferenciarlo del DVR de 4 canales
+                        titleSpecs: "UPS de 1000 VA/500 W, Topología Línea Interactiva, Entrada 120 Vca NEMA 5-15P, y 8 Salidas NEMA 5-15R, Puerto USB, Con Regulador de Voltaje (AVR).", 
+                        desc: "Cámaras PT y PTZ Análogas e IP.",
+                        costUSD: 89.77,
+                        features: ["Topología Línea Interactiva con AVR integrado", "Rango AVR 86-148 VCA para estabilidad", "Tecnología GreenPower UPS™ para eficiencia energética","Compatibilidad con generadores para continuidad energética", "8 salidas NEMA 5-15R con protección integral", "Diseño compacto de torre para espacio reducido"],
+                        videoURL: ""   
+                    },
+                    { 
+                        model: "EPU1200LCD", // Cambié el modelo para diferenciarlo del DVR de 4 canales
+                        titleSpecs: "UPS de 1200VA/720W / Topología Línea Interactiva / Entrada y Salida 120 Vca / Clavija NEMA 5-15P / 6 Tomas NEMA 5-15R.", 
+                        desc: "Cámaras PT y PTZ Análogas e IP.",
+                        costUSD: 93.31,
+                        features: ["Capacidad de 1200 VA / 720 W", "Topología interactiva con pantalla LCD", "Onda senoidal simulada, salida de 120 VCA ±5%","6 salidas NEMA 5-15R, 2 sin respaldo", "Baterías 2 x 12V/7Ah, reemplazo 2 piezas LK9.512", "AVR dinámico para estabilización de voltaje"],
+                        videoURL: ""   
+                    }
+                ]
+            },
+
             camaras_analogas: {
                 title: "Accesorios complementarios para videovigilancia",
                 desc: "Catálogo completo de accesorios con costos integrados (IVA incluido) y factores de rentabilidad blindados.",
@@ -1539,15 +2026,6 @@
                     }
                 ]
             },                    
-
-//            nvs: { title: "Servidores de Video (NVS)", desc: "Codificadores y servidores dedicados para entornos de red complejos.", products: [] },
-//            camaras_ip: { title: "Cámaras IP de Videovigilancia", desc: "Cámaras con conexión por red nativa, resoluciones desde 2MP hasta 4K.", products: [] },
-//            camaras_ptz: { title: "Cámaras Domo PTZ", desc: "Equipos con movimiento robótico horizontal, vertical y zooms ópticos potentes.", products: [] },
-//            switch_rack: { title: "Switches para Rack", desc: "Conmutadores corporativos diseñados para montaje estructural en gabinetes.", products: [] },
-//            switch_poe: { title: "Switches PoE Alimentados", desc: "Dispositivos de red para energizar cámaras IP y Access Points perimetrales.", products: [] },
-//           kits: { title: "Kits de Videovigilancia Cerrados", desc: "Paquetes todo incluido listos para su instalación rápida.", products: [] },
-//            monitores: { title: "Monitores de Monitoreo Continuo", desc: "Pantallas de grado industrial diseñadas para operar 24/7 sin sobrecalentamiento.", products: [] },
-//            accesorios_extra: { title: "Accesorios Adicionales e Infraestructura", desc: "Canalizaciones, cables UTP 100% cobre y gabinetes dedicados.", products: [] }
     };
     function filterActiveCategoryProducts() {
         const query = document.getElementById('categorySearchInput').value.toLowerCase();
