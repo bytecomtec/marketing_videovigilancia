@@ -2330,17 +2330,6 @@
             let videoButtonHTML = product.videoURL ? `<a href="${product.videoURL}" target="_blank" class="btn-video">🎬 Video</a>` : '';
             let featuresHTML = product.features.map(feat => `<li>${feat}</li>`).join('');
 
-            // RENDER DE PRECIOS: Muestra precio de lista tachado si hay descuento activo en UI
-            let priceDisplayHTML = '';
-            if (currentDiscount > 0 && calc.basePublico > calc.precioFinalPublico) {
-                priceDisplayHTML = `
-                    <span style="text-decoration: line-through; color: #94a3b8; font-size: 1rem; display: block;">Precio Lista: $${calc.basePublico.toFixed(2)} MXN</span>
-                    <span class="final-price" style="color: #2563eb;">$${calc.precioFinalPublico.toFixed(2)} MXN <small style="font-size:0.8rem; background:#dbeafe; color:#1e40af; padding:2px 6px; border-radius:4px;">-${currentDiscount * 100}%</small></span>
-                `;
-            } else {
-                priceDisplayHTML = `<span class="final-price">$${calc.precioFinalPublico.toFixed(2)} MXN</span>`;
-            }
-
                     // LÓGICA DE INYECCIÓN DE URL DE SYSCOM:
                     // Si el producto tiene una url ingresada, se dibuja el botón/enlace de redirección.
                     let syscomLinkHTML = '';
@@ -2351,6 +2340,17 @@
                             </a>
                         `;
                     }
+            
+            // RENDER DE PRECIOS: Muestra precio de lista tachado si hay descuento activo en UI
+            let priceDisplayHTML = '';
+            if (currentDiscount > 0 && calc.basePublico > calc.precioFinalPublico) {
+                priceDisplayHTML = `
+                    <span style="text-decoration: line-through; color: #94a3b8; font-size: 1rem; display: block;">Precio Lista: $${calc.basePublico.toFixed(2)} MXN</span>
+                    <span class="final-price" style="color: #2563eb;">$${calc.precioFinalPublico.toFixed(2)} MXN <small style="font-size:0.8rem; background:#dbeafe; color:#1e40af; padding:2px 6px; border-radius:4px;">-${currentDiscount * 100}%</small></span>
+                `;
+            } else {
+                priceDisplayHTML = `<span class="final-price">$${calc.precioFinalPublico.toFixed(2)} MXN</span>`;
+            }
 
             card.innerHTML = `
                 <div class="product-body">
