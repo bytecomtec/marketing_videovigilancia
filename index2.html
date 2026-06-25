@@ -2329,7 +2329,9 @@
             const imgSrc = `${GITHUB_IMG_BASE}${safeModelName}.jpg`;
 
             let videoButtonHTML = product.videoURL ? `<a href="${product.videoURL}" target="_blank" class="btn-video">🎬 Video</a>` : '';
-            let syscomButtonHTML = product.syscomURL ? `<a href="${product.syscomURL}" target="_blank" class="btn-syscom"><i class="fas fa-external-link-alt"></i> SYSCOM</a>` : '';
+            // Busca la línea original de syscomButtonHTML y reemplázala por esta:
+            let urlValida = product.syscomURL || product.syscomUrl;
+            let syscomButtonHTML = urlValida ? `<a href="${urlValida}" target="_blank" class="btn-syscom"><i class="fas fa-external-link-alt"></i> SYSCOM</a>` : '';
             let featuresHTML = product.features.map(feat => `<li>${feat}</li>`).join('');
 
             // RENDER DE PRECIOS: Muestra precio de lista tachado si hay descuento activo en UI
