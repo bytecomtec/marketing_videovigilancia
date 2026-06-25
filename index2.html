@@ -2328,9 +2328,28 @@
             const safeModelName = product.model.replace(/\//g, "_");
             const imgSrc = `${GITHUB_IMG_BASE}${safeModelName}.jpg`;
 
-            let videoButtonHTML = product.videoURL ? `<a href="${product.videoURL}" target="_blank" class="btn-video">🎬 Video</a>` : '';
-            let syscomButtonHTML = product.syscomURL ? `<a href="${product.syscomURL}" target="_blank" class="btn-syscom"><i class="fas fa-external-link-alt"></i> SYSCOM</a>` : '';
-            let featuresHTML = product.features.map(feat => `<li>${feat}</li>`).join('');
+            // 1. Validamos de forma independiente el botón de Video (admite mayúsculas/minúsculas)
+            let videoLink = product.videoURL || product.videourl || product.videoUrl;
+            let videoButtonHTML = (videoLink && videoLink.trim() !== "") 
+            ? `<a href="${videoLink}" target="_blank" class="btn-video">🎬 Video</a>` 
+            : '';
+
+            // 2. Validamos de forma independiente el botón de SYSCOM (admite mayúsculas/minúsculas)
+            let syscomLink = product.syscomURL || product.syscomUrl || product.syscomurl;
+            let syscomButtonHTML = (syscomLink && syscomLink.trim() !== "") 
+            ? `<a href="${syscomLink}" target="_blank" class="btn-syscom"><i class="fas fa-external-link-alt"></i> SYSCOM</a>` 
+                : '';
+
+            // 3. Contenedor de acciones (Se genera si al menos uno de los dos botones existe)
+            let actionsContainerHTML = '';
+            if (videoButtonHTML || syscomButtonHTML) {
+                actionsContainerHTML = `
+                    <div class="product-actions">
+                        ${videoButtonHTML}
+                        ${syscomButtonHTML}
+                    </div>
+                `;
+            }
 
             // RENDER DE PRECIOS: Muestra precio de lista tachado si hay descuento activo en UI
             let priceDisplayHTML = '';
