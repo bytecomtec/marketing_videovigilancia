@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel de Control de Margen e Infraestructura - Bytecomtec</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         /* ==========================================================================
            Variables de Paleta de Color Corporativa
@@ -36,7 +37,6 @@
 
         .navbar h1 { margin: 0; font-size: 1.3rem; font-weight: 600; }
 
-        /* Panel de Parámetros Globales */
         .config-panel {
             display: flex; align-items: center; gap: 15px; flex-wrap: wrap;
         }
@@ -56,7 +56,6 @@
 
         @media (max-width: 900px) { .main-layout { flex-direction: column; } }
 
-        /* Sidebar Menú con Scroll Independiente */
         .sidebar { 
             width: 300px; background-color: var(--white); border-right: 1px solid var(--border-color); 
             padding: 20px 10px; box-sizing: border-box; max-height: calc(100vh - 70px); overflow-y: auto;
@@ -75,11 +74,26 @@
         .category-menu-item .qty-badge { background-color: #f1f5f9; color: #64748b; font-size: 0.75rem; padding: 2px 8px; border-radius: 10px; font-weight: 600; }
         .category-menu-item.active .qty-badge { background-color: #bae6fd; color: #0369a1; }
 
-        /* Showcase de Productos */
         .content-showcase { flex: 1; padding: 30px; box-sizing: border-box; }
-        .showcase-header { margin-bottom: 25px; }
+        .showcase-header { margin-bottom: 20px; }
         .showcase-header h2 { margin: 0 0 8px 0; color: var(--primary-color); font-size: 1.7rem; }
         .showcase-header p { margin: 0; color: #64748b; font-size: 0.95rem; }
+
+        .search-container {
+            margin-bottom: 25px;
+            background-color: var(--white);
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+        }
+        .search-box-wrapper { position: relative; max-width: 500px; }
+        .search-box-wrapper input {
+            width: 100%; padding: 10px 12px 10px 38px; border-radius: 4px;
+            border: 1px solid #cbd5e1; font-size: 0.9rem; color: var(--text-main);
+            box-sizing: border-box; outline: none; transition: border-color 0.2s;
+        }
+        .search-box-wrapper input:focus { border-color: var(--primary-color); box-shadow: 0 0 0 2px rgba(0, 51, 102, 0.1); }
+        .search-box-wrapper i { position: absolute; left: 14px; top: 13px; color: #94a3b8; font-size: 0.95rem; }
 
         .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(430px, 1fr)); gap: 25px; }
         @media (max-width: 500px) { .products-grid { grid-template-columns: 1fr; } }
@@ -91,63 +105,90 @@
         }
         .product-card:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.08); }
         .product-body { display: flex; flex-direction: column; gap: 12px; margin-bottom: 15px; }
-        .product-main-info { display: flex; gap: 15px; align-items: flex-start; }
+        .product-main-info { display: flex; gap: 20px; align-items: flex-start; }
 
         .product-img-box {
-            width: 110px; height: 110px; flex-shrink: 0; border: 1px solid #f1f5f9; border-radius: 6px;
-            display: flex; align-items: center; justify-content: center; background-color: #ffffff; overflow: hidden; cursor: pointer;
+            width: 120px; height: 120px; flex-shrink: 0; border: 1px solid #f1f5f9; border-radius: 6px;
+            display: flex; align-items: center; justify-content: center; background-color: #ffffff; overflow: hidden;
         }
         .product-img-box img { max-width: 100%; max-height: 100%; object-fit: contain; }
 
         .product-details { flex-grow: 1; }
-        .product-model { color: #003399; font-weight: 700; font-size: 1.1rem; margin-bottom: 4px; }
-        .product-title-specs { font-size: 0.9rem; color: var(--text-main); font-weight: 600; line-height: 1.4; margin: 0 0 6px 0; }
+        .product-model { color: #003399; font-weight: 700; font-size: 1.25rem; margin-bottom: 4px; }
+        .product-title-specs { font-size: 0.95rem; color: var(--text-main); font-weight: 700; line-height: 1.4; margin: 0 0 8px 0; }
         
-        /* Estilos para el enlace de Syscom */
-        .syscom-link {
-            display: inline-flex; align-items: center; gap: 4px; font-size: 0.8rem;
-            color: #ff6600; font-weight: bold; text-decoration: none; margin-bottom: 6px;
+        .product-price-list { font-size: 0.95rem; color: #64748b; margin: 8px 0; font-weight: 500; }
+        .product-price-list .final-price { color: #d32f2f; font-weight: bold; font-size: 1.4rem; display: block; margin-bottom: 2px; }
+        .usd-reference { font-size: 0.8rem; color: #94a3b8; display: block; }
+
+        .margin-badge {
+            display: inline-block; background-color: #f0fdf4; color: #15803d; 
+            padding: 6px 14px; border-radius: 6px; font-size: 0.85rem; font-weight: 700; 
+            margin-top: 6px; border: 1px solid #bbf7d0; width: fit-content;
         }
-        .syscom-link:hover { text-decoration: underline; }
 
-        .product-price-list { font-size: 0.95rem; color: #475569; margin: 5px 0; font-weight: 500; }
-        .product-price-list .original-price { text-decoration: line-through; color: #94a3b8; font-size: 0.85rem; margin-right: 8px; }
-        .product-price-list .final-price { color: #d32f2f; font-weight: bold; font-size: 1.15rem; }
-        .usd-reference { font-size: 0.75rem; color: #64748b; display: block; margin-top: 2px; }
+        .product-features-list { margin: 10px 0 0 0; padding-left: 20px; list-style-type: none; }
+        .product-features-list li { font-size: 0.9rem; color: #475569; line-height: 1.6; margin-bottom: 6px; position: relative; }
+        .product-features-list li::before { content: "✓"; position: absolute; left: -18px; color: #10b981; font-weight: bold; }
 
-        /* Características con Palomitas */
-        .product-features-list { margin: 8px 0 0 0; padding-left: 20px; list-style-type: none; }
-        .product-features-list li { font-size: 0.85rem; color: #475569; line-height: 1.5; margin-bottom: 4px; position: relative; }
-        .product-features-list li::before { content: "✓"; position: absolute; left: -16px; color: #10b981; font-weight: bold; }
-
-        .product-footer { border-top: 1px solid #f1f5f9; padding-top: 12px; }
+        .product-footer { border-top: 1px solid #f1f5f9; padding-top: 15px; }
+        .product-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+        
         .btn-prepare {
             background-color: var(--primary-color); color: var(--white); border: none; border-radius: 4px;
-            padding: 9px 12px; font-size: 0.85rem; font-weight: 600; cursor: pointer; width: 100%; text-align: center;
+            padding: 11px 14px; font-size: 0.9rem; font-weight: 600; cursor: pointer; flex: 2;
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-width: 140px;
         }
         .btn-prepare:hover { background-color: #002244; }
 
-        /* MODAL */
+        .btn-video {
+            background-color: transparent; color: var(--accent-color); border: 1px solid var(--accent-color);
+            border-radius: 4px; padding: 11px 14px; font-size: 0.9rem; font-weight: 600; cursor: pointer;
+            flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 6px; text-decoration: none;
+            transition: all 0.2s; box-sizing: border-box; min-width: 90px;
+        }
+        .btn-video:hover { background-color: var(--accent-color); color: var(--white); }
+
+        .btn-syscom {
+            background-color: transparent; color: #475569; border: 1px solid #cbd5e1;
+            border-radius: 4px; padding: 11px 14px; font-size: 0.9rem; font-weight: 600;
+            flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 6px; text-decoration: none;
+            transition: all 0.2s; box-sizing: border-box; min-width: 100px;
+        }
+        .btn-syscom:hover { background-color: #f1f5f9; color: var(--primary-color); border-color: #94a3b8; }
+
+        /* ==========================================================================
+           MODAL DE PREVISUALIZACIÓN DE IMAGEN VERTICAL EN SMARTPHONES
+           ========================================================================== */
         .custom-modal {
             display: none; position: fixed; z-index: 9999; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: rgba(15, 23, 42, 0.85); align-items: center; justify-content: center;
+            background-color: rgba(15, 23, 42, 0.95); align-items: center; justify-content: center;
         }
         .modal-content-wrapper {
-            position: relative; background-color: var(--white); padding: 25px; border-radius: 8px;
-            max-width: 650px; width: 90%; text-align: center;
+            position: relative; background-color: #f1f5f9; padding: 15px; border-radius: 8px;
+            max-width: 450px; width: 92%; max-height: 95vh; display: flex; flex-direction: column; 
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.3); box-sizing: border-box;
         }
-        .output-composite-img { max-width: 100%; max-height: 65vh; border: 1px solid #cbd5e1; border-radius: 6px; }
-        .modal-close { position: absolute; top: 10px; right: 15px; color: #94a3b8; font-size: 1.8rem; cursor: pointer; background: none; border: none; }
+        .image-scroll-container {
+            flex: 1; overflow-y: auto; margin-bottom: 12px; border-radius: 4px;
+            display: flex; align-items: flex-start; justify-content: center; background-color: #cbd5e1;
+        }
+        .output-composite-img { width: 100%; height: auto; border-radius: 4px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); display: block; }
         
-        /* Botón de Copiado Expreso */
-        .btn-copy-clipboard {
-            background-color: #10b981; color: var(--white); border: none; border-radius: 4px;
-            padding: 12px 20px; font-size: 0.95rem; font-weight: bold; cursor: pointer; width: 100%;
-            margin-top: 12px; display: flex; align-items: center; justify-content: center; gap: 8px;
-            transition: background-color 0.2s;
+        .modal-close { position: absolute; top: -40px; right: 0; color: #ffffff; font-size: 2.2rem; cursor: pointer; background: none; border: none; }
+        
+        @media (max-width: 600px) {
+            .modal-close { top: 5px; right: 10px; color: #1e293b; background: rgba(255,255,255,0.9); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; z-index: 10; }
         }
-        .btn-copy-clipboard:hover { background-color: #059669; }
-        .btn-copy-clipboard.success { background-color: #2563eb; }
+
+        .btn-copy-clipboard {
+            background-color: #2563eb; color: var(--white); border: none; border-radius: 4px;
+            padding: 14px 20px; font-size: 1rem; font-weight: bold; cursor: pointer; width: 100%;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            transition: background-color 0.2s; flex-shrink: 0;
+        }
+        .btn-copy-clipboard:hover { background-color: #1d4ed8; }
+        .btn-copy-clipboard.success { background-color: #10b981; }
     </style>
 </head>
 <body>
@@ -157,9 +198,9 @@
         
         <div class="config-panel">
             <div class="currency-controller">
-                <label for="exchangeRate">Dólar SYSCOM:</label>
+                <label for="exchangeRate">Tipo de cambio:</label>
                 <span>$</span>
-                <input type="number" id="exchangeRate" value="17.23" step="0.01" min="1" oninput="updateAllPrices()">
+                <input type="number" id="exchangeRate" value="17.60" step="0.01" min="1" oninput="updateAllPrices()">
                 <span>MXN</span>
             </div>
 
@@ -186,6 +227,14 @@
                 <h2 id="categoryTitle">Cargando...</h2>
                 <p id="categoryDesc"></p>
             </div>
+
+            <div class="search-container">
+                <div class="search-box-wrapper">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="categorySearchInput" onkeyup="filterActiveCategoryProducts()" placeholder="Buscar en esta categoría...">
+                </div>
+            </div>
+
             <div class="products-grid" id="productsContainer"></div>
         </main>
     </div>
@@ -193,605 +242,409 @@
     <div id="imageModal" class="custom-modal" onclick="closeLightbox()">
         <div class="modal-content-wrapper" onclick="event.stopPropagation()">
             <button class="modal-close" onclick="closeLightbox()">&times;</button>
-            <div style="font-size: 0.9rem; color:#475569; font-weight:600; margin-bottom:10px;">Vista Previa de Ficha Técnica:</div>
-            <img id="modalTargetImg" class="output-composite-img" src="" alt="Ficha Comercial">
+            <div style="font-size: 0.95rem; color:#1e293b; font-weight:700; margin-bottom:8px; flex-shrink:0; text-align: left;">Ficha Técnica de Alta Visibilidad:</div>
             
-            <button id="btnClipboardAction" class="btn-copy-clipboard" onclick="copyCanvasToClipboard()">
-                📋 Copiar Ficha para WhatsApp
+            <div class="image-scroll-container">
+                <img id="modalTargetImg" class="output-composite-img" src="" alt="Ficha Comercial">
+            </div>
+            
+            <button id="btnClipboardAction" class="btn-copy-clipboard" onclick="shareOrCopyCanvas()">
+                🚀 Compartir Ficha por WhatsApp
             </button>
         </div>
     </div>
 
     <canvas id="processingCanvas" style="display: none;"></canvas>
 
-    <script>
-        let currentRate = 17.23;
-        let currentDiscount = 0;
+<script>
+    let currentRate = 17.50;
+    let currentDiscount = 0;
+    let currentCategory = "dvr";
+    let activeProductModel = "";
 
-        const GITHUB_IMG_BASE = "https://bytecomtec.github.io/marketing_videovigilancia/";
+    const GITHUB_IMG_BASE = "https://bytecomtec.github.io/marketing_videovigilancia/";
 
-        const categoriesList = [
-            { id: "dvr", name: "DVR" },
-            { id: "nvr", name: "NVR" },
-            { id: "camaras_analogas", name: "Cámaras Análogas" },
-            { id: "almacenamiento", name: "Almacenamiento" },
-            { id: "accesorios", name: "Accesorios" },
-            { id: "nvs", name: "NVS" },
-            { id: "camaras_ip", name: "Cámaras IP" },
-            { id: "camaras_ptz", name: "Cámaras PTZ" },
-            { id: "switch_rack", name: "Switch para Rack" },
-            { id: "switch_poe", name: "Switch PoE" },
-            { id: "kits", name: "Kits" },
-            { id: "monitores", name: "Monitores" },
-            { id: "accesorios_extra", name: "Accesorios Extra" }
-        ];
+    const categoriesList = [
+        { id: "dvr", name: "DVR" },
+        { id: "nvr", name: "NVR" },
+        { id: "nvs", name: "NVS" },
+        { id: "camaras_analogas", name: "Cámaras Análogas" },
+        { id: "camaras_analogas_bullet", name: "Cámaras Análogas Bullet" },
+        { id: "camaras_ip", name: "Cámaras IP" },
+        { id: "almacenamiento", name: "Almacenamiento" },
+        { id: "accesorios", name: "Accesorios" },
+        { id: "camaras_ptz", name: "Cámaras PTZ" },
+        { id: "extensores", name: "Extensores HDMI" },
+        { id: "switch_poe", name: "Switch PoE" },
+        { id: "kits", name: "Kits" },
+        { id: "monitores", name: "Monitores" },
+        { id: "energia", name: "Energía" }
+    ];
 
-        const catalogData = {
-            dvr: {
-                title: "Grabadores Digitales (DVR)",
-                desc: "Catálogo completo de soluciones TurboHD con costos integrados (IVA incluido) y factores de rentabilidad blindados.",
-                products: [
-                    { 
-                        model: "S04-TURBO-G3", 
-                        titleSpecs: "DVR 4 Canales TurboHD + 1 Canal IP / 2 Megapixel (1080p) Lite / Acusense Lite (Evita Falsas Alarmas) / Audio por coaxitron / 1 Bahía de Disco Duro / H.265+ / Salida de Vídeo Full HD", 
-                        desc: "Grabador compacto ideal para el resguardo eficiente de perímetros pequeños con optimización extrema de almacenamiento.",
-                        costUSD: 29.35,
-                        syscomUrl: "https://www.syscom.mx/producto/S04-TURBO-G3-HIKVISION-202241.html", // Nueva URL agregada
-                        features: ["Soporte para 5 tecnologías: HDTVI/AHD/CVBS/CVI/IP", "Compresión H.265+ para reducir uso de disco", "Resolución 1080p Lite con tecnología TurboHD"]
-                    },
-                    { 
-                        model: "EV-4004TURBO-D", 
-                        titleSpecs: "DVR 4 Canales TurboHD + 2 Canales IP / 5 Megapixel Lite- 3K Lite / Acusense (Evista falsas alarmas) / Audio por Coaxitron / Bahía de Disco Duro / Salida de Video en Full HD", 
-                        desc: "Grabador balanceado analítico para entornos residenciales y pequeños comercios que exigen nitidez estructural superior.",
-                        costUSD: 62.14,
-                        syscomUrl: "https://www.syscom.mx/", // URL de prueba
-                        features: ["Filtrado inteligente de humanos y vehículos con AcuSense", "Soporta TurboHD hasta 5 megapíxeles Lite", "Soporta hasta 1 disco duro de 10TB"]
-                    },
-                    { 
-                        model: "IDS-7204HGHI-M1(T)", 
-                        titleSpecs: "DVR 4 Canales TURBOHD + 2 Canales IP / 5 Megapixel Lite - 3K Lite / Audio Bidireccional / ACUSENSE (Evista falsas alarmas) / 1 Bahía de Disco Duro / Salida de Video en Full HD", 
-                        desc: "Solución analítica avanzada basada en algoritmos profundos para mitigar las falsas alarmas de entorno.",
-                        costUSD: 66.98,
-                        syscomUrl: "", // Puede quedar vacío si no se tiene
-                        features: ["Tecnología Pentahíbrida: HD-TVI/HD-CVI/Analógico/IP/AHD", "Audio bidireccional en todos los canales con coaxitron", "Detección inteligente AcuSense para filtrar personas y vehículos"]
-                    },
-                    { 
-                        model: "DVR-208G-M1(C)", 
-                        titleSpecs: "DVR 8 Canales TurboHD + 2 Canales IP / 2 Megapíxel (1080P) Lite / Motion Detection 2.0 (Evita Falsas Alarmas) / Audio por Coaxitron / 1 Bahía de Disco Duro / H.265+ / 1 Canal de Audio / Salida de Vídeo Full HD", 
-                        desc: "Grabador de entrada de la línea HiLook de Hikvision, óptimo para renovaciones de sistemas análogos tradicionales a bajo costo.",
-                        costUSD: 28.91,
-                        syscomUrl: "",
-                        features: ["Visualización en vivo desde dispositivos móviles Hik-Connect", "Soporte de audio por coaxitron en todos los canales", "Detección Motion Detection 2.0 para humanos y vehículos"]
-                    },
-                    { 
-                        model: "S08-TURBO-M/T", 
-                        titleSpecs: "DVR 8 Canales TurboHD 1080p / Chasis Metálico de Alta Durabilidad / Audio sobre Coaxial Multiplexado", 
-                        desc: "Grabador robustecido con chasis estructural metálico para protección superior en operaciones de rango continuo.",
-                        costUSD: 37.13,
-                        syscomUrl: "",
-                        features: ["Audio bidireccional en todos los canales", "Soporta 10 canales: 8 TurboHD + 2 IP", "Compatibilidad con 5 tecnologías de mercado"]
-                    },
-                    { 
-                        model: "IDS-7208HQHI-M1/XT", 
-                        titleSpecs: "DVR 8 Canales TURBOHD + 4 Canales IP / 5 Megapixel Lite - 3K Lite / Audio de Dos Vías por Coaxitron / Reconocimiento Facial / ACUSENSE (Evita falsas alarmas) / 1 Bahía de Disco Duro / Salida de Video en Full HD", 
-                        desc: "Equipo profesional de alta gama provisto de analíticas avanzadas para reconocimiento facial y protección perimetral estricta.",
-                        costUSD: 107.18,
-                        syscomUrl: "",
-                        features: ["Soporta 12 canales: 8 TurboHD + 4 IP", "Reconocimiento facial en 2 canales de video", "Soporta HDD de hasta 10 TB"]
-                    },
-                    { 
-                        model: "EX-8004TURBO", 
-                        titleSpecs: "DVR 4 Canales TURBOHD + 2 Canales IP / 8 Megapixel (4K) / Audio Bidireccional por Coaxitron / ACUSENSE / Reconocimiento Facial / 1 Bahía de Disco Duro / Salida de Video en Full HD / H.265+", 
-                        desc: "Grabador digital insignia de Epcom ideal para proyectos de mediana envergadura que demandan analíticas fluidas.",
-                        costUSD: 100.11,
-                        syscomUrl: "",
-                        features: ["Soporta audio bidireccional por coaxitron", "Reconocimiento facial en 2 canales", "Resolución Nativa 4K UltraHD"]
-                    },
-                    { 
-                        model: "EX-5008-TURBO", 
-                        titleSpecs: "DVR 8 Canales TURBOHD + 4 Canales IP / 5 Megapixel Lite - 3K Lite / Audio Bidireccional por Coaxitron / Reconocimiento Facial / ACUSENSE (Evita falsas alarmas) / 1 Bahía de Disco Duro / Salida de Video en Full HD", 
-                        desc: "Grabador digital insignia de Epcom ideal para proyectos de mediana envergadura que demandan analíticas fluidas.",
-                        costUSD: 95.88,
-                        syscomUrl: "",
-                        features: ["8 Canales TurboHD + 4 IP simultáneos", "Tecnología Acusense para detección precisa", "DVR pentahíbrido de alta compatibilidad"]
-                    },
-                    { 
-                        model: "S16-TURBO-G3", 
-                        titleSpecs: "DVR 16 Canales TurboHD + 2 Canales IP / 2 Megapixel (1080p) Lite / Acusense Lite (Evita Falsas Alarmas) / Audio por Coaxitron / 1 Bahía de Disco Duro / H.265+ / Salida de Video Full HD", 
-                        desc: "Grabador multicanal balanceado para instalaciones escolares que requieren cobertura total de cámaras con costos contenidos.",
-                        costUSD: 69.65,
-                        syscomUrl: "",
-                        features: ["5 tecnologías: HDTVI / AHD / CVI / CVBS / IP", "Audio por coaxitron sin cables adicionales", "Soporta 1 disco duro de hasta 10 TB"]
-                    },
-                    { 
-                        model: "S16-TURBO-M/T", 
-                        titleSpecs: "DVR 16 Canales TurboHD + 2 Canales IP / 2 Megapixel (1080p) Lite / Acusense Lite (Evita Falsas Alarmas) / Audio por Coaxitron y Bidireccional / 1 Bahía de Disco Duro / H.265+ / Salida de Video Full HD", 
-                        desc: "Grabador industrial de 16 vías optimizado para montaje seguro en gabinetes o racks de telecomunicaciones.",
-                        costUSD: 65.74,
-                        syscomUrl: "",
-                        features: ["Tecnología TurboHD 1080p Lite", "AcuSense Lite con detección humana y vehicular", "Diseño compacto de alta disipación térmica"]
-                    },
-                    { 
-                        model: "IDS-7116HGHI-M1(E)", 
-                        titleSpecs: "DVR 16 Canales TurboHD + 2 Canales IP / 2 Megapixel (1080p) Lite / Acusense Lite (Evita falsas alarmas) / Audio por Coaxitron / 1 Bahía de Disco Duro / H.265+ / Salida de Vídeo en Full HD", 
-                        desc: "DVR de 16 canales de grabación HD con soporte H.265 Pro+ altamente eficiente y acceso remoto simple unificado.",
-                        costUSD: 93.84,
-                        syscomUrl: "",
-                        features: ["Audio por coaxitron en todos los canales", "Búsqueda inteligente por humanos y vehículos", "Compresión H.265+ optimiza almacenamiento"]
-                    },
-                    { 
-                        model: "IDS-7216HUHI-M1/T", 
-                        titleSpecs: "DVR 16 Canales TURBOHD + 16 Canales IP / 8 Megapixel (4K) / Audio Bidireccional / ACUSENSE / Audio Bidireccional / 1 Bahía de Disco Duro / Salida de Video en Full HD / H.265+", 
-                        desc: "Grabador profesional híbrido de ultra alta definición recomendado para monitorear detalles críticos con reconocimiento de objetivos.",
-                        costUSD: 312.21,
-                        syscomUrl: "",
-                        features: ["Soporta audio por Coaxitron en canales HD", "Hasta 32 canales IP apagando analógicos", "Resolución de captura 8MP (4K) real"]
-                    },
-                    { 
-                        model: "IDS-7216HQHI-M1/XT", 
-                        titleSpecs: "DVR 16 Canales TURBOHD + 8 Canales IP / 5 Megapixel Lite - 3K Lite / Audio de Dos Vías por Coaxitron / Reconocimiento Facial / ACUSENSE (Evita falsas alarmas) / 1 Bahía de Disco Duro / Salida de Video en Full HD", 
-                        desc: "Plataforma multicanal corporativa que integra motores analíticos avanzados para búsquedas inmediatas por atributos.",
-                        costUSD: 158.72,
-                        syscomUrl: "",
-                        features: ["Reconocimiento facial en 4 canales TurboHD", "Tecnología AcuSense con filtro de entornos", "Soporta 1 HDD hasta 10 TB"]
-                    },
-                    { 
-                        model: "IDS-7216HQHI-M1/H/XT", 
-                        titleSpecs: "[Audio Bidireccional] DVR 16 Canales TURBOHD + 8 Canales IP / 5 Megapixel Lite - 3K Lite / Salida Independiente HDMI - VGA / Audio de Dos Vías por Coaxitron / Reconocimiento Facial / ACUSENSE (Evista falsas alarmas) / 1 Bahía de Disco Duro / Salida de Video en Fu", 
-                        desc: "Grabador robusto diseñado para integraciones institucionales complejas donde coexisten infraestructuras análogas e IP.",
-                        costUSD: 201.07,
-                        syscomUrl: "",
-                        features: ["Reconocimiento facial en 4 canales e IA", "Salida de video independiente HDMI y VGA", "Compresión optimizada H.265 Pro+"]
-                    },
-                    { 
-                        model: "EX-5016TURBO", 
-                        titleSpecs: "DVR 16 Canales TURBOHD + 8 Canales IP / 5 Megapixel Lite - 3K Lite / Audio Bidireccional por Coaxitron / Reconocimiento Facial / ACUSENSE (Evita falsas alarmas) / 1 Bahía de Disco Duro / Salida de Video en Full HD", 
-                        desc: "Solución de videovigilancia robustecida y scalable para medianas empresas con flujos operativos ininterrumpidos.",
-                        costUSD: 160.26,
-                        syscomUrl: "",
-                        features: ["16 canales TurboHD + 8 IP, total 24", "Reconocimiento facial en 4 canales HD", "Acceso remoto fluido desde PC y App Móvil"]
-                    },
-                    { 
-                        model: "IDS-7232HGHI-M2", 
-                        titleSpecs: "DVR 32 Canales TurboHD + 2 Canales IP / 2 Megapixel (1080p) Lite / Acusense (Evita Falsas Alarmas) / Audio por Coaxitron / H.265+ / Salida de Video en Full HD", 
-                        desc: "Sistema centralizado de alta densidad idóneo para proyectos escolares amplios o naves industriales de despliegue masivo.",
-                        costUSD: 247.61,
-                        syscomUrl: "",
-                        features: ["Hasta 34 cámaras en total acoplando IP", "Soporta 2 discos duros de 10 TB c/u", "Filtro inteligente IA integrado contra errores"]
-                    },
-                    { 
-                        model: "IDS-7232HQHI-M2/XT", 
-                        titleSpecs: "[Audio Bidireccional] DVR 32 Canales TurboHD + 8 Canales IP / 5 Megapixel Lite - 3K Lite / Acusense / Reconocimiento Facial / Audio por Coaxitron / 2 Bahías de Disco Duro / H.265+ / Salida de Video en Full HD", 
-                        desc: "Grabador de alta gama que unifica analíticas avanzadas de IA en una infraestructura masiva de cámaras de seguridad perimetral.",
-                        costUSD: 397.40,
-                        syscomUrl: "",
-                        features: ["40 canales totales de videovigilancia masiva", "Reconocimiento facial avanzado en hardware", "2 bahías HDD para resguardo de larga duración"]
-                    },
-                    { 
-                        model: "EX-5032-TURBO", 
-                        titleSpecs: "DVR 32 Canales TurboHD + 8 Canales IP / 5 Megapixel Lite - 3K Lite / Acusense (Evita Falsas Alarmas) / Audio Bidireccional / 2 Bahías de Disco Duro / H.265+ / Salida de Video en Full HD", 
-                        desc: "Grabador masivo insignia diseñado para gestionar la seguridad integral de infraestructuras complejas con máxima estabilidad de red.",
-                        costUSD: 385.82,
-                        syscomUrl: "",
-                        features: ["Soporta cámaras de alta resolución 5 MP", "Detección facial activa multicanal", "Soporta 2 HDD de hasta 12 TB estructurales"]
-                    }
-                ]
-            },
+    const catalogData = {
             nvr: {
                 title: "Grabadores de Red (NVR)",
                 desc: "Soluciones autónomas de grabación IP nativa con gestión remota y switches integrados.",
                 products: [
                     { 
-                        model: "DS-7104NI-K1/W/M(C)", 
+                        model: "DS-7104NI-K1/W/M(C)",
                         titleSpecs: "NVR 4 Megapixel / 4 canales IP / 1 Bahía de Disco Duro / 2 Antenas Wi-Fi / Salida de Vídeo Full HD", 
                         desc: "Grabador IP autónomo provisto de puertos PoE nativos para energizar cámaras de forma directa.",
-                        costUSD: 72.08,
-                        syscomUrl: "",
-                        features: ["Codificación H.265+/H.265 de alta eficiencia", "2 antenas Wi-Fi MIMO de largo alcance integradas", "Throughput de alta velocidad estables"]
-                    },
+                        costUSD: 62.14,
+                        features: ["Codificación H.265+/H.265/H.264+/H.264", "Almacenamiento 1 disco hasta 6 TB", "Throughput entrada 50 Mbps, salida 40 Mbps", "Reproducción sincrónica 4 canales Full HD", "2 antenas Wi-Fi MIMO 2.4 GHz"],
+                        videoURL: "https://bytecomtec.github.io/videos_videovigilancia/videovigilancia.mp4",
+                        syscomURL: "https://www.syscom.mx/producto/DS-7104NI-K1-W-M-C-HIKVISION-209841.html" // URL de ejemplo para SYSCOM
+                   }
+                ]
+            },
+            camaras_analogas_bullet: {
+                title: "Accesorios complementarios para videovigilancia",
+                desc: "Catálogo completo de accesorios con costos integrados (IVA incluido) y factores de rentabilidad blindados.",
+                products: [
                     { 
-                        model: "DS-7604NI-Q1/4P(D)", 
-                        titleSpecs: "NVR 8 Megapixel (4K) (Compatible con Cámaras ACUSENSE) / 4 canales IP / 4 Puertos PoE+ / 1 Bahía de Disco Duro / Salida de Vídeo en 4K / 300 Metros PoE Modo Extendido", 
-                        desc: "Grabador de red eficiente diseñado para gestionar cámaras IP de alta definición continua.",
-                        costUSD: 91.93,
-                        syscomUrl: "",
-                        features: ["4 puertos PoE+ integrados de alimentación directa", "Modo extendido de cableado largo hasta 300 metros", "Salida de video nativa en 4K UHD por HDMI"]
-                    },
-                    { 
-                        model: "DS-7604NXI-K1/4P(E)", 
-                        titleSpecs: "[Acusearch] NVR 12 Megapíxel (4K) / 4 canales IP / 4 Puertos PoE+ / Reconocimiento Facial / AcuSense (Evita Falsas Alarmas) / 1 Bahías de Disco Duro / HDMI en 4K / 300 Metros PoE Modo Extendido", 
-                        desc: "Grabador IP autónomo provisto de puertos PoE nativos para energizar cámaras de forma directa.",
-                        costUSD: 136.18,
-                        syscomUrl: "",
-                        features: ["Reconocimiento facial con base de datos masiva", "4 puertos PoE+ con 50W de potencia distribuida", "Filtro analítico avanzado AcuSearch perimetral"]
+                        model: "B4K-TURBO-EX", 
+                        titleSpecs: "[Audio Bidireccional + Dual Light + ColorVu] Bala TURBOHD 4K (8 Megapixel) / Lente 2.8 mm / 30 mts IR EXIR + 20 mts Luz Blanca / Micrófono y Bocina Integrado / Exterior IP67 / Metal / dWDR", 
+                        desc: "x",
+                        costUSD: 40.24,
+                        features: ["Resolución 4K (8 MP) 3840 x 2160 píxeles", "Lente fijo 2.8 mm con ángulo 113°", "Dual Light: 30 m IR + 20 m luz blanca", "Audio bidireccional full duplex sin cables adicionales", "Detección de movimiento con grabación a color nocturna", "Protección IP67 para exterior e interior"],
+                        videoURL: "",
+                        syscomURL: "" // Dejar vacío si no cuenta con URL de SYSCOM todavía
                     }
                 ]
-            },
-            camaras_analogas: {
-                title: "Cámaras Análogas TurboHD",
-                desc: "Dispositivos bala, domo y ocultos de alta resistencia con transmisión sobre cable coaxial e iluminación inteligente.",
-                products: [
-                    {
-                        model: "DS-2CE16D0T-EXIPF",
-                        titleSpecs: "Cámara Bala Fija de 2 Megapíxel (1080p) / Lente de 2.8 mm / Iluminación IR de 20 Metros / Plástica / 4 Tecnologías Seleccionables",
-                        desc: "Cámara económica para interiores con excelente ángulo de apertura y fidelidad cromática diurna.",
-                        costUSD: 10.45,
-                        syscomUrl: "",
-                        features: ["Soporta tecnologías TVI/AHD/CVI/CVBS", "Lente angular de gran cobertura de área", "Smart IR para ajustar brillo en oscuridad nocturna"]
-                    },
-                    {
-                        model: "DS-2CE76D0T-ITMFS",
-                        titleSpecs: "Cámara Domo Fija de 2 Megapíxel (1080p) / Audio Integrado por Coaxial / Lente de 2.8 mm / Metal / Visión Nocturna de 30m EXIR",
-                        desc: "Domo metálico de alta resistencia idóneo para pasillos escolares con micrófono interconstruido avanzado.",
-                        costUSD: 18.90,
-                        syscomUrl: "",
-                        features: ["Micrófono integrado de alta sensibilidad por coaxial", "Gabinete metálico estructural de larga vida útil", "Tecnología EXIR 2.0 para iluminación uniforme"]
-                    }
-                ]
-            },
-            almacenamiento: {
-                title: "Discos Duros y Almacenamiento",
-                desc: "Unidades mecánicas de grado videovigilancia optimizadas para escritura continua ininterrumpida de flujos de video.",
-                products: [
-                    {
-                        model: "WD10PURZ",
-                        titleSpecs: "Disco Duro de 1 Terabyte Western Digital Purple / Diseñado para Sistemas de Videovigilancia 24/7 / Caché de 64 MB / Interfaz SATA III",
-                        desc: "Unidad estándar de alta durabilidad optimizada para DVRs pequeños con tecnología AllFrame contra pérdida de cuadros.",
-                        costUSD: 49.50,
-                        syscomUrl: "",
-                        features: ["Soporta cargas de trabajo constantes sin caídas", "Algoritmos optimizados para streaming de video", "Bajo consumo energético y mínima vibración"]
-                    },
-                    {
-                        model: "WD43PURZ",
-                        titleSpecs: "Disco Duro de 4 Terabytes Western Digital Purple / Grado Vigilancia Industrial / Caché de 256 MB / Alta Densidad de Datos",
-                        desc: "Capacidad recomendada para grabadores de 8 y 16 canales que requieren retención histórica de al menos 15 días.",
-                        costUSD: 98.20,
-                        syscomUrl: "",
-                        features: ["Soporte de hasta 64 cámaras de alta definición", "Componentes internos resistentes a la corrosión", "Gran velocidad de transferencia SATA a 6 Gb/s"]
-                    }
-                ]
-            },
-            accesorios: {
-                title: "Accesorios de Instalación",
-                desc: "Baluns, transceptores, fuentes de poder unificadas y herrajes certificados para blindaje contra ruidos eléctricos.",
-                products: [
-                    {
-                        model: "TT-101-F-TURBO",
-                        titleSpecs: "Par de Transceptores Pasivos (Baluns) Epcom TurboHD / Soporta hasta 5 Megapíxel / Conector de Presión Rápido",
-                        desc: "Kit de baluns de alto rendimiento para el envío de señal de video y audio sobre cable UTP sin degradación.",
-                        costUSD: 3.15,
-                        syscomUrl: "",
-                        features: ["Protección interconstruida contra descargas de voltaje", "Diseño compacto apilable en tableros o gabinetes", "Inmunidad excepcional contra interferencias de red"]
-                    },
-                    {
-                        model: "XP4D",
-                        titleSpecs: "Fuente de Poder Distribuida Protek / 12 Vcc a 5 Amperes / 4 Salidas con Fusibles Independientes PTC",
-                        desc: "Gabinete de alimentación unificada para centralizar la energía de las cámaras con protección ante cortocomponentes.",
-                        costUSD: 24.60,
-                        syscomUrl: "",
-                        features: ["Fusibles con reinicio automático electrónico PTC", "Indicadores LED individuales por cada canal", "Gabinete metálico con chapa de seguridad"]
-                    }
-                ]
-            },
-            nvs: { title: "Servidores de Video (NVS)", desc: "Codificadores y servidores dedicados para entornos de red complejos.", products: [] },
-            camaras_ip: { title: "Cámaras IP Profesionales", desc: "Cámaras con conexión por red nativa, resoluciones desde 2MP hasta 4K.", products: [] },
-            camaras_ptz: { title: "Cámaras Domo PTZ", desc: "Equipos con movimiento robótico horizontal, vertical y zooms ópticos potentes.", products: [] },
-            switch_rack: { title: "Switches para Rack", desc: "Conmutadores corporativos diseñados para montaje estructural en gabinetes.", products: [] },
-            switch_poe: { title: "Switches PoE Alimentados", desc: "Dispositivos de red para energizar cámaras IP y Access Points perimetrales.", products: [] },
-            kits: { title: "Kits de Videovigilancia Cerrados", desc: "Paquetes todo incluido listos para su instalación rápida.", products: [] },
-            monitores: { title: "Monitores de Monitoreo Continuo", desc: "Pantallas de grado industrial diseñadas para operar 24/7 sin sobrecalentamiento.", products: [] },
-            accesorios_extra: { title: "Accesorios Adicionales e Infraestructura", desc: "Canalizaciones, cables UTP 100% cobre y gabinetes dedicados.", products: [] }
-        };
+            },                    
+    };
+    function filterActiveCategoryProducts() {
+        const query = document.getElementById('categorySearchInput').value.toLowerCase();
+        const cards = document.querySelectorAll('#productsContainer .product-card');
+        cards.forEach(card => {
+            if (card.innerText.toLowerCase().includes(query)) card.style.display = "flex";
+            else card.style.display = "none";
+        });
+    }
 
-        function updateAllPrices() {
-            const rateInput = document.getElementById('exchangeRate');
-            const discountSelect = document.getElementById('discountSelect');
-            
-            if (rateInput) currentRate = parseFloat(rateInput.value) || 17.23;
-            if (discountSelect) currentDiscount = parseFloat(discountSelect.value) || 0;
+    function initMenu() {
+        const menuContainer = document.getElementById('menuList');
+        menuContainer.innerHTML = '';
+        categoriesList.forEach(cat => {
+            const li = document.createElement('li');
+            const count = catalogData[cat.id] ? catalogData[cat.id].products.length : 0;
+            const a = document.createElement('a');
+            a.className = `category-menu-item ${cat.id === currentCategory ? 'active' : ''}`;
+            a.id = `menu-${cat.id}`;
+            a.onclick = () => selectCategory(cat.id);
+            a.innerHTML = `<span>${cat.name}</span> <span class="qty-badge">${count}</span>`;
+            li.appendChild(a);
+            menuContainer.appendChild(li);
+        });
+        renderProducts();
+    }
 
-            const activeMenuItem = document.querySelector('.category-menu-item.active');
-            if (activeMenuItem) {
-                const categoryId = activeMenuItem.id.replace('menu-', '');
-                renderCategory(categoryId);
-            }
+    function selectCategory(catId) {
+        currentCategory = catId;
+        document.querySelectorAll('.category-menu-item').forEach(item => item.classList.remove('active'));
+        const activeItem = document.getElementById(`menu-${catId}`);
+        if (activeItem) activeItem.classList.add('active');
+        document.getElementById('categorySearchInput').value = '';
+        renderProducts();
+    }
+
+    function calculatePrices(costUSD) {
+        const rateInput = document.getElementById('exchangeRate');
+        const discountSelect = document.getElementById('discountSelect');
+        
+        currentRate = rateInput ? parseFloat(rateInput.value) || 17.60 : 17.60;
+        currentDiscount = discountSelect ? parseFloat(discountSelect.value) || 0 : 0;
+
+        const costoMXNSinIva = costUSD * currentRate;
+        const costoMXNConIva = costoMXNSinIva * 1.16;
+        const basePublico = costoMXNConIva * 1.65; // PRECIO DE LISTA ORIGINAL REFERENCE
+        
+        let precioFinalPublico = basePublico * (1 - currentDiscount);
+        
+        const precioMinimoPermitido = costoMXNConIva * 1.20;
+        if (precioFinalPublico < precioMinimoPermitido) precioFinalPublico = precioMinimoPermitido;
+        
+        const margenAsegurado = precioFinalPublico - costoMXNConIva;
+        
+        return { costoMXNConIva, basePublico, precioFinalPublico, margenAsegurado };
+    }
+
+    function renderProducts() {
+        const container = document.getElementById('productsContainer');
+        const titleEl = document.getElementById('categoryTitle');
+        const descEl = document.getElementById('categoryDesc');
+        container.innerHTML = '';
+
+        if (!catalogData[currentCategory] || catalogData[currentCategory].products.length === 0) {
+            const catName = categoriesList.find(c => c.id === currentCategory)?.name || currentCategory;
+            titleEl.innerText = `Línea: ${catName}`;
+            descEl.innerText = catalogData[currentCategory]?.desc || `Módulo asignado a la ingeniería de ${catName.toLowerCase()}.`;
+            container.innerHTML = `<p style="grid-column: 1/-1; color: #64748b; font-style: italic; padding: 30px 0;">Las soluciones de hardware se encuentran en proceso de indexación técnica.</p>`;
+            return;
         }
 
-        function renderCategory(categoryId) {
-            document.querySelectorAll('.category-menu-item').forEach(li => li.classList.remove('active'));
-            const activeLi = document.getElementById(`menu-${categoryId}`);
-            if (activeLi) activeLi.classList.add('active');
+        const categoryInfo = catalogData[currentCategory];
+        titleEl.innerText = categoryInfo.title;
+        descEl.innerText = categoryInfo.desc;
 
-            const container = document.getElementById('productsContainer');
-            const titleElem = document.getElementById('categoryTitle');
-            const descElem = document.getElementById('categoryDesc');
+        categoryInfo.products.forEach(product => {
+            const calc = calculatePrices(product.costUSD);
+            const card = document.createElement('div');
+            card.className = 'product-card';
 
-            if (!container || !titleElem || !descElem) return;
+            const safeModelName = product.model.replace(/\//g, "_");
+            const imgSrc = `${GITHUB_IMG_BASE}${safeModelName}.jpg`;
 
-            container.innerHTML = '';
+            let videoButtonHTML = product.videoURL ? `<a href="${product.videoURL}" target="_blank" class="btn-video">🎬 Video</a>` : '';
+            let syscomButtonHTML = product.syscomURL ? `<a href="${product.syscomURL}" target="_blank" class="btn-syscom"><i class="fas fa-external-link-alt"></i> SYSCOM</a>` : '';
+            let featuresHTML = product.features.map(feat => `<li>${feat}</li>`).join('');
 
-            if (catalogData[categoryId] && catalogData[categoryId].products.length > 0) {
-                titleElem.innerText = catalogData[categoryId].title;
-                descElem.innerText = catalogData[categoryId].desc;
-
-                catalogData[categoryId].products.forEach((prod) => {
-                    const costoMXNSinIva = prod.costUSD * currentRate;
-                    const costoMXNConIva = costoMXNSinIva * 1.16;
-
-                    const basePublico = costoMXNConIva * 1.65; 
-                    let precioFinalPublico = basePublico * (1 - currentDiscount);
-
-                    const precioMinimoPermitido = costoMXNConIva * 1.20;
-                    if (precioFinalPublico < precioMinimoPermitido) {
-                        precioFinalPublico = precioMinimoPermitido;
-                    }
-
-                    const margenAsegurado = precioFinalPublico - costoMXNConIva;
-
-                    const sanitizedFilename = prod.model.replace('/', '_');
-                    const computedImgUrl = `${GITHUB_IMG_BASE}${sanitizedFilename}.jpg`;
-
-                    const card = document.createElement('div');
-                    card.className = 'product-card';
-                    
-                    let featuresHTML = '';
-                    if (prod.features && prod.features.length > 0) {
-                        featuresHTML = `<ul class="product-features-list">`;
-                        prod.features.forEach(f => {
-                            featuresHTML += `<li>${f}</li>`;
-                        });
-                        featuresHTML += `</ul>`;
-                    }
-
-                    const titleSpecsEscaped = prod.titleSpecs.replace(/'/g, "\\'");
-
-                    // LÓGICA DE INYECCIÓN DE URL DE SYSCOM:
-                    // Si el producto tiene una url ingresada, se dibuja el botón/enlace de redirección.
-                    let syscomLinkHTML = '';
-                    if (prod.syscomUrl && prod.syscomUrl.trim() !== "") {
-                        syscomLinkHTML = `
-                            <a href="${prod.syscomUrl}" target="_blank" class="syscom-link">
-                                🌐 Ver en SYSCOM ↗
-                            </a>
-                        `;
-                    }
-
-                    card.innerHTML = `
-                        <div class="product-body">
-                            <div class="product-main-info">
-                                <div class="product-img-box" onclick="triggerFlyerGeneration('${prod.model}', '${titleSpecsEscaped}', ${basePublico}, ${precioFinalPublico})">
-                                    <img src="${computedImgUrl}" alt="${prod.model}" onerror="this.src='byte.png'">
-                                </div>
-                                <div class="product-details">
-                                    <div class="product-model">${prod.model}</div>
-                                    <h3 class="product-title-specs">${prod.titleSpecs}</h3>
-                                    ${syscomLinkHTML} <div class="product-price-list">
-                                        ${currentDiscount > 0 && precioFinalPublico > precioMinimoPermitido ? `<span class="original-price">$${basePublico.toFixed(2)}</span>` : ''}
-                                        <span class="final-price">$${precioFinalPublico.toFixed(2)} MXN</span>
-                                        <span class="usd-reference">Ref. Distribuidor: $${prod.costUSD.toFixed(2)} USD (c/IVA: $${costoMXNConIva.toFixed(2)} MXN)</span>
-                                    </div>
-                                    <div style="background-color: #f0fdf4; color: #166534; padding: 6px 10px; border-radius: 4px; font-size: 0.8rem; font-weight: 700; margin-top: 5px; border: 1px solid #bbf7d0;">
-                                        Margen Real Asegurado: +$${margenAsegurado.toFixed(2)} MXN
-                                    </div>
-                                </div>
-                            </div>
-                            <p style="margin: 0; font-size: 0.85rem; color: #64748b; line-height: 1.4;">${prod.desc}</p>
-                            ${featuresHTML}
-                        </div>
-                        <div class="product-footer">
-                            <button class="btn-prepare" onclick="triggerFlyerGeneration('${prod.model}', '${titleSpecsEscaped}', ${basePublico}, ${precioFinalPublico})">🖼️ Generar Tarjeta Comercial</button>
-                        </div>
-                    `;
-                    container.appendChild(card);
-                });
+            // RENDER DE PRECIOS: Muestra precio de lista tachado si hay descuento activo en UI
+            let priceDisplayHTML = '';
+            if (currentDiscount > 0 && calc.basePublico > calc.precioFinalPublico) {
+                priceDisplayHTML = `
+                    <span style="text-decoration: line-through; color: #94a3b8; font-size: 1rem; display: block;">Precio Lista: $${calc.basePublico.toFixed(2)} MXN</span>
+                    <span class="final-price" style="color: #2563eb;">$${calc.precioFinalPublico.toFixed(2)} MXN <small style="font-size:0.8rem; background:#dbeafe; color:#1e40af; padding:2px 6px; border-radius:4px;">-${currentDiscount * 100}%</small></span>
+                `;
             } else {
-                const catName = categoriesList.find(c => c.id === categoryId)?.name || categoryId;
-                titleElem.innerText = `Línea: ${catName}`;
-                descElem.innerText = catalogData[categoryId]?.desc || `Módulo asignado a la ingeniería de ${catName.toLowerCase()}.`;
-                container.innerHTML = `<p style="grid-column: 1/-1; color: #64748b; font-style: italic; padding: 30px 0;">Las soluciones de hardware y flyers asociados a esta línea de negocio se encuentran actualmente en proceso de indexación técnica.</p>`;
+                priceDisplayHTML = `<span class="final-price">$${calc.precioFinalPublico.toFixed(2)} MXN</span>`;
             }
-        }
 
-        function initMenu() {
-            const menuList = document.getElementById('menuList');
-            if (!menuList) return;
-            menuList.innerHTML = '';
-            categoriesList.forEach((cat) => {
-                const count = catalogData[cat.id] ? catalogData[cat.id].products.length : 0;
-                const li = document.createElement('li');
-                li.className = `category-menu-item ${cat.id === 'dvr' ? 'active' : ''}`;
-                li.id = `menu-${cat.id}`;
-                li.onclick = () => renderCategory(cat.id);
-                li.innerHTML = `<span>${cat.name}</span> <span class="qty-badge">${count}</span>`;
-                menuList.appendChild(li);
-            });
-            renderCategory("dvr");
-        }
+            card.innerHTML = `
+                <div class="product-body">
+                    <div class="product-main-info">
+                        <div class="product-img-box"><img src="${imgSrc}" alt="${product.model}" onerror="this.src='byte.png'"></div>
+                        <div class="product-details">
+                            <div class="product-model">${product.model}</div>
+                            <h3 class="product-title-specs">${product.titleSpecs}</h3>
+                            <div class="product-price-list">
+                                ${priceDisplayHTML}
+                                <span class="usd-reference">Ref: $${product.costUSD.toFixed(2)} USD (c/IVA: $${calc.costoMXNConIva.toFixed(2)} MXN)</span>
+                            </div>
+                            <div class="margin-badge">Margen Real Asegurado: +$${calc.margenAsegurado.toFixed(2)} MXN</div>
+                        </div>
+                    </div>
+                    <p style="margin: 0; font-size: 0.9rem; color: #64748b;">${product.desc}</p>
+                    <ul class="product-features-list">${featuresHTML}</ul>
+                </div>
+                <div class="product-footer">
+                    <div class="product-actions">
+                        <button class="btn-prepare" onclick="prepareTechnicalSheet('${product.model}')">🖼️ Tarjeta Comercial</button>
+                        ${videoButtonHTML}
+                        ${syscomButtonHTML}
+                    </div>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    }
 
-        function wrapText(context, text, x, y, maxWidth, lineHeight) {
-            const words = text.split(' ');
-            let line = '';
-            let currentY = y;
+    function updateAllPrices() { renderProducts(); }
 
-            for (let n = 0; n < words.length; n++) {
-                let testLine = line + words[n] + ' ';
-                let metrics = context.measureText(testLine);
-                let testWidth = metrics.width;
-                if (testWidth > maxWidth && n > 0) {
-                    context.fillText(line, x, currentY);
-                    line = words[n] + ' ';
-                    currentY += lineHeight;
-                } else {
-                    line = testLine;
-                }
-            }
-            context.fillText(line, x, currentY);
-            return currentY;
-        }
+    /* ==========================================================================
+       RENDERING: Construcción de la Ficha Comercial con Lógica de Precios Tachados
+       ========================================================================== */
+    function prepareTechnicalSheet(modelCode) {
+        const product = catalogData[currentCategory].products.find(p => p.model === modelCode);
+        if (!product) return;
 
-        function triggerFlyerGeneration(modelCode, titleSpecs, basePrice, finalPrice) {
-            const canvas = document.getElementById('processingCanvas');
-            const ctx = canvas.getContext('2d');
-            
-            canvas.width = 600;
-            canvas.height = 400;
+        activeProductModel = product.model;
+        const calc = calculatePrices(product.costUSD);
+        const safeModelName = product.model.replace(/\//g, "_");
+        const productImgUrl = `${GITHUB_IMG_BASE}${safeModelName}.jpg`;
 
-            ctx.fillStyle = '#ffffff';
-            ctx.fillRect(0, 0, 600, 400);
+        const canvas = document.getElementById('processingCanvas');
+        const ctx = canvas.getContext('2d');
 
+        canvas.width = 450;
+        canvas.height = 750;
+
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, 450, 750);
+
+        ctx.fillStyle = '#003366';
+        ctx.fillRect(0, 0, 450, 110);
+        
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 18px sans-serif';
+        ctx.fillText('SOLUCIONES DE INGENIERÍA PERIMETRAL', 25, 45);
+        
+        ctx.fillStyle = '#ff6600';
+        ctx.font = 'bold 13px sans-serif';
+        ctx.fillText('FICHA COMERCIAL DE HARDWARE - BYTECOMTEC', 25, 75);
+
+        ctx.fillStyle = '#003399';
+        ctx.font = 'bold 22px sans-serif';
+        ctx.fillText(`MODELO: ${product.model}`, 30, 155);
+
+        ctx.fillStyle = '#1e293b';
+        ctx.font = '15px sans-serif';
+        let nextY = wrapText(ctx, product.titleSpecs, 30, 190, 390, 22);
+
+        // EVALUACIÓN DE DESCUENTOS PARA EL RENDER EN CANVAS
+        let priceY = nextY + 35;
+        if (currentDiscount > 0 && calc.basePublico > calc.precioFinalPublico) {
+            // 1. Dibujar texto del "Precio de Lista original" en color gris neutro
+            ctx.fillStyle = '#94a3b8';
+            ctx.font = 'bold 16px sans-serif';
+            let listPriceText = `Precio Lista: $${calc.basePublico.toFixed(2)} MXN`;
+            ctx.fillText(listPriceText, 30, priceY);
+
+            // 2. Trazar línea roja encima de dicho precio (Efecto Tachado)
+            let textWidth = ctx.measureText(listPriceText).width;
+            ctx.strokeStyle = '#d32f2f';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(30, priceY - 5);
+            ctx.lineTo(30 + textWidth, priceY - 5);
+            ctx.stroke();
+
+            // 3. Posicionar el nuevo precio rebajado abajo de forma dominante
+            priceY += 30;
+            ctx.fillStyle = '#2563eb'; // Azul promocional limpio
+            ctx.font = 'bold 25px sans-serif';
+            ctx.fillText(`Oferta Especial: $${calc.precioFinalPublico.toFixed(2)} MXN`, 30, priceY);
+        } else {
+            // Si no hay descuento, dibuja el precio normal directamente
             ctx.fillStyle = '#003366';
-            ctx.fillRect(0, 0, 600, 80);
+            ctx.font = 'bold 24px sans-serif';
+            ctx.fillText(`Precio Público: $${calc.precioFinalPublico.toFixed(2)} MXN`, 30, priceY);
+        }
 
+        let imgBoxY = priceY + 25;
+        let boxY = imgBoxY + 195; 
+
+        // Si el precio se desplazó hacia abajo por la oferta, reajustamos el límite si es necesario
+        if (boxY > 600) { boxY = 590; }
+
+        ctx.fillStyle = '#f8fafc';
+        ctx.fillRect(30, boxY, 390, 75);
+        ctx.strokeStyle = '#e2e8f0';
+        ctx.strokeRect(30, boxY, 390, 75);
+        
+        ctx.fillStyle = '#d32f2f';
+        ctx.font = 'bold 14px sans-serif';
+        ctx.fillText('Cotización sujeta a diagnóstico en sitio.', 45, boxY + 30);
+        ctx.fillText('No incluye mano de obra por instalación.', 45, boxY + 54);
+
+        ctx.fillStyle = '#64748b';
+        ctx.font = 'italic 12px sans-serif';
+        ctx.fillText('* Vigencia ligada a existencia y tipo de cambio diario.', 30, 700);
+        ctx.fillText('Bytecomtec - Soporte Técnico Autorizado.', 30, 722);
+
+        renderCanvasImage(ctx, productImgUrl, 135, imgBoxY, 180, 180, canvas);
+    }
+
+    function renderCanvasImage(ctx, src, x, y, width, height, canvas) {
+        const img = new Image();
+        img.crossOrigin = "anonymous";
+        img.src = src;
+
+        img.onload = function() {
             ctx.fillStyle = '#ffffff';
-            ctx.font = 'bold 20px sans-serif';
-            ctx.fillText('SOLUCIONES DE INGENIERÍA PERIMETRAL', 30, 45);
-
-            ctx.fillStyle = '#ff6600';
-            ctx.font = 'bold 14px sans-serif';
-            ctx.fillText('FICHA COMERCIAL DE HARDWARE - BYTECOMTEC', 30, 68);
-
-            ctx.fillStyle = '#1e293b';
-            ctx.font = 'bold 22px sans-serif';
-            ctx.fillText(`MODELO: ${modelCode}`, 40, 125);
-
-            ctx.fillStyle = '#334155';
-            ctx.font = '12px sans-serif';
-            let nextY = wrapText(ctx, titleSpecs, 40, 150, 360, 18);
-
-            let priceY = Math.max(nextY + 25, 205);
-            
-            if (Math.abs(basePrice - finalPrice) > 0.01) {
-                ctx.fillStyle = '#94a3b8';
-                ctx.font = '13px sans-serif';
-                let origText = `Precio de Lista: $${basePrice.toFixed(2)} MXN`;
-                ctx.fillText(origText, 40, priceY);
-                
-                let textWidth = ctx.measureText(origText).width;
-                ctx.strokeStyle = '#94a3b8';
-                ctx.lineWidth = 1;
-                ctx.beginPath();
-                ctx.moveTo(40, priceY - 4);
-                ctx.lineTo(40 + textWidth, priceY - 4);
-                ctx.stroke();
-                
-                priceY += 20;
-            }
-
-            ctx.fillStyle = '#003366';
-            ctx.font = 'bold 18px sans-serif';
-            ctx.fillText(`Precio Especial Público: $${finalPrice.toFixed(2)} MXN`, 40, priceY);
-
-            let boxY = Math.max(priceY + 15, 245);
-            ctx.fillStyle = '#f8fafc';
-            ctx.fillRect(40, boxY, 360, 55);
+            ctx.fillRect(x, y, width, height);
             ctx.strokeStyle = '#e2e8f0';
-            ctx.strokeRect(40, boxY, 360, 55);
-
-            ctx.fillStyle = '#d32f2f';
-            ctx.font = 'bold 14px sans-serif';
-            ctx.fillText('Cotización sujeta a diagnóstico en sitio', 55, boxY + 32);
-
-            ctx.fillStyle = '#64748b';
-            ctx.font = 'italic 11px sans-serif';
-            ctx.fillText('* Vigencia ligada a fluctuaciones del tipo de cambio Syscom diario.', 40, 355);
-            ctx.fillText('Bytecomtec S.A. de C.V. - Soporte Técnico Autorizado', 40, 375);
-
-            const img = new Image();
-            img.crossOrigin = "anonymous";
+            ctx.strokeRect(x, y, width, height);
             
-            const sanitizedFilename = modelCode.replace('/', '_');
-            img.src = `${GITHUB_IMG_BASE}${sanitizedFilename}.jpg`;
+            const maxDim = width - 20;
+            let w = img.width;
+            let h = img.height;
+            if (w > h) {
+                h = (h * maxDim) / w;
+                w = maxDim;
+            } else {
+                w = (w * maxDim) / h;
+                h = maxDim;
+            }
+            const xOffset = x + (width - w) / 2;
+            const yOffset = y + (height - h) / 2;
+            
+            ctx.drawImage(img, xOffset, yOffset, w, h);
+            openModalWithCanvasData(canvas);
+        };
+        img.onerror = function() {
+            ctx.fillStyle = '#f1f5f9';
+            ctx.fillRect(x, y, width, height);
+            ctx.strokeStyle = '#cbd5e1';
+            ctx.strokeRect(x, y, width, height);
+            ctx.fillStyle = '#94a3b8';
+            ctx.font = 'bold 13px sans-serif';
+            ctx.fillText('[Imagen]', x + (width/2) - 25, y + (height/2) + 5);
+            openModalWithCanvasData(canvas);
+        };
+    }
 
-            img.onload = function() {
-                ctx.fillStyle = '#ffffff';
-                ctx.fillRect(420, 150, 140, 140);
-                ctx.strokeStyle = '#e2e8f0';
-                ctx.strokeRect(420, 150, 140, 140);
-                
-                const maxDim = 120;
-                let w = img.width;
-                let h = img.height;
-                if (w > h) {
-                    h = (h * maxDim) / w;
-                    w = maxDim;
+    function wrapText(context, text, x, y, maxWidth, lineHeight) {
+        const words = text.split(' ');
+        let line = '';
+        let currentY = y;
+        for (let n = 0; n < words.length; n++) {
+            let testLine = line + words[n] + ' ';
+            if (context.measureText(testLine).width > maxWidth && n > 0) {
+                context.fillText(line, x, currentY);
+                line = words[n] + ' ';
+                currentY += lineHeight;
+            } else {
+                line = testLine;
+            }
+        }
+        context.fillText(line, x, currentY);
+        return currentY;
+    }
+
+    function openModalWithCanvasData(canvas) {
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalTargetImg');
+        const btnAction = document.getElementById('btnClipboardAction');
+        
+        if (modal && modalImg) {
+            modalImg.src = canvas.toDataURL('image/png');
+            modal.style.display = 'flex';
+            
+            if (btnAction) {
+                if (navigator.canShare && navigator.share) {
+                    btnAction.innerText = '🚀 Compartir Ficha por WhatsApp';
                 } else {
-                    w = (w * maxDim) / h;
-                    h = maxDim;
+                    btnAction.innerText = '📋 Copiar Imagen al Portapapeles';
                 }
-                const xOffset = 420 + (140 - w) / 2;
-                const yOffset = 150 + (140 - h) / 2;
-                
-                ctx.drawImage(img, xOffset, yOffset, w, h);
-                openModalWithCanvasData(canvas);
-            };
-
-            img.onerror = function() {
-                ctx.fillStyle = '#f1f5f9';
-                ctx.fillRect(420, 150, 140, 140);
-                ctx.strokeStyle = '#cbd5e1';
-                ctx.strokeRect(420, 150, 140, 140);
-                ctx.fillStyle = '#94a3b8';
-                ctx.font = 'bold 11px sans-serif';
-                ctx.fillText('[Imagen Indexada]', 440, 225);
-                openModalWithCanvasData(canvas);
-            };
-        }
-
-        function openModalWithCanvasData(canvas) {
-            const modal = document.getElementById('imageModal');
-            const modalImg = document.getElementById('modalTargetImg');
-            const btnAction = document.getElementById('btnClipboardAction');
-            
-            if (modal && modalImg) {
-                modalImg.src = canvas.toDataURL('image/png');
-                modal.style.display = 'flex';
-                
-                if (btnAction) {
-                    btnAction.className = 'btn-copy-clipboard';
-                    btnAction.innerText = '📋 Copiar Ficha para WhatsApp';
-                }
+                btnAction.className = 'btn-copy-clipboard';
             }
         }
+    }
 
-        async function copyCanvasToClipboard() {
-            const canvas = document.getElementById('processingCanvas');
-            const btnAction = document.getElementById('btnClipboardAction');
-            
-            try {
-                canvas.toBlob(async function(blob) {
-                    if (!blob) {
-                        alert("Error al procesar los datos de la ficha técnica.");
-                        return;
+    function shareOrCopyCanvas() {
+        const canvas = document.getElementById('processingCanvas');
+        const btnAction = document.getElementById('btnClipboardAction');
+        const cleanFileName = `Ficha_${activeProductModel.replace(/[^a-zA-Z0-9]/g, '_')}.png`;
+
+        canvas.toBlob(async function(blob) {
+            if (!blob) return;
+            if (navigator.canShare && navigator.share) {
+                try {
+                    const file = new File([blob], cleanFileName, { type: 'image/png' });
+                    await navigator.share({ files: [file] });
+                } catch (err) {
+                    console.log("Compartición omitida.");
+                }
+            } else {
+                try {
+                    await navigator.clipboard.write([new ClipboardItem({ [blob.type]: blob })]);
+                    if (btnAction) {
+                        btnAction.className = 'btn-copy-clipboard success';
+                        btnAction.innerText = '✅ ¡Ficha Copiada! Pégala en tu chat (Ctrl+V)';
                     }
-                    
-                    try {
-                        await navigator.clipboard.write([
-                            new ClipboardItem({
-                                [blob.type]: blob
-                            })
-                        ]);
-                        
-                        if (btnAction) {
-                            btnAction.className = 'btn-copy-clipboard success';
-                            btnAction.innerText = '✅ ¡Ficha Copiada! Pégala en WhatsApp (Ctrl+V)';
-                        }
-                    } catch (err) {
-                        console.error("Error en la API de portapapeles: ", err);
-                        alert("Tu navegador bloqueó la escritura directa de imágenes. Prueba dando clic derecho sobre la ficha de abajo.");
-                    }
-                }, 'image/png');
-                
-            } catch (error) {
-                console.error("Fallo general de procesamiento de imagen: ", error);
+                } catch (err) {
+                    alert("Mantén presionada la imagen para guardarla.");
+                }
             }
-        }
+        }, 'image/png');
+    }
 
-        function closeLightbox() {
-            const modal = document.getElementById('imageModal');
-            if (modal) modal.style.display = 'none';
-        }
+    function closeLightbox() {
+        document.getElementById('imageModal').style.display = 'none';
+    }
 
-        window.onload = initMenu;
-    </script>
+    window.onload = initMenu;
+</script>
 </body>
 </html>
