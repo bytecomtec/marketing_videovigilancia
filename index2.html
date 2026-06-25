@@ -117,13 +117,6 @@
         .product-model { color: #003399; font-weight: 700; font-size: 1.25rem; margin-bottom: 4px; }
         .product-title-specs { font-size: 0.95rem; color: var(--text-main); font-weight: 700; line-height: 1.4; margin: 0 0 8px 0; }
 
-        /* Estilos para el enlace de Syscom */
-        .syscom-link {
-            display: inline-flex; align-items: center; gap: 4px; font-size: 0.8rem;
-            color: #ff6600; font-weight: bold; text-decoration: none; margin-bottom: 6px;
-        }
-        .syscom-link:hover { text-decoration: underline; }
-
         .product-price-list { font-size: 0.95rem; color: #64748b; margin: 8px 0; font-weight: 500; }
         .product-price-list .final-price { color: #d32f2f; font-weight: bold; font-size: 1.4rem; display: block; margin-bottom: 2px; }
         .usd-reference { font-size: 0.8rem; color: #94a3b8; display: block; }
@@ -155,6 +148,14 @@
             transition: all 0.2s; box-sizing: border-box;
         }
         .btn-video:hover { background-color: var(--accent-color); color: var(--white); }
+
+  .btn-syscom {
+            background-color: transparent; color: #475569; border: 1px solid #cbd5e1;
+            border-radius: 4px; padding: 11px 14px; font-size: 0.9rem; font-weight: 600;
+            flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 6px; text-decoration: none;
+            transition: all 0.2s; box-sizing: border-box; min-width: 100px;
+        }
+        .btn-syscom:hover { background-color: #f1f5f9; color: var(--primary-color); border-color: #94a3b8; }
 
         /* ==========================================================================
            MODAL DE PREVISUALIZACIÓN DE IMAGEN VERTICAL EN SMARTPHONES
@@ -1801,8 +1802,8 @@
                     { 
                         model: "PS12DC4PBK", // Cambié el modelo para diferenciarlo del DVR
                         titleSpecs: "Fuente de Poder con Gabinete de 4 Salidas de 11 - 15 Vcc / 5 Amper / Soporta Batería de Respaldo / Voltaje de Entrada: 96 - 264 Vca / Soporta Protección contra Sobrecorriente de Salida, Protección contra Cortocircuito",
-                        costUSD: 19.07,
                         syscomUrl: "https://www.syscom.mx/producto/S04-TURBO-G3-HIKVISION-202241.html",
+                        costUSD: 19.07,
                         features: ["Voltaje de salida ajustable 11-15 VCC", "Corriente total de salida de 5 A", "Protección contra sobrecorriente y cortocircuitos", "Monitoreo automático de batería con corte a 10.5 V","Reinicio automático al recuperar energía", "Diseño compacto para fácil instalación"],
                         videoURL: ""   
                     },
@@ -2328,19 +2329,9 @@
             const imgSrc = `${GITHUB_IMG_BASE}${safeModelName}.jpg`;
 
             let videoButtonHTML = product.videoURL ? `<a href="${product.videoURL}" target="_blank" class="btn-video">🎬 Video</a>` : '';
+            let syscomButtonHTML = product.syscomURL ? `<a href="${product.syscomURL}" target="_blank" class="btn-syscom"><i class="fas fa-external-link-alt"></i> SYSCOM</a>` : '';
             let featuresHTML = product.features.map(feat => `<li>${feat}</li>`).join('');
 
-                    // LÓGICA DE INYECCIÓN DE URL DE SYSCOM:
-                    // Si el producto tiene una url ingresada, se dibuja el botón/enlace de redirección.
-                    let syscomLinkHTML = '';
-                    if (prod.syscomUrl && prod.syscomUrl.trim() !== "") {
-                        syscomLinkHTML = `
-                            <a href="${prod.syscomUrl}" target="_blank" class="syscom-link">
-                                🌐 Ver en SYSCOM ↗
-                            </a>
-                        `;
-                    }
-            
             // RENDER DE PRECIOS: Muestra precio de lista tachado si hay descuento activo en UI
             let priceDisplayHTML = '';
             if (currentDiscount > 0 && calc.basePublico > calc.precioFinalPublico) {
@@ -2373,6 +2364,7 @@
                     <div class="product-actions">
                         <button class="btn-prepare" onclick="prepareTechnicalSheet('${product.model}')">🖼️ Generar Tarjeta Comercial</button>
                         ${videoButtonHTML}
+                        ${syscomButtonHTML}
                     </div>
                 </div>
             `;
