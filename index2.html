@@ -2305,8 +2305,7 @@
 // =========================================================================
     // FUNCIÓN DE RENDERIZADO DE PRODUCTOS Y CATEGORÍAS (CORREGIDA Y CERRADA)
     // =========================================================================
-    function showCategory(categoryKey) {
-        // 1. Obtener el contenedor principal usando el ID correcto de tu HTML
+function showCategory(categoryKey) {
         const productsContainer = document.getElementById('productsContainer');
         if (!productsContainer) return;
 
@@ -2316,12 +2315,16 @@
         const categoryInfo = catalogData[categoryKey];
         if (!categoryInfo || !categoryInfo.products) return;
 
-        // Iterar de forma segura sobre cada producto de la categoría seleccionada
+        // Iterar sobre cada producto de forma segura
         categoryInfo.products.forEach(product => {
-            const calc = calculatePrices(product.costUSD);
+            // Validación de seguridad para evitar que un producto mal estructurado rompa el script
+            if (!product || !product.model) return;
+
+            const calc = calculatePrices(product.costUSD || 0);
             const card = document.createElement('div');
             card.className = 'product-card';
 
+            // Reemplazo seguro del modelo para la imagen
             const safeModelName = product.model.replace(/\//g, "_");
             const imgSrc = `${GITHUB_IMG_BASE}${safeModelName}.jpg`;
 
@@ -2337,15 +2340,15 @@
                 ? `<a href="${syscomLink}" target="_blank" class="btn-syscom"><i class="fas fa-external-link-alt"></i> SYSCOM</a>` 
                 : '';
 
-            // 3. Generar las viñetas de características de forma segura
+            // 3. Generar las viñetas de características protegiendo si no existen
             let featuresHTML = '';
-            if (product.features && product.features.length > 0) {
+            if (product.features && Array.isArray(product.features) && product.features.length > 0) {
                 featuresHTML = product.features.map(f => `<li>${f}</li>`).join('');
             } else {
                 featuresHTML = '<li>Sin características disponibles</li>';
             }
 
-            // RENDER DE PRECIOS: Muestra precio de lista tachado si hay descuento activo en la UI
+            // RENDER DE PRECIOS: Muestra precio de lista tachado si hay descuento activo
             let priceDisplayHTML = '';
             if (currentDiscount > 0 && calc.basePublico > calc.precioFinalPublico) {
                 priceDisplayHTML = `
@@ -2356,7 +2359,7 @@
                 priceDisplayHTML = `<span class="final-price">$${calc.precioFinalPublico.toFixed(2)} MXN</span>`;
             }
 
-            // Inyectar la plantilla HTML estructurada sin cortes de comillas invertidas
+            // Inyectar la plantilla HTML estructurada asegurando que no haya campos undefined
             card.innerHTML = `
                 <div class="product-body">
                     <div class="product-main-info">
@@ -2368,7 +2371,7 @@
                             <h3 class="product-title-specs">${product.titleSpecs || 'Sin especificaciones'}</h3>
                             <div class="product-price-list">
                                 ${priceDisplayHTML}
-                                <span class="usd-reference">Ref: $${product.costUSD.toFixed(2)} USD (c/IVA: $${calc.costoMXNConIva.toFixed(2)} MXN)</span>
+                                <span class="usd-reference">Ref: $${(product.costUSD || 0).toFixed(2)} USD (c/IVA: $${calc.costoMXNConIva.toFixed(2)} MXN)</span>
                             </div>
                             <div class="margin-badge">Margen Real Asegurado: +$${calc.margenAsegurado.toFixed(2)} MXN</div>
                         </div>
@@ -2387,10 +2390,10 @@
                 </div>
             `;
             
-            // Insertar la tarjeta armada en el contenedor de la cuadrícula
+            // Insertar de forma segura en la cuadrícula
             productsContainer.appendChild(card);
         });
-    } // <-- ESTE CIERRE DE FUNCIÓN ES CRÍTICO Y REPARA EL BLOQUEO
+    }
 
     function updateAllPrices() { renderProducts(); }
 
