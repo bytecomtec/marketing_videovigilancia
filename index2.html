@@ -2302,25 +2302,22 @@
         return { costoMXNConIva, basePublico, precioFinalPublico, margenAsegurado };
     }
 
-    function renderProducts() {
-        const container = document.getElementById('productsContainer');
-        const titleEl = document.getElementById('categoryTitle');
-        const descEl = document.getElementById('categoryDesc');
-        container.innerHTML = '';
+// =========================================================================
+    // FUNCIÓN DE RENDERIZADO DE PRODUCTOS Y CATEGORÍAS (CORREGIDA Y CERRADA)
+    // =========================================================================
+    function showCategory(categoryKey) {
+        // 1. Obtener el contenedor principal usando el ID correcto de tu HTML
+        const productsContainer = document.getElementById('productsContainer');
+        if (!productsContainer) return;
 
-        if (!catalogData[currentCategory] || catalogData[currentCategory].products.length === 0) {
-            const catName = categoriesList.find(c => c.id === currentCategory)?.name || currentCategory;
-            titleEl.innerText = `Línea: ${catName}`;
-            descEl.innerText = catalogData[currentCategory]?.desc || `Módulo asignado a la ingeniería de ${catName.toLowerCase()}.`;
-            container.innerHTML = `<p style="grid-column: 1/-1; color: #64748b; font-style: italic; padding: 30px 0;">Las soluciones de hardware se encuentran en proceso de indexación técnica.</p>`;
-            return;
-        }
+        // Limpiar el contenedor antes de renderizar
+        productsContainer.innerHTML = '';
 
-        const categoryInfo = catalogData[currentCategory];
-        titleEl.innerText = categoryInfo.title;
-        descEl.innerText = categoryInfo.desc;
+        const categoryInfo = catalogData[categoryKey];
+        if (!categoryInfo || !categoryInfo.products) return;
 
- categoryInfo.products.forEach(product => {
+        // Iterar de forma segura sobre cada producto de la categoría seleccionada
+        categoryInfo.products.forEach(product => {
             const calc = calculatePrices(product.costUSD);
             const card = document.createElement('div');
             card.className = 'product-card';
@@ -2328,19 +2325,19 @@
             const safeModelName = product.model.replace(/\//g, "_");
             const imgSrc = `${GITHUB_IMG_BASE}${safeModelName}.jpg`;
 
-            // 1. Validamos de forma independiente el botón de Video (admite mayúsculas/minúsculas)
+            // 1. Validamos de forma independiente el botón de Video
             let videoLink = product.videoURL || product.videourl || product.videoUrl;
             let videoButtonHTML = (videoLink && videoLink.trim() !== "") 
                 ? `<a href="${videoLink}" target="_blank" class="btn-video">🎬 Video</a>` 
                 : '';
 
-            // 2. Validamos de forma independiente el botón de SYSCOM (admite mayúsculas/minúsculas)
+            // 2. Validamos de forma independiente el botón de SYSCOM
             let syscomLink = product.syscomURL || product.syscomUrl || product.syscomurl;
             let syscomButtonHTML = (syscomLink && syscomLink.trim() !== "") 
                 ? `<a href="${syscomLink}" target="_blank" class="btn-syscom"><i class="fas fa-external-link-alt"></i> SYSCOM</a>` 
                 : '';
 
-            // CORRECCIÓN 1: Declarar y generar las viñetas de características dinámicamente desde el JSON
+            // 3. Generar las viñetas de características de forma segura
             let featuresHTML = '';
             if (product.features && product.features.length > 0) {
                 featuresHTML = product.features.map(f => `<li>${f}</li>`).join('');
@@ -2348,7 +2345,7 @@
                 featuresHTML = '<li>Sin características disponibles</li>';
             }
 
-            // RENDER DE PRECIOS: Muestra precio de lista tachado si hay descuento activo en UI
+            // RENDER DE PRECIOS: Muestra precio de lista tachado si hay descuento activo en la UI
             let priceDisplayHTML = '';
             if (currentDiscount > 0 && calc.basePublico > calc.precioFinalPublico) {
                 priceDisplayHTML = `
@@ -2359,7 +2356,7 @@
                 priceDisplayHTML = `<span class="final-price">$${calc.precioFinalPublico.toFixed(2)} MXN</span>`;
             }
 
-            // CORRECCIÓN 2: Renderizado limpio estructurando las comillas invertidas sin cortes accidentales
+            // Inyectar la plantilla HTML estructurada sin cortes de comillas invertidas
             card.innerHTML = `
                 <div class="product-body">
                     <div class="product-main-info">
@@ -2390,9 +2387,10 @@
                 </div>
             `;
             
-            // CORRECCIÓN 3: Tu contenedor en el HTML se llama 'productsContainer'
+            // Insertar la tarjeta armada en el contenedor de la cuadrícula
             productsContainer.appendChild(card);
         });
+    } // <-- ESTE CIERRE DE FUNCIÓN ES CRÍTICO Y REPARA EL BLOQUEO
 
     function updateAllPrices() { renderProducts(); }
 
