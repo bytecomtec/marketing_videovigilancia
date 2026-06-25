@@ -2320,7 +2320,7 @@
         titleEl.innerText = categoryInfo.title;
         descEl.innerText = categoryInfo.desc;
 
-        categoryInfo.products.forEach(product => {
+ categoryInfo.products.forEach(product => {
             const calc = calculatePrices(product.costUSD);
             const card = document.createElement('div');
             card.className = 'product-card';
@@ -2331,24 +2331,21 @@
             // 1. Validamos de forma independiente el botón de Video (admite mayúsculas/minúsculas)
             let videoLink = product.videoURL || product.videourl || product.videoUrl;
             let videoButtonHTML = (videoLink && videoLink.trim() !== "") 
-            ? `<a href="${videoLink}" target="_blank" class="btn-video">🎬 Video</a>` 
-            : '';
+                ? `<a href="${videoLink}" target="_blank" class="btn-video">🎬 Video</a>` 
+                : '';
 
             // 2. Validamos de forma independiente el botón de SYSCOM (admite mayúsculas/minúsculas)
             let syscomLink = product.syscomURL || product.syscomUrl || product.syscomurl;
             let syscomButtonHTML = (syscomLink && syscomLink.trim() !== "") 
-            ? `<a href="${syscomLink}" target="_blank" class="btn-syscom"><i class="fas fa-external-link-alt"></i> SYSCOM</a>` 
+                ? `<a href="${syscomLink}" target="_blank" class="btn-syscom"><i class="fas fa-external-link-alt"></i> SYSCOM</a>` 
                 : '';
 
-            // 3. Contenedor de acciones (Se genera si al menos uno de los dos botones existe)
-            let actionsContainerHTML = '';
-            if (videoButtonHTML || syscomButtonHTML) {
-                actionsContainerHTML = `
-                    <div class="product-actions">
-                        ${videoButtonHTML}
-                        ${syscomButtonHTML}
-                    </div>
-                `;
+            // CORRECCIÓN 1: Declarar y generar las viñetas de características dinámicamente desde el JSON
+            let featuresHTML = '';
+            if (product.features && product.features.length > 0) {
+                featuresHTML = product.features.map(f => `<li>${f}</li>`).join('');
+            } else {
+                featuresHTML = '<li>Sin características disponibles</li>';
             }
 
             // RENDER DE PRECIOS: Muestra precio de lista tachado si hay descuento activo en UI
@@ -2362,13 +2359,16 @@
                 priceDisplayHTML = `<span class="final-price">$${calc.precioFinalPublico.toFixed(2)} MXN</span>`;
             }
 
+            // CORRECCIÓN 2: Renderizado limpio estructurando las comillas invertidas sin cortes accidentales
             card.innerHTML = `
                 <div class="product-body">
                     <div class="product-main-info">
-                        <div class="product-img-box"><img src="${imgSrc}" alt="${product.model}" onerror="this.src='byte.png'"></div>
+                        <div class="product-img-box">
+                            <img src="${imgSrc}" alt="${product.model}" onerror="this.src='byte.png'">
+                        </div>
                         <div class="product-details">
                             <div class="product-model">${product.model}</div>
-                            <h3 class="product-title-specs">${product.titleSpecs}</h3>
+                            <h3 class="product-title-specs">${product.titleSpecs || 'Sin especificaciones'}</h3>
                             <div class="product-price-list">
                                 ${priceDisplayHTML}
                                 <span class="usd-reference">Ref: $${product.costUSD.toFixed(2)} USD (c/IVA: $${calc.costoMXNConIva.toFixed(2)} MXN)</span>
@@ -2376,8 +2376,10 @@
                             <div class="margin-badge">Margen Real Asegurado: +$${calc.margenAsegurado.toFixed(2)} MXN</div>
                         </div>
                     </div>
-                    <p style="margin: 0; font-size: 0.9rem; color: #64748b;">${product.desc}</p>
-                    <ul class="product-features-list">${featuresHTML}</ul>
+                    <p style="margin: 10px 0 5px 0; font-size: 0.9rem; color: #64748b;">${product.desc || ''}</p>
+                    <ul class="product-features-list">
+                        ${featuresHTML}
+                    </ul>
                 </div>
                 <div class="product-footer">
                     <div class="product-actions">
@@ -2387,9 +2389,10 @@
                     </div>
                 </div>
             `;
-            container.appendChild(card);
+            
+            // CORRECCIÓN 3: Tu contenedor en el HTML se llama 'productsContainer'
+            productsContainer.appendChild(card);
         });
-    }
 
     function updateAllPrices() { renderProducts(); }
 
