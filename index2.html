@@ -149,7 +149,7 @@
         }
         .btn-video:hover { background-color: var(--accent-color); color: var(--white); }
 
-        .btn-syscom {
+  .btn-syscom {
             background-color: transparent; color: #475569; border: 1px solid #cbd5e1;
             border-radius: 4px; padding: 11px 14px; font-size: 0.9rem; font-weight: 600;
             flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 6px; text-decoration: none;
@@ -1802,10 +1802,10 @@
                     { 
                         model: "PS12DC4PBK", // Cambié el modelo para diferenciarlo del DVR
                         titleSpecs: "Fuente de Poder con Gabinete de 4 Salidas de 11 - 15 Vcc / 5 Amper / Soporta Batería de Respaldo / Voltaje de Entrada: 96 - 264 Vca / Soporta Protección contra Sobrecorriente de Salida, Protección contra Cortocircuito",
+                        syscomUrl: "https://www.syscom.mx/products/176574",
                         costUSD: 19.07,
                         features: ["Voltaje de salida ajustable 11-15 VCC", "Corriente total de salida de 5 A", "Protección contra sobrecorriente y cortocircuitos", "Monitoreo automático de batería con corte a 10.5 V","Reinicio automático al recuperar energía", "Diseño compacto para fácil instalación"],
-                        videoURL: "https://www.syscom.mx/producto/DS-7104NI-K1-W-M-C-HIKVISION-209841.html",
-                        syscomUrl: "https://www.syscom.mx/products/168902"                        
+                        videoURL: ""   
                     },
                     { 
                         model: "DS-2FA1225-C4/K", // Cambié el modelo para diferenciarlo del DVR
@@ -1826,8 +1826,7 @@
                         titleSpecs: "Fuente de Poder de 12 Vcc @ 5A / 4 Cámaras / FILTRO DE RUIDO ESPECIAL PARA CAMARAS 4K / Fusible Reseteable Inter Construido PTC / Protección Contra Sobre-Tensiones y Contra Cortocircuito / Recomendado para cámaras 4K.",
                         costUSD: 11.98,
                         features: ["Salida 12V DC con hasta 5 amperios", "Compatible con cámaras 4K TurboHD (8 Megapíxeles)", "Filtro de ruido especial para reducir interferencia", "Voltaje entrada 110-240V CA, salida regulada","Fusible reseteable PTC integrado para protección", "Certificación UL Listed y CE de seguridad"],
-                        videoURL: "",
-                        syscomUrl: "https://www.syscom.mx/products/176092"
+                        videoURL: ""   
                     },
                     { 
                         model: "DS-2FA1205-C8/K", // Cambié el modelo para diferenciarlo del DVR
@@ -2330,9 +2329,7 @@
             const imgSrc = `${GITHUB_IMG_BASE}${safeModelName}.jpg`;
 
             let videoButtonHTML = product.videoURL ? `<a href="${product.videoURL}" target="_blank" class="btn-video">🎬 Video</a>` : '';
-            // Busca la línea original de syscomButtonHTML y reemplázala por esta:
-            let urlValida = product.syscomURL || product.syscomUrl;
-            let syscomButtonHTML = urlValida ? `<a href="${urlValida}" target="_blank" class="btn-syscom"><i class="fas fa-external-link-alt"></i> SYSCOM</a>` : '';
+            let syscomButtonHTML = product.syscomURL ? `<a href="${product.syscomURL}" target="_blank" class="btn-syscom"><i class="fas fa-external-link-alt"></i> SYSCOM</a>` : '';
             let featuresHTML = product.features.map(feat => `<li>${feat}</li>`).join('');
 
             // RENDER DE PRECIOS: Muestra precio de lista tachado si hay descuento activo en UI
