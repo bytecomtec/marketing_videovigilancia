@@ -6,9 +6,6 @@
     <title>Panel de Control de Margen e Infraestructura - Bytecomtec</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        /* ==========================================================================
-           Variables de Paleta de Color Corporativa
-           ========================================================================== */
         :root {
             --primary-color: #003366;       /* Azul Corporativo */
             --accent-color: #ff6600;        /* Naranja Técnico */
@@ -157,9 +154,6 @@
         }
         .btn-syscom:hover { background-color: #f1f5f9; color: var(--primary-color); border-color: #94a3b8; }
 
-        /* ==========================================================================
-           MODAL DE PREVISUALIZACIÓN DE IMAGEN VERTICAL EN SMARTPHONES
-           ========================================================================== */
         .custom-modal {
             display: none; position: fixed; z-index: 9999; top: 0; left: 0; width: 100%; height: 100%;
             background-color: rgba(15, 23, 42, 0.95); align-items: center; justify-content: center;
@@ -280,23 +274,7 @@
         { id: "monitores", name: "Monitores" },
         { id: "energia", name: "Energía" }
     ];
-
     const catalogData = {
-            nvr: {
-                title: "Grabadores de Red (NVR)",
-                desc: "Soluciones autónomas de grabación IP nativa con gestión remota y switches integrados.",
-                products: [
-                    { 
-                        model: "DS-7104NI-K1/W/M(C)",
-                        titleSpecs: "NVR 4 Megapixel / 4 canales IP / 1 Bahía de Disco Duro / 2 Antenas Wi-Fi / Salida de Vídeo Full HD", 
-                        desc: "Grabador IP autónomo provisto de puertos PoE nativos para energizar cámaras de forma directa.",
-                        costUSD: 62.14,
-                        features: ["Codificación H.265+/H.265/H.264+/H.264", "Almacenamiento 1 disco hasta 6 TB", "Throughput entrada 50 Mbps, salida 40 Mbps", "Reproducción sincrónica 4 canales Full HD", "2 antenas Wi-Fi MIMO 2.4 GHz"],
-                        videoURL: "https://bytecomtec.github.io/videos_videovigilancia/videovigilancia.mp4",
-                        syscomURL: "https://www.syscom.mx/producto/DS-7104NI-K1-W-M-C-HIKVISION-209841.html" // URL de ejemplo para SYSCOM
-                   }
-                ]
-            },
             camaras_analogas_bullet: {
                 title: "Accesorios complementarios para videovigilancia",
                 desc: "Catálogo completo de accesorios con costos integrados (IVA incluido) y factores de rentabilidad blindados.",
@@ -396,7 +374,11 @@
             const imgSrc = `${GITHUB_IMG_BASE}${safeModelName}.jpg`;
 
             let videoButtonHTML = product.videoURL ? `<a href="${product.videoURL}" target="_blank" class="btn-video">🎬 Video</a>` : '';
-            let syscomButtonHTML = product.syscomURL ? `<a href="${product.syscomURL}" target="_blank" class="btn-syscom"><i class="fas fa-external-link-alt"></i> SYSCOM</a>` : '';
+            
+            // CORRECCIÓN AQUÍ: Si el link específico no existe, genera el buscador por modelo de SYSCOM
+            let targetSyscomURL = product.syscomURL ? product.syscomURL : `https://www.syscom.mx/principal/resultado?search=${encodeURIComponent(product.model)}`;
+            let syscomButtonHTML = `<a href="${targetSyscomURL}" target="_blank" class="btn-syscom"><i class="fas fa-external-link-alt"></i> SYSCOM</a>`;
+            
             let featuresHTML = product.features.map(feat => `<li>${feat}</li>`).join('');
 
             // RENDER DE PRECIOS: Muestra precio de lista tachado si hay descuento activo en UI
@@ -441,9 +423,6 @@
 
     function updateAllPrices() { renderProducts(); }
 
-    /* ==========================================================================
-       RENDERING: Construcción de la Ficha Comercial con Lógica de Precios Tachados
-       ========================================================================== */
     function prepareTechnicalSheet(modelCode) {
         const product = catalogData[currentCategory].products.find(p => p.model === modelCode);
         if (!product) return;
@@ -534,7 +513,6 @@
 
         renderCanvasImage(ctx, productImgUrl, 135, imgBoxY, 180, 180, canvas);
     }
-
     function renderCanvasImage(ctx, src, x, y, width, height, canvas) {
         const img = new Image();
         img.crossOrigin = "anonymous";
@@ -573,7 +551,6 @@
             openModalWithCanvasData(canvas);
         };
     }
-
     function wrapText(context, text, x, y, maxWidth, lineHeight) {
         const words = text.split(' ');
         let line = '';
@@ -591,7 +568,6 @@
         context.fillText(line, x, currentY);
         return currentY;
     }
-
     function openModalWithCanvasData(canvas) {
         const modal = document.getElementById('imageModal');
         const modalImg = document.getElementById('modalTargetImg');
@@ -611,7 +587,6 @@
             }
         }
     }
-
     function shareOrCopyCanvas() {
         const canvas = document.getElementById('processingCanvas');
         const btnAction = document.getElementById('btnClipboardAction');
@@ -639,7 +614,6 @@
             }
         }, 'image/png');
     }
-
     function closeLightbox() {
         document.getElementById('imageModal').style.display = 'none';
     }
