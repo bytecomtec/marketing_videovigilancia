@@ -132,12 +132,12 @@
         .product-features-list li::before { content: "✓"; position: absolute; left: -18px; color: #10b981; font-weight: bold; }
 
         .product-footer { border-top: 1px solid #f1f5f9; padding-top: 15px; }
-        .product-actions { display: flex; gap: 10px; }
+        .product-actions { display: flex; gap: 8px; flex-wrap: wrap; }
         
         .btn-prepare {
             background-color: var(--primary-color); color: var(--white); border: none; border-radius: 4px;
             padding: 11px 14px; font-size: 0.9rem; font-weight: 600; cursor: pointer; flex: 2;
-            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-width: 140px;
         }
         .btn-prepare:hover { background-color: #002244; }
 
@@ -145,11 +145,19 @@
             background-color: transparent; color: var(--accent-color); border: 1px solid var(--accent-color);
             border-radius: 4px; padding: 11px 14px; font-size: 0.9rem; font-weight: 600; cursor: pointer;
             flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 6px; text-decoration: none;
-            transition: all 0.2s; box-sizing: border-box;
+            transition: all 0.2s; box-sizing: border-box; min-width: 90px;
         }
         .btn-video:hover { background-color: var(--accent-color); color: var(--white); }
 
-        /* ==========================================================================
+        .btn-syscom {
+            background-color: transparent; color: #475569; border: 1px solid #cbd5e1;
+            border-radius: 4px; padding: 11px 14px; font-size: 0.9rem; font-weight: 600;
+            flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 6px; text-decoration: none;
+            transition: all 0.2s; box-sizing: border-box; min-width: 100px;
+        }
+        .btn-syscom:hover { background-color: #f1f5f9; color: var(--primary-color); border-color: #94a3b8; }
+
+           /* ==========================================================================
            MODAL DE PREVISUALIZACIÓN DE IMAGEN VERTICAL EN SMARTPHONES
            ========================================================================== */
         .custom-modal {
@@ -272,7 +280,6 @@
         { id: "monitores", name: "Monitores" },
         { id: "energia", name: "Energía" }
     ];
-
     const catalogData = {
             nvr: {
                 title: "Grabadores de Red (NVR)",
@@ -284,6 +291,7 @@
                         desc: "Grabador IP autónomo provisto de puertos PoE nativos para energizar cámaras de forma directa.",
                         costUSD: 62.14,
                         features: ["Codificación H.265+/H.265/H.264+/H.264", "Almacenamiento 1 disco hasta 6 TB", "Throughput entrada 50 Mbps, salida 40 Mbps", "Reproducción sincrónica 4 canales Full HD", "2 antenas Wi-Fi MIMO 2.4 GHz"],
+                        syscomURL: "https://www.syscom.mx/products/176574",
                         videoURL: "https://bytecomtec.github.io/videos_videovigilancia/videovigilancia.mp4"
                    },
                    { 
@@ -292,6 +300,7 @@
                         desc: "Grabador de red eficiente diseñado para gestionar cámaras IP de alta definición continua.",
                         costUSD: 79.25,
                         features: ["Compresión H.265+/H.265/H.264+/H.264", "4 puertos PoE+ con 50W total", "Soporta disco duro de hasta 8TB", "Acceso remoto desde dispositivos móviles", "Salida de video 4K en HDMI"],
+                        syscomURL: "https://www.syscom.mx/products/176574",
                         videoURL: ""     
                     },
                     { 
@@ -300,6 +309,7 @@
                         desc: "Grabador IP autónomo provisto de puertos PoE nativos para energizar cámaras de forma directa.",
                         costUSD: 117.40,
                         features: ["Compresión H.265+/H.265/H.264+/H.264 para eficiencia", "4 puertos PoE+ con 50W potencia total", "Acceso remoto vía Hik-Connect y aplicaciones móviles", "Reconocimiento facial hasta 50,000 rostros en 4 canales", "Modo PoE extendido hasta 300 metros de distancia"],
+                        syscomURL: "https://www.syscom.mx/products/176574",
                         videoURL: ""       
                     },
                     { 
@@ -1793,10 +1803,11 @@
                 products: [
                     { 
                         model: "PS12DC4PBK", // Cambié el modelo para diferenciarlo del DVR
-                        titleSpecs: "Fuente de Poder con Gabinete de 4 Salidas de 11 - 15 Vcc / 5 Amper / Soporta Batería de Respaldo / Voltaje de Entrada: 96 - 264 Vca / Soporta Protección contra Sobrecorriente de Salida, Protección contra Cortocircuito /",
+                        titleSpecs: "Fuente de Poder con Gabinete de 4 Salidas de 11 - 15 Vcc / 5 Amper / Soporta Batería de Respaldo / Voltaje de Entrada: 96 - 264 Vca / Soporta Protección contra Sobrecorriente de Salida, Protección contra Cortocircuito",
                         costUSD: 19.07,
                         features: ["Voltaje de salida ajustable 11-15 VCC", "Corriente total de salida de 5 A", "Protección contra sobrecorriente y cortocircuitos", "Monitoreo automático de batería con corte a 10.5 V","Reinicio automático al recuperar energía", "Diseño compacto para fácil instalación"],
-                        videoURL: ""   
+                        syscomUrl: "https://www.syscom.mx/products/176574",
+                        videoURL: ""
                     },
                     { 
                         model: "DS-2FA1225-C4/K", // Cambié el modelo para diferenciarlo del DVR
@@ -2320,6 +2331,11 @@
             const imgSrc = `${GITHUB_IMG_BASE}${safeModelName}.jpg`;
 
             let videoButtonHTML = product.videoURL ? `<a href="${product.videoURL}" target="_blank" class="btn-video">🎬 Video</a>` : '';
+            
+            // CORRECCIÓN AQUÍ: Si el link específico no existe, genera el buscador por modelo de SYSCOM
+            let targetSyscomURL = product.syscomURL ? product.syscomURL : `https://www.syscom.mx/principal/resultado?search=${encodeURIComponent(product.model)}`;
+            let syscomButtonHTML = `<a href="${targetSyscomURL}" target="_blank" class="btn-syscom"><i class="fas fa-external-link-alt"></i> SYSCOM</a>`;
+            
             let featuresHTML = product.features.map(feat => `<li>${feat}</li>`).join('');
 
             // RENDER DE PRECIOS: Muestra precio de lista tachado si hay descuento activo en UI
@@ -2352,8 +2368,9 @@
                 </div>
                 <div class="product-footer">
                     <div class="product-actions">
-                        <button class="btn-prepare" onclick="prepareTechnicalSheet('${product.model}')">🖼️ Generar Tarjeta Comercial</button>
+                        <button class="btn-prepare" onclick="prepareTechnicalSheet('${product.model}')">🖼️ Tarjeta Comercial</button>
                         ${videoButtonHTML}
+                        ${syscomButtonHTML}
                     </div>
                 </div>
             `;
@@ -2363,7 +2380,7 @@
 
     function updateAllPrices() { renderProducts(); }
 
-    /* ==========================================================================
+        /* ==========================================================================
        RENDERING: Construcción de la Ficha Comercial con Lógica de Precios Tachados
        ========================================================================== */
     function prepareTechnicalSheet(modelCode) {
@@ -2456,7 +2473,6 @@
 
         renderCanvasImage(ctx, productImgUrl, 135, imgBoxY, 180, 180, canvas);
     }
-
     function renderCanvasImage(ctx, src, x, y, width, height, canvas) {
         const img = new Image();
         img.crossOrigin = "anonymous";
@@ -2495,7 +2511,6 @@
             openModalWithCanvasData(canvas);
         };
     }
-
     function wrapText(context, text, x, y, maxWidth, lineHeight) {
         const words = text.split(' ');
         let line = '';
@@ -2513,7 +2528,6 @@
         context.fillText(line, x, currentY);
         return currentY;
     }
-
     function openModalWithCanvasData(canvas) {
         const modal = document.getElementById('imageModal');
         const modalImg = document.getElementById('modalTargetImg');
@@ -2533,7 +2547,6 @@
             }
         }
     }
-
     function shareOrCopyCanvas() {
         const canvas = document.getElementById('processingCanvas');
         const btnAction = document.getElementById('btnClipboardAction');
@@ -2561,7 +2574,6 @@
             }
         }, 'image/png');
     }
-
     function closeLightbox() {
         document.getElementById('imageModal').style.display = 'none';
     }
